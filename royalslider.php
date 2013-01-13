@@ -1,12 +1,11 @@
 <?php
 /*
-Plugin Name: Sparks RoyalSlider
-Plugin URI: http://dimsemenov.com/plugins/royal-slider/documentation/?s=dp
-Description: Part of the Sparks Framework. A WordPress plugin for the RoyalSlider jQuery plugin.
-Version: 1.0
-Author: Star Verte LLC
-Author URI: http://www.starverte.com
-*/
+ * Loads RoyalSlider scripts
+ *
+ * @package Sparks
+ * @sub-package Steel
+ *
+ */
 
 function my_scripts_method() {
 	wp_enqueue_script('jquery');
