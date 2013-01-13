@@ -25,4 +25,6 @@ License URI: http://www.gnu.org/licenses/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+include_once(WP_PLUGIN_URL . '/steel/royalslider.php')
+
 ?>
