@@ -31,7 +31,8 @@ include_once dirname( __FILE__ ) . '/widgets.php';
 add_action('admin_menu', 'register_sparks_menu');
 
 function register_sparks_menu() {
-   add_menu_page('sparks-menu', 'Sparks', 'edit_others_pages', 'steel/admin.php', '',   plugins_url('steel/img/sparks.png'), 55);
+   add_menu_page('sparks-menu', 'Sparks', 'edit_others_pages', 'steel/admin.php', '',   plugins_url('steel/img/sparks.png'), 50);
+  print_r($GLOBALS['menu']);
 }
 
 add_action( 'admin_enqueue_scripts', 'steel_scripts' );
@@ -40,20 +41,4 @@ function steel_scripts() {
        wp_register_style( 'SparksStyles', plugins_url('admin.css', __FILE__) );
        wp_enqueue_style( 'SparksStyles' );
 }
-
-/* Add separator for admin menu */
-function add_admin_menu_separator($position) {
-  global $menu;
-  $index = 0;
-  foreach($menu as $offset => $section) {
-    if (substr($section[2],0,9)=='separator')
-      $index++;
-    if ($offset>=$position) {
-      $menu[$position] = array('','read',"separator{$index}",'','wp-menu-separator');
-      break;
-    }
-  }
-  ksort( $menu );
-}
-add_admin_menu_separator(54);
 ?>
