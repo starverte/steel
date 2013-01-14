@@ -33,4 +33,11 @@ add_action('admin_menu', 'register_sparks_menu');
 function register_sparks_menu() {
    add_menu_page('sparks-menu', 'Sparks', 'edit_others_pages', 'steel/admin.php', '',   plugins_url('steel/img/sparks.png'), 30);
 }
+
+add_action( 'admin_enqueue_scripts', 'steel_scripts' );
+   
+function steel_scripts() {
+       wp_register_style( 'SparksStyles', plugins_url('admin.css', __FILE__) );
+       wp_enqueue_style( 'SparksStyles' );
+}
 ?>
