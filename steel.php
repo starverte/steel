@@ -31,6 +31,6 @@ include_once dirname( __FILE__ ) . '/widgets.php';
 add_action('admin_menu', 'register_sparks_menu');
 
 function register_sparks_menu() {
-   add_menu_page('Sparks', 'sparks', 'add_users', 'sparks/admin.php', '',   plugins_url('sparks/img/sparks.png'), 30);
+   add_menu_page('Sparks', 'sparks-menu', 'add_users', 'sparks/admin.php', '',   plugins_url('sparks/img/sparks.png'), 30);
 
 ?>
