@@ -28,4 +28,9 @@ License URI: http://www.gnu.org/licenses/
 include_once dirname( __FILE__ ) . '/royalslider.php';
 include_once dirname( __FILE__ ) . '/widgets.php';
 
+add_action('admin_menu', 'register_sparks_menu');
+
+function register_sparks_menu() {
+   add_menu_page('Sparks', 'sparks', 'edit_others_pages', 'sparks/admin.php', '',   plugins_url('sparks/img/icon.png'), 30);
+
 ?>
