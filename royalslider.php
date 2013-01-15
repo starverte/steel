@@ -6,6 +6,7 @@
  * @sub-package Steel
  *
  */
+add_action('wp_enqueue_scripts', 'my_scripts_method');
 
 function my_scripts_method() {
 	wp_enqueue_script('jquery');
@@ -25,8 +26,6 @@ function my_scripts_method() {
 		true
 	);
 }    
- 
-add_action('wp_enqueue_scripts', 'my_scripts_method');
 
     /**
      * Register with hook 'wp_enqueue_scripts', which can be used for front end CSS and JavaScript

@@ -25,7 +25,35 @@ License URI: http://www.gnu.org/licenses/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-include_once(WP_PLUGIN_URL . '/steel/royalslider.php');
-include_once(WP_PLUGIN_URL . '/steel/widgets.php');
+include_once dirname( __FILE__ ) . '/royalslider.php';
+include_once dirname( __FILE__ ) . '/widgets.php';
 
+add_action( 'admin_enqueue_scripts', 'steel_scripts' );
+   
+function steel_scripts() {
+       wp_register_style( 'SparksStyles', plugins_url('admin.css', __FILE__) );
+       wp_enqueue_style( 'SparksStyles' );
+}
+
+add_action('admin_init', 'register_sparks_options' );
+add_action('admin_menu', 'register_sparks_menu');
+
+// Init plugin options to white list our options
+function register_sparks_options(){
+	register_setting( 'sparks_options', 'steel_options', 'steel_options_validate' );
+}
+
+// Add menu page
+function register_sparks_menu() {
+	add_options_page('Ozh\'s Sample Options', 'Sample Options', 'manage_options', 'steel_optionsoptions', 'steel_optionsoptions_do_page');
+	add_menu_page('Sparks', 'Sparks', 'manage_options', 'steel/admin.php', '',   plugins_url('steel/img/sparks.png'), 50);
+}
+
+function steel_options_validate($input) {
+	
+	// Say our second option must be safe text with no HTML tags
+	$input['merch_id'] =  wp_filter_nohtml_kses($input['merch_id']);
+	
+	return $input;
+}
 ?>

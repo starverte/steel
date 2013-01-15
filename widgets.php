@@ -1,3 +1,4 @@
+<?php
 /*
  * Creates custom widgets
  *
@@ -5,3 +6,4 @@
  * @sub-package Steel
  *
  */
+?>
