@@ -7,12 +7,12 @@
  *
  */
 function steel_widgets() {
-    register_widget( 'Link_Widget' );
+    register_widget( 'Steel_Link_Widget' );
 }
 
-class Link_Widget extends WP_Widget {
+class Steel_Link_Widget extends WP_Widget {
 
-  function Link_Widget() {
+  function Steel_Link_Widget() {
 		$widget_ops = array( 'classname' => 'link-widget', 'description' => __('A widget that only displays a title with a link', 'link-widget') );
 		
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'link-widget' );
