@@ -6,7 +6,7 @@
  * @sub-package Steel
  *
  */
-function sparks_events_widgets() {
+function steel_widgets() {
     register_widget( 'Link_Widget' );
 }
 
