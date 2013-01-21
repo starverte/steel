@@ -6,6 +6,8 @@
  * @sub-package Steel
  *
  */
+add_action( 'widgets_init', 'steel_widgets' );
+
 function steel_widgets() {
     register_widget( 'Steel_Link_Widget' );
 }
@@ -17,7 +19,7 @@ class Steel_Link_Widget extends WP_Widget {
 		
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'link-widget' );
 		
-		$this->WP_Widget( 'link-widget', __('Link Title Widget', 'link-widget'), $widget_ops, $control_ops );
+		$this->WP_Widget( 'link-widget', __('Custom Link Widget', 'link-widget'), $widget_ops, $control_ops );
 	}
 	
 	function widget( $args, $instance ) {
@@ -55,8 +57,8 @@ class Steel_Link_Widget extends WP_Widget {
 	function form( $instance ) {
 
 		//Set up some default widget settings.
-		$defaults = array( 'title' => __('Upcoming Events', 'link-widget'), 'show_info' => true );
-		$defaults = array( 'href' => __('3', 'link-widget'), 'show_info' => true );
+		$defaults = array( 'title' => __('', 'link-widget'), 'show_info' => true );
+		$defaults = array( 'href' => __('http://', 'link-widget'), 'show_info' => true );
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
 		<p>
@@ -64,7 +66,7 @@ class Steel_Link_Widget extends WP_Widget {
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Number of Events:', 'link-widget'); ?></label>
+			<label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Link:', 'link-widget'); ?></label>
 			<input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo $instance['href']; ?>" style="width:100%;" />
 		</p>
 
