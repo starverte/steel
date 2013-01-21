@@ -13,11 +13,11 @@ function steel_widgets() {
 class Link_Widget extends WP_Widget {
 
   function Link_Widget() {
-		$widget_ops = array( 'classname' => 'link-widget', 'description' => __('A widget that displays upcoming events', 'link-widget') );
+		$widget_ops = array( 'classname' => 'link-widget', 'description' => __('A widget that only displays a title with a link', 'link-widget') );
 		
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'link-widget' );
 		
-		$this->WP_Widget( 'link-widget', __('Link Widget', 'link-widget'), $widget_ops, $control_ops );
+		$this->WP_Widget( 'link-widget', __('Link Title Widget', 'link-widget'), $widget_ops, $control_ops );
 	}
 	
 	function widget( $args, $instance ) {
