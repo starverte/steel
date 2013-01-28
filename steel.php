@@ -56,4 +56,13 @@ function steel_options_validate($input) {
 	
 	return $input;
 }
+
+//Empty search fix
+add_filter( 'request', 'my_request_filter' );
+function my_request_filter( $query_vars ) {
+    if( isset( $_GET['s'] ) && empty( $_GET['s'] ) ) {
+        $query_vars['s'] = " ";
+    }
+    return $query_vars;
+}
 ?>
