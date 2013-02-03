@@ -28,11 +28,16 @@ License URI: http://www.gnu.org/licenses/
 include_once dirname( __FILE__ ) . '/royalslider.php';
 include_once dirname( __FILE__ ) . '/widgets.php';
 
-add_action( 'admin_enqueue_scripts', 'steel_scripts' );
+add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
+add_action( 'wp_enqueue_scripts', 'steel_scripts' );
    
-function steel_scripts() {
+function steel_admin_scripts() {
        wp_register_style( 'SparksStyles', plugins_url('admin.css', __FILE__) );
        wp_enqueue_style( 'SparksStyles' );
+}
+function steel_scripts() {
+       wp_register_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js');
+       wp_enqueue_script( 'pin-it-button' );
 }
 
 add_action('admin_init', 'register_sparks_options' );
@@ -92,6 +97,7 @@ function tweet_this( $data_count = 'horizontal' , $data_size = '' , $data_via = 
 
 //Like Button
 function like_this( $args = array() ) {
+	$url = get_permalink();
 	$defaults = array(
 		'data_href' => $url,
 		'data_send' => 'false',
@@ -107,5 +113,24 @@ function like_this( $args = array() ) {
 	$args = (object) $args;
 	
 	printf('<div class="fb-like" data-href="%s" data-send="%s" data-layout="%s" data-show-faces="%s" data-width="%s" data-action="%s" data-font="%s" data-colorscheme="%s" data-ref="%s"></div>', $args->data_href, $args->data_send, $args->data_layout, $args->data_show_faces, $args->data_width, $args->data_action, $args->data_font, $args->data_color, $args->data_ref);
+}
+
+//Pin it Button
+function pin_it( $args = array() ) {
+	$url = get_permalink();
+	$title = the_title( '', '', false);
+	$thumb_id = get_post_thumbnail_id();
+	$thumbnail = wp_get_attachment_url( $thumb_id );
+	$defaults = array(
+		'data_url' => $url,
+		'data_thumb' => $thumbnail,
+		'data_text' => $title,
+		'data_count' => 'horizontal',
+	);
+	$args = wp_parse_args($args, $defaults);
+	$args = (object) $args;
+	
+	printf('<a href="http://pinterest.com/pin/create/button/?url=%s&media=%s&description=%s" class="pin-it-button" count-layout="%s">', $args->data_url, $args->data_thumb, $args->data_text, $args->data_count);
+	printf('<img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>');
 }
 ?>
