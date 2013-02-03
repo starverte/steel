@@ -65,4 +65,28 @@ function my_request_filter( $query_vars ) {
     }
     return $query_vars;
 }
+
+//Twitter Button
+function tweet_this( $data_count = 'horizontal' , $data_size = '' , $data_via = '' , $args = array() ) {
+	$url = get_permalink();
+	$title = the_title( '', '', false);
+	$language = get_bloginfo( 'language' );
+	$defaults = array(
+		'data_url' => $url,
+		'data_text' => $title,
+		'data_related' => '',
+		'data_lang' => $language,
+		'data_counturl' => $url,
+		'data_hashtags' => '',
+		'data_dnt' => '',
+	);
+	$args = wp_parse_args($args, $defaults);
+	$args = (object) $args;
+	
+	if ( $args->data_hashtags != '' ) { $tweet_class = 'twitter-hashtag-button'; $hashtag = '#'.$args->data_hashtags; $link = 'https://twitter.com/intent/tweet?button_hashtag='.$hashtag; } else { $tweet_class = 'twitter-share-button'; $hashtag = ''; $link = 'https://twitter.com/share';}
+	
+	printf('<a href="%s" class="%s" data-count="%s" data-size="%s" data-via="%s" data-url="%s" data-text="%s" data-related="%s" data-lang="%s" data-counturl="%s" data_hashtags="%s" data-dnt="%s">', $link, $tweet_class, $data_count, $data_size, $data_via, $args->data_url, $args->data_text, $args->data_related, $args->data_lang, $args->data_counturl, $args->data_hashtags, $args->data_dnt);
+	printf('Tweet</a>');
+	printf('<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>');
+}
 ?>
