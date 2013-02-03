@@ -89,4 +89,23 @@ function tweet_this( $data_count = 'horizontal' , $data_size = '' , $data_via = 
 	printf('Tweet</a>');
 	printf('<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>');
 }
+
+//Like Button
+function like_this( $args = array() ) {
+	$defaults = array(
+		'data_href' => $url,
+		'data_send' => 'false',
+		'data_layout' => 'standard',
+		'data_show_faces' => 'false',
+		'data_width' => '450',
+		'data_action' => 'like',
+		'data_font' => 'lucida grande',
+		'data_color' => 'light',
+		'data_ref' => '',
+	);
+	$args = wp_parse_args($args, $defaults);
+	$args = (object) $args;
+	
+	printf('<div class="fb-like" data-href="%s" data-send="%s" data-layout="%s" data-show-faces="%s" data-width="%s" data-action="%s" data-font="%s" data-colorscheme="%s" data-ref="%s"></div>', $args->data_href, $args->data_send, $args->data_layout, $args->data_show_faces, $args->data_width, $args->data_action, $args->data_font, $args->data_color, $args->data_ref);
+}
 ?>
