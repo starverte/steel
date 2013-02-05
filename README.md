@@ -14,7 +14,7 @@ Author URI: http://starverte.com/
 
 License: GPLv2 or later
 
-License URI: http://www.gnu.org/licenses/
+License URI: license.txt
 
 A spark sets a fire ablaze, and similarly the Sparks Framework is made up of 'sparks' that help initiate
 the creative process of website development within WordPress. Often times to start a fire, a person uses flint and steel.
