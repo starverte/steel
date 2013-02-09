@@ -32,12 +32,15 @@ add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
    
 function steel_admin_scripts() {
-       wp_register_style( 'SparksStyles', plugins_url('admin.css', __FILE__) );
-       wp_enqueue_style( 'SparksStyles' );
+       wp_register_style( 'sparks-styles', plugins_url('admin.css', __FILE__) );
+       wp_enqueue_style( 'sparks-styles' );
 }
 function steel_scripts() {
        wp_register_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js');
        wp_enqueue_script( 'pin-it-button' );
+	   wp_enqueue_script('jquery-ui-dialog');
+	   wp_register_style( 'sparks-modal', plugins_url('modal.php', __FILE__) );
+	   wp_enqueue_script('sparks-modal');
 }
 
 add_action('admin_init', 'register_sparks_options' );
@@ -50,7 +53,6 @@ function register_sparks_options(){
 
 // Add menu page
 function register_sparks_menu() {
-	add_options_page('Ozh\'s Sample Options', 'Sample Options', 'manage_options', 'steel_optionsoptions', 'steel_optionsoptions_do_page');
 	add_menu_page('Sparks', 'Sparks', 'manage_options', 'steel/admin.php', '',   plugins_url('steel/img/sparks.png'), 50);
 }
 
