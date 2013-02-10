@@ -43,25 +43,76 @@ function steel_scripts() {
 	   wp_enqueue_script('sparks-modal');
 }
 
-add_action('admin_init', 'register_sparks_options' );
-add_action('admin_menu', 'register_sparks_menu');
-
-// Init plugin options to white list our options
-function register_sparks_options(){
-	register_setting( 'sparks_options', 'steel_options', 'steel_options_validate' );
+// add the admin options page
+add_action('admin_menu', 'sparks_admin_add_page');
+function sparks_admin_add_page() {
+	add_menu_page('Sparks', 'Sparks', 'manage_options', 'sparks', 'sparks_options_page',   plugins_url('steel/img/sparks.png'), 50);
 }
+// display the admin options page
+function sparks_options_page() {
+?>
+   <div class="wrap">
+		<h2>Sparks Options</h2>
+		<form action="options.php" method="post">
+		<?php settings_fields('sparks_options'); ?>
+		<?php do_settings_sections('sparks'); ?>
+        <?php settings_errors(); ?>
+ 
+			<p class="submit">
+			<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+			</p>
+		</form>
+	</div>
 
-// Add menu page
-function register_sparks_menu() {
-	add_menu_page('Sparks', 'Sparks', 'manage_options', 'steel/admin.php', '',   plugins_url('steel/img/sparks.png'), 50);
+<?php
 }
-
-function steel_options_validate($input) {
-	
-	// Say our second option must be safe text with no HTML tags
-	$input['merch_id'] =  wp_filter_nohtml_kses($input['merch_id']);
-	
-	return $input;
+// add the admin settings and such
+add_action('admin_init', 'sparks_admin_init');
+function sparks_admin_init(){
+	register_setting( 'sparks_options', 'sparks_options', 'sparks_options_validate' );
+	add_settings_section('sparks_social', 'Social Media', 'sparks_social_text', 'sparks');
+	add_settings_field('fb_app_id', 'Facebook App ID', 'fb_app_id_setting', 'sparks', 'sparks_social' );
+	if (is_plugin_active('sparks-store/store.php')) {
+		add_settings_section('sparks_store', 'PayPal', 'sparks_store_text', 'sparks');
+		add_settings_field('paypal_merch_id', 'Merchant ID', 'paypal_merch_id_setting', 'sparks', 'sparks_store' );
+	}
+}
+function sparks_store_text() {
+	echo '';
+}
+function paypal_merch_id_setting() {
+	$options = get_option('sparks_options');
+	if (isset($options['merch_id'])) {
+		echo "<input id='paypal_merch_id' name='sparks_options[merch_id]' size='40' type='text' value='{$options['merch_id']}' />";
+	}
+	else {
+		echo "<input id='paypal_merch_id' name='sparks_options[merch_id]' size='40' type='text' value='' />";
+	}
+}
+function sparks_social_text() {
+	echo 'Social media profile information';
+}
+function fb_app_id_setting() {
+	$options = get_option('sparks_options');
+	if (isset($options['fb_app_id'])) {
+		echo "<input id='db_app_id' name='sparks_options[fb_app_id]' size='40' type='text' value='{$options['fb_app_id']}' />";
+	}
+	else {
+		echo "<input id='fb_app_id' name='sparks_options[fb_app_id]' size='40' type='text' value='' />";
+	}
+}
+// validate our options
+function sparks_options_validate($input) {
+	global $newinput;
+	$newinput['merch_id'] = trim($input['merch_id']);
+	if(!preg_match('/^[a-z0-9]{13}$/i', $newinput['merch_id']) & !empty($newinput['merch_id'])) {
+		add_settings_error( 'merch_id' , 'invalid' , 'Invalid PayPal Merchant ID. <span style="font-weight:normal;display:block;">A PayPal Merchant ID consists of 13 alphanumeric characters.</span>'  );
+	}
+	$newinput['fb_app_id'] = trim($input['fb_app_id']);
+	if (!preg_match('/^[0-9]{15}$/i', $newinput['fb_app_id']) & !empty($newinput['fb_app_id'])) {
+		add_settings_error( 'fb_app_id' , 'invalid' , 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>'  );
+	}
+	return $newinput;
 }
 
 //Empty search fix
