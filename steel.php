@@ -186,4 +186,28 @@ function pin_it( $args = array() ) {
 	printf('<a href="http://pinterest.com/pin/create/button/?url=%s&media=%s&description=%s" class="pin-it-button" count-layout="%s">', $args->data_url, $args->data_thumb, $args->data_text, $args->data_count);
 	printf('<img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>');
 }
+
+// [columns]
+function columns_shortcode( $atts, $content = null ) {
+	extract( shortcode_atts( array(
+		'num' => 2
+	), $atts ) );
+	$new = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
+	return '<div class="columns columns-'. esc_attr($num) .'">' . do_shortcode($new) . '</div>';
+}
+add_shortcode( 'columns', 'columns_shortcode' );
+
+function column_shortcode( $atts, $content = null ) {
+	extract( shortcode_atts( array(
+		'title' => null
+	), $atts ) );
+	$new = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
+	if (isset($title) && !empty($title)) {
+		return '<div class="column"><h3>' . esc_attr($title) .'</h3><p>' . $new . '</p></div>';
+	}
+	else {
+		return '<div class="column"><p>' . $new . '</p></div>';
+	}
+}
+add_shortcode( 'column', 'column_shortcode' );
 ?>
