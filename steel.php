@@ -210,4 +210,8 @@ function column_shortcode( $atts, $content = null ) {
 	}
 }
 add_shortcode( 'column', 'column_shortcode' );
+
+//Add content to <head> section
+function steel_head() {
+}
 ?>
