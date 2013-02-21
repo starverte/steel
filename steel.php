@@ -3,7 +3,7 @@
 Plugin Name: Steel
 Plugin URI: //Not yet developed
 GitHub URI: https://github.com/starverte/steel.git
-Description: Core plugin of the Sparks Framework. Includes custom widgets, royalslider, and options menu.
+Description: Core plugin of the Sparks Framework. Includes custom widgets, and options menu.
 Author: starverte
 Author URI: http://starverte.com/
 License: GPLv3
@@ -25,7 +25,6 @@ License URI: http://www.gnu.org/licenses/
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-include_once dirname( __FILE__ ) . '/royalslider.php';
 include_once dirname( __FILE__ ) . '/widgets.php';
 
 add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
