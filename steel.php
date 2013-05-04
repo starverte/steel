@@ -31,15 +31,31 @@ add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
    
 function steel_admin_scripts() {
-       wp_register_style( 'sparks-styles', plugins_url('admin.css', __FILE__) );
+       wp_register_style( 'sparks-styles', plugins_url('steel/css/admin.css') );
        wp_enqueue_style( 'sparks-styles' );
 }
 function steel_scripts() {
-       wp_register_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js');
-       wp_enqueue_script( 'pin-it-button' );
-	   wp_enqueue_script('jquery-ui-dialog');
-	   wp_register_style( 'sparks-modal', plugins_url('modal.php', __FILE__) );
-	   wp_enqueue_script('sparks-modal');
+	// Replace WordPress default jQuery library with latest one from Google CDN
+	wp_deregister_script( 'jquery' );
+	wp_register_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js', false, '2.0.0', true );
+	wp_enqueue_script( 'jquery' );
+	
+	// Replace WordPress default jQuery UI Core library with latest jQuery UI (all) from Google CDN
+	wp_deregister_script( 'jquery-ui-core' );
+	wp_register_script('jquery-ui-core', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js', array('jquery') , '1.10.2', true );
+	wp_enqueue_script( 'jquery-ui-core' );
+	
+	// Load script for "Pin It" button
+	wp_register_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js');
+	wp_enqueue_script( 'pin-it-button' );
+	
+	// Load scripts and styles for Twitter Bootstrap
+	wp_register_script( 'bootstrap', plugins_url('steel/js/bootstrap.min.js') , array('jquery') , '2.3.1', true );
+	wp_register_style( 'bootstrap-style', plugins_url('steel/css/bootstrap.min.css') );
+	wp_register_script( 'bootstrap-run', plugins_url('steel/js/run.js') , array('bootstrap') , '' , true );
+	wp_enqueue_script( 'bootstrap' );
+	wp_enqueue_style( 'bootstrap-style' );
+	wp_enqueue_script( 'bootstrap-run' );
 }
 
 // add the admin options page
