@@ -47,9 +47,9 @@ function steel_scripts() {
 	wp_enqueue_script( 'jquery-ui-core' );
 	
 	// Load scripts and styles for Twitter Bootstrap
-	wp_register_script( 'bootstrap', plugins_url( '/js/bootstrap.min.js'), array('jquery') , '2.3.1', true );
-	wp_register_style( 'bootstrap-style', plugins_url( '/css/bootstrap.min.css' ) );
-	wp_register_script( 'bootstrap-run', plugins_url( '/js/run.js' ), array('bootstrap') , '' , true );
+	wp_register_script( 'bootstrap', plugins_url( '/steel/js/bootstrap.min.js'), array('jquery') , '2.3.1', true );
+	wp_register_style( 'bootstrap-style', plugins_url( '/steel/css/bootstrap.min.css' ) );
+	wp_register_script( 'bootstrap-run', plugins_url( '/steel/js/run.js' ), array('bootstrap') , '' , true );
 	wp_enqueue_script( 'bootstrap' );
 	wp_enqueue_style( 'bootstrap-style' );
 	wp_enqueue_script( 'bootstrap-run' );
