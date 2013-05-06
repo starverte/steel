@@ -30,10 +30,7 @@ include_once dirname( __FILE__ ) . '/widgets.php';
 add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
    
-function steel_admin_scripts() {
-       wp_register_style( 'sparks-styles', plugins_url('steel/css/admin.css') );
-       wp_enqueue_style( 'sparks-styles' );
-}
+
 function steel_scripts() {
 	
 	// Replace WordPress default jQuery library with latest one from Google CDN
@@ -58,6 +55,15 @@ function steel_scripts() {
 	wp_register_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js');
 	wp_enqueue_script( 'pin-it-button' );
 	
+}
+function steel_admin_scripts() {
+       wp_register_style( 'sparks-styles', plugins_url('steel/css/admin.css') );
+       wp_enqueue_style( 'sparks-styles' );
+		// Load scripts and styles for Twitter Bootstrap
+		wp_register_script( 'bootstrap-buttons', plugins_url( '/steel/js/bootstrap-buttons.min.js'), array('jquery') , '2.3.1', true );
+		wp_register_style( 'bootstrap-buttons-style', plugins_url( '/steel/css/bootstrap-buttons.min.css' ) );
+		wp_enqueue_script( 'bootstrap-buttons' );
+		wp_enqueue_style( 'bootstrap-buttons-style' );
 }
 
 // add the admin options page
