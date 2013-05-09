@@ -60,10 +60,10 @@ function steel_admin_scripts() {
        wp_register_style( 'sparks-styles', plugins_url('steel/css/admin.css') );
        wp_enqueue_style( 'sparks-styles' );
 		// Load scripts and styles for Twitter Bootstrap
-		wp_register_script( 'bootstrap-buttons', plugins_url( '/steel/js/bootstrap-buttons.min.js'), array('jquery') , '2.3.1', true );
-		wp_register_style( 'bootstrap-buttons-style', plugins_url( '/steel/css/bootstrap-buttons.min.css' ) );
-		wp_enqueue_script( 'bootstrap-buttons' );
-		wp_enqueue_style( 'bootstrap-buttons-style' );
+		wp_register_script( 'bootstrap-admin', plugins_url( '/steel/js/bootstrap-admin.min.js'), array('jquery') , '2.3.1', true );
+		wp_register_style( 'bootstrap-admin-style', plugins_url( '/steel/css/bootstrap-admin.min.css' ) );
+		wp_enqueue_script( 'bootstrap-admin' );
+		wp_enqueue_style( 'bootstrap-admin-style' );
 }
 
 // add the admin options page
