@@ -119,7 +119,7 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
 
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'link-widget' );
 
-		$this->WP_Widget( 'link-widget', __('Custom Link Widget', 'link-widget'), $widget_ops, $control_ops );
+		$this->WP_Widget( 'link-widget', __('Custom Link Widget (Legacy)', 'link-widget'), $widget_ops, $control_ops );
 	}
 
 	function widget( $args, $instance ) {
