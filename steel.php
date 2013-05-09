@@ -47,9 +47,6 @@ function steel_scripts() {
 	wp_register_script( 'bootstrap', plugins_url( '/steel/js/bootstrap.min.js'), array('jquery') , '2.3.1', true );
 	wp_register_style( 'bootstrap-style', plugins_url( '/steel/css/bootstrap.min.css' ) );
 	wp_register_script( 'bootstrap-run', plugins_url( '/steel/js/run.js' ), array('bootstrap') , '' , true );
-	wp_enqueue_script( 'bootstrap' );
-	wp_enqueue_style( 'bootstrap-style' );
-	wp_enqueue_script( 'bootstrap-run' );
 	
 	// Load script for "Pin It" button
 	wp_register_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js');
