@@ -43,11 +43,6 @@ function steel_scripts() {
 	wp_register_script('jquery-ui-core', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js', array('jquery') , '1.10.2', true );
 	wp_enqueue_script( 'jquery-ui-core' );
 	
-	// Load scripts and styles for Twitter Bootstrap
-	wp_register_script( 'bootstrap', plugins_url( '/steel/js/bootstrap.min.js'), array('jquery') , '2.3.1', true );
-	wp_register_style( 'bootstrap-style', plugins_url( '/steel/css/bootstrap.min.css' ) );
-	wp_register_script( 'bootstrap-run', plugins_url( '/steel/js/run.js' ), array('bootstrap') , '' , true );
-	
 	// Load script for "Pin It" button
 	wp_register_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js');
 	wp_enqueue_script( 'pin-it-button' );
@@ -56,11 +51,12 @@ function steel_scripts() {
 function steel_admin_scripts() {
        wp_register_style( 'sparks-styles', plugins_url('steel/css/admin.css') );
        wp_enqueue_style( 'sparks-styles' );
-		// Load scripts and styles for Twitter Bootstrap
-		wp_register_script( 'bootstrap-admin', plugins_url( '/steel/js/bootstrap-admin.min.js'), array('jquery') , '2.3.1', true );
-		wp_register_style( 'bootstrap-admin-style', plugins_url( '/steel/css/bootstrap-admin.min.css' ) );
-		wp_enqueue_script( 'bootstrap-admin' );
-		wp_enqueue_style( 'bootstrap-admin-style' );
+       
+	// Load scripts and styles for Twitter Bootstrap
+	wp_register_script( 'bootstrap-admin', plugins_url( '/steel/js/bootstrap-admin.min.js'), array('jquery') , '2.3.1', true );
+	wp_register_style( 'bootstrap-admin-style', plugins_url( '/steel/css/bootstrap-admin.min.css' ) );
+	wp_enqueue_script( 'bootstrap-admin' );
+	wp_enqueue_style( 'bootstrap-admin-style' );
 }
 
 // add the admin options page
