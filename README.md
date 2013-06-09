@@ -1,4 +1,4 @@
-Steel 0.5.9
+Steel 0.6.0
 =====
 Plugin Name: Steel
 
