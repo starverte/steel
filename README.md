@@ -21,7 +21,7 @@ the creative process of website development within WordPress. Often times to sta
 With the Sparks Framework it is the same way. 'Flint' (the core theme) and 'Steel' (the core plugin) makeup the foundation
 of the framework. Then, additional child themes and plugins extend the functionality and user experience.
 
-		Copyright 2013  Star Verte LLC  (email : info@starverte.com)
+    Copyright 2013  Star Verte LLC  (email : info@starverte.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
