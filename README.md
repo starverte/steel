@@ -6,7 +6,7 @@ Plugin URI: https://github.com/starverte/steel.git
 
 Description: Core plugin of the Sparks Framework. Includes custom widgets, social functions, and options menu
 
-Version: 0.5.9
+Version: 0.6.0
 
 Author: Star Verte LLC
 
