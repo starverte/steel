@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: Steel
-Plugin URI: //Not yet developed
-GitHub URI: https://github.com/starverte/steel.git
+Plugin URI: https://github.com/starverte/steel.git
 Description: Core plugin of the Sparks Framework. Includes custom widgets, social functions, and options menu
-Author: starverte
+Version: 0.5.9
+Author: Star Verte LLC
 Author URI: http://starverte.com/
 License: GPLv3
 License URI: http://www.gnu.org/licenses/
