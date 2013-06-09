@@ -198,31 +198,31 @@ class Upcoming_Events_Widget extends WP_Widget {
     
 		<div id="post-<?php the_ID(); ?>" <?php post_class(); ?> ><?php
     
-		$custom = get_post_custom();
-		$event_loc = $custom['event_loc'][0];
-		$event_start = $custom['event_start'][0];
-		$event_end = $custom['event_end'][0];
-		$start_mth = date( 'M', $event_start );
-		$start_day = date( 'j', $event_start );
-		if (isset($custom['event_multi_day']) && $custom['event_multi_day'][0] == true) {
-			$start_time = date( 'M j, g:i a', $event_start );
-			$end_time = date( 'M j, g:i a', $event_end );			
-		}
-		else {
-			$start_time = date( 'g:i a', $event_start );
-			$end_time = date( 'g:i a', $event_end );
-		}?>
+			$custom = get_post_custom();
+			$event_loc = $custom['event_loc'][0];
+			$event_start = $custom['event_start'][0];
+			$event_end = $custom['event_end'][0];
+			$start_mth = date( 'M', $event_start );
+			$start_day = date( 'j', $event_start );
+			if (isset($custom['event_multi_day']) && $custom['event_multi_day'][0] == true) {
+				$start_time = date( 'M j, g:i a', $event_start );
+				$end_time = date( 'M j, g:i a', $event_end );			
+			}
+			else {
+				$start_time = date( 'g:i a', $event_start );
+				$end_time = date( 'g:i a', $event_end );
+			}?>
     
-		<div class="event-date">
-	      <div class="month"><?php echo $start_mth; ?></div>
-      	<div class="day"><?php echo $start_day; ?></div>
-      </div><!-- .event-date -->
-      <header class="entry-header">
-      	<h1 class="entry-title"><?php the_title(); ?></h1>
-      	<p class="event-time"><?php echo $start_time; ?> to <?php echo $end_time; ?></p>
-      </header><!-- .entry-header -->
-      <a class="directions" href="https://maps.google.com/maps?q=<?php echo $event_loc; ?>" target="_blank">Map</a>
-      <div class="entry-content"><?php the_content(); ?></div>
+			<div class="event-date">
+				<div class="month"><?php echo $start_mth; ?></div>
+				<div class="day"><?php echo $start_day; ?></div>
+			</div><!-- .event-date -->
+			<header class="entry-header">
+				<h1 class="entry-title"><?php the_title(); ?></h1>
+				<p class="event-time"><?php echo $start_time; ?> to <?php echo $end_time; ?></p>
+			</header><!-- .entry-header -->
+			<a class="directions" href="https://maps.google.com/maps?q=<?php echo $event_loc; ?>" target="_blank">Map</a>
+			<div class="entry-content"><?php the_content(); ?></div>
 		</div><!-- #post-<?php the_ID(); ?> --> <?php
 		
 		endwhile;
@@ -240,12 +240,12 @@ class Upcoming_Events_Widget extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
     
 		<p>
-      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'upcoming-events'); ?></label>
-      <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'upcoming-events'); ?></label>
+			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
 		</p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'numposts' ); ?>"><?php _e('Number of Events:', 'upcoming-events'); ?></label>
-      <input id="<?php echo $this->get_field_id( 'numposts' ); ?>" name="<?php echo $this->get_field_name( 'numposts' ); ?>" value="<?php echo $instance['numposts']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'numposts' ); ?>"><?php _e('Number of Events:', 'upcoming-events'); ?></label>
+			<input id="<?php echo $this->get_field_id( 'numposts' ); ?>" name="<?php echo $this->get_field_name( 'numposts' ); ?>" value="<?php echo $instance['numposts']; ?>" style="width:100%;" />
 		</p><?php
 	}
 }
