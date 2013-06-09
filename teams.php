@@ -36,7 +36,7 @@ function steel_teams_init() {
 	);
 	
 	$args = array(
-		'label'               => __( 'sp_team_profile', 'sparks' ),
+		'label'               => __( 'steel_team_profile', 'sparks' ),
 		'description'         => __( 'Member(s) of "Teams"', 'sparks' ),
 		'labels'              => $labels,
 		'supports'            => array( 'title', 'editor', 'thumbnail', ),
