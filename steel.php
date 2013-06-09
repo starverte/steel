@@ -33,16 +33,6 @@ add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 
 function steel_scripts() {
 	
-	// Replace WordPress default jQuery library with latest one from Google CDN
-	wp_deregister_script( 'jquery' );
-	wp_register_script( 'jquery', '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js', false, '2.0.0', true );
-	wp_enqueue_script( 'jquery' );
-	
-	// Replace WordPress default jQuery UI Core library with latest jQuery UI (all) from Google CDN
-	wp_deregister_script( 'jquery-ui-core' );
-	wp_register_script('jquery-ui-core', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js', array('jquery') , '1.10.2', true );
-	wp_enqueue_script( 'jquery-ui-core' );
-	
 	// Load script for "Pin It" button
 	wp_register_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js');
 	wp_enqueue_script( 'pin-it-button' );
