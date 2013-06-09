@@ -74,22 +74,22 @@ class Steel_Link_Widget extends WP_Widget {
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
 		</p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Link:', 'link-widget'); ?></label>
-      <input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo $instance['href']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Link:', 'link-widget'); ?></label>
+			<input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo $instance['href']; ?>" style="width:100%;" />
 		</p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'style' ); ?>"><?php _e('Button Style:', 'link-widget'); ?></label>
-      <input id="<?php echo $this->get_field_id( 'style' ); ?>" name="<?php echo $this->get_field_name( 'style' ); ?>" value="<?php echo $instance['style']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'style' ); ?>"><?php _e('Button Style:', 'link-widget'); ?></label>
+			<input id="<?php echo $this->get_field_id( 'style' ); ?>" name="<?php echo $this->get_field_name( 'style' ); ?>" value="<?php echo $instance['style']; ?>" style="width:100%;" />
 		</p>
 		<div class="btn-group" data-toggle="buttons-radio">
-      <button type="button" class="btn">Default</button>
-      <button type="button" class="btn btn-primary">Primary</button>
-      <button type="button" class="btn btn-info">Info</button>
-      <button type="button" class="btn btn-success">Success</button>
-      <button type="button" class="btn btn-warning">Warning</button>
-      <button type="button" class="btn btn-danger">Danger</button>
-      <button type="button" class="btn btn-inverse">Inverse</button>
-      <button type="button" class="btn btn-link">Link</button>
+			<button type="button" class="btn">Default</button>
+			<button type="button" class="btn btn-primary">Primary</button>
+			<button type="button" class="btn btn-info">Info</button>
+			<button type="button" class="btn btn-success">Success</button>
+			<button type="button" class="btn btn-warning">Warning</button>
+			<button type="button" class="btn btn-danger">Danger</button>
+			<button type="button" class="btn btn-inverse">Inverse</button>
+			<button type="button" class="btn btn-link">Link</button>
 		</div><?php
 	}
 }
@@ -133,8 +133,8 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
 			<input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo $instance['href']; ?>" style="width:100%;" />
 		</p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e('Classes:', 'link-widget'); ?></label>
-      <input id="<?php echo $this->get_field_id( 'class' ); ?>" name="<?php echo $this->get_field_name( 'class' ); ?>" value="<?php echo $instance['class']; ?>" style="width:100%;" />
+			<label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e('Classes:', 'link-widget'); ?></label>
+			<input id="<?php echo $this->get_field_id( 'class' ); ?>" name="<?php echo $this->get_field_name( 'class' ); ?>" value="<?php echo $instance['class']; ?>" style="width:100%;" />
 		</p><?php		
 	}
 }
