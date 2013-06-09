@@ -1,4 +1,4 @@
-Steel 0.5.9
+Steel 0.6.0
 =====
 Plugin Name: Steel
 
@@ -6,7 +6,7 @@ Plugin URI: https://github.com/starverte/steel.git
 
 Description: Core plugin of the Sparks Framework. Includes custom widgets, social functions, and options menu
 
-Version: 0.5.9
+Version: 0.6.0
 
 Author: Star Verte LLC
 
@@ -21,7 +21,7 @@ the creative process of website development within WordPress. Often times to sta
 With the Sparks Framework it is the same way. 'Flint' (the core theme) and 'Steel' (the core plugin) makeup the foundation
 of the framework. Then, additional child themes and plugins extend the functionality and user experience.
 
-		Copyright 2013  Star Verte LLC  (email : info@starverte.com)
+    Copyright 2013  Star Verte LLC  (email : info@starverte.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
