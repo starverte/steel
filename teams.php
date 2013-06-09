@@ -11,8 +11,8 @@
 /*
  * Create custom post type
  */
-add_action( 'init', 'steel_teams', 0 );
-function steel_teams() {
+add_action( 'init', 'steel_teams_init', 0 );
+function steel_teams_init() {
 	$labels = array(
 		'name'                => _x( 'Profiles', 'Post Type General Name', 'sparks' ),
 		'singular_name'       => _x( 'Profile', 'Post Type Singular Name', 'sparks' ),
