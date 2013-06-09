@@ -1,31 +1,12 @@
 <?php
 /*
-Plugin Name: Sparks Teams
-Plugin URI: //Not yet developed
-Description: Part of the Sparks Framework. A plugin that allows creation and management of "teams" for use with staff, elders, board members, etc.
-Version: 0.9
-Author: Star Verte LLC
-Author URI: http://www.starverte.com
-License: GPLv2 or later
-
-    Copyright 2013  Star Verte LLC  (email : info@starverte.com)
-    
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as 
-    published by the Free Software Foundation.
-    
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-    
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-    
-    You should have received a copy of the GNU General Public License
-    along with Sparks Teams.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ * Allows profiles to be built that can belong to one or multiple "teams"
+ *
+ * @package Sparks
+ * @sub-package Steel
+ *
+ * @since 0.6.0
+ */
 
 // Register Custom Post Type
 function sparks_teams_init() {
