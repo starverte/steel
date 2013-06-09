@@ -53,15 +53,15 @@ function sparks_admin_add_page() {
 }
 function sparks_options_page() { ?>
 
-  <div class="wrap">
-    <h2>Sparks Options</h2>
-    <form action="options.php" method="post">
-      <?php settings_fields('sparks_options'); ?>
-      <?php do_settings_sections('sparks'); ?>
-      <?php settings_errors(); ?>
-      <p class="submit"><input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" /></p>
-    </form>
-  </div><?php	
+	<div class="wrap">
+	<h2>Sparks Options</h2>
+	<form action="options.php" method="post">
+		<?php settings_fields('sparks_options'); ?>
+		<?php do_settings_sections('sparks'); ?>
+		<?php settings_errors(); ?>
+		<p class="submit"><input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" /></p>
+	</form>
+	</div><?php	
 }
 
 /*
