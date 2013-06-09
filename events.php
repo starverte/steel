@@ -213,13 +213,13 @@ class Upcoming_Events_Widget extends WP_Widget {
 			$end_time = date( 'g:i a', $event_end );
 		}?>
     
-      <div class="event-date">
-        <div class="month"><?php echo $start_mth; ?></div>
-        <div class="day"><?php echo $start_day; ?></div>
+		<div class="event-date">
+	      <div class="month"><?php echo $start_mth; ?></div>
+      	<div class="day"><?php echo $start_day; ?></div>
       </div><!-- .event-date -->
       <header class="entry-header">
-        <h1 class="entry-title"><?php the_title(); ?></h1>
-        <p class="event-time"><?php echo $start_time; ?> to <?php echo $end_time; ?></p>
+      	<h1 class="entry-title"><?php the_title(); ?></h1>
+      	<p class="event-time"><?php echo $start_time; ?> to <?php echo $end_time; ?></p>
       </header><!-- .entry-header -->
       <a class="directions" href="https://maps.google.com/maps?q=<?php echo $event_loc; ?>" target="_blank">Map</a>
       <div class="entry-content"><?php the_content(); ?></div>
