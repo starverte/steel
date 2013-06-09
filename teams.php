@@ -14,18 +14,18 @@
 add_action( 'init', 'steel_teams_init', 0 );
 function steel_teams_init() {
 	$labels = array(
-		'name'                => _x( 'Profiles', 'Post Type General Name', 'sparks' ),
-		'singular_name'       => _x( 'Profile', 'Post Type Singular Name', 'sparks' ),
-		'menu_name'           => __( 'Teams', 'sparks' ),
-		'all_items'           => __( 'All Profiles', 'sparks' ),
-		'view_item'           => __( 'View Profile', 'sparks' ),
-		'add_new_item'        => __( 'Add New Profile', 'sparks' ),
-		'add_new'             => __( 'New Profile', 'sparks' ),
-		'edit_item'           => __( 'Edit Profile', 'sparks' ),
-		'update_item'         => __( 'Update Profile', 'sparks' ),
-		'search_items'        => __( 'Search teams', 'sparks' ),
-		'not_found'           => __( 'No profiles found', 'sparks' ),
-		'not_found_in_trash'  => __( 'No profiles found in trash. Did you check recycling?', 'sparks' ),
+		'name'                => _x( 'Profiles', 'Post Type General Name', 'steel' ),
+		'singular_name'       => _x( 'Profile', 'Post Type Singular Name', 'steel' ),
+		'menu_name'           => __( 'Teams', 'steel' ),
+		'all_items'           => __( 'All Profiles', 'steel' ),
+		'view_item'           => __( 'View Profile', 'steel' ),
+		'add_new_item'        => __( 'Add New Profile', 'steel' ),
+		'add_new'             => __( 'New Profile', 'steel' ),
+		'edit_item'           => __( 'Edit Profile', 'steel' ),
+		'update_item'         => __( 'Update Profile', 'steel' ),
+		'search_items'        => __( 'Search teams', 'steel' ),
+		'not_found'           => __( 'No profiles found', 'steel' ),
+		'not_found_in_trash'  => __( 'No profiles found in trash. Did you check recycling?', 'steel' ),
 	);
 	
 	$rewrite = array(
@@ -36,8 +36,8 @@ function steel_teams_init() {
 	);
 	
 	$args = array(
-		'label'               => __( 'steel_team_profile', 'sparks' ),
-		'description'         => __( 'Member(s) of "Teams"', 'sparks' ),
+		'label'               => __( 'steel_team_profile', 'steel' ),
+		'description'         => __( 'Member(s) of "Teams"', 'steel' ),
 		'labels'              => $labels,
 		'supports'            => array( 'title', 'editor', 'thumbnail', ),
 		'hierarchical'        => false,
@@ -59,20 +59,20 @@ function steel_teams_init() {
 	register_post_type( 'steel_profile', $args );
 	
 	$labels2 = array(
-		'name'                       => _x( 'Teams', 'Taxonomy General Name', 'sparks' ),
-		'singular_name'              => _x( 'Team', 'Taxonomy Singular Name', 'sparks' ),
-		'menu_name'                  => __( 'Teams', 'sparks' ),
-		'all_items'                  => __( 'All Teams', 'sparks' ),
-		'parent_item'                => __( '', 'sparks' ),
-		'parent_item_colon'          => __( '', 'sparks' ),
-		'new_item_name'              => __( 'New Team Name', 'sparks' ),
-		'add_new_item'               => __( 'Add New Team', 'sparks' ),
-		'edit_item'                  => __( 'Edit Team', 'sparks' ),
-		'update_item'                => __( 'Update Team', 'sparks' ),
-		'separate_items_with_commas' => __( 'Separate teams with commas', 'sparks' ),
-		'search_items'               => __( 'Search teams', 'sparks' ),
-		'add_or_remove_items'        => __( 'Add or remove teams', 'sparks' ),
-		'choose_from_most_used'      => __( 'Choose from the most used teams', 'sparks' ),
+		'name'                       => _x( 'Teams', 'Taxonomy General Name', 'steel' ),
+		'singular_name'              => _x( 'Team', 'Taxonomy Singular Name', 'steel' ),
+		'menu_name'                  => __( 'Teams', 'steel' ),
+		'all_items'                  => __( 'All Teams', 'steel' ),
+		'parent_item'                => __( '', 'steel' ),
+		'parent_item_colon'          => __( '', 'steel' ),
+		'new_item_name'              => __( 'New Team Name', 'steel' ),
+		'add_new_item'               => __( 'Add New Team', 'steel' ),
+		'edit_item'                  => __( 'Edit Team', 'steel' ),
+		'update_item'                => __( 'Update Team', 'steel' ),
+		'separate_items_with_commas' => __( 'Separate teams with commas', 'steel' ),
+		'search_items'               => __( 'Search teams', 'steel' ),
+		'add_or_remove_items'        => __( 'Add or remove teams', 'steel' ),
+		'choose_from_most_used'      => __( 'Choose from the most used teams', 'steel' ),
 	);
 	
 	$rewrite2 = array(
