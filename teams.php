@@ -8,7 +8,10 @@
  * @since 0.6.0
  */
 
-// Register Custom Post Type
+/*
+ * Create custom post type
+ */
+add_action( 'init', 'steel_teams', 0 );
 function steel_teams() {
 	$labels = array(
 		'name'                => _x( 'Profiles', 'Post Type General Name', 'sparks' ),
@@ -92,15 +95,11 @@ function steel_teams() {
 	register_taxonomy( 'steel_team', 'steel_profile', $args2 );
 }
 
-// Hook into the 'init' action
-add_action( 'init', 'steel_teams', 0 );
-
-// BEGIN - Create custom fields
+/*
+ * Create custom meta boxes
+ */
 add_action( 'add_meta_boxes', 'steel_teams_meta_boxes' );
-
 function steel_teams_meta_boxes() { add_meta_box('steel_teams_meta', 'Team Member Profile', 'steel_teams_meta', 'steel_profile', 'side', 'high'); }
-
-/* Team Member Profile */
 function steel_teams_meta() {
 	global $post;
 	$custom = get_post_custom($post->ID); ?>
@@ -110,21 +109,17 @@ function steel_teams_meta() {
 	<p><label>Email</label><input type="email" size="10" name="profile_email" value="<?php if (isset($custom['profile_email'])) { echo $custom["profile_email"] [0]; } ?>" /></p><?php
 }
 
-/* Save Details */
+/*
+ * Save data from meta boxes
+ */
 add_action('save_post', 'save_steel_profile');
-
-function save_steel_profile(){
+function save_steel_profile() {
 	global $post;
-	
-	if ( defined('DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset($post_id)) ) { return $post_id; }
-	
-	if( defined('DOING_AJAX' ) && DOING_AJAX && (isset($post_id)) ) { return $post_id; } //Prevents the metaboxes from being overwritten while quick editing.
-	
-	if( ereg( '/\edit\.php', $_SERVER['REQUEST_URI'] ) && (isset($post_id)) ) { return $post_id; } //Detects if the save action is coming from a quick edit/batch edit.
-	
-	// Save the data
-	if (isset($_POST['profile_name'])) {update_post_meta($post->ID, "profile_name", $_POST["profile_name"]);}
-	if (isset($_POST['profile_phone'])) {update_post_meta($post->ID, "profile_phone", $_POST["profile_phone"]);}
-	if (isset($_POST['profile_email'])) {update_post_meta($post->ID, "profile_email", $_POST["profile_email"]);}
+	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && (isset($post_id))) { return $post_id; }
+	if(defined('DOING_AJAX') && DOING_AJAX && (isset($post_id))) { return $post_id; } //Prevents the metaboxes from being overwritten while quick editing.
+	if(ereg('/\edit\.php', $_SERVER['REQUEST_URI']) && (isset($post_id))) { return $post_id; } //Detects if the save action is coming from a quick edit/batch edit.
+	if (isset($_POST['profile_name'])) { update_post_meta($post->ID, "profile_name", $_POST["profile_name"]); }
+	if (isset($_POST['profile_phone'])) { update_post_meta($post->ID, "profile_phone", $_POST["profile_phone"]); }
+	if (isset($_POST['profile_email'])) { update_post_meta($post->ID, "profile_email", $_POST["profile_email"]); }
 }
 ?>
