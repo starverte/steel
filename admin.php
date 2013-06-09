@@ -1,3 +1,12 @@
+<?php
+/*
+ * Sparks Administration Page
+ *
+ * @package Sparks
+ * @sub-package Steel
+ *
+ * @since 0.2.0
+ */ ?>
    <div class="wrap">
 		<h2>Sparks Options</h2>
 		<form method="post" action="options.php">

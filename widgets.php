@@ -5,6 +5,7 @@
  * @package Sparks
  * @sub-package Steel
  *
+ * @since 0.5.7
  */
 add_action( 'widgets_init', 'steel_widgets' );
 
