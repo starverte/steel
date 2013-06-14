@@ -26,6 +26,7 @@ License URI: http://www.gnu.org/licenses/
 */
 
 include_once dirname( __FILE__ ) . '/events.php';
+include_once dirname( __FILE__ ) . '/shortcodes.php';
 include_once dirname( __FILE__ ) . '/teams.php';
 include_once dirname( __FILE__ ) . '/widgets.php';
 
@@ -170,22 +171,5 @@ function pin_it( $args = array() ) {
 	$args = (object) $args;
 	printf('<a href="http://pinterest.com/pin/create/button/?url=%s&media=%s&description=%s" class="pin-it-button" count-layout="%s">', $args->data_url, $args->data_thumb, $args->data_text, $args->data_count);
 	printf('<img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>');
-}
-
-/*
- * Create [columns] and [column] shortcodes
- */
-add_shortcode( 'columns', 'columns_shortcode' );
-add_shortcode( 'column', 'column_shortcode' );
-function columns_shortcode( $atts, $content = null ) {
-	extract( shortcode_atts( array( 'num' => 2 ), $atts ) );
-	$new = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
-	return '<div class="columns columns-'. esc_attr($num) .'">' . do_shortcode($new) . '</div>';
-}
-function column_shortcode( $atts, $content = null ) {
-	extract( shortcode_atts( array( 'title' => null ), $atts ) );
-	$new = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
-	if (isset($title) && !empty($title)) { return '<div class="column"><h3>' . esc_attr($title) .'</h3><p>' . $new . '</p></div>'; }
-	else { return '<div class="column"><p>' . $new . '</p></div>'; }
 }
 ?>
