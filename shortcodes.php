@@ -14,7 +14,7 @@
 add_shortcode( 'columns', 'columns_shortcode' );
 add_shortcode( 'column', 'column_shortcode' );
 function columns_shortcode( $atts, $content = null ) {
-  extract( shortcode_atts( array( 'num' => 2 ), $atts ) );
+	extract( shortcode_atts( array( 'num' => 2 ), $atts ) );
 	$new = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
 	return '<div class="columns columns-'. esc_attr($num) .'">' . do_shortcode($new) . '</div>';
 }
