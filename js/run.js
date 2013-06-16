@@ -4,7 +4,7 @@
  * @package Sparks
  * @sub-package Steel
  *
- * @since 0.6.0
+ * @since 0.7.0
  */
 
 jQuery(function() {
