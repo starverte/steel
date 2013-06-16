@@ -6,6 +6,7 @@
  *
  * @since 0.6.0
  */
+ 
 jQuery(function() {
     jQuery( ".datepicker" ).datepicker({ dateFormat: "MM d, yy", showButtonPanel: true });
 });
