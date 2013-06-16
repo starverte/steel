@@ -8,8 +8,8 @@
  */
 
 jQuery(function() {
-    jQuery( ".tooltip" ).tooltip();
-    jQuery( ".popover" ).popover();
-    jQuery( ".accordion" ).accordion();
-    jQuery( ".carousel" ).carousel();
+    jQuery( ".steel-tooltip" ).tooltip();
+    jQuery( ".steel-popover" ).popover();
+    jQuery( ".steel-accordion" ).accordion();
+    jQuery( ".steel-carousel" ).carousel();
 });
