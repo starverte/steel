@@ -43,6 +43,6 @@ add_shortcode( 'tooltip', 'tooltip_shortcode' );
 function tooltip_shortcode( $atts, $content = null ) {
 	extract( shortcode_atts( array( 'title' => '', 'placement' => 'top' ), $atts ) );
 	$new = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
-	return '<a href="#" data-toggle="tooltip" title="' . $title . '" data-placement="' . $placement . '">' . $new . '</a>';
+	return '<a class="tooltip" href="#" data-toggle="tooltip" title="' . $title . '" data-placement="' . $placement . '">' . $new . '</a>';
 }
 ?>
