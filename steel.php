@@ -42,7 +42,7 @@ function steel_admin_scripts() {
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
 	wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js'); // Load script for "Pin It" button
-	wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ); // Load front-end scripts
+	wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ) ); // Load front-end scripts
 }
 
 
