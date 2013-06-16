@@ -45,4 +45,29 @@ function tooltip_shortcode( $atts, $content = null ) {
 	$new = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
 	return '<a class="steel-tooltip" href="#" data-toggle="tooltip" title="' . $title . '" data-placement="' . $placement . '">' . $new . '</a>';
 }
+
+/*
+ * Create [popover] shortcode
+ */
+add_shortcode( 'popover', 'popover_shortcode' );
+function tooltip_shortcode( $atts, $content = null ) {
+	extract( shortcode_atts( array( 'title' => '', 'placement' => 'top', 'text' => null, 'color' => 'default', 'size' => 'default' ), $atts ) );
+	$new_content = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
+	$new_text = strip_tags($text, '<a><strong><em><blockquote><code><ol><ul><li>');
+	switch ($color) {
+		case 'default' : $btn_color = ''; break;
+		case 'blue' : $btn_color = ' btn-primary'; break;
+		case 'green' : $btn_color = ' btn-success'; break;
+		case 'yellow' : $btn_color = ' btn-warning'; break;
+		case 'red' : $btn_color = ' btn-danger'; break;
+		case 'black' : $btn_color = ' btn-inverse'; break;
+	}
+	switch ($size) {
+		case 'default' : $btn_size = ''; break;
+		case 'large' : $btn_size = ' btn-large'; break;
+		case 'small' : $btn_size = ' btn-small'; break;
+		case 'mini' : $btn_size = ' btn-mini'; break;
+	}
+	return '<a class="btn steel-tooltip' . $btn_color . $btn_size '" href="#" data-toggle="popover" title="' . $title . '" data-content="' . $new_text . '" data-placement="' . $placement . '">' . $new_content . '</a>';
+}
 ?>
