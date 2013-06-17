@@ -43,7 +43,8 @@ add_shortcode( 'tooltip', 'tooltip_shortcode' );
 function tooltip_shortcode( $atts, $content = null ) {
 	extract( shortcode_atts( array( 'title' => '', 'placement' => 'top' ), $atts ) );
 	$new = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
-	return '<a class="steel-tooltip" href="#" data-toggle="tooltip" title="' . $title . '" data-placement="' . $placement . '">' . $new . '</a>';
+	$rand = rand();
+	return '<a class="steel-tooltip" href="' . $rand . '" id="' . $rand . '" data-toggle="tooltip" title="' . $title . '" data-placement="' . $placement . '">' . $new . '</a>';
 }
 
 /*
@@ -54,6 +55,7 @@ function popover_shortcode( $atts, $content = null ) {
 	extract( shortcode_atts( array( 'title' => '', 'placement' => 'top', 'text' => null, 'color' => 'default', 'size' => 'default' ), $atts ) );
 	$new_content = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
 	$new_text = strip_tags($text, '<a><strong><em><blockquote><code><ol><ul><li>');
+	$rand = rand();
 	switch ($color) {
 		case 'default' : $btn_color = ''; break;
 		case 'blue' : $btn_color = ' btn-primary'; break;
@@ -68,6 +70,6 @@ function popover_shortcode( $atts, $content = null ) {
 		case 'small' : $btn_size = ' btn-small'; break;
 		case 'mini' : $btn_size = ' btn-mini'; break;
 	}
-	return '<a class="btn steel-popover' . $btn_color . $btn_size . '" href="#" data-toggle="popover" title="' . $title . '" data-content="' . $new_text . '" data-placement="' . $placement . '">' . $new_content . '</a>';
+	return '<a class="btn steel-tooltip' . $btn_color . $btn_size . '" href="' . $rand . '" id="' . $rand . '" data-toggle="popover" title="' . $title . '" data-content="' . $new_text . '" data-placement="' . $placement . '">' . $new_content . '</a>';
 }
 ?>
