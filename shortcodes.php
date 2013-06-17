@@ -50,7 +50,7 @@ function tooltip_shortcode( $atts, $content = null ) {
  * Create [popover] shortcode
  */
 add_shortcode( 'popover', 'popover_shortcode' );
-function tooltip_shortcode( $atts, $content = null ) {
+function popover_shortcode( $atts, $content = null ) {
 	extract( shortcode_atts( array( 'title' => '', 'placement' => 'top', 'text' => null, 'color' => 'default', 'size' => 'default' ), $atts ) );
 	$new_content = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
 	$new_text = strip_tags($text, '<a><strong><em><blockquote><code><ol><ul><li>');
