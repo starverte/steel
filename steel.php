@@ -31,13 +31,7 @@ include_once dirname( __FILE__ ) . '/teams.php';
 include_once dirname( __FILE__ ) . '/widgets.php';
 
 add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
-function steel_admin_scripts() {
-	wp_enqueue_style( 'steel-admin-style', plugins_url('steel/css/admin.css') );
-	
-	// Load scripts and styles for Twitter Bootstrap
-	wp_enqueue_script( 'bootstrap-admin', plugins_url( '/steel/js/bootstrap-admin.min.js'), array('jquery') , '2.3.1', true );
-	wp_enqueue_style( 'bootstrap-admin-style', plugins_url( '/steel/css/bootstrap-admin.min.css' ) );
-}
+function steel_admin_scripts() { wp_enqueue_style( 'steel-admin-style', plugins_url('steel/css/admin.css') ); }
 
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
