@@ -164,39 +164,41 @@ function carousel_shortcode($attr) {
 	$carousel_div = "<div id='steelCarousel' class='steel-carousel carousel slide carouselid-{$id}'>";
 	$output = apply_filters( 'carousel_style', $carousel_style . "\n\t\t" . $carousel_div );
 	
-	$output .= "<ol class='carousel-indicators'>";
+	$output .= "<ol class='carousel-indicators'>\n\t";
 	
 	$n = 0;
-	foreach ( $attachments as $id => $attachment ) {
-		$output .= "<li data-target='#steelCarousel' data-slide-to='" . ($n++) . "'></li>";
+	foreach ( $attachments as $id => $attachment ) { 
+		$output .= "<li data-target='#steelCarousel'";
+		if ($n == 0 ) { $output .= " class='active'"; }
+		$output .= " data-slide-to='" . ($n++) . "'></li>\n";
 	}
 	
-	$output .= "</ol><!-- .carousel-indicators -->
-		<div class='carousel-inner'>";
+	$output .= "</ol>\n";
+	$output .= "<div class='carousel-inner'>\n\t";
 
 	$i = 0;
 	foreach ( $attachments as $id => $attachment ) {
 		$img_src = wp_get_attachment_image_src($id, $size);
-		$img = "<img src='" . $img_src[0] . "' alt='" . $attachment->alt . "' />";
 
-		$output .= "<{$itemtag} class='item";
-		$i++; if ($i == 0 ) { $output .= " active"; }
-		$output .= "'>";
-		$output .= "$img";
+		$output .= "<{$itemtag} class='";
+		if ($i == 0 ) { $output .= "active "; }
+		$output .= "item i" . $i . "'>";
+		$output .= "<img id='i" . ($i++) . "' src='" . $img_src[0] . "' alt='" . $attachment->alt . "' />";
 		if ( $captiontag && trim($attachment->post_excerpt) ) {
 			$output .= "
 				<{$captiontag} class='carousel-caption'>
-				" . wptexturize($attachment->post_excerpt) . "
+				<h4>" . wptexturize($attachment->title) . "</h4>
+				<p>" . wptexturize($attachment->post_excerpt) . "</p>
 				</{$captiontag}>";
 		}
-		$output .= "</{$itemtag}><!-- .item -->";
+		$output .= "</{$itemtag}>\n";
 	}
 
 	$output .= "
-			</div><!-- .carousel-inner -->
+			</div>
 			<a class='carousel-control left' href='#steelCarousel' data-slide='prev'>&lsaquo;</a>
   		<a class='carousel-control right' href='#steelCarousel' data-slide='next'>&rsaquo;</a>
-		</div><!-- #steelCarousel -->\n";
+		</div>\n";
 
 	return $output;
 }
