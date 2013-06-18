@@ -179,15 +179,19 @@ function carousel_shortcode($attr) {
 	$i = 0;
 	foreach ( $attachments as $id => $attachment ) {
 		$img_src = wp_get_attachment_image_src($id, $size);
+		$img_title = apply_filters( 'the_title', $attachment->post_title );
+		$alt = trim(strip_tags( get_post_meta($id, '_wp_attachment_image_alt', true) ));
+		if ($alt == '') {$img_alt = $img_title; }
+		else { $img_alt = $alt; }
 
 		$output .= "<{$itemtag} class='";
 		if ($i == 0 ) { $output .= "active "; }
 		$output .= "item i" . $i . "'>";
-		$output .= "<img id='i" . ($i++) . "' src='" . $img_src[0] . "' alt='" . $attachment->alt . "' />";
+		$output .= "<img id='i" . ($i++) . "' src='" . $img_src[0] . "' alt='" . $img_alt . "' />";
 		if ( $captiontag && trim($attachment->post_excerpt) ) {
 			$output .= "
 				<{$captiontag} class='carousel-caption'>
-				<h4>" . wptexturize($attachment->title) . "</h4>
+				<h4>" . $img_title . "</h4>
 				<p>" . wptexturize($attachment->post_excerpt) . "</p>
 				</{$captiontag}>";
 		}
