@@ -3,7 +3,7 @@
 Plugin Name: Steel
 Plugin URI: https://github.com/starverte/steel.git
 Description: Core plugin of the Sparks Framework. Includes custom widgets, social functions, and options menu
-Version: 0.6.0
+Version: 0.7.0
 Author: Star Verte LLC
 Author URI: http://starverte.com/
 License: GPLv3
@@ -11,36 +11,32 @@ License URI: http://www.gnu.org/licenses/
 
 	Copyright 2013  Star Verte LLC  (email : info@starverte.com)
 	
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License, version 2, as 
-	published by the Free Software Foundation.
-	
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.
-	
+
 	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 include_once dirname( __FILE__ ) . '/events.php';
+include_once dirname( __FILE__ ) . '/shortcodes.php';
 include_once dirname( __FILE__ ) . '/teams.php';
 include_once dirname( __FILE__ ) . '/widgets.php';
 
 add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
-function steel_admin_scripts() {
-	wp_enqueue_style( 'steel-admin-style', plugins_url('steel/css/admin.css') );
-	
-	// Load scripts and styles for Twitter Bootstrap
-	wp_enqueue_script( 'bootstrap-admin', plugins_url( '/steel/js/bootstrap-admin.min.js'), array('jquery') , '2.3.1', true );
-	wp_enqueue_style( 'bootstrap-admin-style', plugins_url( '/steel/css/bootstrap-admin.min.css' ) );
-}
+function steel_admin_scripts() { wp_enqueue_style( 'steel-admin-style', plugins_url('steel/css/admin.css') ); }
 
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
 	wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js'); // Load script for "Pin It" button
+	wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array('jquery') , '0.7.0', true ); // Load front-end scripts
 }
 
 
@@ -170,22 +166,5 @@ function pin_it( $args = array() ) {
 	$args = (object) $args;
 	printf('<a href="http://pinterest.com/pin/create/button/?url=%s&media=%s&description=%s" class="pin-it-button" count-layout="%s">', $args->data_url, $args->data_thumb, $args->data_text, $args->data_count);
 	printf('<img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>');
-}
-
-/*
- * Create [columns] and [column] shortcodes
- */
-add_shortcode( 'columns', 'columns_shortcode' );
-add_shortcode( 'column', 'column_shortcode' );
-function columns_shortcode( $atts, $content = null ) {
-	extract( shortcode_atts( array( 'num' => 2 ), $atts ) );
-	$new = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
-	return '<div class="columns columns-'. esc_attr($num) .'">' . do_shortcode($new) . '</div>';
-}
-function column_shortcode( $atts, $content = null ) {
-	extract( shortcode_atts( array( 'title' => null ), $atts ) );
-	$new = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
-	if (isset($title) && !empty($title)) { return '<div class="column"><h3>' . esc_attr($title) .'</h3><p>' . $new . '</p></div>'; }
-	else { return '<div class="column"><p>' . $new . '</p></div>'; }
 }
 ?>
