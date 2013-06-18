@@ -161,14 +161,14 @@ function carousel_shortcode($attr) {
 	if ( apply_filters( 'use_default_carousel_style', true ) )
 		$carousel_style = "";
 	$size_class = sanitize_html_class( $size );
-	$carousel_div = "<div id='myCarousel' class='steel-carousel carousel slide carouselid-{$id}'>";
+	$carousel_div = "<div id='steelCarousel' class='steel-carousel carousel slide carouselid-{$id}'>";
 	$output = apply_filters( 'carousel_style', $carousel_style . "\n\t\t" . $carousel_div );
 	
 	$output .= "<ol class='carousel-indicators'>";
 	
 	$n = 0;
 	foreach ( $attachments as $id => $attachment ) {
-		$output .= "<li data-target='#myCarousel' data-slide-to='" . ($n++) . "'></li>";
+		$output .= "<li data-target='#steelCarousel' data-slide-to='" . ($n++) . "'></li>";
 	}
 	
 	$output .= "</ol><!-- .carousel-indicators -->
@@ -194,9 +194,9 @@ function carousel_shortcode($attr) {
 
 	$output .= "
 			</div><!-- .carousel-inner -->
-			<a class='carousel-control left' href='#myCarousel' data-slide='prev'>&lsaquo;</a>
-  		<a class='carousel-control right' href='#myCarousel' data-slide='next'>&rsaquo;</a>
-		</div><!-- #myCarousel -->\n";
+			<a class='carousel-control left' href='#steelCarousel' data-slide='prev'>&lsaquo;</a>
+  		<a class='carousel-control right' href='#steelCarousel' data-slide='next'>&rsaquo;</a>
+		</div><!-- #steelCarousel -->\n";
 
 	return $output;
 }
