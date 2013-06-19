@@ -192,4 +192,33 @@ class Steel_Quotes_Widget extends WP_Widget {
 		<?php
 	}
 }
+
+/*
+ * Create [quote] shortcode
+ */
+add_shortcode( 'quote', 'quote_shortcode' );
+function quote_shortcode( $atts ) {
+	extract( shortcode_atts( array( 'list' => 'quotes' ), $atts ) );
+	$quote_list = ! empty( $list ) ? get_term( $list, 'steel_quote_lists' ) : false;
+	if ( !$list )
+			return;
+	$quoteshortcode = new WP_Query(
+		array(
+			'post_type' => 'steel_quote',
+			'orderby' => 'rand',
+			'posts_per_page' => 1,
+			'tax_query' => array(
+				array(
+					'taxonomy' => 'steel_quote_lists',
+					'field' => 'slug',
+					'terms' => $list
+				)
+			)
+		)
+	);
+	
+	while ($quoteshortcode->have_posts()) : $quoteshortcode->the_post(); ?>
+		<blockquote><?php the_excerpt(); ?><cite><?php the_title(); ?></cite></blockquote>
+	<?php endwhile;
+}
  ?>
