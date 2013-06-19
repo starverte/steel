@@ -5,7 +5,7 @@
  * @package Sparks
  * @sub-package Steel
  *
- * @since 0.7.0
+ * @since 0.7.2
  */
  
 /*
@@ -33,7 +33,7 @@ function steel_quotes_init() {
 		'label'               => __( 'steel_quote', 'steel' ),
 		'description'         => __( 'Quotes', 'steel' ),
 		'labels'              => $post_labels,
-		'supports'            => array( 'title', 'excerpt', ),
+		'supports'            => array(''),
 		'hierarchical'        => false,
 		'public'              => true,
 		'show_ui'             => true,
@@ -81,5 +81,115 @@ function steel_quotes_init() {
 	);
 
 	register_taxonomy( 'steel_quote_lists', 'steel_quote', $tax_args );
+	wp_insert_term( 'Quotes', 'steel_quote_lists', array( 'slug'=>'quotes', 'description' => 'Basic Quotes category' ) );
+	wp_insert_term( 'Testimonials', 'steel_quote_lists', array( 'slug'=>'testimonials', 'description' => 'Testimonial quotes' ) );
+}
+
+/*
+ * Register custom meta box for steel_quote
+ */
+add_action( 'add_meta_boxes', 'steel_quote_add_custom_boxes' );
+function steel_quote_add_custom_boxes() {
+	add_meta_box('steel_quote_meta', 'Quote Details', 'steel_quote_meta', 'steel_quote', 'normal', 'high');
+}
+function steel_quote_meta() {
+	global $post;
+	$custom = get_post_custom($post->ID);
+?>
+    <p>
+    	<label class="screen-reader-text" for="excerpt"><?php _e('Excerpt') ?></label><textarea rows="1" cols="40" name="excerpt" id="excerpt"><?php echo $post->post_excerpt; // textarea_escaped ?></textarea>
+    	<input type="text" size="40" name="post_title" value="<?php the_title(); ?>" placeholder="Cite" />
+    </p>
+    
+	<?php
+}
+
+/*
+ * Register random quote widget
+ */
+add_action( 'widgets_init', 'steel_quotes_widgets' );
+function steel_quotes_widgets() {
+	register_widget( 'Steel_Quotes_Widget' );
+}
+class Steel_Quotes_Widget extends WP_Widget {
+
+	function __construct() {
+		$widget_ops = array( 'description' => __('Displays a random quote') );
+		parent::__construct( 'list', __('Random Quote(s)'), $widget_ops );
+	}
+
+	function widget($args, $instance) {
+		// Get list
+		$list = ! empty( $instance['list'] ) ? get_term( $instance['list'], 'steel_quote_lists' ) : false;
+
+		if ( !$list )
+			return;
+
+		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
+
+		echo $args['before_widget'];
+
+		if ( !empty($instance['title']) )
+			echo $args['before_title'] . $instance['title'] . $args['after_title'];
+
+		$quotes = new WP_Query(
+			array(
+				'post_type' => 'steel_quote',
+				'orderby' => 'rand',
+				'posts_per_page' => 1,
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'steel_quote_lists',
+						'field' => 'slug',
+						'terms' => $list->slug
+					)
+				)
+			)
+		);
+		
+		while ($quotes->have_posts()) : $quotes->the_post(); ?>
+    	<blockquote><?php the_excerpt(); ?><cite><?php the_title(); ?></cite></blockquote>
+    <?php endwhile;
+
+		echo $args['after_widget'];
+	}
+
+	function update( $new_instance, $old_instance ) {
+		$instance['title'] = strip_tags( stripslashes($new_instance['title']) );
+		$instance['list'] = (int) $new_instance['list'];
+		return $instance;
+	}
+
+	function form( $instance ) {
+		$title = isset( $instance['title'] ) ? $instance['title'] : '';
+		$list = isset( $instance['list'] ) ? $instance['list'] : '';
+
+		// Get menus
+		$terms = get_terms( 'steel_quote_lists', array( 'hide_empty' => false ) );
+
+		// If no menus exists, direct the user to go and create some.
+		if ( !$terms ) {
+			echo '<p>'. sprintf( __('No menus have been created yet. <a href="%s">Create some</a>.'), admin_url('nav-menus.php') ) .'</p>';
+			return;
+		}
+		?>
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:') ?></label>
+			<input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $title; ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('list'); ?>"><?php _e('Select List:'); ?></label>
+			<select id="<?php echo $this->get_field_id('list'); ?>" name="<?php echo $this->get_field_name('list'); ?>">
+		<?php
+			foreach ( $terms as $term ) {
+				echo '<option value="' . $term->term_id . '"'
+					. selected( $list, $term->term_id, false )
+					. '>'. $term->name . '</option>';
+			}
+		?>
+			</select>
+		</p>
+		<?php
+	}
 }
  ?>
