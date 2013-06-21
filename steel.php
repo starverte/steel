@@ -3,7 +3,7 @@
 Plugin Name: Steel
 Plugin URI: https://github.com/starverte/steel.git
 Description: Core plugin of the Sparks Framework. Includes custom widgets, social functions, and options menu
-Version: 0.7.1
+Version: 0.7.2
 Author: Star Verte LLC
 Author URI: http://starverte.com/
 License: GPLv3
@@ -46,12 +46,13 @@ function steel_scripts() {
  */
 add_action('admin_menu', 'sparks_admin_add_page');
 function sparks_admin_add_page() {
-	add_menu_page('Sparks', 'Sparks', 'manage_options', 'sparks', 'sparks_options_page',   plugins_url('steel/img/sparks.png'), 50);
+	add_menu_page('Sparks', 'Sparks', 'manage_options', 'sparks', 'sparks_options_page',   plugins_url('steel/img/sparks.png'), 100);
+	add_submenu_page( 'sparks', 'Sparks Options', 'Sparks Options', 'manage_options', 'sparks/options', 'sparks_options_page' );
 }
 function sparks_options_page() { ?>
 
 	<div class="wrap">
-	<h2>Sparks Options</h2>
+	<?php echo '<img width="32" height="32" src="' . plugins_url( 'img/sparks.png' , __FILE__ ) . '" style="margin-right: 10px; float: left; margin-top: 7px;" /><h2>Sparks Options</h2>'; ?>
 	<form action="options.php" method="post">
 		<?php settings_fields('sparks_options'); ?>
 		<?php do_settings_sections('sparks'); ?>
