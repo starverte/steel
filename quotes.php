@@ -37,7 +37,7 @@ function steel_quotes_init() {
 		'hierarchical'        => false,
 		'public'              => true,
 		'show_ui'             => true,
-		'show_in_menu'        => true,
+		'show_in_menu'        => false,
 		'show_in_nav_menus'   => false,
 		'show_in_admin_bar'   => true,
 		'menu_position'       => 100,
@@ -83,6 +83,14 @@ function steel_quotes_init() {
 	register_taxonomy( 'steel_quote_lists', 'steel_quote', $tax_args );
 	wp_insert_term( 'Quotes', 'steel_quote_lists', array( 'slug'=>'quotes', 'description' => 'Basic Quotes category' ) );
 	wp_insert_term( 'Testimonials', 'steel_quote_lists', array( 'slug'=>'testimonials', 'description' => 'Testimonial quotes' ) );
+}
+
+add_action('admin_menu', 'register_quotes_submenus');
+function register_quotes_submenus() {
+	add_submenu_page( 'sparks', 'All Quotes', 'All Quotes', 'edit_posts', 'edit.php?post_type=steel_quote&mode=excerpt', '' );
+	add_submenu_page( 'sparks', 'New Quote', 'New Quote', 'edit_posts', 'post-new.php?post_type=steel_quote', '' );
+	add_submenu_page( 'sparks', 'Quote Lists', 'Quote Lists', 'manage_categories', 'edit-tags.php?taxonomy=steel_quote_lists&post_type=steel_quote', '' );
+	
 }
 
 /*
@@ -221,4 +229,4 @@ function quote_shortcode( $atts ) {
 		<blockquote><?php the_excerpt(); ?><cite><?php the_title(); ?></cite></blockquote>
 	<?php endwhile;
 }
- ?>
+?>
