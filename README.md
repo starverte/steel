@@ -1,4 +1,4 @@
-Steel 0.7.2
+Steel 0.7.2 [![Build Status](https://travis-ci.org/starverte/steel.png?branch=master)](https://travis-ci.org/starverte/steel)
 =====
 Plugin Name: Steel
 
