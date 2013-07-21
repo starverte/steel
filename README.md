@@ -1,4 +1,4 @@
-Steel 0.7.2
+Steel 0.7.3
 =====
 Plugin Name: Steel
 
@@ -6,7 +6,7 @@ Plugin URI: https://github.com/starverte/steel.git
 
 Description: Core plugin of the Sparks Framework. Includes custom widgets, social functions, and options menu
 
-Version: 0.7.2
+Version: 0.7.3
 
 Author: Star Verte LLC
 
