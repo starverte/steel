@@ -3,7 +3,7 @@
 Plugin Name: Steel
 Plugin URI: https://github.com/starverte/steel.git
 Description: Core plugin of the Sparks Framework. Includes custom widgets, social functions, and options menu
-Version: 0.7.2
+Version: 0.7.3
 Author: Star Verte LLC
 Author URI: http://starverte.com/
 License: GPLv3
@@ -44,18 +44,17 @@ function steel_scripts() {
 /*
  * Add options page
  */
-add_action('admin_menu', 'sparks_admin_add_page');
-function sparks_admin_add_page() {
-	add_menu_page('Sparks', 'Sparks', 'manage_options', 'sparks', 'sparks_options_page',   plugins_url('steel/img/sparks.png'), 100);
-	add_submenu_page( 'sparks', 'Sparks Options', 'Sparks Options', 'manage_options', 'sparks/options', 'sparks_options_page' );
+add_action('admin_menu', 'steel_admin_add_page');
+function steel_admin_add_page() {
+	add_menu_page('Steel', 'Steel', 'manage_options', 'steel', 'steel_options_page',   plugins_url('steel/img/sparks.png'), 3);
 }
-function sparks_options_page() { ?>
+function steel_options_page() { ?>
 
 	<div class="wrap">
-	<?php echo '<img width="32" height="32" src="' . plugins_url( 'img/sparks.png' , __FILE__ ) . '" style="margin-right: 10px; float: left; margin-top: 7px;" /><h2>Sparks Options</h2>'; ?>
+	<?php echo '<img width="32" height="32" src="' . plugins_url( 'img/sparks.png' , __FILE__ ) . '" style="margin-right: 10px; float: left; margin-top: 7px;" /><h2>Steel Options</h2>'; ?>
 	<form action="options.php" method="post">
-		<?php settings_fields('sparks_options'); ?>
-		<?php do_settings_sections('sparks'); ?>
+		<?php settings_fields('steel_options'); ?>
+		<?php do_settings_sections('steel'); ?>
 		<?php settings_errors(); ?>
 		<p class="submit"><input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" /></p>
 	</form>
@@ -65,29 +64,29 @@ function sparks_options_page() { ?>
 /*
  * Register settings for options page
  */
-add_action('admin_init', 'sparks_admin_init');
-function sparks_admin_init(){
-	register_setting('sparks_options', 'sparks_options', 'sparks_options_validate' );
-	add_settings_section('sparks_social', 'Social Media', 'sparks_social_text', 'sparks');
-	add_settings_field('fb_app_id', 'Facebook App ID', 'fb_app_id_setting', 'sparks', 'sparks_social' );
+add_action('admin_init', 'steel_admin_init');
+function steel_admin_init(){
+	register_setting('steel_options', 'steel_options', 'steel_options_validate' );
+	add_settings_section('steel_social', 'Social Media', 'steel_social_text', 'steel');
+	add_settings_field('fb_app_id', 'Facebook App ID', 'fb_app_id_setting', 'steel', 'steel_social' );
 	if (is_plugin_active('sparks-store/store.php')) {
-		add_settings_section('sparks_store', 'PayPal', 'sparks_store_text', 'sparks');
-		add_settings_field('paypal_merch_id', 'Merchant ID', 'paypal_merch_id_setting', 'sparks', 'sparks_store' );
+		add_settings_section('sparks_store', 'PayPal', 'sparks_store_text', 'steel');
+		add_settings_field('paypal_merch_id', 'Merchant ID', 'paypal_merch_id_setting', 'steel', 'sparks_store' );
 	}
 }
 function sparks_store_text() { echo ''; }
 function paypal_merch_id_setting() {
-	$options = get_option('sparks_options');
-	if (isset($options['merch_id'])) { echo "<input id='paypal_merch_id' name='sparks_options[merch_id]' size='40' type='text' value='{$options['merch_id']}' />"; }
-	else { echo "<input id='paypal_merch_id' name='sparks_options[merch_id]' size='40' type='text' value='' />"; }
+	$options = get_option('steel_options');
+	if (isset($options['merch_id'])) { echo "<input id='paypal_merch_id' name='steel_options[merch_id]' size='40' type='text' value='{$options['merch_id']}' />"; }
+	else { echo "<input id='paypal_merch_id' name='steel_options[merch_id]' size='40' type='text' value='' />"; }
 }
-function sparks_social_text() { echo 'Social media profile information'; }
+function steel_social_text() { echo 'Social media profile information'; }
 function fb_app_id_setting() {
-	$options = get_option('sparks_options');
-	if (isset($options['fb_app_id'])) { echo "<input id='db_app_id' name='sparks_options[fb_app_id]' size='40' type='text' value='{$options['fb_app_id']}' />"; }
-	else { echo "<input id='fb_app_id' name='sparks_options[fb_app_id]' size='40' type='text' value='' />"; }
+	$options = get_option('steel_options');
+	if (isset($options['fb_app_id'])) { echo "<input id='db_app_id' name='steel_options[fb_app_id]' size='40' type='text' value='{$options['fb_app_id']}' />"; }
+	else { echo "<input id='fb_app_id' name='steel_options[fb_app_id]' size='40' type='text' value='' />"; }
 }
-function sparks_options_validate($input) {
+function steel_options_validate($input) {
 	global $newinput;
 	$newinput['merch_id'] = trim($input['merch_id']);
 	if(!preg_match('/^[a-z0-9]{13}$/i', $newinput['merch_id']) & !empty($newinput['merch_id'])) { add_settings_error( 'merch_id' , 'invalid' , 'Invalid PayPal Merchant ID. <span style="font-weight:normal;display:block;">A PayPal Merchant ID consists of 13 alphanumeric characters.</span>'  ); }
