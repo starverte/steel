@@ -183,4 +183,14 @@ function pin_it( $args = array() ) {
 	printf('<a href="http://pinterest.com/pin/create/button/?url=%s&media=%s&description=%s" class="pin-it-button" count-layout="%s">', $args->data_url, $args->data_thumb, $args->data_text, $args->data_count);
 	printf('<img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>');
 }
+
+/*
+ * Create function to remove admin bar from front end by default
+ */
+add_action('after_setup_theme', 'remove_admin_bar');
+function remove_admin_bar() {
+	if (!current_user_can('administrator') && !is_admin()) {
+		show_admin_bar(false);
+	}
+}
 ?>
