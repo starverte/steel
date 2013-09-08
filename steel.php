@@ -3,7 +3,7 @@
 Plugin Name: Steel
 Plugin URI: https://github.com/starverte/steel.git
 Description: Core plugin of the Sparks Framework. Includes custom widgets, social functions, and options menu
-Version: 0.7.3
+Version: 0.7.4
 Author: Star Verte LLC
 Author URI: http://starverte.com/
 License: GPLv3
@@ -31,15 +31,28 @@ include_once dirname( __FILE__ ) . '/shortcodes.php';
 include_once dirname( __FILE__ ) . '/teams.php';
 include_once dirname( __FILE__ ) . '/widgets.php';
 
+/**
+ * Returns current plugin version.
+ */
+function steel_version() {
+    if ( ! function_exists( 'get_plugins' ) )
+        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+    $plugin_folder = get_plugins( '/' . plugin_basename( dirname( __FILE__ ) ) );
+    $plugin_file = basename( ( __FILE__ ) );
+    return $plugin_folder[$plugin_file]['Version'];
+}
+
+/**
+ * Load scripts
+ */
 add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
 function steel_admin_scripts() { wp_enqueue_style( 'steel-admin-style', plugins_url('steel/css/admin.css') ); }
 
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
 	wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js'); // Load script for "Pin It" button
-	wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array('jquery') , '0.7.0', true ); // Load front-end scripts
+	wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array('jquery') , steel_version() , true ); // Load front-end scripts
 }
-
 
 /*
  * Add options page
@@ -77,8 +90,8 @@ function steel_admin_init(){
 function sparks_store_text() { echo ''; }
 function paypal_merch_id_setting() {
 	$options = get_option('steel_options');
-	if (isset($options['merch_id'])) { echo "<input id='paypal_merch_id' name='steel_options[merch_id]' size='40' type='text' value='{$options['merch_id']}' />"; }
-	else { echo "<input id='paypal_merch_id' name='steel_options[merch_id]' size='40' type='text' value='' />"; }
+	if (isset($options['paypal_merch_id'])) { echo "<input id='paypal_merch_id' name='steel_options[paypal_merch_id]' size='40' type='text' value='{$options['paypal_merch_id']}' />"; }
+	else { echo "<input id='paypal_merch_id' name='steel_options[paypal_merch_id]' size='40' type='text' value='' />"; }
 }
 function steel_social_text() { echo 'Social media profile information'; }
 function fb_app_id_setting() {
@@ -88,9 +101,11 @@ function fb_app_id_setting() {
 }
 function steel_options_validate($input) {
 	global $newinput;
-	$newinput['merch_id'] = trim($input['merch_id']);
-	if(!preg_match('/^[a-z0-9]{13}$/i', $newinput['merch_id']) & !empty($newinput['merch_id'])) { add_settings_error( 'merch_id' , 'invalid' , 'Invalid PayPal Merchant ID. <span style="font-weight:normal;display:block;">A PayPal Merchant ID consists of 13 alphanumeric characters.</span>'  ); }
-	$newinput['fb_app_id'] = trim($input['fb_app_id']);
+	if (is_plugin_active('sparks-store/store.php')) {
+		$newinput['paypal_merch_id'] = trim($input['paypal_merch_id']);
+		if(!preg_match('/^[a-z0-9]{13}$/i', $newinput['paypal_merch_id']) & !empty($newinput['paypal_merch_id'])) { add_settings_error( 'paypal_merch_id' , 'invalid' , 'Invalid PayPal Merchant ID. <span style="font-weight:normal;display:block;">A PayPal Merchant ID consists of 13 alphanumeric characters.</span>'  ); }
+		$newinput['fb_app_id'] = trim($input['fb_app_id']);
+	}
 	if (!preg_match('/^[0-9]{15}$/i', $newinput['fb_app_id']) & !empty($newinput['fb_app_id'])) { add_settings_error( 'fb_app_id' , 'invalid' , 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>'  ); }
 	return $newinput;
 }
@@ -167,5 +182,15 @@ function pin_it( $args = array() ) {
 	$args = (object) $args;
 	printf('<a href="http://pinterest.com/pin/create/button/?url=%s&media=%s&description=%s" class="pin-it-button" count-layout="%s">', $args->data_url, $args->data_thumb, $args->data_text, $args->data_count);
 	printf('<img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>');
+}
+
+/*
+ * Create function to remove admin bar from front end by default
+ */
+add_action('after_setup_theme', 'remove_admin_bar');
+function remove_admin_bar() {
+	if (!current_user_can('administrator') && !is_admin()) {
+		show_admin_bar(false);
+	}
 }
 ?>
