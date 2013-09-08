@@ -167,7 +167,7 @@ class Upcoming_Events_Widget extends WP_Widget {
 	function Upcoming_Events_Widget() {
 		$widget_ops = array( 'classname' => 'upcoming-events', 'description' => __('A widget that displays upcoming events', 'upcoming-events') );
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'upcoming-events-widget' );
-		$this->WP_Widget( 'upcoming-events-widget', __('Steel: Upcoming Events Widget', 'upcoming-events'), $widget_ops, $control_ops );
+		$this->WP_Widget( 'upcoming-events-widget', __('Upcoming Events Widget', 'upcoming-events'), $widget_ops, $control_ops );
 	}
 	
 	function widget( $args, $instance ) {
