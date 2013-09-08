@@ -117,7 +117,7 @@ function save_steel_profile() {
 	global $post;
 	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && (isset($post_id))) { return $post_id; }
 	if(defined('DOING_AJAX') && DOING_AJAX && (isset($post_id))) { return $post_id; } //Prevents the metaboxes from being overwritten while quick editing.
-	if(ereg('/\edit\.php', $_SERVER['REQUEST_URI']) && (isset($post_id))) { return $post_id; } //Detects if the save action is coming from a quick edit/batch edit.
+	if(preg_match('/\edit\.php/', $_SERVER['REQUEST_URI']) && (isset($post_id))) { return $post_id; } //Detects if the save action is coming from a quick edit/batch edit.
 	if (isset($_POST['profile_name'])) { update_post_meta($post->ID, "profile_name", $_POST["profile_name"]); }
 	if (isset($_POST['profile_phone'])) { update_post_meta($post->ID, "profile_phone", $_POST["profile_phone"]); }
 	if (isset($_POST['profile_email'])) { update_post_meta($post->ID, "profile_email", $_POST["profile_email"]); }
