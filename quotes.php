@@ -114,7 +114,7 @@ class Steel_Quotes_Widget extends WP_Widget {
 
 	function __construct() {
 		$widget_ops = array( 'description' => __('Displays a random quote') );
-		parent::__construct( 'list', __('Random Quote(s)'), $widget_ops );
+		parent::__construct( 'list', __('Steel: Random Quote(s)'), $widget_ops );
 	}
 
 	function widget($args, $instance) {
