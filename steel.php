@@ -47,7 +47,6 @@ function steel_scripts() {
 add_action('admin_menu', 'sparks_admin_add_page');
 function sparks_admin_add_page() {
 	add_menu_page('Sparks', 'Sparks', 'manage_options', 'sparks', 'sparks_options_page',   plugins_url('steel/img/sparks.png'), 100);
-	add_submenu_page( 'sparks', 'Sparks Options', 'Sparks Options', 'manage_options', 'sparks/options', 'sparks_options_page' );
 }
 function sparks_options_page() { ?>
 
