@@ -7,10 +7,11 @@
  *
  */
 
+
 /*
  * Create custom post type
  */
-add_action( 'init', 'steel_events_init', 0 );
+if (is_module_active('events')) {add_action( 'init', 'steel_events_init', 0 );}
 function steel_events_init() {
 	$labels = array(
 		'name'                => _x( 'Events', 'Post Type General Name', 'steel' ),

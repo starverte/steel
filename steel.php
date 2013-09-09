@@ -73,6 +73,9 @@ function sparks_admin_init(){
 		add_settings_section('sparks_store', 'PayPal', 'sparks_store_text', 'sparks');
 		add_settings_field('paypal_merch_id', 'Merchant ID', 'paypal_merch_id_setting', 'sparks', 'sparks_store' );
 	}
+	add_settings_section('sparks_mods', 'Modules', 'sparks_mods_output', 'sparks');
+	add_settings_field('mod_events', 'Events', 'mod_events_setting', 'sparks', 'sparks_mods' );
+	add_settings_field('mod_teams', 'Teams', 'mod_teams_setting', 'sparks', 'sparks_mods' );
 }
 function sparks_store_text() { echo ''; }
 function paypal_merch_id_setting() {
@@ -83,15 +86,36 @@ function paypal_merch_id_setting() {
 function sparks_social_text() { echo 'Social media profile information'; }
 function fb_app_id_setting() {
 	$options = get_option('sparks_options');
-	if (isset($options['fb_app_id'])) { echo "<input id='db_app_id' name='sparks_options[fb_app_id]' size='40' type='text' value='{$options['fb_app_id']}' />"; }
+	if (isset($options['fb_app_id'])) { echo "<input id='fb_app_id' name='sparks_options[fb_app_id]' size='40' type='text' value='{$options['fb_app_id']}' />"; }
 	else { echo "<input id='fb_app_id' name='sparks_options[fb_app_id]' size='40' type='text' value='' />"; }
+}
+function sparks_mods_output() { echo 'Activate and deactivate modules within Steel'; }
+function mod_events_setting() {
+	$options = get_option('sparks_options');
+	if (isset($options['mod_events'])) { $events = $options['mod_events']; }
+	else { $events = "0"; } ?>
+	<input name="sparks_options[mod_events]" type="radio" value="true" <?php checked( $events, "true" ) ?>> Active
+	<input name="sparks_options[mod_events]" type="radio" value="false" <?php checked( $events, "false" ) ?>> Not Active
+	<?php
+}
+function mod_teams_setting() {
+	$options = get_option('sparks_options');
+	if (isset($options['mod_teams'])) { $teams = $options['mod_teams']; }
+	else { $teams = "0"; } ?>
+	<input name="sparks_options[mod_teams]" type="radio" value="true" <?php checked( $teams, "true" ) ?>> Active
+	<input name="sparks_options[mod_teams]" type="radio" value="false" <?php checked( $teams, "false" ) ?>> Not Active
+	<?php
 }
 function sparks_options_validate($input) {
 	global $newinput;
-	$newinput['merch_id'] = trim($input['merch_id']);
-	if(!preg_match('/^[a-z0-9]{13}$/i', $newinput['merch_id']) & !empty($newinput['merch_id'])) { add_settings_error( 'merch_id' , 'invalid' , 'Invalid PayPal Merchant ID. <span style="font-weight:normal;display:block;">A PayPal Merchant ID consists of 13 alphanumeric characters.</span>'  ); }
+	if (is_plugin_active('sparks-store/store.php')) {
+	  $newinput['merch_id'] = trim($input['merch_id']);
+	  if(!preg_match('/^[a-z0-9]{13}$/i', $newinput['merch_id']) & !empty($newinput['merch_id'])) { add_settings_error( 'merch_id' , 'invalid' , 'Invalid PayPal Merchant ID. <span style="font-weight:normal;display:block;">A PayPal Merchant ID consists of 13 alphanumeric characters.</span>'  ); }
+	}
 	$newinput['fb_app_id'] = trim($input['fb_app_id']);
 	if (!preg_match('/^[0-9]{15}$/i', $newinput['fb_app_id']) & !empty($newinput['fb_app_id'])) { add_settings_error( 'fb_app_id' , 'invalid' , 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>'  ); }
+	$newinput['mod_events'] = trim($input['mod_events']);
+	$newinput['mod_teams'] = trim($input['mod_teams']);
 	return $newinput;
 }
 
@@ -185,5 +209,18 @@ function pin_it( $args = array() ) {
 	$args = (object) $args;
 	printf('<a href="http://pinterest.com/pin/create/button/?url=%s&media=%s&description=%s" class="pin-it-button" count-layout="%s">', $args->data_url, $args->data_thumb, $args->data_text, $args->data_count);
 	printf('<img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>');
+}
+
+/*
+ * Add function is_module_active
+ */
+function is_module_active( $mod ) {
+	$options = get_option('sparks_options');
+	if (isset($options['mod_'.$mod])) { $mod_status = $options['mod_'.$mod]; }
+	else $mod_status = "false";
+	if ($mod_status == "true")
+		return true;
+	else
+		return false;
 }
 ?>
