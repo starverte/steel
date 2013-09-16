@@ -29,6 +29,7 @@ include_once dirname( __FILE__ ) . '/events.php';
 include_once dirname( __FILE__ ) . '/quotes.php';
 include_once dirname( __FILE__ ) . '/shortcodes.php';
 include_once dirname( __FILE__ ) . '/teams.php';
+include_once dirname( __FILE__ ) . '/templates/templates.php';
 include_once dirname( __FILE__ ) . '/widgets.php';
 
 add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
