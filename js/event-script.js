@@ -1,8 +1,7 @@
 /*
  * Scripts for Sparks Events
  *
- * @package Sparks
- * @sub-package Steel
+ * @package Steel
  *
  * @since 0.6.0
  */

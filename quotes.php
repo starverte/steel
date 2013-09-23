@@ -2,8 +2,8 @@
 /*
  * Creates custom post-type "quotes" for displaying random quotes, testimonials, etc.
  *
- * @package Sparks
- * @sub-package Steel
+ * @package Steel
+ * @sub-package Quotes
  *
  */
 

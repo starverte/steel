@@ -2,8 +2,7 @@
 /**
  * Leftovers removed from Flint
  *
- * @package Sparks
- * @sub-package Steel
+ * @package Steel
  */
 
 /*
