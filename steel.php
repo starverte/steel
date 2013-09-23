@@ -98,15 +98,15 @@ function steel_options_page() { ?>
 add_action('admin_init', 'steel_admin_init');
 function steel_admin_init(){
   register_setting('steel_options', 'steel_options', 'steel_options_validate' );
-  add_settings_section('steel_social', 'Social Media', 'steel_social_text', 'sparks');
-  add_settings_field('fb_app_id', 'Facebook App ID', 'fb_app_id_setting', 'sparks', 'steel_social' );
+  add_settings_section('steel_social', 'Social Media', 'steel_social_text', 'steel');
+  add_settings_field('fb_app_id', 'Facebook App ID', 'fb_app_id_setting', 'steel', 'steel_social' );
   if (is_plugin_active('sparks-store/store.php')) {
-    add_settings_section('sparks_store', 'PayPal', 'sparks_store_text', 'sparks');
-    add_settings_field('paypal_merch_id', 'Merchant ID', 'paypal_merch_id_setting', 'sparks', 'sparks_store' );
+    add_settings_section('sparks_store', 'PayPal', 'sparks_store_text', 'steel');
+    add_settings_field('paypal_merch_id', 'Merchant ID', 'paypal_merch_id_setting', 'steel', 'sparks_store' );
   }
-  add_settings_section('sparks_mods', 'Modules', 'sparks_mods_output', 'sparks');
-  add_settings_field('mod_events', 'Events', 'mod_events_setting', 'sparks', 'sparks_mods' );
-  add_settings_field('mod_teams', 'Teams', 'mod_teams_setting', 'sparks', 'sparks_mods' );
+  add_settings_section('steel_mods', 'Modules', 'steel_mods_output', 'steel');
+  add_settings_field('mod_events', 'Events', 'mod_events_setting', 'steel', 'steel_mods' );
+  add_settings_field('mod_teams', 'Teams', 'mod_teams_setting', 'steel', 'steel_mods' );
 }
 function sparks_store_text() { echo ''; }
 function paypal_merch_id_setting() {
@@ -120,7 +120,7 @@ function fb_app_id_setting() {
   if (isset($options['fb_app_id'])) { echo "<input id='fb_app_id' name='steel_options[fb_app_id]' size='40' type='text' value='{$options['fb_app_id']}' />"; }
   else { echo "<input id='fb_app_id' name='steel_options[fb_app_id]' size='40' type='text' value='' />"; }
 }
-function sparks_mods_output() { echo 'Activate and deactivate modules within Steel'; }
+function steel_mods_output() { echo 'Activate and deactivate modules within Steel'; }
 function mod_events_setting() {
   $options = get_option('steel_options');
   if (isset($options['mod_events'])) { $events = $options['mod_events']; }
