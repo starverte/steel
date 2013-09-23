@@ -25,7 +25,6 @@ License URI: http://www.gnu.org/licenses/
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-include_once dirname( __FILE__ ) . '/events.php';
 include_once dirname( __FILE__ ) . '/quotes.php';
 include_once dirname( __FILE__ ) . '/shortcodes.php';
 include_once dirname( __FILE__ ) . '/teams.php';
