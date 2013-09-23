@@ -104,7 +104,6 @@ function steel_admin_init(){
     add_settings_field('paypal_merch_id', 'Merchant ID', 'paypal_merch_id_setting', 'steel', 'sparks_store' );
   }
   add_settings_section('steel_mods', 'Modules', 'steel_mods_output', 'steel');
-  add_settings_field('mod_events', 'Events', 'mod_events_setting', 'steel', 'steel_mods' );
   add_settings_field('mod_teams', 'Teams', 'mod_teams_setting', 'steel', 'steel_mods' );
 }
 function sparks_store_text() { echo ''; }
@@ -120,14 +119,6 @@ function fb_app_id_setting() {
   else { echo "<input id='fb_app_id' name='steel_options[fb_app_id]' size='40' type='text' value='' />"; }
 }
 function steel_mods_output() { echo 'Activate and deactivate modules within Steel'; }
-function mod_events_setting() {
-  $options = get_option('steel_options');
-  if (isset($options['mod_events'])) { $events = $options['mod_events']; }
-  else { $events = "0"; } ?>
-  <input name="steel_options[mod_events]" type="radio" value="true" <?php checked( $events, "true" ) ?>> Active
-  <input name="steel_options[mod_events]" type="radio" value="false" <?php checked( $events, "false" ) ?>> Not Active
-  <?php
-}
 function mod_teams_setting() {
   $options = get_option('steel_options');
   if (isset($options['mod_teams'])) { $teams = $options['mod_teams']; }
@@ -145,7 +136,6 @@ function steel_options_validate($input) {
   }
   $newinput['fb_app_id'] = trim($input['fb_app_id']);
   if (!preg_match('/^[0-9]{15}$/i', $newinput['fb_app_id']) & !empty($newinput['fb_app_id'])) { add_settings_error( 'fb_app_id' , 'invalid' , 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>'  ); }
-  $newinput['mod_events'] = trim($input['mod_events']);
   $newinput['mod_teams'] = trim($input['mod_teams']);
   return $newinput;
 }
