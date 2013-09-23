@@ -1,8 +1,7 @@
 /*
  * Run shortcode scripts for front-end
  *
- * @package Sparks
- * @sub-package Steel
+ * @package Steel
  *
  * @since 0.7.0
  */

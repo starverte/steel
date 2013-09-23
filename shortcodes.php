@@ -2,8 +2,8 @@
 /*
  * Various shortcodes for easily adding customized content
  *
- * @package Sparks
- * @sub-package Steel
+ * @package Steel
+ * @sub-package Shortcodes
  *
  * @since 0.7.1
  */
