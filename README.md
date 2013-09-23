@@ -1,37 +1,27 @@
-Steel 0.8.1
-=====
-Plugin Name: Steel
+# Steel
+Contributors: starverte, mbeall
 
-Plugin URI: https://github.com/starverte/steel.git
+Tags: bootstrap, quotes, shortcodes, teams, widgets
 
-Description: Core plugin of the Sparks Framework. Includes custom widgets, social functions, and options menu
+Requires at least: 3.4
 
-Version: 0.8.1
+Tested up to: 3.6.1
 
-Author: Star Verte LLC
+Stable tag: 0.8.1
 
-Author URI: http://starverte.com/
+License: GPLv3 or later
 
-License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl.html
 
-License URI: http://www.gnu.org/licenses/
+Core plugin of the Sparks Framework. Works for any theme; but when paired with Flint your WordPress site will be on fire.
 
-A spark sets a fire ablaze, and similarly the Sparks Framework is made up of 'sparks' that help initiate
-the creative process of website development within WordPress. Often times to start a fire, a person uses flint and steel.
-With the Sparks Framework it is the same way. 'Flint' (the core theme) and 'Steel' (the core plugin) makeup the foundation
-of the framework. Then, additional child themes and plugins extend the functionality and user experience.
+## Installation
 
-    Copyright 2013  Star Verte LLC  (email : info@starverte.com)
+1. Upload `steel.zip` to the `/wp-content/plugins/` directory
+1. Unzip `steel.zip` to a sub-directory named `steel`
+1. Activate the plugin through the 'Plugins' menu in WordPress
+1. Check out the options menu for more options
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+## Frequently Asked Questions
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+Submit your questions to http://sparks.starverte.com/steel and we will try to answer them.
