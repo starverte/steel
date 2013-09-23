@@ -7,7 +7,7 @@ Requires at least: 3.4
 
 Tested up to: 3.6.1
 
-Stable tag: 0.8.1
+Stable tag: 0.8.2
 
 License: GPLv3 or later
 
