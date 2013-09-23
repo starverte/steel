@@ -2,16 +2,15 @@
 /*
  * Allows profiles to be built that can belong to one or multiple "teams"
  *
- * @package Sparks
- * @sub-package Steel
+ * @package Steel
+ * @sub-package Teams
  *
- * @since 0.6.0
  */
 
 /*
  * Create custom post type
  */
-add_action( 'init', 'steel_teams_init', 0 );
+if (is_module_active('teams')) { add_action( 'init', 'steel_teams_init', 0 ); }
 function steel_teams_init() {
 	$labels = array(
 		'name'                => _x( 'Profiles', 'Post Type General Name', 'steel' ),
@@ -29,14 +28,14 @@ function steel_teams_init() {
 	);
 	
 	$rewrite = array(
-		'slug'                => '',
+		'slug'                => 'profiles',
 		'with_front'          => true,
 		'pages'               => false,
 		'feeds'               => false,
 	);
 	
 	$args = array(
-		'label'               => __( 'steel_team_profile', 'steel' ),
+		'label'               => __( 'steel_profile', 'steel' ),
 		'description'         => __( 'Member(s) of "Teams"', 'steel' ),
 		'labels'              => $labels,
 		'supports'            => array( 'title', 'editor', 'thumbnail', ),
@@ -76,7 +75,7 @@ function steel_teams_init() {
 	);
 	
 	$rewrite2 = array(
-		'slug'                       => 'team',
+		'slug'                       => 'teams',
 		'with_front'                 => true,
 		'hierarchical'               => true,
 	);
@@ -104,9 +103,9 @@ function steel_teams_meta() {
 	global $post;
 	$custom = get_post_custom($post->ID); ?>
   
-	<p><label>Name</label><input type="text" size="10" name="profile_name" value="<?php if (isset($custom['profile_name'])) { echo $custom["profile_name"] [0]; } ?>" /></p>
-	<p><label>Phone</label><input type="tel" size="10" name="profile_phone" value="<?php if (isset($custom['profile_phone'])) { echo $custom["profile_phone"] [0]; } ?>" /></p>
-	<p><label>Email</label><input type="email" size="10" name="profile_email" value="<?php if (isset($custom['profile_email'])) { echo $custom["profile_email"] [0]; } ?>" /></p><?php
+	<p><label>Title</label><input type="text"  size="10" name="profile_title" value="<?php if (isset($custom['profile_title'])) { echo                                                              $custom["profile_title"][0]; } ?>" /></p>
+	<p><label>Email</label><input type="email" size="10" name="profile_email" value="<?php if (isset($custom['profile_email'])) { echo                                                              $custom["profile_email"][0]; } ?>" /></p>
+	<p><label>Phone</label><input type="tel"   size="10" name="profile_phone" value="<?php if (isset($custom['profile_phone'])) { echo preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "$1.$2.$3", $custom["profile_phone"][0]); } ?>" /></p><?php
 }
 
 /*
@@ -118,8 +117,30 @@ function save_steel_profile() {
 	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && (isset($post_id))) { return $post_id; }
 	if(defined('DOING_AJAX') && DOING_AJAX && (isset($post_id))) { return $post_id; } //Prevents the metaboxes from being overwritten while quick editing.
 	if(preg_match('/\edit\.php/', $_SERVER['REQUEST_URI']) && (isset($post_id))) { return $post_id; } //Detects if the save action is coming from a quick edit/batch edit.
-	if (isset($_POST['profile_name'])) { update_post_meta($post->ID, "profile_name", $_POST["profile_name"]); }
-	if (isset($_POST['profile_phone'])) { update_post_meta($post->ID, "profile_phone", $_POST["profile_phone"]); }
 	if (isset($_POST['profile_email'])) { update_post_meta($post->ID, "profile_email", $_POST["profile_email"]); }
+	if (isset($_POST['profile_title'])) { update_post_meta($post->ID, "profile_title", $_POST["profile_title"]); }
+	if (isset($_POST['profile_phone'])) {
+		$new = preg_replace('/[^a-z0-9]+/i', '', $_POST["profile_phone"]);
+		update_post_meta($post->ID, "profile_phone", $new);
+	}
+}
+
+/*
+ * Create cystom functions to display data
+ */
+function profile_title() {
+	global $post;
+	$custom = get_post_custom($post->ID);
+	if (isset($custom['profile_title'])) { echo $custom["profile_title"][0]; }
+}
+function profile_email() {
+	global $post;
+	$custom = get_post_custom($post->ID);
+	if (isset($custom['profile_email'])) { echo $custom["profile_email"][0]; }
+}
+function profile_phone($pattern = "$1.$2.$3") {
+	global $post;
+	$custom = get_post_custom($post->ID);
+	if (isset($custom['profile_phone'])) { echo preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", $pattern, $custom["profile_phone"][0]); }
 }
 ?>
