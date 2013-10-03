@@ -3,7 +3,7 @@ Contributors: starverte, mbeall
 Tags: bootstrap, quotes, shortcodes, teams, widgets
 Requires at least: 3.4
 Tested up to: 3.6.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
