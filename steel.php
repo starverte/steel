@@ -48,23 +48,6 @@ function steel_version() {
 add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
 function steel_admin_scripts() { wp_enqueue_style( 'steel-admin-style', plugins_url('steel/css/admin.css') ); }
 
-/**
- * Returns current plugin version.
- */
-function steel_version() {
-    if ( ! function_exists( 'get_plugins' ) )
-        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-    $plugin_folder = get_plugins( '/' . plugin_basename( dirname( __FILE__ ) ) );
-    $plugin_file = basename( ( __FILE__ ) );
-    return $plugin_folder[$plugin_file]['Version'];
-}
-
-/**
- * Load scripts
- */
-add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
-function steel_admin_scripts() { wp_enqueue_style( 'steel-admin-style', plugins_url('steel/css/admin.css') ); }
-
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
   wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js'); // Load script for "Pin It" button
