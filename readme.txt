@@ -44,6 +44,9 @@ Submit your questions to http://sparks.starverte.com/steel and we will try to an
 
 == Changelog ==
 
+= 1.0.1 =
+Removed redundant `steel_version` and admin scripts functions
+
 = 1.0.0 =
 Updated branding and descriptions.
 
