@@ -59,7 +59,7 @@ function steel_scripts() {
  */
 add_action('admin_menu', 'steel_admin_add_page');
 function steel_admin_add_page() {
-  add_menu_page('Steel', 'Steel', 'manage_options', 'steel', 'steel_options_page',   plugins_url('steel/img/sparks.png'), 100);
+  add_menu_page('Steel', 'Steel', 'manage_options', 'steel', 'steel_options_page',   plugins_url('steel/img/sparks.png'));
 }
 function steel_options_page() { ?>
 
