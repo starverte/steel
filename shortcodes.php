@@ -3,7 +3,7 @@
  * Various shortcodes for easily adding customized content
  *
  * @package Steel
- * @sub-package Shortcodes
+ * @module Shortcodes
  *
  * @since 0.7.1
  */

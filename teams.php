@@ -3,7 +3,7 @@
  * Allows profiles to be built that can belong to one or multiple "teams"
  *
  * @package Steel
- * @sub-package Teams
+ * @module Teams
  *
  */
 

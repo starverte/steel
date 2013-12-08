@@ -3,7 +3,7 @@
 * Creates custom widgets
 *
 * @package Steel
-* @sub-package Widgets
+* @module Widgets
 *
 */
 
@@ -57,28 +57,27 @@ class Steel_Link_Widget extends WP_Widget {
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance; 
 		$instance['title'] = strip_tags( $new_instance['title'] );
-		$instance['href'] = strip_tags( $new_instance['href'] );
+		$instance['href']  = strip_tags( $new_instance['href']  );
 		$instance['style'] = strip_tags( $new_instance['style'] );
 		return $instance;
 	}
 	
 	function form( $instance ) {
-		$defaults = array( 'title' => __('', 'link-widget'), 'show_info' => true );
-		$defaults = array( 'href' => __('http://', 'link-widget'), 'show_info' => true );
-		$defaults = array( 'style' => __('', 'link-widget'), 'show_info' => true );
-		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
+		$title = !empty($instance['title']) ? $instance['title'] : '';
+		$href  = !empty($instance['href'])  ? $instance['href']  : 'http://';
+		$style = !empty($instance['style']) ? $instance['style'] : ''; ?>
 		
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'link-widget'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $title; ?>" style="width:100%;" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Link:', 'link-widget'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo $instance['href']; ?>" style="width:100%;" />
+			<input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo $href; ?>" style="width:100%;" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'style' ); ?>"><?php _e('Button Style:', 'link-widget'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'style' ); ?>" name="<?php echo $this->get_field_name( 'style' ); ?>" value="<?php echo $instance['style']; ?>" style="width:100%;" />
+			<input id="<?php echo $this->get_field_id( 'style' ); ?>" name="<?php echo $this->get_field_name( 'style' ); ?>" value="<?php echo $style; ?>" style="width:100%;" />
 		</p>
 		<div class="btn-group" data-toggle="buttons-radio">
 			<button type="button" class="btn">Default</button>
@@ -118,21 +117,21 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
 	}	
 	
 	function form( $instance ) {
-		$defaults = array( 'title' => __('', 'link-widget'), 'show_info' => true );
-		$defaults = array( 'href' => __('http://', 'link-widget'), 'show_info' => true );
-		$defaults = array( 'class' => __('', 'link-widget'), 'show_info' => true );
+		$defaults = array( 'title' => __('', 'link-widget-legacy'), 'show_info' => true );
+		$defaults = array( 'href' => __('http://', 'link-widget-legacy'), 'show_info' => true );
+		$defaults = array( 'class' => __('', 'link-widget-legacy'), 'show_info' => true );
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 		
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'link-widget'); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'link-widget-legacy'); ?></label>
 			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Link:', 'link-widget'); ?></label>
+			<label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Link:', 'link-widget-legacy'); ?></label>
 			<input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo $instance['href']; ?>" style="width:100%;" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e('Classes:', 'link-widget'); ?></label>
+			<label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e('Classes:', 'link-widget-legacy'); ?></label>
 			<input id="<?php echo $this->get_field_id( 'class' ); ?>" name="<?php echo $this->get_field_name( 'class' ); ?>" value="<?php echo $instance['class']; ?>" style="width:100%;" />
 		</p><?php		
 	}
