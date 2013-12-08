@@ -105,8 +105,8 @@ function steel_mods_output() { echo 'Activate and deactivate modules within Stee
 function mod_teams_setting() {
   $options = get_option('steel_options');
   if (isset($options['mod_teams'])) { $teams = $options['mod_teams']; }
-  else { $teams = "0"; } ?>
-  <input name="steel_options[mod_teams]" type="radio" value="true" <?php checked( $teams, "true" ) ?>> Active
+  else { $teams = "false"; } ?>
+  <input name="steel_options[mod_teams]" type="radio" value="true" <?php checked( $teams, "true" ) ?>> Active<br />
   <input name="steel_options[mod_teams]" type="radio" value="false" <?php checked( $teams, "false" ) ?>> Not Active
   <?php
 }
