@@ -28,7 +28,6 @@ License URI: http://www.gnu.org/licenses/
 include_once dirname( __FILE__ ) . '/quotes.php';
 include_once dirname( __FILE__ ) . '/shortcodes.php';
 include_once dirname( __FILE__ ) . '/teams.php';
-include_once dirname( __FILE__ ) . '/templates/templates.php';
 include_once dirname( __FILE__ ) . '/widgets.php';
 
 /**
