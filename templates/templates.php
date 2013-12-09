@@ -3,7 +3,7 @@
  * If theme doesn't have templates for custom post types, use Steel's packaged templates.
  *
  * @package Steel
- * @sub-package Teams
+ * @module Teams
  *
  */
 
