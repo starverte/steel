@@ -1,4 +1,4 @@
-# Steel 1.0.2
+# Steel 1.1.0
 
 License: GPLv3 or later
 
