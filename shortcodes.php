@@ -5,205 +5,219 @@
  * @package Steel
  * @module Shortcodes
  *
- * @since 0.7.1
+ * @since 1.1.0
  */
  
 /*
  * Create [column] shortcode
  */
+if ( shortcode_exists( 'column' ) ) { remove_shortcode( 'column' ); }
 add_shortcode( 'column', 'column_shortcode' );
 function column_shortcode( $atts, $content = null ) {
-	extract( shortcode_atts( array( 'title' => null, 'num' => '2', 'first' => false, 'last' => false ), $atts ) );
-	switch ($num) {
-		case '2' : $style = 'span6'; break;
-		case '3' : $style = 'span4'; break;
-		case '4' : $style = 'span3'; break;
-		case '5' : if ($first or $last) { $style = 'span3'; } else { $style = 'span2'; } break;
-		case '6' : $style = 'span2'; break;
-	}
-	$new = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
-	if ($first) {
-		if (!empty($title)) { return '<div class="row-fluid"><div class="' . $style . '"><h3>' . esc_attr($title) .'</h3><p>' . $new . '</p></div>'; }
-		else { return '<div class="row-fluid"><div class="' . $style . '"><p>' . $new . '</p></div>'; }
-	}
-	elseif ($last) {
-		if (!empty($title)) { return '<div class="' . $style . '"><h3>' . esc_attr($title) .'</h3><p>' . $new . '</p></div></div>'; }
-		else { return '<div class="' . $style . '"><p>' . $new . '</p></div></div>'; }
-	}
-	else {
-		if (!empty($title)) { return '<div class="' . $style . '"><h3>' . esc_attr($title) .'</h3><p>' . $new . '</p></div>'; }
-		else { return '<div class="' . $style . '"><p>' . $new . '</p></div>'; }	
-	}
+  extract( shortcode_atts( array(
+    'title' => null,
+    'num'   => '2',
+    'first' => false,
+    'last'  => false
+  ), $atts ) );
+
+  switch ($num) {
+    case '2' : $style = 'span6'; break;
+    case '3' : $style = 'span4'; break;
+    case '4' : $style = 'span3'; break;
+    case '5' : if ($first or $last) { $style = 'span3'; } else { $style = 'span2'; } break;
+    case '6' : $style = 'span2'; break;
+  }
+
+  $new = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
+
+  if ($first) {
+    if (!empty($title)) { return '<div class="row-fluid"><div class="' . $style . '"><h3>' . esc_attr($title) .'</h3><p>' . $new . '</p></div>'; }
+    else { return '<div class="row-fluid"><div class="' . $style . '"><p>' . $new . '</p></div>'; }
+  }
+  elseif ($last) {
+    if (!empty($title)) { return '<div class="' . $style . '"><h3>' . esc_attr($title) .'</h3><p>' . $new . '</p></div></div>'; }
+    else { return '<div class="' . $style . '"><p>' . $new . '</p></div></div>'; }
+  }
+  else {
+    if (!empty($title)) { return '<div class="' . $style . '"><h3>' . esc_attr($title) .'</h3><p>' . $new . '</p></div>'; }
+    else { return '<div class="' . $style . '"><p>' . $new . '</p></div>'; }  
+  }
 }
 
 /*
- * Create [tooltip] shortcode
+ * Create [glyph icon=""] shortcode
  */
-add_shortcode( 'tooltip', 'tooltip_shortcode' );
-function tooltip_shortcode( $atts, $content = null ) {
-	extract( shortcode_atts( array( 'title' => '', 'placement' => 'top' ), $atts ) );
-	$new = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
-	return '<a class="steel-tooltip" href="#" data-toggle="tooltip" title="' . $title . '" data-placement="' . $placement . '">' . $new . '</a>';
+add_shortcode( 'glyph', 'glyphicon_shortcode' );
+function glyphicon_shortcode( $atts ) {
+  extract( shortcode_atts( array( 'icon' => '' ), $atts ) );
+  return '<i class="glyphicon glyphicon-'. $icon .'"></i> ';
 }
 
 /*
- * Create [popover] shortcode
+ * Create [btn] shortcode
  */
-add_shortcode( 'popover', 'popover_shortcode' );
-function popover_shortcode( $atts, $content = null ) {
-	extract( shortcode_atts( array( 'title' => '', 'placement' => 'top', 'text' => null, 'color' => 'default', 'size' => 'default' ), $atts ) );
-	$new_content = strip_tags($content, '<a><strong><em><blockquote><code><ol><ul><li>');
-	$new_text = strip_tags($text, '<a><strong><em><blockquote><code><ol><ul><li>');
-	$rand = rand();
-	switch ($color) {
-		case 'default'	: $btn_color = '';				      break;
-		case 'blue'			: $btn_color = ' btn-primary';	break;
-		case 'green'		: $btn_color = ' btn-success';	break;
-		case 'yellow'		: $btn_color = ' btn-warning';	break;
-		case 'red'			: $btn_color = ' btn-danger';	  break;
-		case 'black'		: $btn_color = ' btn-inverse';	break;
-	}
-	switch ($size) {
-		case 'default'	: $btn_size = '';			    break;
-		case 'large'		: $btn_size = ' btn-large';	break;
-		case 'small'		: $btn_size = ' btn-small';	break;
-		case 'mini'			: $btn_size = ' btn-mini';	break;
-	}
-	return '<a class="btn steel-popover' . $btn_color . $btn_size . '" href="#" data-toggle="popover" title="' . $title . '" data-content="' . $new_text . '" data-placement="' . $placement . '">' . $new_content . '</a>';
+if ( shortcode_exists( 'btn' ) ) { remove_shortcode( 'btn' ); }
+add_shortcode( 'btn', 'btn_shortcode' );
+function btn_shortcode( $atts, $content = null ) {
+  extract( shortcode_atts( array(
+    'color' => 'default',
+    'link'  => ''
+  ), $atts ) );
+
+  $new = strip_tags($content, '<a><strong><code>');
+
+  switch ($color) {    
+    case 'blue'  : $btn_class = 'btn-primary'  ; break;
+    case 'green' : $btn_class = 'btn-success'  ; break;
+    case 'yellow': $btn_class = 'btn-warning'  ; break;
+    case 'red'   : $btn_class = 'btn-danger'   ; break;
+    default      : $btn_class = 'btn-' . $color; break;
+  }
+  return '<a class="btn '. $btn_class .'" href="' . $link . '">' . do_shortcode($new) . '</a>';
 }
 
+/*
+ * Create [btn_group] shortcode
+ */
+if ( shortcode_exists( 'btn_group' ) ) { remove_shortcode( 'btn_group' ); }
+add_shortcode( 'btn_group', 'btn_group_shortcode' );
+function btn_group_shortcode( $atts, $content = null ) {
+  $new = strip_tags($content, '<a><strong><code>');
+
+  $output  = '<div class="btn-group">';
+  $output .= do_shortcode($new);
+  $output .= '</div>';
+  return $output;
+}
 
 /*
- * Create [carousel] shortcode
+ * Create [label] shortcode
  */
-add_shortcode('carousel', 'carousel_shortcode');
-function carousel_shortcode($attr) {
-	$post = get_post();
+if ( shortcode_exists( 'label' ) ) { remove_shortcode( 'label' ); }
+add_shortcode( 'label', 'label_shortcode' );
+function label_shortcode( $atts, $content = null ) {
+  extract( shortcode_atts( array( 'color' => 'default' ), $atts ) );
 
-	static $instance = 0;
-	$instance++;
+  $new = strip_tags($content, '<a>');
 
-	if ( ! empty( $attr['ids'] ) ) {
-		// 'ids' is explicitly ordered, unless you specify otherwise.
-		if ( empty( $attr['orderby'] ) )
-			$attr['orderby'] = 'post__in';
-		$attr['include'] = $attr['ids'];
-	}
+  switch ($color) {    
+    case 'blue'       : $label_class = 'label-primary'  ; break;
+    case 'green'      : $label_class = 'label-success'  ; break;
+    case 'light-blue' : $label_class = 'label-info'     ; break;
+    case 'yellow'     : $label_class = 'label-warning'  ; break;
+    case 'red'        : $label_class = 'label-danger'   ; break;
+    default           : $label_class = 'label-' . $color; break;
+  }
 
-	// Allow plugins/themes to override the default carousel template.
-	$output = apply_filters('post_carousel', '', $attr);
-	if ( $output != '' )
-		return $output;
+  return '<span class="label '. $label_class .'">' . $new . '</span>';
+}
 
-	// We're trusting author input, so let's at least make sure it looks like a valid orderby statement
-	if ( isset( $attr['orderby'] ) ) {
-		$attr['orderby'] = sanitize_sql_orderby( $attr['orderby'] );
-		if ( !$attr['orderby'] )
-			unset( $attr['orderby'] );
-	}
+/*
+ * Create [badge] shortcode
+ */
+if ( shortcode_exists( 'badge' ) ) { remove_shortcode( 'badge' ); }
+add_shortcode( 'badge', 'badge_shortcode' );
+function badge_shortcode( $atts, $content = null ) {
+  $new = strip_tags($content, '<a>');
+  return '<span class="badge">' . $new . '</span>';
+}
 
-	extract(shortcode_atts(array(
-		'order'      => 'ASC',
-		'orderby'    => 'menu_order ID',
-		'id'         => $post->ID,
-		'itemtag'    => 'div',
-		'icontag'    => 'div',
-		'captiontag' => 'div',
-		'size'       => 'large',
-		'include'    => '',
-		'exclude'    => ''
-	), $attr));
+/*
+ * Create [alert] shortcode
+ */
+if ( shortcode_exists( 'alert' ) ) { remove_shortcode( 'alert' ); }
+add_shortcode( 'alert', 'alert_shortcode' );
+function alert_shortcode( $atts, $content = null ) {
+  extract( shortcode_atts( array( 'color' => 'info' ), $atts ) );
+  
+  $new = strip_tags($content, '<a><strong><em><code><ol><ul><li>');
+  
+  switch ($color) {
+    case 'green'      : $alert_class = 'alert-success'  ; break;
+    case 'light-blue' : $alert_class = 'alert-info'     ; break;
+    case 'yellow'     : $alert_class = 'alert-warning'  ; break;
+    case 'red'        : $alert_class = 'alert-danger'   ; break;
+    default           : $alert_class = 'alert-' . $color; break;
+  }
+  
+  return '<div class="alert '. $alert_class .'">' . $new . '</div>';
+}
 
-	$id = intval($id);
-	if ( 'RAND' == $order )
-		$orderby = 'none';
+/*
+ * Create [progress] shortcode
+ */
+if ( shortcode_exists( 'progress' ) ) { remove_shortcode( 'progress' ); }
+add_shortcode( 'progress', 'progress_shortcode' );
+function progress_shortcode( $atts, $content = null ) {
+  extract( shortcode_atts( array(
+    'color'   => 'default',
+    'percent' => null,
+    'style'   => false
+  ), $atts ) );
 
-	if ( !empty($include) ) {
-		$_attachments = get_posts( array('include' => $include, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby) );
+  switch ($color) {
+    case 'default'    : $progress_bar_class = ''                       ; break;
+    case 'green'      : $progress_bar_class = ' progress-bar-success'  ; break;
+    case 'light-blue' : $progress_bar_class = ' progress-bar-info'     ; break;
+    case 'yellow'     : $progress_bar_class = ' progress-bar-warning'  ; break;
+    case 'red'        : $progress_bar_class = ' progress-bar-danger'   ; break;
+    default           : $progress_bar_class = ' progress-bar-' . $color; break;
+  }
 
-		$attachments = array();
-		foreach ( $_attachments as $key => $val ) {
-			$attachments[$val->ID] = $_attachments[$key];
-		}
-	} elseif ( !empty($exclude) ) {
-		$attachments = get_children( array('post_parent' => $id, 'exclude' => $exclude, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby) );
-	} else {
-		$attachments = get_children( array('post_parent' => $id, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby) );
-	}
+  switch ($style) {
+    case 'striped'  : $progress_class = ' progress-striped'        ; break;
+    case 'animated' : $progress_class = ' progress-striped active' ; break;
+    default         : $progress_class = ''                         ; break;
+  }
 
-	if ( empty($attachments) )
-		return '';
+  $output  = '<div class="progress'. $progress_class .'">';
+  $output .= '<div class="progress-bar'. $progress_bar_class .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%">';
+  $output .= '<span class="sr-only">'. $percent .'% Complete</span>';
+  $output .= '</div></div>';
+  return $output;
+}
 
-	if ( is_feed() ) {
-		$output = "\n";
-		foreach ( $attachments as $att_id => $attachment )
-			$output .= wp_get_attachment_link($att_id, $size, true) . "\n";
-		return $output;
-	}
+/*
+ * Create [panel] shortcode
+ */
+if ( shortcode_exists( 'panel' ) ) { remove_shortcode( 'panel' ); }
+add_shortcode( 'panel', 'panel_shortcode' );
+function panel_shortcode( $atts, $content = null ) {
+  extract( shortcode_atts( array(
+    'color'   => 'default',
+    'heading' => null,
+    'title'   => null,
+    'footer'  => null
+  ), $atts ) );
+  
+  $new = strip_tags($content, '<a><strong><em><code><ol><ul><li>');
 
-	$itemtag = tag_escape($itemtag);
-	$captiontag = tag_escape($captiontag);
-	$icontag = tag_escape($icontag);
-	$valid_tags = wp_kses_allowed_html( 'post' );
-	if ( ! isset( $valid_tags[ $itemtag ] ) )
-		$itemtag = 'dl';
-	if ( ! isset( $valid_tags[ $captiontag ] ) )
-		$captiontag = 'dd';
-	if ( ! isset( $valid_tags[ $icontag ] ) )
-		$icontag = 'dt';
+  switch ($color) {
+    case 'blue'      : $panel_class = ' panel-primary'  ; break;
+    case 'green'     : $panel_class = ' panel-success'  ; break;
+    case 'light-blue': $panel_class = ' panel-info'     ; break;
+    case 'yellow'    : $panel_class = ' panel-warning'  ; break;
+    case 'red'       : $panel_class = ' panel-danger'   ; break;
+    default          : $panel_class = ' panel-' . $color; break;
+  }
 
-	$itemwidth = 100;
-	$float = is_rtl() ? 'right' : 'left';
+  $output  = '<div class="panel'. $panel_class .'">';
 
-	$selector = "carousel-{$instance}";
+  if (!empty($title)) {
+    $output .= '<div class="panel-heading">';
+    $output .= '<div class="panel-title">' . $title . '</div>';
+    $output .= '</div>';
+  }
+  elseif (!empty($heading)) { $output .= '<div class="panel-heading">' . $heading . '</div>'; }
 
-	$carousel_style = $carousel_div = '';
-	if ( apply_filters( 'use_default_carousel_style', true ) )
-		$carousel_style = "";
-	$size_class = sanitize_html_class( $size );
-	$carousel_div = "<div id='steelCarousel' class='steel-carousel carousel slide carouselid-{$id}'>";
-	$output = apply_filters( 'carousel_style', $carousel_style . "\n\t\t" . $carousel_div );
-	
-	$output .= "<ol class='carousel-indicators'>\n\t";
-	
-	$n = 0;
-	foreach ( $attachments as $id => $attachment ) { 
-		$output .= "<li data-target='#steelCarousel'";
-		if ($n == 0 ) { $output .= " class='active'"; }
-		$output .= " data-slide-to='" . ($n++) . "'></li>\n";
-	}
-	
-	$output .= "</ol>\n";
-	$output .= "<div class='carousel-inner'>\n\t";
+  $output .= '<div class="panel-body">' . $new . '</div>';
 
-	$i = 0;
-	foreach ( $attachments as $id => $attachment ) {
-		$img_src = wp_get_attachment_image_src($id, $size);
-		$img_title = apply_filters( 'the_title', $attachment->post_title );
-		$alt = trim(strip_tags( get_post_meta($id, '_wp_attachment_image_alt', true) ));
-		if ($alt == '') {$img_alt = $img_title; }
-		else { $img_alt = $alt; }
+  if (!empty($footer)) {
+    $output .= '<div class="panel-footer">' . $footer . '</div>';
+  }
 
-		$output .= "<{$itemtag} class='";
-		if ($i == 0 ) { $output .= "active "; }
-		$output .= "item i" . $i . "'>";
-		$output .= "<img id='i" . ($i++) . "' src='" . $img_src[0] . "' alt='" . $img_alt . "' />";
-		if ( $captiontag && trim($attachment->post_excerpt) ) {
-			$output .= "
-				<{$captiontag} class='carousel-caption'>
-				<h4>" . $img_title . "</h4>
-				<p>" . wptexturize($attachment->post_excerpt) . "</p>
-				</{$captiontag}>";
-		}
-		$output .= "</{$itemtag}>\n";
-	}
-
-	$output .= "
-			</div>
-			<a class='carousel-control left' href='#steelCarousel' data-slide='prev'>&lsaquo;</a>
-  		<a class='carousel-control right' href='#steelCarousel' data-slide='next'>&rsaquo;</a>
-		</div>\n";
-
-	return $output;
+  $output .= '</div>';
+  return $output;
 }
 ?>
