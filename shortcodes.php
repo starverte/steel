@@ -122,4 +122,102 @@ function badge_shortcode( $atts, $content = null ) {
   $new = strip_tags($content, '<a>');
   return '<span class="badge">' . $new . '</span>';
 }
+
+/*
+ * Create [alert] shortcode
+ */
+if ( shortcode_exists( 'alert' ) ) { remove_shortcode( 'alert' ); }
+add_shortcode( 'alert', 'alert_shortcode' );
+function alert_shortcode( $atts, $content = null ) {
+  extract( shortcode_atts( array( 'color' => 'info' ), $atts ) );
+  
+  $new = strip_tags($content, '<a><strong><em><code><ol><ul><li>');
+  
+  switch ($color) {
+    case 'green'      : $alert_class = 'alert-success'  ; break;
+    case 'light-blue' : $alert_class = 'alert-info'     ; break;
+    case 'yellow'     : $alert_class = 'alert-warning'  ; break;
+    case 'red'        : $alert_class = 'alert-danger'   ; break;
+    default           : $alert_class = 'alert-' . $color; break;
+  }
+  
+  return '<div class="alert '. $alert_class .'">' . $new . '</div>';
+}
+
+/*
+ * Create [progress] shortcode
+ */
+if ( shortcode_exists( 'progress' ) ) { remove_shortcode( 'progress' ); }
+add_shortcode( 'progress', 'progress_shortcode' );
+function progress_shortcode( $atts, $content = null ) {
+  extract( shortcode_atts( array(
+    'color'   => 'default',
+    'percent' => null,
+    'style'   => false
+  ), $atts ) );
+
+  switch ($color) {
+    case 'default'    : $progress_bar_class = ''                       ; break;
+    case 'green'      : $progress_bar_class = ' progress-bar-success'  ; break;
+    case 'light-blue' : $progress_bar_class = ' progress-bar-info'     ; break;
+    case 'yellow'     : $progress_bar_class = ' progress-bar-warning'  ; break;
+    case 'red'        : $progress_bar_class = ' progress-bar-danger'   ; break;
+    default           : $progress_bar_class = ' progress-bar-' . $color; break;
+  }
+
+  switch ($style) {
+    case 'striped'  : $progress_class = ' progress-striped'        ; break;
+    case 'animated' : $progress_class = ' progress-striped active' ; break;
+    default         : $progress_class = ''                         ; break;
+  }
+
+  $output  = '<div class="progress'. $progress_class .'">';
+  $output .= '<div class="progress-bar'. $progress_bar_class .'" role="progressbar" aria-valuenow="'. $percent .'" aria-valuemin="0" aria-valuemax="100" style="width: '. $percent .'%">';
+  $output .= '<span class="sr-only">'. $percent .'% Complete</span>';
+  $output .= '</div></div>';
+  return $output;
+}
+
+/*
+ * Create [panel] shortcode
+ */
+if ( shortcode_exists( 'panel' ) ) { remove_shortcode( 'panel' ); }
+add_shortcode( 'panel', 'panel_shortcode' );
+function panel_shortcode( $atts, $content = null ) {
+  extract( shortcode_atts( array(
+    'color'   => 'default',
+    'heading' => null,
+    'title'   => null,
+    'footer'  => null
+  ), $atts ) );
+  
+  $new = strip_tags($content, '<a><strong><em><code><ol><ul><li>');
+
+  switch ($color) {
+    case 'blue'      : $panel_class = ' panel-primary'  ; break;
+    case 'green'     : $panel_class = ' panel-success'  ; break;
+    case 'light-blue': $panel_class = ' panel-info'     ; break;
+    case 'yellow'    : $panel_class = ' panel-warning'  ; break;
+    case 'red'       : $panel_class = ' panel-danger'   ; break;
+    default          : $panel_class = ' panel-' . $color; break;
+  }
+
+  $output  = '<div class="panel'. $panel_class .'">';
+
+  if (!empty($title)) {
+    $output .= '<div class="panel-heading">';
+    $output .= '<div class="panel-title">' . $title . '</div>';
+    $output .= '</div>';
+  }
+  elseif (!empty($heading)) { $output .= '<div class="panel-heading">' . $heading . '</div>'; }
+
+  $output .= '<div class="panel-body">' . $new . '</div>';
+
+  if (!empty($footer)) {
+    $output .= '<div class="panel-footer">' . $footer . '</div>';
+  }
+
+  $output .= '</div>';
+  return $output;
+}
 ?>
