@@ -234,7 +234,7 @@ function progress_shortcode( $atts, $content = null ) {
 if ( shortcode_exists( 'panel' ) ) { remove_shortcode( 'panel' ); }
 add_shortcode( 'panel', 'panel_shortcode' );
 function panel_shortcode( $atts, $content = null ) {
-  extract( shortcode_atts( array(
+	extract( shortcode_atts( array(
     'color'   => 'default',
     'heading' => null,
     'title'   => null,
@@ -242,6 +242,9 @@ function panel_shortcode( $atts, $content = null ) {
   ), $atts ) );
   
   $new = strip_tags($content, '<a><strong><em><code><ol><ul><li>');
+	
+	global $group_id, $panel_int;
+	$panel_int += 1;
 
   switch ($color) {
     case 'blue'      : $panel_class = ' panel-primary'  ; break;
@@ -252,16 +255,27 @@ function panel_shortcode( $atts, $content = null ) {
     default          : $panel_class = ' panel-' . $color; break;
   }
 
-  $output  = '<div class="panel'. $panel_class .'">';
+  $output  = '<div class="panel'. $panel_class .'"';
+	$output .= !empty($group_id) ? ' data-parent="' . $group_id . '"' : '';
+	$output .= '>';
 
   if (!empty($title)) {
     $output .= '<div class="panel-heading">';
-    $output .= '<div class="panel-title">' . $title . '</div>';
-    $output .= '</div>';
+    $output .= '<h4 class="panel-title">';
+		$output .= !empty($group_id) ? '<a data-toggle="collapse" data-parent="#' . $group_id . '" href="#' . $group_id . '-' . $panel_int . '">' : '';
+    $output .= $title;
+		$output .= !empty($group_id) ? '</a>' : '';
+    $output .= '</h4>'; //.panel-title
+    $output .= '</div>'; //.panel-heading
   }
   elseif (!empty($heading)) { $output .= '<div class="panel-heading">' . $heading . '</div>'; }
-
+	
+	$collapse_class = 'panel-collapse collapse';
+	$collapse_class .= $panel_int == 1 ? ' in' : '';
+	
+  $output .= !empty($group_id) ? '<div class="' . $collapse_class . '" id="' . $group_id . '-' . $panel_int . '">' : '';
   $output .= '<div class="panel-body">' . $new . '</div>';
+	$output .= !empty($group_id) ? '</div>' : '';
 
   if (!empty($footer)) {
     $output .= '<div class="panel-footer">' . $footer . '</div>';
