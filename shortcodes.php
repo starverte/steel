@@ -46,6 +46,20 @@ function column_shortcode( $atts, $content = null ) {
 }
 
 /*
+ * Create [tooltip] shortcode
+ */
+add_shortcode( 'tooltip', 'tooltip_shortcode' );
+function tooltip_shortcode( $atts, $content = null ) {
+  extract( shortcode_atts( array(
+    'title' => '',
+    'placement' => 'top auto'
+  ), $atts ) );
+  
+  $new = strip_tags($content, '<a><strong><em>');
+  return '<a class="steel-tooltip" href="#" data-toggle="tooltip" title="' . $title . '" data-placement="' . $placement . '">' . $new . '</a>';
+}
+
+/*
  * Create [glyph icon=""] shortcode
  */
 add_shortcode( 'glyph', 'glyphicon_shortcode' );
@@ -61,11 +75,15 @@ if ( shortcode_exists( 'btn' ) ) { remove_shortcode( 'btn' ); }
 add_shortcode( 'btn', 'btn_shortcode' );
 function btn_shortcode( $atts, $content = null ) {
   extract( shortcode_atts( array(
-    'color' => 'default',
-    'link'  => ''
+    'color'     => 'default',
+    'link'      => '#',
+    'placement' => 'top auto',
+    'toggle'    => null,
+    'title'     => null,
+    'body'      => null
   ), $atts ) );
 
-  $new = strip_tags($content, '<a><strong><code>');
+  $new = strip_tags($content, '<a><strong><em>');
 
   switch ($color) {    
     case 'blue'  : $btn_class = 'btn-primary'  ; break;
@@ -74,7 +92,39 @@ function btn_shortcode( $atts, $content = null ) {
     case 'red'   : $btn_class = 'btn-danger'   ; break;
     default      : $btn_class = 'btn-' . $color; break;
   }
-  return '<a class="btn '. $btn_class .'" href="' . $link . '">' . do_shortcode($new) . '</a>';
+  
+  switch ($toggle){
+    case 'tooltip':
+      if (!empty($title)) {
+        $btn_class .= ' steel-tooltip';
+        $data       = ' data-toggle="tooltip"';
+        $data      .= ' data-placement="' . $placement . '"';
+      }
+      else { $data = ''; }
+      break;
+    case 'popover':
+      if (!empty($body)) {
+        $btn_class .= ' steel-popover';
+        $data       = ' data-toggle="popover"';
+        $data      .= ' data-placement="' . $placement . '"';
+        $data      .= ' data-content="' . $body. '"';
+      }
+      else { $data = ''; }
+      break;
+    default:
+      $data = '';
+      break;
+  }
+  
+  $output  = '<a ';
+  $output .= 'class="btn '. $btn_class .'" ';
+  $output .= 'href="' . $link . '"';
+  $output .= $data;
+  $output .= !empty($title) ? ' title="' . $title . '"' : '';
+  $output .= '>';
+  $output .= do_shortcode($new);
+  $output .= '</a>';
+  return $output;
 }
 
 /*
