@@ -270,4 +270,22 @@ function panel_shortcode( $atts, $content = null ) {
   $output .= '</div>';
   return $output;
 }
+
+/*
+ * Create [panel_group] shortcode
+ */
+if ( shortcode_exists( 'panel_group' ) ) { remove_shortcode( 'panel_group' ); }
+add_shortcode( 'panel_group', 'panel_group_shortcode' );
+function panel_group_shortcode( $atts, $content = null ) {
+  $new = strip_tags($content, '<a><strong><em><code><ol><ul><li>');
+	
+	global $group_id, $panel_int;
+	$group_id  = rand(0,999);
+	$panel_int = 0;
+
+  $output  = '<div class="panel-group" id="' . $group_id . '">';
+  $output .= do_shortcode($new);
+  $output .= '</div>';
+  return $output;
+}
 ?>
