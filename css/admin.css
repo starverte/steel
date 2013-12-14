@@ -1,3 +1,4 @@
-.toplevel_page_steel .wp-menu-image img {
-    max-width: 14px;
+#toplevel_page_steel .wp-menu-image::before {
+  font-family: 'Star Verte' !important;
+  content: 'c'!important;
 }

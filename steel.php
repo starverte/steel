@@ -45,7 +45,10 @@ function steel_version() {
  * Load scripts
  */
 add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
-function steel_admin_scripts() { wp_enqueue_style( 'steel-admin-style', plugins_url('steel/css/admin.css') ); }
+function steel_admin_scripts() {
+  wp_enqueue_style( 'steel-admin-style', plugins_url('steel/css/admin.css'    ) );
+  wp_enqueue_style( 'steel-font'       , plugins_url('steel/css/starverte.css') );
+}
 
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
@@ -58,7 +61,7 @@ function steel_scripts() {
  */
 add_action('admin_menu', 'steel_admin_add_page');
 function steel_admin_add_page() {
-  add_menu_page('Steel', 'Steel', 'manage_options', 'steel', 'steel_options_page',   plugins_url('steel/img/sparks.png'), 100);
+  add_menu_page('Steel', 'Steel', 'manage_options', 'steel', 'steel_options_page', '', 100);
 }
 function steel_options_page() { ?>
 
