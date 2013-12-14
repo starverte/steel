@@ -52,6 +52,16 @@ function steel_admin_scripts() {
 
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
+	//Load latest jQuery
+	wp_deregister_script('jquery');
+	wp_enqueue_script('jquery', '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js', false, '1.10.2', true);
+	
+	// Load Twitter Bootstrap
+	wp_deregister_script('bootstrap');
+	wp_deregister_style('bootstrap-css');
+  wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', array('jquery'), '3.0.3', true );
+  wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/css/bootstrap.min.css', array() , '3.0.3' );
+	
   wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js'); // Load script for "Pin It" button
   wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array('jquery') , steel_version() , true ); // Load front-end scripts
 }
@@ -63,7 +73,7 @@ add_action('admin_menu', 'steel_admin_add_page');
 function steel_admin_add_page() {
   add_menu_page('Steel', 'Steel', 'manage_options', 'steel', 'steel_options_page', '', 100);
 }
-function steel_options_page() { ?>
+function steel_options_page() { ?>	
 
   <div class="wrap">
   <?php echo '<img width="32" height="32" src="' . plugins_url( 'img/sparks.png' , __FILE__ ) . '" style="margin-right: 10px; float: left; margin-top: 7px;" /><h2>Steel Options</h2>'; ?>
