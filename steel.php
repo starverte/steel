@@ -71,12 +71,12 @@ function steel_scripts() {
  */
 add_action('admin_menu', 'steel_admin_add_page');
 function steel_admin_add_page() {
-  add_menu_page('Steel', 'Steel', 'manage_options', 'steel', 'steel_options_page', '', 100);
+  add_menu_page('Steel', 'Steel', 'manage_options', 'steel', 'steel_options_page', '');
 }
 function steel_options_page() { ?>	
 
   <div class="wrap">
-  <?php echo '<img width="32" height="32" src="' . plugins_url( 'img/sparks.png' , __FILE__ ) . '" style="margin-right: 10px; float: left; margin-top: 7px;" /><h2>Steel Options</h2>'; ?>
+  <?php echo '<h2>Steel Options</h2>'; ?>
   <form action="options.php" method="post">
     <?php settings_fields('steel_options'); ?>
     <?php do_settings_sections('steel'); ?>
