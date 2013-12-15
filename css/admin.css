@@ -2,7 +2,3 @@
   font-family: 'Star Verte' !important;
   content: 'c'!important;
 }
-#menu-posts-steel_profile .wp-menu-image::before {
-	font: normal 20px/1 'dashicons';
-  content: "\f307";
-}
