@@ -27,6 +27,7 @@ License URI: http://www.gnu.org/licenses/
 
 include_once dirname( __FILE__ ) . '/quotes.php';
 include_once dirname( __FILE__ ) . '/shortcodes.php';
+include_once dirname( __FILE__ ) . '/slides.php';
 include_once dirname( __FILE__ ) . '/teams.php';
 include_once dirname( __FILE__ ) . '/widgets.php';
 
@@ -100,6 +101,7 @@ function steel_admin_init(){
   }
   add_settings_section('steel_mods', 'Modules', 'steel_mods_output', 'steel');
   add_settings_field('mod_teams', 'Teams', 'mod_teams_setting', 'steel', 'steel_mods' );
+	add_settings_field('mod_slides', 'Slides', 'mod_slides_setting', 'steel', 'steel_mods' );
 }
 function sparks_store_text() { echo ''; }
 function paypal_merch_id_setting() {
@@ -122,6 +124,14 @@ function mod_teams_setting() {
   <input name="steel_options[mod_teams]" type="radio" value="false" <?php checked( $teams, "false" ) ?>> Not Active
   <?php
 }
+function mod_slides_setting() {
+  $options = get_option('steel_options');
+  if (isset($options['mod_slides'])) { $slides = $options['mod_slides']; }
+  else { $slides = "false"; } ?>
+  <input name="steel_options[mod_slides]" type="radio" value="true" <?php checked( $slides, "true" ) ?>> Active<br />
+  <input name="steel_options[mod_slides]" type="radio" value="false" <?php checked( $slides, "false" ) ?>> Not Active
+  <?php
+}
 function steel_options_validate($input) {
   global $newinput;
   if (is_plugin_active('sparks-store/store.php')) {
@@ -132,6 +142,7 @@ function steel_options_validate($input) {
   $newinput['fb_app_id'] = trim($input['fb_app_id']);
   if (!preg_match('/^[0-9]{15}$/i', $newinput['fb_app_id']) & !empty($newinput['fb_app_id'])) { add_settings_error( 'fb_app_id' , 'invalid' , 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>'  ); }
   $newinput['mod_teams'] = trim($input['mod_teams']);
+	$newinput['mod_slides'] = trim($input['mod_slides']);
   return $newinput;
 }
 
