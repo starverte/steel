@@ -71,12 +71,12 @@ function steel_scripts() {
  */
 add_action('admin_menu', 'steel_admin_add_page');
 function steel_admin_add_page() {
-  add_menu_page('Steel', 'Steel', 'manage_options', 'steel', 'steel_options_page', '', 100);
+  add_menu_page('Steel', 'Steel', 'manage_options', 'steel', 'steel_options_page', '');
 }
 function steel_options_page() { ?>	
 
   <div class="wrap">
-  <?php echo '<img width="32" height="32" src="' . plugins_url( 'img/sparks.png' , __FILE__ ) . '" style="margin-right: 10px; float: left; margin-top: 7px;" /><h2>Steel Options</h2>'; ?>
+  <?php echo '<h2>Steel Options</h2>'; ?>
   <form action="options.php" method="post">
     <?php settings_fields('steel_options'); ?>
     <?php do_settings_sections('steel'); ?>
@@ -104,14 +104,14 @@ function steel_admin_init(){
 function sparks_store_text() { echo ''; }
 function paypal_merch_id_setting() {
   $options = get_option('steel_options');
-  if (isset($options['paypal_merch_id'])) { echo "<input id='paypal_merch_id' name='steel_options[paypal_merch_id]' size='40' type='text' value='{$options['paypal_merch_id']}' />"; }
-  else { echo "<input id='paypal_merch_id' name='steel_options[paypal_merch_id]' size='40' type='text' value='' />"; }
+  if (isset($options["paypal_merch_id"])) { echo '<input id="paypal_merch_id" name="steel_options[paypal_merch_id]" size="40" type="text" value="'.$options["paypal_merch_id"].'" />'; }
+  else { echo '<input id="paypal_merch_id" name="steel_options[paypal_merch_id]" size="40" type="text" value="" />'; }
 }
 function steel_social_text() { echo 'Social media profile information'; }
 function fb_app_id_setting() {
   $options = get_option('steel_options');
-  if (isset($options['fb_app_id'])) { echo "<input id='fb_app_id' name='steel_options[fb_app_id]' size='40' type='text' value='{$options['fb_app_id']}' />"; }
-  else { echo "<input id='fb_app_id' name='steel_options[fb_app_id]' size='40' type='text' value='' />"; }
+  if (isset($options["fb_app_id"])) { echo '<input id="fb_app_id" name="steel_options[fb_app_id]" size="40" type="text" value="{$options["fb_app_id"]}" />'; }
+  else { echo '<input id="fb_app_id" name="steel_options[fb_app_id]" size="40" type="text" value="" />'; }
 }
 function steel_mods_output() { echo 'Activate and deactivate modules within Steel'; }
 function mod_teams_setting() {
