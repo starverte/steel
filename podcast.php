@@ -6,8 +6,13 @@
  * @module Podcast
  *
  */
- 
-if (is_module_active('podcast')) { add_action( 'init', 'steel_podcast_init', 0 ); }
+
+if (is_module_active('podcast')) {
+  add_action( 'init'       , 'steel_podcast_init'         , 0 );
+  add_action( 'edit_term'  , 'save_steel_pod_series_cover'    );
+  add_action( 'create_term', 'save_steel_pod_series_cover'    );
+}
+
 function steel_podcast_init() {
 
   // Register Custom Post Type Episode
@@ -114,5 +119,76 @@ function steel_podcast_init() {
   );
   register_taxonomy( 'steel_pod_series', 'steel_pod_episode', $args );
 
+}
+
+function steel_pod_series_field($taxonomy = 'steel_pod_series') {
+  $output  = '';
+
+  if(empty($taxonomy->term_id)) {
+    $output .= '<div class="form-field">';
+    $output .= '<input type="hidden" name="steel_pod_series_cover" id="steel_pod_series_cover">';
+    $output .= '<a href="#" id="steel_pod_series_cover_button" class="button insert-media add_media" title="Set Cover Photo"><span class="cover-photo-icon"></span> Set Cover Photo</a>';
+    $output .= '</div>';
+  }
+  else{
+    $steel_pod_series_cover_url = get_option('steel_pod_series_cover' . $taxonomy->term_id);
+
+    $output .= '<tr class="form-field">';
+    $output .= '<th scope="row" valign="top"><label for="steel_pod_series_cover">Cover Photo</label></th>';
+    $output .= '<td>';
+
+    $output .= !empty($steel_pod_series_cover_url) ?'<img src="' . $steel_pod_series_cover_url . '" style="max-width:300px;margin:1em 0;" id="steel_pod_series_cover_img">' : '<img src="" id="steel_pod_series_cover_img" style="max-width:300px;">';
+
+    $output .= '<input type="hidden" name="steel_pod_series_cover" id="steel_pod_series_cover" value="'.$steel_pod_series_cover_url.'">';
+    $output .= '<a href="#" id="steel_pod_series_cover_button" class="button insert-media add_media" title="Set Cover Photo" style="display:block;max-width:300px;"><span class="cover-photo-icon"></span> Set Cover Photo</a>';
+
+    $output .= '</td>';
+    $output .= '</tr>';       
+  }
+
+  echo $output; ?>
+
+  <script type="text/javascript">
+    var file_frame;
+
+    jQuery('#steel_pod_series_cover_button').live('click', function( event ){
+
+      event.preventDefault();
+
+      if ( file_frame ) {
+        file_frame.open();
+        return;
+      }
+
+      file_frame = wp.media.frames.file_frame = wp.media({
+        title: jQuery( this ).data( 'uploader_title' ),
+        button: {
+          text: jQuery( this ).data( 'uploader_button_text' ),
+        },
+        multiple: false
+      });
+
+      file_frame.on( 'select', function() {
+        attachment = file_frame.state().get('selection').first().toJSON();
+
+        document.getElementById("steel_pod_series_cover"    ).value        = attachment.url;
+        document.getElementById("steel_pod_series_cover_img").src          = attachment.url;
+        document.getElementById("steel_pod_series_cover_img").style.margin = '1em 0'       ;
+      });
+
+      file_frame.open();
+
+    });;
+  </script>
+
+  <?php
+}
+
+/**
+* Save cover photo for series
+*/
+function save_steel_pod_series_cover($term_id) {
+  if (isset($_POST['steel_pod_series_cover']))
+    update_option('steel_pod_series_cover' . $term_id, $_POST['steel_pod_series_cover']);
 }
 ?>
