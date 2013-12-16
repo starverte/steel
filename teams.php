@@ -1,6 +1,6 @@
 <?php
 /*
- * Allows profiles to be built that can belong to one or multiple "teams"
+ * Allows creation and management of profiles that can belong to one or many "teams" for use with staff, elders, board members, and more
  *
  * @package Steel
  * @module Teams
