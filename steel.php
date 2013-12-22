@@ -23,7 +23,7 @@ License URI: http://www.gnu.org/licenses/
 
   You should have received a copy of the GNU General Public License
   along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 include_once dirname( __FILE__ ) . '/podcast.php';
 include_once dirname( __FILE__ ) . '/quotes.php';
@@ -33,8 +33,8 @@ include_once dirname( __FILE__ ) . '/teams.php';
 include_once dirname( __FILE__ ) . '/widgets.php';
 
 /**
-* Returns current plugin version.
-*/
+ * Returns current plugin version.
+ */
 function steel_version() {
   if ( ! function_exists( 'get_plugins' ) )
     require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
@@ -46,8 +46,8 @@ function steel_version() {
 }
 
 /**
-* Load scripts
-*/
+ * Load scripts
+ */
 add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
 function steel_admin_scripts() {
   wp_enqueue_style( 'steel-admin-style', plugins_url('steel/css/admin.css'    ) );
@@ -74,8 +74,8 @@ function steel_scripts() {
 }
 
 /**
-* Action: admin_head
-*/
+ * Action: admin_head
+ */
 add_action('admin_head', 'steel_admin_head');
 function steel_admin_head() {
   if (is_module_active('podcast')) {
@@ -85,8 +85,8 @@ function steel_admin_head() {
 }
 
 /*
-* Add options page
-*/
+ * Add options page
+ */
 add_action('admin_menu', 'steel_admin_add_page');
 function steel_admin_add_page() {
   add_menu_page('Steel', 'Steel', 'manage_options', 'steel', 'steel_options_page', '');
@@ -108,8 +108,8 @@ function steel_options_page() {
 }
 
 /*
-* Register settings for options page
-*/
+ * Register settings for options page
+ */
 add_action('admin_init', 'steel_admin_init');
 function steel_admin_init(){
   register_setting('steel_options', 'steel_options', 'steel_options_validate' );
@@ -195,8 +195,8 @@ function steel_options_validate($input) {
 }
 
 /*
-* Add function steel_open
-*/
+ * Add function steel_open
+ */
 function steel_open( $scripts = array() ) {
   $defaults = array('facebook' => true);
   $scripts  = wp_parse_args( $scripts, $defaults );
@@ -213,8 +213,8 @@ function steel_open( $scripts = array() ) {
 }
 
 /*
-* Empty search fix
-*/
+ * Empty search fix
+ */
 add_filter( 'request', 'steel_request' );
 function steel_request( $query_vars ) {
   if( !empty( $_GET['s'] ) && empty( $_GET['s'] ) ) { $query_vars['s'] = " "; }
@@ -222,8 +222,8 @@ function steel_request( $query_vars ) {
 }
 
 /*
-* Create function tweet_this
-*/
+ * Create function tweet_this
+ */
 function tweet_this( $data_count = 'horizontal' , $data_size = '' , $data_via = '' , $args = array() ) {
   $url      = get_permalink();
   $title    = the_title( '', '', false);
@@ -273,8 +273,8 @@ function tweet_this( $data_count = 'horizontal' , $data_size = '' , $data_via = 
 }
 
 /*
-* Create function like_this (Facebook)
-*/
+ * Create function like_this (Facebook)
+ */
 function like_this( $args = array() ) {
   $url = get_permalink();
 
@@ -309,8 +309,8 @@ function like_this( $args = array() ) {
 }
 
 /*
-* Create function pin_it (Pinterest)
-*/
+ * Create function pin_it (Pinterest)
+ */
 function pin_it( $args = array() ) {
   $url       = get_permalink();
   $title     = the_title( '', '', false);
@@ -338,8 +338,8 @@ function pin_it( $args = array() ) {
 }
 
 /*
-* Add function is_module_active
-*/
+ * Add function is_module_active
+ */
 function is_module_active( $mod ) {
   $options = get_option('steel_options');
   $mod_status = !empty($options['mod_' . $mod]) ? $options['mod_' . $mod] : 'false';
@@ -350,12 +350,26 @@ function is_module_active( $mod ) {
 }
 
 /*
-* Create function to remove admin bar from front end by default
-*/
+ * Create function to remove admin bar from front end by default
+ */
 add_action('after_setup_theme', 'remove_admin_bar');
 function remove_admin_bar() {
   if (!current_user_can('administrator') && !is_admin()) {
     show_admin_bar(false);
   }
+}
+
+/*
+ * Add function is_flint_active
+ */
+function is_flint_active() {
+  $theme = wp_get_theme();
+  $name = $theme->get( 'Name' );
+  $template = $theme->get( 'Template' );
+  $template = !empty($template) ? $template : strtolower ( $name );
+  if ($template == 'flint')
+    return true;
+  else
+    return false;
 }
 ?>
