@@ -129,7 +129,8 @@ function steel_admin_init(){
   add_settings_section('steel_mods', 'Modules', 'steel_mods_output', 'steel');
 
   //add_settings_field('mod_bootstrap', 'Bootstrap', 'mod_bootstrap_setting', 'steel', 'steel_mods' );
-	  add_settings_field('mod_podcast'  , 'Podcast'  , 'mod_podcast_setting'  , 'steel', 'steel_mods' );
+    add_settings_field('mod_podcast'  , 'Podcast'  , 'mod_podcast_setting'  , 'steel', 'steel_mods' );
+  //add_settings_field('mod_quotes'   , 'Quotes'   , 'mod_quotes_setting'   , 'steel', 'steel_mods' );
     add_settings_field('mod_slides'   , 'Slides'   , 'mod_slides_setting'   , 'steel', 'steel_mods' );
     add_settings_field('mod_teams'    , 'Teams'    , 'mod_teams_setting'    , 'steel', 'steel_mods' );
 }
@@ -170,6 +171,15 @@ function mod_podcast_setting() {
   <label for="steel_options[mod_podcast]"><input name="steel_options[mod_podcast]" type="radio" value="false" <?php checked( $podcast, "false" ) ?>>Not Active</label>
   <?php
 }
+function mod_quotes_setting() {
+  $options = get_option('steel_options');
+
+  $quotes = !empty($options['mod_quotes']) ? $options['mod_quotes'] : 'true'; ?>
+
+  <label for="steel_options[mod_quotes]"><input name="steel_options[mod_quotes]" type="radio" value="true"  <?php checked( $quotes, 'true'  ) ?>>Active</label>
+  <label for="steel_options[mod_quotes]"><input name="steel_options[mod_quotes]" type="radio" value="false" <?php checked( $quotes, 'false' ) ?>>Not Active</label>
+  <?php
+}
 function mod_slides_setting() {
   $options = get_option('steel_options');
 
@@ -201,6 +211,7 @@ function steel_options_validate($input) {
 
   //$newinput['mod_bootstrap'] = trim($input['mod_bootstrap']);
     $newinput['mod_podcast'  ] = trim($input['mod_podcast'  ]);
+  //$newinput['mod_quotes'   ] = trim($input['mod_quotes'   ]);
     $newinput['mod_slides'   ] = trim($input['mod_slides'   ]);
     $newinput['mod_teams'    ] = trim($input['mod_teams'    ]);
 
@@ -355,7 +366,7 @@ function pin_it( $args = array() ) {
  */
 function is_module_active( $mod ) {
   $options = get_option('steel_options');
-  $default_on  = array('bootstrap');
+  $default_on  = array('bootstrap','quotes');
   if (in_array($mod, $default_on)) :
     $mod_status = !empty($options['mod_' . $mod]) ? $options['mod_' . $mod] : 'true';
   else :
