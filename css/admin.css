@@ -2,16 +2,21 @@
   font-family: 'Star Verte' !important;
   content: 'c'!important;
 }
-.cover-photo-icon:before {
+span[class*='steel-icon-'] {
   margin: 0 2px;
   display: inline-block;
   width: 18px;
   height: 18px;
   font: 400 18px/1 dashicons;
   color: #888;
-  content: "\f128";
   -moz-osx-font-smoothing: grayscale;
    -webkit-font-smoothing: antialiased;
   vertical-align: text-top;
   speak: none;
+}
+.steel-icon-cover-photo:before {
+  content: "\f128";
+}
+.steel-icon-media:before {
+  content: "\f236";
 }
