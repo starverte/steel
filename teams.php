@@ -10,7 +10,7 @@
 /*
  * Create custom post type
  */
-if (is_module_active('teams')) { add_action( 'init', 'steel_teams_init', 0 ); }
+add_action( 'init', 'steel_teams_init', 0 );
 function steel_teams_init() {
   $labels = array(
     'name'                => _x( 'Profiles', 'Post Type General Name', 'steel' ),
