@@ -134,6 +134,7 @@ function steel_admin_init(){
 	//add_settings_field('mod_shortcodes', 'Shortcodes', 'mod_shortcodes_setting', 'steel', 'steel_mods' );
     add_settings_field('mod_slides'    , 'Slides'    , 'mod_slides_setting'    , 'steel', 'steel_mods' );
     add_settings_field('mod_teams'     , 'Teams'     , 'mod_teams_setting'     , 'steel', 'steel_mods' );
+	//add_settings_field('mod_widgets'   , 'Widgets'   , 'mod_widgets_setting'   , 'steel', 'steel_mods' );
 }
 function sparks_store_text() { echo ''; }
 function paypal_merch_id_setting() {
@@ -208,6 +209,15 @@ function mod_teams_setting() {
   <label for="steel_options[mod_teams]"><input name="steel_options[mod_teams]" type="radio" value="false" <?php checked( $teams, "false" ) ?>>Not Active</label>
   <?php
 }
+function mod_widgets_setting() {
+  $options = get_option('steel_options');
+
+  $widgets = !empty($options['mod_widgets']) ? $options['mod_widgets'] : 'true'; ?>
+
+  <label for="steel_options[mod_widgets]"><input name="steel_options[mod_widgets]" type="radio" value="true"  <?php checked( $widgets, 'true'  ) ?>>Active</label>
+  <label for="steel_options[mod_widgets]"><input name="steel_options[mod_widgets]" type="radio" value="false" <?php checked( $widgets, 'false' ) ?>>Not Active</label>
+  <?php
+}
 function steel_options_validate($input) {
   global $newinput;
   if (is_plugin_active('sparks-store/store.php')) {
@@ -225,6 +235,7 @@ function steel_options_validate($input) {
 	//$newinput['mod_shortcodes'] = trim($input['mod_shortcodes']);
     $newinput['mod_slides'    ] = trim($input['mod_slides'    ]);
     $newinput['mod_teams'     ] = trim($input['mod_teams'     ]);
+	//$newinput['mod_widgets'   ] = trim($input['mod_widgets'   ]);
 
   return $newinput;
 }
@@ -377,7 +388,7 @@ function pin_it( $args = array() ) {
  */
 function is_module_active( $mod ) {
   $options = get_option('steel_options');
-  $default_on = array('bootstrap','quotes','shortcodes');
+  $default_on = array('bootstrap','quotes','shortcodes','widgets');
   if (in_array($mod, $default_on)) :
     $mod_status = !empty($options['mod_' . $mod]) ? $options['mod_' . $mod] : 'true';
   else :
