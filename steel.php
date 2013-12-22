@@ -58,13 +58,15 @@ function steel_admin_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
-  // Make sure there aren't other instances of Twitter Bootstrap
-  wp_deregister_script('bootstrap'    );
-  wp_deregister_style ('bootstrap-css');
-
-  // Load Twitter Bootstrap
-  wp_enqueue_script( 'bootstrap'    , get_template_directory_uri() . '/js/bootstrap.min.js'  , array('jquery'), '3.0.3', true );
-  wp_enqueue_style ( 'bootstrap-css', get_template_directory_uri() . '/css/bootstrap.min.css', array()        , '3.0.3'       );
+  if (is_module_active('bootstrap')) {
+    // Make sure there aren't other instances of Twitter Bootstrap
+    wp_deregister_script('bootstrap'    );
+    wp_deregister_style ('bootstrap-css');
+  
+    // Load Twitter Bootstrap
+    wp_enqueue_script( 'bootstrap'    , plugins_url('steel/js/bootstrap.min.js'  ), array('jquery'), '3.0.3', true );
+    wp_enqueue_style ( 'bootstrap-css', plugins_url('steel/css/bootstrap.min.css'), array()        , '3.0.3'       );
+  }
 
   // Load script for "Pin It" button
   wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js');
@@ -126,9 +128,10 @@ function steel_admin_init(){
 
   add_settings_section('steel_mods', 'Modules', 'steel_mods_output', 'steel');
 
-  add_settings_field('mod_podcast', 'Podcast', 'mod_podcast_setting', 'steel', 'steel_mods' );
-  add_settings_field('mod_slides' , 'Slides' , 'mod_slides_setting' , 'steel', 'steel_mods' );
-  add_settings_field('mod_teams'  , 'Teams'  , 'mod_teams_setting'  , 'steel', 'steel_mods' );
+  //add_settings_field('mod_bootstrap', 'Bootstrap', 'mod_bootstrap_setting', 'steel', 'steel_mods' );
+	  add_settings_field('mod_podcast'  , 'Podcast'  , 'mod_podcast_setting'  , 'steel', 'steel_mods' );
+    add_settings_field('mod_slides'   , 'Slides'   , 'mod_slides_setting'   , 'steel', 'steel_mods' );
+    add_settings_field('mod_teams'    , 'Teams'    , 'mod_teams_setting'    , 'steel', 'steel_mods' );
 }
 function sparks_store_text() { echo ''; }
 function paypal_merch_id_setting() {
@@ -149,6 +152,15 @@ function fb_app_id_setting() {
   echo $output;
 }
 function steel_mods_output() { echo 'Activate and deactivate modules within Steel'; }
+function mod_bootstrap_setting() {
+  $options = get_option('steel_options');
+
+  $bootstrap = !empty($options['mod_bootstrap']) ? $options['mod_bootstrap'] : 'true'; ?>
+
+  <label for="steel_options[mod_bootstrap]"><input name="steel_options[mod_bootstrap]" type="radio" value="true"  <?php checked( $bootstrap, 'true'  ) ?>>Active</label>
+  <label for="steel_options[mod_bootstrap]"><input name="steel_options[mod_bootstrap]" type="radio" value="false" <?php checked( $bootstrap, 'false' ) ?>>Not Active</label>
+  <?php
+}
 function mod_podcast_setting() {
   $options = get_option('steel_options');
 
@@ -187,9 +199,10 @@ function steel_options_validate($input) {
   $newinput['fb_app_id'] = trim($input['fb_app_id']);
   if (!preg_match('/^[0-9]{15}$/i', $newinput['fb_app_id']) & !empty($newinput['fb_app_id'])) { add_settings_error( 'fb_app_id', 'invalid', 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>' ); }
 
-  $newinput['mod_podcast'] = trim($input['mod_podcast']);
-  $newinput['mod_slides']  = trim($input['mod_slides'] );
-  $newinput['mod_teams']   = trim($input['mod_teams']  );
+  //$newinput['mod_bootstrap'] = trim($input['mod_bootstrap']);
+    $newinput['mod_podcast'  ] = trim($input['mod_podcast'  ]);
+    $newinput['mod_slides'   ] = trim($input['mod_slides'   ]);
+    $newinput['mod_teams'    ] = trim($input['mod_teams'    ]);
 
   return $newinput;
 }
@@ -342,8 +355,14 @@ function pin_it( $args = array() ) {
  */
 function is_module_active( $mod ) {
   $options = get_option('steel_options');
-  $mod_status = !empty($options['mod_' . $mod]) ? $options['mod_' . $mod] : 'false';
-  if ($mod_status == "true")
+  $default_on  = array('bootstrap');
+  if (in_array($mod, $default_on)) :
+    $mod_status = !empty($options['mod_' . $mod]) ? $options['mod_' . $mod] : 'true';
+  else :
+    $mod_status = !empty($options['mod_' . $mod]) ? $options['mod_' . $mod] : 'false';
+  endif;
+  
+  if ($mod_status == 'true')
     return true;
   else
     return false;
