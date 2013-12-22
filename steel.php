@@ -128,11 +128,12 @@ function steel_admin_init(){
 
   add_settings_section('steel_mods', 'Modules', 'steel_mods_output', 'steel');
 
-  //add_settings_field('mod_bootstrap', 'Bootstrap', 'mod_bootstrap_setting', 'steel', 'steel_mods' );
-    add_settings_field('mod_podcast'  , 'Podcast'  , 'mod_podcast_setting'  , 'steel', 'steel_mods' );
-  //add_settings_field('mod_quotes'   , 'Quotes'   , 'mod_quotes_setting'   , 'steel', 'steel_mods' );
-    add_settings_field('mod_slides'   , 'Slides'   , 'mod_slides_setting'   , 'steel', 'steel_mods' );
-    add_settings_field('mod_teams'    , 'Teams'    , 'mod_teams_setting'    , 'steel', 'steel_mods' );
+  //add_settings_field('mod_bootstrap' , 'Bootstrap' , 'mod_bootstrap_setting' , 'steel', 'steel_mods' );
+    add_settings_field('mod_podcast'   , 'Podcast'   , 'mod_podcast_setting'   , 'steel', 'steel_mods' );
+  //add_settings_field('mod_quotes'    , 'Quotes'    , 'mod_quotes_setting'    , 'steel', 'steel_mods' );
+	//add_settings_field('mod_shortcodes', 'Shortcodes', 'mod_shortcodes_setting', 'steel', 'steel_mods' );
+    add_settings_field('mod_slides'    , 'Slides'    , 'mod_slides_setting'    , 'steel', 'steel_mods' );
+    add_settings_field('mod_teams'     , 'Teams'     , 'mod_teams_setting'     , 'steel', 'steel_mods' );
 }
 function sparks_store_text() { echo ''; }
 function paypal_merch_id_setting() {
@@ -180,6 +181,15 @@ function mod_quotes_setting() {
   <label for="steel_options[mod_quotes]"><input name="steel_options[mod_quotes]" type="radio" value="false" <?php checked( $quotes, 'false' ) ?>>Not Active</label>
   <?php
 }
+function mod_shortcodes_setting() {
+  $options = get_option('steel_options');
+
+  $shortcodes = !empty($options['mod_shortcodes']) ? $options['mod_shortcodes'] : 'true'; ?>
+
+  <label for="steel_options[mod_shortcodes]"><input name="steel_options[mod_shortcodes]" type="radio" value="true"  <?php checked( $shortcodes, 'true'  ) ?>>Active</label>
+  <label for="steel_options[mod_shortcodes]"><input name="steel_options[mod_shortcodes]" type="radio" value="false" <?php checked( $shortcodes, 'false' ) ?>>Not Active</label>
+  <?php
+}
 function mod_slides_setting() {
   $options = get_option('steel_options');
 
@@ -209,11 +219,12 @@ function steel_options_validate($input) {
   $newinput['fb_app_id'] = trim($input['fb_app_id']);
   if (!preg_match('/^[0-9]{15}$/i', $newinput['fb_app_id']) & !empty($newinput['fb_app_id'])) { add_settings_error( 'fb_app_id', 'invalid', 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>' ); }
 
-  //$newinput['mod_bootstrap'] = trim($input['mod_bootstrap']);
-    $newinput['mod_podcast'  ] = trim($input['mod_podcast'  ]);
-  //$newinput['mod_quotes'   ] = trim($input['mod_quotes'   ]);
-    $newinput['mod_slides'   ] = trim($input['mod_slides'   ]);
-    $newinput['mod_teams'    ] = trim($input['mod_teams'    ]);
+  //$newinput['mod_bootstrap' ] = trim($input['mod_bootstrap' ]);
+    $newinput['mod_podcast'   ] = trim($input['mod_podcast'   ]);
+  //$newinput['mod_quotes'    ] = trim($input['mod_quotes'    ]);
+	//$newinput['mod_shortcodes'] = trim($input['mod_shortcodes']);
+    $newinput['mod_slides'    ] = trim($input['mod_slides'    ]);
+    $newinput['mod_teams'     ] = trim($input['mod_teams'     ]);
 
   return $newinput;
 }
@@ -366,7 +377,7 @@ function pin_it( $args = array() ) {
  */
 function is_module_active( $mod ) {
   $options = get_option('steel_options');
-  $default_on  = array('bootstrap','quotes');
+  $default_on = array('bootstrap','quotes','shortcodes');
   if (in_array($mod, $default_on)) :
     $mod_status = !empty($options['mod_' . $mod]) ? $options['mod_' . $mod] : 'true';
   else :
