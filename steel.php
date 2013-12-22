@@ -23,7 +23,7 @@ License URI: http://www.gnu.org/licenses/
 
   You should have received a copy of the GNU General Public License
   along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
+*/
 
 if (is_module_active('podcast')) {
   include_once dirname( __FILE__ ) . '/podcast.php';
@@ -57,7 +57,7 @@ function steel_admin_scripts() {
   wp_enqueue_style( 'steel-admin-style', plugins_url('steel/css/admin.css'    ) );
   wp_enqueue_style( 'steel-font'       , plugins_url('steel/css/starverte.css') );
   wp_enqueue_style( 'dashicons'                                                 );
-  
+
   wp_enqueue_media();
 }
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
@@ -66,7 +66,7 @@ function steel_scripts() {
     // Make sure there aren't other instances of Twitter Bootstrap
     wp_deregister_script('bootstrap'    );
     wp_deregister_style ('bootstrap-css');
-  
+
     // Load Twitter Bootstrap
     wp_enqueue_script( 'bootstrap'    , plugins_url('steel/js/bootstrap.min.js'  ), array('jquery'), '3.0.3', true );
     wp_enqueue_style ( 'bootstrap-css', plugins_url('steel/css/bootstrap.min.css'), array()        , '3.0.3'       );
@@ -85,8 +85,10 @@ function steel_scripts() {
 add_action('admin_head', 'steel_admin_head');
 function steel_admin_head() {
   if (is_module_active('podcast')) {
-    add_action( 'steel_pod_series_add_form_fields' , 'steel_pod_series_field' );
-    add_action( 'steel_pod_series_edit_form_fields', 'steel_pod_series_field' );
+    add_action( 'steel_pod_series_add_form_fields'  , 'steel_pod_series_field'   );
+    add_action( 'steel_pod_series_edit_form_fields' , 'steel_pod_series_field'   );
+    add_action( 'steel_pod_channel_add_form_fields' , 'steel_pod_channel_fields' );
+    add_action( 'steel_pod_channel_edit_form_fields', 'steel_pod_channel_fields' );
   }
 }
 
@@ -135,10 +137,10 @@ function steel_admin_init(){
   //add_settings_field('mod_bootstrap' , 'Bootstrap' , 'mod_bootstrap_setting' , 'steel', 'steel_mods' );
     add_settings_field('mod_podcast'   , 'Podcast'   , 'mod_podcast_setting'   , 'steel', 'steel_mods' );
   //add_settings_field('mod_quotes'    , 'Quotes'    , 'mod_quotes_setting'    , 'steel', 'steel_mods' );
-	//add_settings_field('mod_shortcodes', 'Shortcodes', 'mod_shortcodes_setting', 'steel', 'steel_mods' );
+  //add_settings_field('mod_shortcodes', 'Shortcodes', 'mod_shortcodes_setting', 'steel', 'steel_mods' );
     add_settings_field('mod_slides'    , 'Slides'    , 'mod_slides_setting'    , 'steel', 'steel_mods' );
     add_settings_field('mod_teams'     , 'Teams'     , 'mod_teams_setting'     , 'steel', 'steel_mods' );
-	//add_settings_field('mod_widgets'   , 'Widgets'   , 'mod_widgets_setting'   , 'steel', 'steel_mods' );
+  //add_settings_field('mod_widgets'   , 'Widgets'   , 'mod_widgets_setting'   , 'steel', 'steel_mods' );
 }
 function sparks_store_text() { echo ''; }
 function paypal_merch_id_setting() {
@@ -173,8 +175,8 @@ function mod_podcast_setting() {
 
   $podcast = !empty($options['mod_podcast']) ? $options['mod_podcast'] : 'false'; ?>
 
-  <label for="steel_options[mod_podcast]"><input name="steel_options[mod_podcast]" type="radio" value="true" <?php checked( $podcast, "true" ) ?>>Active</label>
-  <label for="steel_options[mod_podcast]"><input name="steel_options[mod_podcast]" type="radio" value="false" <?php checked( $podcast, "false" ) ?>>Not Active</label>
+  <label for="steel_options[mod_podcast]"><input name="steel_options[mod_podcast]" type="radio" value="true"  <?php checked( $podcast, 'true'  ) ?>>Active</label>
+  <label for="steel_options[mod_podcast]"><input name="steel_options[mod_podcast]" type="radio" value="false" <?php checked( $podcast, 'false' ) ?>>Not Active</label>
   <?php
 }
 function mod_quotes_setting() {
@@ -200,8 +202,8 @@ function mod_slides_setting() {
 
   $slides = !empty($options['mod_slides']) ? $options['mod_slides'] : 'false'; ?>
 
-  <label for="steel_options[mod_slides]"><input name="steel_options[mod_slides]" type="radio" value="true" <?php checked( $slides, "true" ) ?>>Active</label>
-  <label for="steel_options[mod_slides]"><input name="steel_options[mod_slides]" type="radio" value="false" <?php checked( $slides, "false" ) ?>>Not Active</label>
+  <label for="steel_options[mod_slides]"><input name="steel_options[mod_slides]" type="radio" value="true"  <?php checked( $slides, 'true'  ) ?>>Active</label>
+  <label for="steel_options[mod_slides]"><input name="steel_options[mod_slides]" type="radio" value="false" <?php checked( $slides, 'false' ) ?>>Not Active</label>
   <?php
 }
 function mod_teams_setting() {
@@ -209,8 +211,8 @@ function mod_teams_setting() {
 
   $teams = !empty($options['mod_teams']) ? $options['mod_teams'] : 'false'; ?>
 
-  <label for="steel_options[mod_teams]"><input name="steel_options[mod_teams]" type="radio" value="true" <?php checked( $teams, "true" ) ?>>Active</label>
-  <label for="steel_options[mod_teams]"><input name="steel_options[mod_teams]" type="radio" value="false" <?php checked( $teams, "false" ) ?>>Not Active</label>
+  <label for="steel_options[mod_teams]"><input name="steel_options[mod_teams]" type="radio" value="true"  <?php checked( $teams, 'true'  ) ?>>Active</label>
+  <label for="steel_options[mod_teams]"><input name="steel_options[mod_teams]" type="radio" value="false" <?php checked( $teams, 'false' ) ?>>Not Active</label>
   <?php
 }
 function mod_widgets_setting() {
@@ -236,10 +238,10 @@ function steel_options_validate($input) {
   //$newinput['mod_bootstrap' ] = trim($input['mod_bootstrap' ]);
     $newinput['mod_podcast'   ] = trim($input['mod_podcast'   ]);
   //$newinput['mod_quotes'    ] = trim($input['mod_quotes'    ]);
-	//$newinput['mod_shortcodes'] = trim($input['mod_shortcodes']);
+  //$newinput['mod_shortcodes'] = trim($input['mod_shortcodes']);
     $newinput['mod_slides'    ] = trim($input['mod_slides'    ]);
     $newinput['mod_teams'     ] = trim($input['mod_teams'     ]);
-	//$newinput['mod_widgets'   ] = trim($input['mod_widgets'   ]);
+  //$newinput['mod_widgets'   ] = trim($input['mod_widgets'   ]);
 
   return $newinput;
 }
@@ -392,13 +394,13 @@ function pin_it( $args = array() ) {
  */
 function is_module_active( $mod ) {
   $options = get_option('steel_options');
-  $default_on = array('bootstrap','quotes','shortcodes','widgets');
+  $default_on  = array('bootstrap','quotes','shortcodes','widgets');
   if (in_array($mod, $default_on)) :
-    $mod_status = !empty($options['mod_' . $mod]) ? $options['mod_' . $mod] : 'true';
+    $mod_status = !empty($options[ 'mod_' . $mod ]) ? $options[ 'mod_' . $mod ] : 'true';
   else :
-    $mod_status = !empty($options['mod_' . $mod]) ? $options['mod_' . $mod] : 'false';
+    $mod_status = !empty($options[ 'mod_' . $mod ]) ? $options[ 'mod_' . $mod ] : 'false';
   endif;
-  
+
   if ($mod_status == 'true')
     return true;
   else
