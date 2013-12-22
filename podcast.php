@@ -7,11 +7,10 @@
  *
  */
 
-if (is_module_active('podcast')) {
-  add_action( 'init'       , 'steel_podcast_init'         , 0 );
-  add_action( 'edit_term'  , 'save_steel_pod_series_cover'    );
-  add_action( 'create_term', 'save_steel_pod_series_cover'    );
-}
+
+add_action( 'init'       , 'steel_podcast_init'         , 0 );
+add_action( 'edit_term'  , 'save_steel_pod_series_cover'    );
+add_action( 'create_term', 'save_steel_pod_series_cover'    );
 
 function steel_podcast_init() {
 
