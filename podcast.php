@@ -118,27 +118,27 @@ function steel_podcast_init() {
   register_taxonomy( 'steel_pod_series', 'steel_pod_episode', $args );
 }
 
-function steel_pod_series_field($taxonomy = 'steel_pod_series') {
+function steel_pod_series_fields($taxonomy = 'steel_pod_series') {
   $output  = '';
 
   if(empty($taxonomy->term_id)) {
     $output .= '<div class="form-field">';
-    $output .= '<label for="steel_pod_series_cover">Cover Photo</label>';
-    $output .= '<input type="hidden" name="steel_pod_series_cover" id="steel_pod_series_cover">';
-    $output .= '<a href="#" id="steel_pod_series_cover_button" class="button insert-media add_media" title="Set Cover Photo"><span class="steel-icon-cover-photo"></span> Set Cover Photo</a>';
+    $output .= '<label for="series_cover">Cover Photo</label>';
+    $output .= '<input type="hidden" name="series_cover" id="series_cover">';
+    $output .= '<a href="#" id="series_cover_button" class="button insert-media add_media" title="Set Cover Photo"><span class="steel-icon-cover-photo"></span> Set Cover Photo</a>';
     $output .= '</div>';
   }
   else{
-    $steel_pod_series_cover_url = get_option('steel_pod_series_cover' . $taxonomy->term_id);
+    $series_cover_url = get_option('series_cover' . $taxonomy->term_id);
 
     $output .= '<tr class="form-field">';
-    $output .= '<th scope="row" valign="top"><label for="steel_pod_series_cover">Cover Photo</label></th>';
+    $output .= '<th scope="row" valign="top"><label for="series_cover">Cover Photo</label></th>';
     $output .= '<td>';
 
-    $output .= !empty($steel_pod_series_cover_url) ?'<img src="' . $steel_pod_series_cover_url . '" style="max-width:300px;margin:1em 0;" id="steel_pod_series_cover_img">' : '<img src="" id="steel_pod_series_cover_img" style="max-width:300px;">';
+    $output .= !empty($series_cover_url) ?'<img src="' . $series_cover_url . '" style="max-width:300px;margin:1em 0;" id="series_cover_img">' : '<img src="" id="series_cover_img" style="max-width:300px;">';
 
-    $output .= '<input type="hidden" name="steel_pod_series_cover" id="steel_pod_series_cover" value="' . $steel_pod_series_cover_url . '">';
-    $output .= '<a href="#" id="steel_pod_series_cover_button" class="button insert-media add_media" title="Set Cover Photo" style="display:block;max-width:300px;"><span class="steel-icon-cover-photo"></span> Set Cover Photo</a>';
+    $output .= '<input type="hidden" name="series_cover" id="series_cover" value="' . $series_cover_url . '">';
+    $output .= '<a href="#" id="series_cover_button" class="button insert-media add_media" title="Set Cover Photo" style="display:block;max-width:300px;"><span class="steel-icon-cover-photo"></span> Set Cover Photo</a>';
 
     $output .= '</td>';
     $output .= '</tr>';       
@@ -149,7 +149,7 @@ function steel_pod_series_field($taxonomy = 'steel_pod_series') {
   <script type="text/javascript">
     var file_frame;
 
-    jQuery('#steel_pod_series_cover_button').live('click', function( event ){
+    jQuery('#series_cover_button').live('click', function( event ){
 
       event.preventDefault();
 
@@ -169,9 +169,9 @@ function steel_pod_series_field($taxonomy = 'steel_pod_series') {
       file_frame.on( 'select', function() {
         attachment = file_frame.state().get('selection').first().toJSON();
 
-        document.getElementById("steel_pod_series_cover"    ).value        = attachment.url;
-        document.getElementById("steel_pod_series_cover_img").src          = attachment.url;
-        document.getElementById("steel_pod_series_cover_img").style.margin = '1em 0'       ;
+        document.getElementById("series_cover"    ).value        = attachment.url;
+        document.getElementById("series_cover_img").src          = attachment.url;
+        document.getElementById("series_cover_img").style.margin = '1em 0'       ;
       });
 
       file_frame.open();
@@ -184,107 +184,183 @@ function steel_pod_channel_fields($taxonomy = 'steel_pod_channel') {
   $output  = '';
 
   if(empty($taxonomy->term_id)) {
-        
     //Channel Type
     $output .= '<div class="form-field">';
-    $output .= '<label for="steel_pod_channel_type">Type</label>';
-    $output .= '<select name="steel_pod_channel_type">';
+    $output .= '<label for="channel_type">Type</label>';
+    $output .= '<select name="channel_type">';
     $output .= '<option value="display">Display</option>';
-    $output .= '<option value="pod_audio">Audio Podcast</option>';
-    $output .= '<option value="pod_video">Video Podcast</option>';
+    $output .= '<option value="podcast">Podcast</option>';
     $output .= '</select>';
+    $output .= '<p>Display outputs HTML, Podcast outputs RSS for iTunes</p>';
+    $output .= '</div>';
+    
+    //Cover Photo
+    $output .= '<div class="form-field">';
+    $output .= '<label for="channel_cover">Cover Photo</label>';
+    $output .= '<input type="hidden" name="channel_cover" id="channel_cover">';
+    $output .= '<a href="#" id="channel_cover_button" class="button insert-media add_media" title="Set Cover Photo"><span class="steel-icon-cover-photo"></span> Set Cover Photo</a>';
+    $output .= '<p>iTunes requires square JPG or PNG images that are at least 1400x1400 pixels</p>';
     $output .= '</div>';
   }
   else {
     $t_ID = $taxonomy->term_id;
-    $steel_pod_channel_type = get_option('steel_pod_channel_type' . $t_ID);
-    $steel_pod_channel_copy = get_option('steel_pod_channel_copy' . $t_ID);
-    $steel_pod_channel_author = get_option('steel_pod_channel_author' . $t_ID);
-    $steel_pod_channel_owner_name = get_option('steel_pod_channel_owner_name' . $t_ID);
-    $steel_pod_channel_owner_email = get_option('steel_pod_channel_owner_email' . $t_ID);
+    $channel_type        = get_option('channel_type'        . $t_ID);
+    $channel_copy        = get_option('channel_copy'        . $t_ID);
+    $channel_link        = get_option('channel_link'        . $t_ID);
+    $channel_author      = get_option('channel_author'      . $t_ID);
+    $channel_cat         = get_option('channel_cat'         . $t_ID);
+    $channel_owner_name  = get_option('channel_owner_name'  . $t_ID);
+    $channel_owner_email = get_option('channel_owner_email' . $t_ID);
     
-    $a = array( 'value' => 'display'  , 'label' => 'Display'      );
-    $b = array( 'value' => 'pod_audio', 'label' => 'Audio Podcast');
-    $c = array( 'value' => 'pod_video', 'label' => 'Video Podcast');
-    $options = array($a, $b, $c);
+    $a = array( 'value' => 'display', 'label' => 'Display');
+    $b = array( 'value' => 'podcast', 'label' => 'Podcast');
+    $options = array($a, $b);
+    $itunes_cats = array( 'Arts', '— Design', '— Fashion &amp Beauty', '— Food', '— Literature', '— Performing Arts', '— Visual Arts', 'Business', '— Business News', '— Careers', '— Investing', '— Management &amp Marketing', '— Shopping', 'Comedy', 'Education', '— Education', '— Education Technology', '— Higher Education', '— K-12', '— Language Courses', '— Training', 'Games &amp Hobbies', '— Automotive', '— Aviation', '— Hobbies', '— Other Games', '— Video Games', 'Government &amp Organizations', '— Local', '— National', '— Non-Profit', '— Regional', 'Health', '— Alternative Health', '— Fitness &amp Nutrition', '— Self-Help', '— Sexuality', 'Kids &amp Family', 'Music', 'News &amp Politics', 'Religion &amp Spirituality', '— Buddhism', '— Christianity', '— Hinduism', '— Islam', '— Judaism', '— Other', '— Spirituality', 'Science &amp Medicine', '— Medicine', '— Natural Sciences', '— Social Sciences', 'Society &amp Culture', '— History', '— Personal Journals', '— Philosophy', '— Places &amp Travel', 'Sports &amp Recreation', '— Amateur', '— College &amp High School', '— Outdoor', '— Professional', 'Technology', '— Gadgets', '— Tech News', '— Podcasting', '— Software How-To', 'TV &amp Film');
     
     //Channel Type
     $output .= '<tr class="form-field">';
-    $output .= '<th scope="row" valign="top"><label for="steel_pod_channel_type">Type</label></th>';
+    $output .= '<th scope="row" valign="top"><label for="channel_type">Type</label></th>';
     $output .= '<td>';
-    $output .= '<select name="steel_pod_channel_type">';
+    $output .= '<select name="channel_type">';
     foreach ($options as $opt) {
       $output .= '<option value="' . $opt['value'] . '" ';
-      $output .= $steel_pod_channel_type == $opt['value'] ? ' selected="selected"' : '';
+      $output .= $channel_type == $opt['value'] ? ' selected="selected"' : '';
       $output .= '>' . $opt['label'] . '</option>';
     }
     $output .= '</select>';
+    $output .= '<br><span class="description">Display outputs HTML, Podcast outputs RSS for iTunes</span>';
     $output .= '</td>';
     $output .= '</tr>'; 
     
     if (is_podcast_channel($t_ID)) {
       $output .= '<tr><th scope="row" valign="top"><h3>Podcast Information</h3></th></tr>';
       
+      //Cover Photo
+      $channel_cover_url = get_option('channel_cover' . $taxonomy->term_id);
+      $output .= '<tr class="form-field">';
+      $output .= '<th scope="row" valign="top"><label for="channel_cover">Cover Photo</label></th>';
+      $output .= '<td>';
+      $output .= !empty($channel_cover_url) ?'<img src="' . $channel_cover_url . '" style="margin:1em 0;" id="channel_cover_img" width="300" height="300">' : '<img src="" id="channel_cover_img">';
+      $output .= '<input type="hidden" name="channel_cover" id="channel_cover" value="' . $channel_cover_url . '">';
+      $output .= '<a href="#" id="channel_cover_button" class="button insert-media add_media" title="Set Cover Photo" style="display:block;max-width:300px;"><span class="steel-icon-cover-photo"></span> Set Cover Photo</a>';
+      $output .= '<br><span class="description">iTunes requires square JPG or PNG images that are at least 1400x1400 pixels</span>';
+      $output .= '</td>';
+      $output .= '</tr>';
+      
+      //Link
+      $output .= '<tr class="form-field">';
+      $output .= '<th scope="row" valign="top"><label for="channel_link">Link</label></th>';
+      $output .= '<td>';
+      $output .= '<input type="text" name="channel_link" id="channel_link" value="' . $channel_link . '">';
+      $output .= '</td>';
+      $output .= '</tr>';
+      
       //Copyright Notice
       $output .= '<tr class="form-field">';
-      $output .= '<th scope="row" valign="top"><label for="steel_pod_channel_copy">Copyright Notice</label></th>';
+      $output .= '<th scope="row" valign="top"><label for="channel_copy">Copyright Notice</label></th>';
       $output .= '<td>';
-      $output .= '<input type="text" name="steel_pod_channel_copy" id="steel_pod_channel_copy" value="' . $steel_pod_channel_copy . '">';
-      $output .= '<br><span class="description">i.e. &copy;2013 Star Verte LLC. All Rights Reserved.</span>';
+      $output .= '<input type="text" name="channel_copy" id="channel_copy" value="' . $channel_copy . '">';
+      $output .= '<br><span class="description">i.e. &amp;copy; 2013 Star Verte LLC. All Rights Reserved. (&amp;copy; becomes &copy;)</span>';
       $output .= '</td>';
       $output .= '</tr>';
       
       //Author
       $output .= '<tr class="form-field">';
-      $output .= '<th scope="row" valign="top"><label for="steel_pod_channel_author">Author</label></th>';
+      $output .= '<th scope="row" valign="top"><label for="channel_author">Author</label></th>';
       $output .= '<td>';
-      $output .= '<input type="text" name="steel_pod_channel_author" id="steel_pod_channel_author" value="' . $steel_pod_channel_author . '">';
+      $output .= '<input type="text" name="channel_author" id="channel_author" value="' . $channel_author . '">';
       $output .= '<br><span class="description">May be an individual or a corporate author. i.e. Star Verte LLC</span>';
+      $output .= '</td>';
+      $output .= '</tr>';
+      
+      //Podcast Category
+      $output .= '<tr class="form-field">';
+      $output .= '<th scope="row" valign="top"><label for="channel_cat">Category</label></th>';
+      $output .= '<td>';
+      $output .= '<select name="channel_cat">';
+      foreach ($itunes_cats as $cat) {
+        $output .= '<option value="' . $cat . '" ';
+        $output .= $channel_cat == $cat ? ' selected="selected"' : '';
+        $output .= '>' . $cat . '</option>';
+      }
+      $output .= '</select>';
       $output .= '</td>';
       $output .= '</tr>';
       
       //Owner
       $output .= '<tr><th scope="row" valign="top"><h4>Podcast Owner</h4>';
-      $output .= '<p class="description">The name and email of an individual person.</p>';
+      $output .= '<span class="description">Used for contact only</span>';
       $output .= '</th></tr>';
       $output .= '<tr class="form-field">';
-      $output .= '<th scope="row" valign="top"><label for="steel_pod_channel_owner_name">Name</label></th>';
+      $output .= '<th scope="row" valign="top"><label for="channel_owner_name">Name</label></th>';
       $output .= '<td>';
-      $output .= '<input type="text" name="steel_pod_channel_owner_name" id="steel_pod_channel_owner_name" value="' . $steel_pod_channel_owner_name . '">';
+      $output .= '<input type="text" name="channel_owner_name" id="channel_owner_name" value="' . $channel_owner_name . '">';
       $output .= '</td>';
       $output .= '</tr>';
       $output .= '<tr class="form-field">';
-      $output .= '<th scope="row" valign="top"><label for="steel_pod_channel_owner_email">Email</label></th>';
+      $output .= '<th scope="row" valign="top"><label for="channel_owner_email">Email</label></th>';
       $output .= '<td>';
-      $output .= '<input type="text" name="steel_pod_channel_owner_email" id="steel_pod_channel_owner_email" value="' . $steel_pod_channel_owner_email . '">';
+      $output .= '<input type="text" name="channel_owner_email" id="channel_owner_email" value="' . $channel_owner_email . '">';
       $output .= '</td>';
       $output .= '</tr>';
     }      
   }  
   
-  echo $output;
+  echo $output; ?>
+  <script type="text/javascript">
+    var file_frame;
+
+    jQuery('#channel_cover_button').live('click', function( event ){
+
+      event.preventDefault();
+
+      if ( file_frame ) {
+        file_frame.open();
+        return;
+      }
+
+      file_frame = wp.media.frames.file_frame = wp.media({
+        title: jQuery( this ).data( 'uploader_title' ),
+        button: {
+          text: jQuery( this ).data( 'uploader_button_text' ),
+        },
+        multiple: false
+      });
+
+      file_frame.on( 'select', function() {
+        attachment = file_frame.state().get('selection').first().toJSON();
+
+        document.getElementById("channel_cover"    ).value        = attachment.url;
+        document.getElementById("channel_cover_img").src          = attachment.url;
+        document.getElementById("channel_cover_img").style.margin = '1em 0'       ;
+        document.getElementById("channel_cover_img").width        = '300'         ;
+        document.getElementById("channel_cover_img").height       = '300'         ;
+      });
+
+      file_frame.open();
+
+    });;
+  </script><?php
 }
 
 /**
 * Save custom fields for channels and series
 */
 function save_steel_pod_custom($term_id) {
-  if (isset($_POST['steel_pod_series_cover']))
-    update_option('steel_pod_series_cover' . $term_id, $_POST['steel_pod_series_cover']);
-  if (isset($_POST['steel_pod_channel_type']))
-    update_option('steel_pod_channel_type' . $term_id, $_POST['steel_pod_channel_type']);
-  if (isset($_POST['steel_pod_channel_copy']))
-    update_option('steel_pod_channel_copy' . $term_id, $_POST['steel_pod_channel_copy']);
-  if (isset($_POST['steel_pod_channel_author']))
-    update_option('steel_pod_channel_author' . $term_id, $_POST['steel_pod_channel_author']);
-  if (isset($_POST['steel_pod_channel_owner_name']))
-    update_option('steel_pod_channel_owner_name' . $term_id, $_POST['steel_pod_channel_owner_name']);
-  if (isset($_POST['steel_pod_channel_owner_email']))
-    update_option('steel_pod_channel_owner_email' . $term_id, $_POST['steel_pod_channel_owner_email']);
+  if (!empty($_POST['series_cover'])) { update_option('series_cover' . $term_id, $_POST['series_cover']); }
+  
+  if (!empty($_POST['channel_type']       )) { update_option('channel_type'        . $term_id, $_POST['channel_type']       ); }
+  if (!empty($_POST['channel_cover']      )) { update_option('channel_cover'       . $term_id, $_POST['channel_cover']      ); }
+  if (!empty($_POST['channel_link']       )) { update_option('channel_link'        . $term_id, $_POST['channel_link']       ); }
+  if (!empty($_POST['channel_copy']       )) { update_option('channel_copy'        . $term_id, $_POST['channel_copy']       ); }
+  if (!empty($_POST['channel_author']     )) { update_option('channel_author'      . $term_id, $_POST['channel_author']     ); }
+  if (!empty($_POST['channel_cat']        )) { update_option('channel_cat'         . $term_id, $_POST['channel_cat']        ); }
+  if (!empty($_POST['channel_owner_name'] )) { update_option('channel_owner_name'  . $term_id, $_POST['channel_owner_name'] ); }
+  if (!empty($_POST['channel_owner_email'])) { update_option('channel_owner_email' . $term_id, $_POST['channel_owner_email']); }
 }
 
 function is_podcast_channel($term_id) {
-  $type = get_option('steel_pod_channel_type'. $term_id);
+  $type = get_option('channel_type'. $term_id);
   if ($type == 'display') :
     return false;
   else :
