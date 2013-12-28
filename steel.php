@@ -58,6 +58,16 @@ function steel_admin_scripts() {
   wp_enqueue_style( 'steel-font'       , plugins_url('steel/css/starverte.css') );
   wp_enqueue_style( 'dashicons'                                                 );
 
+  wp_deregister_script( 'jquery' );
+  wp_deregister_script( 'jquery-ui' );
+
+  wp_enqueue_script( 'jquery'   , '//code.jquery.com/jquery-1.9.1.js'       , '1.9.1' , true );
+  wp_enqueue_script( 'jquery-ui', '//code.jquery.com/ui/1.10.3/jquery-ui.js', '1.10.3', true );
+
+  if (is_module_active('slides')) {
+    wp_enqueue_script( 'slides-module', plugins_url('steel/js/slides.js'  ), array('jquery'), steel_version(), true );
+  }
+
   wp_enqueue_media();
 }
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
@@ -85,8 +95,8 @@ function steel_scripts() {
 add_action('admin_head', 'steel_admin_head');
 function steel_admin_head() {
   if (is_module_active('podcast')) {
-    add_action( 'steel_pod_series_add_form_fields'  , 'steel_pod_series_field'   );
-    add_action( 'steel_pod_series_edit_form_fields' , 'steel_pod_series_field'   );
+    add_action( 'steel_pod_series_add_form_fields'  , 'steel_pod_series_fields'   );
+    add_action( 'steel_pod_series_edit_form_fields' , 'steel_pod_series_fields'   );
     add_action( 'steel_pod_channel_add_form_fields' , 'steel_pod_channel_fields' );
     add_action( 'steel_pod_channel_edit_form_fields', 'steel_pod_channel_fields' );
   }
