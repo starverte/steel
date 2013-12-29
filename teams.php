@@ -126,7 +126,7 @@ function save_steel_profile() {
 }
 
 /*
- * Create cystom functions to display data
+ * Create custom functions to display data
  */
 function profile_title() {
   global $post;
