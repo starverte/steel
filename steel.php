@@ -440,4 +440,12 @@ function is_flint_active() {
   else
     return false;
 }
+
+/*
+ * Add function steel_get_image_url
+ */
+function steel_get_image_url( $attachment_id, $size = 'thumbnail', $icon = false ) {
+  $image = wp_get_attachment_image_src( $attachment_id, $size, $icon );
+  return $image[0];
+}
 ?>

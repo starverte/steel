@@ -127,9 +127,4 @@ function steel_slides_meta( $meta ) {
   $output = !empty($custom['slides_'.$meta][0]) ? $custom['slides_'.$meta][0] : '';
   return $output;
 }
-
-function steel_get_image_url( $attachment_id, $size = 'thumbnail', $icon = false ) {
-  $image = wp_get_attachment_image_src( $attachment_id, $size, $icon );
-  return $image[0];
-}
 ?>
