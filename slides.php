@@ -53,16 +53,18 @@ function steel_slides_init() {
  * Create custom meta boxes
  */
 add_action( 'add_meta_boxes', 'steel_slides_meta_boxes' );
-function steel_slides_meta_boxes() { add_meta_box('steel_slides_details', 'Add/Edit Slides', 'steel_slides_details', 'steel_slides', 'advanced', 'high'); }
-function steel_slides_details() {
+function steel_slides_meta_boxes() {
+  add_meta_box('steel_slides_slideshow', 'Add/Edit Slides'     , 'steel_slides_slideshow', 'steel_slides', 'advanced', 'high'  );
+  add_meta_box('steel_slides_info'     , 'Using this Slideshow', 'steel_slides_info'     , 'steel_slides', 'side');
+}
+function steel_slides_slideshow() {
   $slides_media = steel_slides_meta( 'media' );
   $slides_order = steel_slides_meta( 'order' );
   $slides_media_url = steel_slides_meta( 'media_url' );
-  $the_slides = array('123','234','345','456','567');
   $slides = explode(',', $slides_order);
 
   $output = '';
-  $output .= '<a href="#" class="button add_slide_media" id="btn_above" title="Add slide to slideshow" style="margin-bottom:10px;"><span class="steel-icon-cover-photo"></span> New Slide</a>';
+  $output .= '<a href="#" class="button add_slide_media" id="btn_above" title="Add slide to slideshow"><span class="steel-icon-cover-photo"></span> New Slide</a>';
   $output .= '<div id="slides">';
   foreach ($slides as $slide) {
     if (!empty($slide)) {
@@ -86,12 +88,18 @@ function steel_slides_details() {
     }
   }
   $output .= '</div>';
-  $output .= '<a href="#" class="button add_slide_media" id="btn_below" title="Add slide to slideshow" style="float:left;clear:both;margin-top:10px;"><span class="steel-icon-cover-photo"></span> New Slide</a>';
+  $output .= '<a href="#" class="button add_slide_media" id="btn_below" title="Add slide to slideshow" style="float:left;clear:both;"><span class="steel-icon-cover-photo"></span> New Slide</a>';
 
   echo $output; ?>
 
   <input type="hidden" name="slides_order" id="slides_order" value="<?php echo $slides_order; ?>">
   <div style="float:none; clear:both;"></div><?php
+}
+function steel_slides_info() {
+  global $post; ?>
+
+  <p>To use this slider in your posts or pages use the following shortcode:</p>
+  <p><code>[steel_slideshow id="<?php echo $post->ID; ?>"]</code> or</p><p><code>[steel_slideshow name="<?php echo strtolower($post->post_title); ?>"]</code></p><?php
 }
 
 /*
@@ -119,12 +127,100 @@ function save_steel_slides() {
 }
 
 /*
- * Display Podcast Episode metadata
+ * Display Slides metadata
  */
-function steel_slides_meta( $meta ) {
+function steel_slides_meta( $meta, $post_id = NULL ) {
   global $post;
-  $custom = get_post_custom($post->ID);
+  $custom = $post_id == NULL ? get_post_custom($post->ID) : get_post_custom($post_id);
   $output = !empty($custom['slides_'.$meta][0]) ? $custom['slides_'.$meta][0] : '';
+  return $output;
+}
+
+/*
+ * Display Slideshow by id
+ */
+function steel_slideshow( $post_id ) {
+  $slides_media     = steel_slides_meta( 'media'    , $post_id );
+  $slides_order     = steel_slides_meta( 'order'    , $post_id );
+  $slides_media_url = steel_slides_meta( 'media_url', $post_id );
+
+  $slides = explode(',', $slides_order);
+
+  $output     = '';
+  $indicators = '';
+  $items      = '';
+  $controls   = '';
+  $count      = -1;
+  $i          = -1;
+
+  //Indicators
+  foreach ($slides as $slide) {
+    if (!empty($slide)) {
+      $count += 1;
+      $indicators .= $count >= 1 ? '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"></li>' : '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'" class="active"></li>';
+    }
+  }
+
+  //Wrapper for slides
+  foreach ($slides as $slide) {
+    if (!empty($slide)) {
+      $image   = wp_get_attachment_image_src( $slide );
+      $title   = steel_slides_meta( 'title_'  .$slide, $post_id );
+      $content = steel_slides_meta( 'content_'.$slide, $post_id );
+      $link    = steel_slides_meta( 'link_'   .$slide, $post_id );
+      $i += 1;
+
+      $items .= $i >= 1 ? '<div class="item">' : '<div class="item active">';
+      $items .= !empty($link) ? '<a href="'.$link.'">' : '';
+      $items .= '<img id="slide_img_'.$slide.'" src="'.$image[0].'" alt='.$title.'>';
+      $items .= !empty($link) ? '</a>' : '';
+
+      if (!empty($title) || !empty($content)) {
+        $items .= '<div class="carousel-caption">';
+        if (!empty($title  )) { $items .= '<h3 id="slides_title_'.$slide.'">' .$title  .'</h3>'; }
+        if (!empty($content)) { $items .= '<p id="slides_content_'.$slide.'">'.$content.'</p>' ; }
+        $items .= '</div>';//.carousel-caption
+      }
+      $items .= '</div>';//.item
+    }
+  }
+
+  //Controls
+  $controls .= '<a class="left ' .'carousel-control" href="#carousel_'.$post_id.'" data-slide="prev"><span class="glyphicon glyphicon-chevron-left' .'"></span></a>';
+  $controls .= '<a class="right '.'carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="glyphicon glyphicon-chevron-right'.'"></span></a>';
+
+  //Output
+  $output .= '<div id="carousel_'.$post_id.'" class="carousel slide" data-ride="carousel">';
+  $output .= '<ol class="carousel-indicators">';
+  $output .= $indicators;
+  $output .= '</ol>';
+  $output .= '<div class="carousel-inner">';
+  $output .= $items;
+  $output .= '</div>';
+  $output .= $controls;
+  $output .= '</div>';
+
+  return $output;
+}
+
+/*
+ * Create [steel_slideshow] shortcode
+ */
+if ( shortcode_exists( 'steel_slideshow' ) ) { remove_shortcode( 'steel_slideshow' ); }
+add_shortcode( 'steel_slideshow', 'steel_slideshow_shortcode' );
+function steel_slideshow_shortcode( $atts, $content = null ) {
+  extract( shortcode_atts( array( 'id' => null, 'name' => null ), $atts ) );
+
+  if (!empty($id)) {
+    $output = steel_slideshow( $id );
+  }
+  elseif (!empty($name)) {
+    $show = get_page_by_title( $name, OBJECT, 'steel_slides' );
+    $output = steel_slideshow( $show->ID );
+  }
+  else {
+    return;
+  }
   return $output;
 }
 ?>
