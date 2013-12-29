@@ -111,7 +111,7 @@ function steel_admin_head() {
  */
 add_action('admin_menu', 'steel_admin_add_page');
 function steel_admin_add_page() {
-  add_menu_page('Steel', 'Steel', 'manage_options', 'steel', 'steel_options_page', '');
+  add_menu_page('Steel', 'Steel', 'manage_options', 'steel', 'steel_options_page', 'none');
 }
 function steel_options_page() {
   ?>
