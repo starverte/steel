@@ -30,6 +30,13 @@ span[class*='steel-icon-'] {
 }
 
 /* Slides */
+.post-php.post-type-steel_slides #misc-publishing-actions,
+.post-php.post-type-steel_slides #minor-publishing-actions {
+  display: none;
+}
+.add_slide_media {
+  margin: 5px 0 !important;
+}
 #slides {
   list-style-type: none;
   margin: 0;
