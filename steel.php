@@ -65,7 +65,7 @@ function steel_admin_scripts() {
   wp_enqueue_script( 'jquery-ui', '//code.jquery.com/ui/1.10.3/jquery-ui.js', '1.10.3', true );
 
   if (is_module_active('slides')) {
-    wp_enqueue_script( 'slides-module', plugins_url('steel/js/slides.js'  ), array('jquery'), steel_version(), true );
+    wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), steel_version(), true );
   }
 
   wp_enqueue_media();
@@ -80,6 +80,10 @@ function steel_scripts() {
     // Load Twitter Bootstrap
     wp_enqueue_script( 'bootstrap'    , plugins_url('steel/js/bootstrap.min.js'  ), array('jquery'), '3.0.3', true );
     wp_enqueue_style ( 'bootstrap-css', plugins_url('steel/css/bootstrap.min.css'), array()        , '3.0.3'       );
+  }
+  
+  if (is_module_active('slides')) {
+    wp_enqueue_style ( 'slides-mod-style', plugins_url('steel/css/slides.css'  ), array(), steel_version());
   }
 
   // Load script for "Pin It" button
