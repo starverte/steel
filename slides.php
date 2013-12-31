@@ -164,7 +164,7 @@ function steel_slideshow( $post_id ) {
   //Wrapper for slides
   foreach ($slides as $slide) {
     if (!empty($slide)) {
-      $image   = wp_get_attachment_image_src( $slide );
+      $image   = wp_get_attachment_image_src( $slide, 'full' );
       $title   = steel_slides_meta( 'title_'  .$slide, $post_id );
       $content = steel_slides_meta( 'content_'.$slide, $post_id );
       $link    = steel_slides_meta( 'link_'   .$slide, $post_id );
