@@ -31,7 +31,9 @@ span[class*='steel-icon-'] {
 
 /* Slides */
 .post-php.post-type-steel_slides #misc-publishing-actions,
-.post-php.post-type-steel_slides #minor-publishing-actions {
+.post-php.post-type-steel_slides #minor-publishing-actions,
+.post-new-php.post-type-steel_slides #misc-publishing-actions,
+.post-new-php.post-type-steel_slides #minor-publishing-actions {
   display: none;
 }
 .add_slide_media {
