@@ -25,11 +25,6 @@ License URI: http://www.gnu.org/licenses/
   along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if (is_module_active('podcast')) {
-  include_once dirname( __FILE__ ) . '/podcast.php';
-  if (is_flint_active()) { include_once dirname( __FILE__ ) . '/flint/podcast.php'; }
-}
-
 if (is_module_active('quotes'    )) { include_once dirname( __FILE__ ) . '/quotes.php';     }
 if (is_module_active('shortcodes')) { include_once dirname( __FILE__ ) . '/shortcodes.php'; }
 if (is_module_active('slides'    )) { include_once dirname( __FILE__ ) . '/slides.php';     }
@@ -93,19 +88,6 @@ function steel_scripts() {
   wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array('jquery'), steel_version(), true );
 }
 
-/**
- * Action: admin_head
- */
-add_action('admin_head', 'steel_admin_head');
-function steel_admin_head() {
-  if (is_module_active('podcast')) {
-    add_action( 'steel_pod_series_add_form_fields'  , 'steel_pod_series_fields'   );
-    add_action( 'steel_pod_series_edit_form_fields' , 'steel_pod_series_fields'   );
-    add_action( 'steel_pod_channel_add_form_fields' , 'steel_pod_channel_fields' );
-    add_action( 'steel_pod_channel_edit_form_fields', 'steel_pod_channel_fields' );
-  }
-}
-
 /*
  * Add options page
  */
@@ -149,7 +131,7 @@ function steel_admin_init(){
   add_settings_section('steel_mods', 'Modules', 'steel_mods_output', 'steel');
 
   //add_settings_field('mod_bootstrap' , 'Bootstrap' , 'mod_bootstrap_setting' , 'steel', 'steel_mods' );
-    add_settings_field('mod_podcast'   , 'Podcast'   , 'mod_podcast_setting'   , 'steel', 'steel_mods' );
+  //add_settings_field('mod_podcast'   , 'Podcast'   , 'mod_podcast_setting'   , 'steel', 'steel_mods' );
   //add_settings_field('mod_quotes'    , 'Quotes'    , 'mod_quotes_setting'    , 'steel', 'steel_mods' );
   //add_settings_field('mod_shortcodes', 'Shortcodes', 'mod_shortcodes_setting', 'steel', 'steel_mods' );
     add_settings_field('mod_slides'    , 'Slides'    , 'mod_slides_setting'    , 'steel', 'steel_mods' );
