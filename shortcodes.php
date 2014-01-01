@@ -85,14 +85,8 @@ function btn_shortcode( $atts, $content = null ) {
 
   $new = strip_tags($content, '<a><strong><em>');
 
-  switch ($color) {    
-    case 'blue'  : $btn_class = 'btn-primary'  ; break;
-    case 'green' : $btn_class = 'btn-success'  ; break;
-    case 'yellow': $btn_class = 'btn-warning'  ; break;
-    case 'red'   : $btn_class = 'btn-danger'   ; break;
-    default      : $btn_class = 'btn-' . $color; break;
-  }
-  
+  $btn_class = 'btn-' . $color;
+
   switch ($toggle){
     case 'tooltip':
       if (!empty($title)) {
@@ -118,7 +112,7 @@ function btn_shortcode( $atts, $content = null ) {
   
   $output  = '<a ';
   $output .= 'class="btn '. $btn_class .'" ';
-  $output .= 'href="' . $link . '"';
+  $output .= $toggle != 'popover' ? 'href="' . $link . '"' : '';
   $output .= $data;
   $output .= !empty($title) ? ' title="' . $title . '"' : '';
   $output .= '>';
@@ -151,14 +145,7 @@ function label_shortcode( $atts, $content = null ) {
 
   $new = strip_tags($content, '<a>');
 
-  switch ($color) {    
-    case 'blue'       : $label_class = 'label-primary'  ; break;
-    case 'green'      : $label_class = 'label-success'  ; break;
-    case 'light-blue' : $label_class = 'label-info'     ; break;
-    case 'yellow'     : $label_class = 'label-warning'  ; break;
-    case 'red'        : $label_class = 'label-danger'   ; break;
-    default           : $label_class = 'label-' . $color; break;
-  }
+  $label_class = 'label-' . $color;
 
   return '<span class="label '. $label_class .'">' . $new . '</span>';
 }
@@ -180,17 +167,11 @@ if ( shortcode_exists( 'alert' ) ) { remove_shortcode( 'alert' ); }
 add_shortcode( 'alert', 'alert_shortcode' );
 function alert_shortcode( $atts, $content = null ) {
   extract( shortcode_atts( array( 'color' => 'info' ), $atts ) );
-  
+
   $new = strip_tags($content, '<a><strong><em><code><ol><ul><li>');
-  
-  switch ($color) {
-    case 'green'      : $alert_class = 'alert-success'  ; break;
-    case 'light-blue' : $alert_class = 'alert-info'     ; break;
-    case 'yellow'     : $alert_class = 'alert-warning'  ; break;
-    case 'red'        : $alert_class = 'alert-danger'   ; break;
-    default           : $alert_class = 'alert-' . $color; break;
-  }
-  
+
+  $alert_class = 'alert-' . $color;
+
   return '<div class="alert '. $alert_class .'">' . $new . '</div>';
 }
 
@@ -208,10 +189,6 @@ function progress_shortcode( $atts, $content = null ) {
 
   switch ($color) {
     case 'default'    : $progress_bar_class = ''                       ; break;
-    case 'green'      : $progress_bar_class = ' progress-bar-success'  ; break;
-    case 'light-blue' : $progress_bar_class = ' progress-bar-info'     ; break;
-    case 'yellow'     : $progress_bar_class = ' progress-bar-warning'  ; break;
-    case 'red'        : $progress_bar_class = ' progress-bar-danger'   ; break;
     default           : $progress_bar_class = ' progress-bar-' . $color; break;
   }
 
@@ -234,7 +211,7 @@ function progress_shortcode( $atts, $content = null ) {
 if ( shortcode_exists( 'panel' ) ) { remove_shortcode( 'panel' ); }
 add_shortcode( 'panel', 'panel_shortcode' );
 function panel_shortcode( $atts, $content = null ) {
-	extract( shortcode_atts( array(
+  extract( shortcode_atts( array(
     'color'   => 'default',
     'heading' => null,
     'title'   => null,
@@ -242,40 +219,33 @@ function panel_shortcode( $atts, $content = null ) {
   ), $atts ) );
   
   $new = strip_tags($content, '<a><strong><em><code><ol><ul><li>');
-	
-	global $group_id, $panel_int;
-	$panel_int += 1;
+  
+  global $group_id, $panel_int;
+  $panel_int += 1;
 
-  switch ($color) {
-    case 'blue'      : $panel_class = ' panel-primary'  ; break;
-    case 'green'     : $panel_class = ' panel-success'  ; break;
-    case 'light-blue': $panel_class = ' panel-info'     ; break;
-    case 'yellow'    : $panel_class = ' panel-warning'  ; break;
-    case 'red'       : $panel_class = ' panel-danger'   ; break;
-    default          : $panel_class = ' panel-' . $color; break;
-  }
+  $panel_class = ' panel-' . $color;
 
   $output  = '<div class="panel'. $panel_class .'"';
-	$output .= !empty($group_id) ? ' data-parent="' . $group_id . '"' : '';
-	$output .= '>';
+  $output .= !empty($group_id) ? ' data-parent="' . $group_id . '"' : '';
+  $output .= '>';
 
   if (!empty($title)) {
     $output .= '<div class="panel-heading">';
     $output .= '<h4 class="panel-title">';
-		$output .= !empty($group_id) ? '<a data-toggle="collapse" data-parent="#' . $group_id . '" href="#' . $group_id . '-' . $panel_int . '">' : '';
+    $output .= !empty($group_id) ? '<a data-toggle="collapse" data-parent="#' . $group_id . '" href="#' . $group_id . '-' . $panel_int . '">' : '';
     $output .= $title;
-		$output .= !empty($group_id) ? '</a>' : '';
+    $output .= !empty($group_id) ? '</a>' : '';
     $output .= '</h4>'; //.panel-title
     $output .= '</div>'; //.panel-heading
   }
   elseif (!empty($heading)) { $output .= '<div class="panel-heading">' . $heading . '</div>'; }
-	
-	$collapse_class = 'panel-collapse collapse';
-	$collapse_class .= $panel_int == 1 ? ' in' : '';
-	
+  
+  $collapse_class = 'panel-collapse collapse';
+  $collapse_class .= $panel_int == 1 ? ' in' : '';
+  
   $output .= !empty($group_id) ? '<div class="' . $collapse_class . '" id="' . $group_id . '-' . $panel_int . '">' : '';
   $output .= '<div class="panel-body">' . $new . '</div>';
-	$output .= !empty($group_id) ? '</div>' : '';
+  $output .= !empty($group_id) ? '</div>' : '';
 
   if (!empty($footer)) {
     $output .= '<div class="panel-footer">' . $footer . '</div>';
@@ -292,10 +262,10 @@ if ( shortcode_exists( 'panel_group' ) ) { remove_shortcode( 'panel_group' ); }
 add_shortcode( 'panel_group', 'panel_group_shortcode' );
 function panel_group_shortcode( $atts, $content = null ) {
   $new = strip_tags($content, '<a><strong><em><code><ol><ul><li>');
-	
-	global $group_id, $panel_int;
-	$group_id  = rand(0,999);
-	$panel_int = 0;
+  
+  global $group_id, $panel_int;
+  $group_id  = rand(0,999);
+  $panel_int = 0;
 
   $output  = '<div class="panel-group" id="' . $group_id . '">';
   $output .= do_shortcode($new);

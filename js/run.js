@@ -3,12 +3,11 @@
  *
  * @package Steel
  *
- * @since 0.7.0
+ * @since 1.1.0
  */
 
 jQuery(function() {
     jQuery( ".steel-tooltip" ).tooltip();
     jQuery( ".steel-popover" ).popover();
     jQuery( ".steel-accordion" ).accordion();
-    jQuery( ".steel-carousel" ).carousel();
 });

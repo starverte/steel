@@ -1,0 +1,17 @@
+/*
+ * Styles for Slides module
+ *
+ * @package Steel
+ * @module Slides
+ *
+ * @since 1.1.0
+ */
+
+.carousel img {
+  border: 0 !important;
+  padding: 0 !important;
+}
+.carousel {
+  border: 0 !important;
+  margin: 5px 0;
+}
