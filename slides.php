@@ -129,11 +129,9 @@ function save_steel_slides() {
 /*
  * Display Slides metadata
  */
-function steel_slides_meta( $meta, $post_id = NULL ) {
-  global $post;
-  $custom = $post_id == NULL ? get_post_custom($post->ID) : get_post_custom($post_id);
-  $output = !empty($custom['slides_'.$meta][0]) ? $custom['slides_'.$meta][0] : '';
-  return $output;
+function steel_slides_meta( $key, $post_id = NULL ) {
+  $meta = steel_meta( 'slides', $key, $post_id );
+  return $meta;
 }
 
 /*
