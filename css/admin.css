@@ -1,3 +1,83 @@
-.toplevel_page_steel .wp-menu-image img {
-    max-width: 14px;
+#toplevel_page_steel .wp-menu-image::before {
+  font-family: 'Star Verte' !important;
+  content: 'c'!important;
+}
+span[class*='steel-icon-'] {
+  margin: 0 2px;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  font: 400 18px/1 dashicons;
+  -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
+  vertical-align: text-top;
+  speak: none;
+}
+.steel-icon-cover-photo:before {
+  content: "\f128";
+}
+.steel-icon-media:before {
+  content: "\f236";
+}
+.steel-icon-plus:before {
+  content: "\f132";
+}
+.steel-icon-dismiss:before {
+  content: "\f153";
+}
+.steel-icon-link:before {
+  content: "\f103";
+}
+
+/* Slides */
+.post-php.post-type-steel_slides #misc-publishing-actions,
+.post-php.post-type-steel_slides #minor-publishing-actions,
+.post-new-php.post-type-steel_slides #misc-publishing-actions,
+.post-new-php.post-type-steel_slides #minor-publishing-actions {
+  display: none;
+}
+.add_slide_media {
+  margin: 5px 0 !important;
+}
+#slides {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.slide {
+  margin: 5px 5px 5px 0;
+  padding: 5px;
+  float: left;
+  width: 300px;
+  height: 360px;
+  overflow: scroll;
+  border: 1px solid #f5f5f5;
+  background: #fff;
+}
+.slide:hover {
+  border: 1px solid #ddd;
+}
+#slides img,
+#slides label,
+#slides input,
+#slides textarea {
+  margin: 5px;
+}
+#slides p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.slide-controls {
+  background: #eee;
+  padding: 5px;
+  margin: -5px;
+  margin-bottom: 5px;
+  height: 18px;
+}
+.slide:hover .slide-controls {
+  background: #ddd;
+}
+.del-slide,
+.del-slide:hover {
+  color: #a00;
 }
