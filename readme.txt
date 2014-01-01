@@ -47,6 +47,10 @@ Submit your questions to http://sparks.starverte.com/steel and we will try to an
 
 == Changelog ==
 
+= 1.1.0 =
+* Added numerous shortcodes to implement Bootstrap like [btn] and [glyph] (for complete list and use, check out http://sparks.starverte.com/steel/bootstrap/)
+* Added new Slides module (documentation will soon be available via http://sparks.starverte.com/steel/slides/)
+
 = 1.0.1 =
 Removed redundant `steel_version` and admin scripts functions
 
