@@ -452,4 +452,14 @@ function steel_get_image_url( $attachment_id, $size = 'thumbnail', $icon = false
   $image = wp_get_attachment_image_src( $attachment_id, $size, $icon );
   return $image[0];
 }
+
+/*
+ * Display custom metadata
+ */
+function steel_meta( $mod_prefix, $key, $post_id = NULL ) {
+  global $post;
+  $custom = $post_id == NULL ? get_post_custom($post->ID) : get_post_custom($post_id);
+  $meta = !empty($custom[$mod_prefix.'_'.$key][0]) ? $custom[$mod_prefix.'_'.$key][0] : '';
+  return $meta;
+}
 ?>
