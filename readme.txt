@@ -1,6 +1,6 @@
 === Steel ===
 Contributors: starverte, mbeall
-Tags: bootstrap, quotes, shortcodes, teams, widgets
+Tags: bootstrap, carousel, quotes, shortcodes, slides, teams, widgets
 Requires at least: 3.4
 Tested up to: 3.8
 Stable tag: 1.1.0
@@ -18,6 +18,9 @@ Bootstrap 3 is included with Steel, but currently requires implementation. We ho
 
 = Quotes =
 Display a random quote (or testimonial) in the sidebar with our random quote widget. We are looking at embedding random quotes within a post or page in our next update.
+
+= Slides =
+Create and display media slideshows using Bootstrap’s Carousel plugin.
 
 = Teams =
 Create profiles for board of directors, staff members, etc. and display them on a nice summary page.
