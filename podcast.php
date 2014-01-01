@@ -374,14 +374,14 @@ function is_podcast_channel($term_id) {
 add_action( 'add_meta_boxes', 'steel_podcast_meta_boxes' );
 function steel_podcast_meta_boxes() { add_meta_box('steel_podcast_meta', 'Episode Details', 'steel_podcast_meta', 'steel_pod_episode', 'side', 'high'); }
 function steel_podcast_meta() {
-  $episode_media = steel_pod_episode_meta( 'media' );
-  $episode_media_url = steel_pod_episode_meta( 'media_url' ); ?>
+  $episode_media = steel_episode_meta( 'media' );
+  $episode_media_url = steel_episode_meta( 'media_url' ); ?>
   
   <p><label>Subtitle </label><br>
-  <input type="text" size="25" name="episode_subtitle" value="<?php echo steel_pod_episode_meta( 'subtitle' ); ?>" /></p>
+  <input type="text" size="25" name="episode_subtitle" value="<?php echo steel_episode_meta( 'subtitle' ); ?>" /></p>
 
   <p><label>Author(s) </label><br>
-  <textarea cols="25"  name="episode_author"><?php echo steel_pod_episode_meta( 'author' ); ?></textarea></p>
+  <textarea cols="25"  name="episode_author"><?php echo steel_episode_meta( 'author' ); ?></textarea></p>
 
   <a href="#" id="episode_media_button" class="button add_media" title="Select audio"><span class="steel-icon-media"></span> Select Audio/Video</a>
 
@@ -440,11 +440,20 @@ function save_steel_pod_episode() {
 
 /*
  * Display Podcast Episode metadata
+ * Deprecated, use steel_episode_meta() instead
+ *
+ * TODO: Remove in Steel 1.2.x
  */
-function steel_pod_episode_meta( $meta ) {
-  global $post;
-  $custom = get_post_custom($post->ID);
-  $output = !empty($custom['episode_'.$meta][0]) ? $custom['episode_'.$meta][0] : '';
-  return $output;
+function steel_pod_episode_meta( $key ) {
+  $meta = steel_episode_meta( $key );
+  return $meta;
+}
+
+/*
+ * Display Podcast Episode metadata
+ */
+function steel_episode_meta( $key, $post_id = NULL ) {
+  $meta = steel_meta( 'episode', $key, $post_id );
+  return $meta;
 }
 ?>

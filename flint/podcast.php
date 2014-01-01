@@ -16,7 +16,7 @@ function steel_pod_episode_subtitle($args) {
 
   $custom = get_post_custom($post->ID);
   $output  = '<' . $container . '>';
-  $output .= steel_pod_episode_meta('subtitle');
+  $output .= steel_episode_meta('subtitle');
   $output  .= '</' . $container . '>';
   echo $output;
 }
@@ -28,10 +28,10 @@ function steel_pod_episode_header($args) {
   $args = wp_parse_args( $args, $defaults );
   extract($args);
   
-  echo do_shortcode( '[audio url=' . steel_pod_episode_meta('media_url') . ']');
+  echo do_shortcode( '[audio url=' . steel_episode_meta('media_url') . ']');
   
   $output  = '<p>'. $author;
-  $output .= steel_pod_episode_meta('author');
+  $output .= steel_episode_meta('author');
   $output  .= '</p>';
   echo $output;
 }
