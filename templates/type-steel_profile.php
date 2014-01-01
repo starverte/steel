@@ -13,9 +13,9 @@
     <article id="post-<?php the_ID(); ?>" <?php post_class('col-lg-8 col-md-8 col-sm-8'); ?>>
       <header class="entry-header">
         <h1 class="entry-title"><?php if (is_singular()) { echo the_title(); } else { $permalink = get_permalink(); $title = get_the_title(); echo '<a href="' . $permalink .'" rel="bookmark">' . $title . '</a>'; } ?></h1>
-        <h4><?php profile_title(); ?></h4>
-        <p><?php profile_email(); ?><br>
-           <?php profile_phone(); ?></p>
+        <h4><?php echo steel_profile_meta('title'); ?></h4>
+        <p><?php echo steel_profile_meta('email'); ?><br>
+           <?php echo steel_profile_phone(); ?></p>
       </header><!-- .entry-header -->
       
       <?php if ( is_search() ) : // Only display Excerpts for Search ?>

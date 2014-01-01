@@ -99,13 +99,11 @@ function steel_teams_init() {
  */
 add_action( 'add_meta_boxes', 'steel_teams_meta_boxes' );
 function steel_teams_meta_boxes() { add_meta_box('steel_teams_meta', 'Team Member Profile', 'steel_teams_meta', 'steel_profile', 'side', 'high'); }
-function steel_teams_meta() {
-  global $post;
-  $custom = get_post_custom($post->ID); ?>
+function steel_teams_meta() { ?>
   
-  <p><label>Title</label><input type="text"  size="10" name="profile_title" value="<?php if (isset($custom['profile_title'])) { echo                                                              $custom["profile_title"][0]; } ?>" /></p>
-  <p><label>Email</label><input type="email" size="10" name="profile_email" value="<?php if (isset($custom['profile_email'])) { echo                                                              $custom["profile_email"][0]; } ?>" /></p>
-  <p><label>Phone</label><input type="tel"   size="10" name="profile_phone" value="<?php if (isset($custom['profile_phone'])) { echo preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", "$1.$2.$3", $custom["profile_phone"][0]); } ?>" /></p><?php
+  <p><label>Title</label><input type="text"  size="10" name="profile_title" value="<?php echo steel_profile_meta ('title'); ?>" /></p>
+  <p><label>Email</label><input type="email" size="10" name="profile_email" value="<?php echo steel_profile_meta ('email'); ?>" /></p>
+  <p><label>Phone</label><input type="tel"   size="10" name="profile_phone" value="<?php echo steel_profile_phone();        ?>" /></p><?php
 }
 
 /*
@@ -126,21 +124,44 @@ function save_steel_profile() {
 }
 
 /*
- * Create custom functions to display data
+ * Display Team Profile metadata
+ * Deprecated, use steel_profile_meta() instead
+ *
+ * TODO: Remove in Steel 1.2.x
  */
 function profile_title() {
-  global $post;
-  $custom = get_post_custom($post->ID);
-  if (isset($custom['profile_title'])) { echo $custom["profile_title"][0]; }
+  $meta = steel_profile_meta( 'title' );
+  echo $meta;
 }
 function profile_email() {
-  global $post;
-  $custom = get_post_custom($post->ID);
-  if (isset($custom['profile_email'])) { echo $custom["profile_email"][0]; }
+  $meta = steel_profile_meta( 'email' );
+  echo $meta;
 }
-function profile_phone($pattern = "$1.$2.$3") {
-  global $post;
-  $custom = get_post_custom($post->ID);
-  if (isset($custom['profile_phone'])) { echo preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", $pattern, $custom["profile_phone"][0]); }
+
+/*
+ * Display profile phone number
+ * Deprecated, use steel_profile_phone() instead
+ *
+ * TODO: Remove in Steel 1.2.x
+ */
+function profile_phone( $pattern = "$1.$2.$3" ) {
+  $meta = steel_profile_phone( $pattern );
+  echo $meta;
+}
+
+/*
+ * Display Team Profile metadata
+ */
+function steel_profile_meta( $key, $post_id = NULL ) {
+  $meta = steel_meta( 'profile', $key, $post_id );
+  return $meta;
+}
+
+/*
+ * Display profile phone number
+ */
+function steel_profile_phone( $pattern = "$1.$2.$3", $post_id = NULL ) {
+  $phone = steel_profile_meta( 'phone', $post_id );
+  return preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", $pattern, $phone);
 }
 ?>
