@@ -7,11 +7,72 @@
  * @since 1.1.0
  */
 
-.carousel img {
+/* Default skin */
+.carousel-default {
+  border: 0;
+  border-radius: 0;
+  margin: 5px 0;
+}
+.carousel-default img {
   border: 0 !important;
+  border-radius: 0 !important;
   padding: 0 !important;
 }
-.carousel {
-  border: 0 !important;
+.carousel-default .carousel-inner {
+}
+.carousel-default .carousel-control {
+}
+.carousel-default .carousel-indicators {
+}
+.carousel-default .carousel-caption {
+}
+@media screen and (min-width: 768px) {
+  .carousel-default .carousel-caption {
+  }
+  .carousel-default .carousel-indicators {
+  }
+}
+
+/* Bar skin */
+.carousel-bar {
+  border: 0;
+  border-radius: 0;
   margin: 5px 0;
+}
+.carousel-bar img {
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+.carousel-bar .carousel-inner {
+}
+.carousel-bar .carousel-control {
+}
+.carousel-bar .carousel-indicators {
+  display: none;
+}
+.carousel-bar .item {
+  background: #222;
+}
+.carousel-bar .carousel-caption {
+  /* bottom: 0; */
+/* right: 0; */
+top: 0;
+left: 0;
+padding-top: 0.5em;
+padding-bottom: 0.5em;
+/* margin: 0; */
+/* clear: both; */
+/* float: none; */
+position: relative;
+
+}
+.carousel-bar .carousel-caption p {
+  margin-bottom: 0;
+}
+@media screen and (min-width: 768px) {
+  .carousel-bar .carousel-caption {
+  }
+  .carousel-bar .carousel-indicators {
+  }
 }
