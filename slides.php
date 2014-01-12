@@ -56,11 +56,13 @@ add_action( 'add_meta_boxes', 'steel_slides_meta_boxes' );
 function steel_slides_meta_boxes() {
   add_meta_box('steel_slides_slideshow', 'Add/Edit Slides'     , 'steel_slides_slideshow', 'steel_slides', 'advanced', 'high'  );
   add_meta_box('steel_slides_info'     , 'Using this Slideshow', 'steel_slides_info'     , 'steel_slides', 'side');
+  add_meta_box('steel_slides_settings' , 'Slideshow Settings'  , 'steel_slides_settings' , 'steel_slides', 'side');
 }
 function steel_slides_slideshow() {
-  $slides_media = steel_slides_meta( 'media' );
-  $slides_order = steel_slides_meta( 'order' );
+  $slides_media     = steel_slides_meta( 'media' );
+  $slides_order     = steel_slides_meta( 'order' );
   $slides_media_url = steel_slides_meta( 'media_url' );
+  
   $slides = explode(',', $slides_order);
 
   $output = '';
@@ -101,6 +103,23 @@ function steel_slides_info() {
   <p>To use this slider in your posts or pages use the following shortcode:</p>
   <p><code>[steel_slideshow id="<?php echo $post->ID; ?>"]</code> or</p><p><code>[steel_slideshow name="<?php echo strtolower($post->post_title); ?>"]</code></p><?php
 }
+function steel_slides_settings() {
+  global $post;
+  $skins = array('Default','Bar');
+  $the_skin = steel_slides_meta( 'skin' ); ?>
+
+  <p><label for="slides_skin">Skin</label>&nbsp;&nbsp;&nbsp;<select id="slides_skin" name="slides_skin">
+        <option value="">Select</option>
+        <?php 
+          foreach ($skins as $skin) {
+            $option  = '<option value="' . $skin . '" '. selected( $the_skin, $skin ) .'>';
+            $option .= $skin;
+            $option .= '</option>';
+            echo $option;
+          }
+        ?>
+      </select></p><?php
+}
 
 /*
  * Save data from meta boxes
@@ -109,9 +128,9 @@ add_action('save_post', 'save_steel_slides');
 function save_steel_slides() {
   global $post;
   if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && (isset($post_id))) { return $post_id; }
-  if(defined('DOING_AJAX') && DOING_AJAX && (isset($post_id))) { return $post_id; }
-  if(preg_match('/\edit\.php/', $_SERVER['REQUEST_URI']) && (isset($post_id))) { return $post_id; }
-  if (!empty($_POST['slides_order']   )) {
+  if (defined('DOING_AJAX') && DOING_AJAX && (isset($post_id))) { return $post_id; }
+  if (preg_match('/\edit\.php/', $_SERVER['REQUEST_URI']) && (isset($post_id))) { return $post_id; }
+  if (isset($_POST['slides_order']   )) {
     update_post_meta($post->ID, 'slides_order'   , $_POST['slides_order']);
     $slides = explode(',', get_post_meta($post->ID, 'slides_order', true));
     foreach ($slides as $slide) {
@@ -124,6 +143,9 @@ function save_steel_slides() {
   if (isset($_POST['slides_author']   )) { update_post_meta($post->ID, 'slides_author'   , $_POST['slides_author']   ); }
   if (isset($_POST['slides_media']    )) { update_post_meta($post->ID, 'slides_media'    , $_POST['slides_media']    ); }
   if (isset($_POST['slides_media_url'])) { update_post_meta($post->ID, 'slides_media_url', $_POST['slides_media_url']); }
+  
+  if (!empty($_POST['slides_skin'])) { update_post_meta($post->ID, 'slides_skin', $_POST['slides_skin']); }
+    else                             { update_post_meta($post->ID, 'slides_skin', 'Default'            ); }
 }
 
 /*
@@ -141,6 +163,9 @@ function steel_slideshow( $post_id ) {
   $slides_media     = steel_slides_meta( 'media'    , $post_id );
   $slides_order     = steel_slides_meta( 'order'    , $post_id );
   $slides_media_url = steel_slides_meta( 'media_url', $post_id );
+  $slides_skin      = steel_slides_meta( 'skin'     , $post_id );
+  
+  $slides_skin_class = !empty($slides_skin) ? ' carousel-'.strtolower($slides_skin) : ' carousel-default' ;
 
   $slides = explode(',', $slides_order);
 
@@ -175,8 +200,13 @@ function steel_slideshow( $post_id ) {
 
       if (!empty($title) || !empty($content)) {
         $items .= '<div class="carousel-caption">';
-        if (!empty($title  )) { $items .= '<h3 id="slides_title_'.$slide.'">' .$title  .'</h3>'; }
-        if (!empty($content)) { $items .= '<p id="slides_content_'.$slide.'">'.$content.'</p>' ; }
+        if ($slides_skin != 'Bar') {
+          if (!empty($title  )) { $items .= '<h3 id="slides_title_'.$slide.'">' .$title  .'</h3>'; }
+          if (!empty($content)) { $items .= '<p id="slides_content_'.$slide.'">'.$content.'</p>' ; }
+        }
+        else {
+          if (!empty($title)) { $items .= '<p id="slides_title_'.$slide.'">' .$title.'</p>'; }
+        }
         $items .= '</div>';//.carousel-caption
       }
       $items .= '</div>';//.item
@@ -188,10 +218,12 @@ function steel_slideshow( $post_id ) {
   $controls .= '<a class="right '.'carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="glyphicon glyphicon-chevron-right'.'"></span></a>';
 
   //Output
-  $output .= '<div id="carousel_'.$post_id.'" class="carousel slide" data-ride="carousel">';
-  $output .= '<ol class="carousel-indicators">';
-  $output .= $indicators;
-  $output .= '</ol>';
+  $output .= '<div id="carousel_'.$post_id.'" class="carousel slide'.$slides_skin_class.'" data-ride="carousel">';
+  if ($slides_skin != 'Bar') {
+    $output .= '<ol class="carousel-indicators">';
+    $output .= $indicators;
+    $output .= '</ol>';
+  }
   $output .= '<div class="carousel-inner">';
   $output .= $items;
   $output .= '</div>';
