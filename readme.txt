@@ -3,7 +3,7 @@ Contributors: starverte, mbeall
 Tags: bootstrap, carousel, quotes, shortcodes, slides, teams, widgets
 Requires at least: 3.4
 Tested up to: 3.8
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -47,6 +47,10 @@ Like our plugin? Write us a review!
 Submit your questions to http://sparks.starverte.com/steel and we will try to answer them.
 
 == Changelog ==
+
+= 1.1.1 =
+* Added skins for Slides module
+* Added ability to turn off Bootstrap module
 
 = 1.1.0 =
 * Added numerous shortcodes to implement Bootstrap like [btn] and [glyph] (for complete list and use, check out http://sparks.starverte.com/steel/bootstrap/)
