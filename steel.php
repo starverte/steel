@@ -67,14 +67,20 @@ function steel_admin_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
-  if (is_module_active('bootstrap')) {
+  if (is_module_active('bootstrap', 'js')||is_module_active('bootstrap', 'both')) {
     // Make sure there aren't other instances of Twitter Bootstrap
-    wp_deregister_script('bootstrap'    );
+    wp_deregister_script('bootstrap');
+
+    // Load Twitter Bootstrap
+    wp_enqueue_script( 'bootstrap', plugins_url('steel/js/bootstrap.min.js'  ), array('jquery'), '3.0.3', true );
+  }
+  
+  if (is_module_active('bootstrap', 'css')||is_module_active('bootstrap', 'both')) {
+    // Make sure there aren't other instances of Twitter Bootstrap
     wp_deregister_style ('bootstrap-css');
 
     // Load Twitter Bootstrap
-    wp_enqueue_script( 'bootstrap'    , plugins_url('steel/js/bootstrap.min.js'  ), array('jquery'), '3.0.3', true );
-    wp_enqueue_style ( 'bootstrap-css', plugins_url('steel/css/bootstrap.min.css'), array()        , '3.0.3'       );
+    wp_enqueue_style ( 'bootstrap-css', plugins_url('steel/css/bootstrap.min.css'), array() , '3.0.3' );
   }
   
   if (is_module_active('slides')) {
@@ -130,7 +136,7 @@ function steel_admin_init(){
 
   add_settings_section('steel_mods', 'Modules', 'steel_mods_output', 'steel');
 
-  //add_settings_field('mod_bootstrap' , 'Bootstrap' , 'mod_bootstrap_setting' , 'steel', 'steel_mods' );
+    add_settings_field('mod_bootstrap' , 'Bootstrap' , 'mod_bootstrap_setting' , 'steel', 'steel_mods' );
   //add_settings_field('mod_podcast'   , 'Podcast'   , 'mod_podcast_setting'   , 'steel', 'steel_mods' );
   //add_settings_field('mod_quotes'    , 'Quotes'    , 'mod_quotes_setting'    , 'steel', 'steel_mods' );
   //add_settings_field('mod_shortcodes', 'Shortcodes', 'mod_shortcodes_setting', 'steel', 'steel_mods' );
@@ -160,10 +166,16 @@ function steel_mods_output() { echo 'Activate and deactivate modules within Stee
 function mod_bootstrap_setting() {
   $options = get_option('steel_options');
 
-  $bootstrap = !empty($options['mod_bootstrap']) ? $options['mod_bootstrap'] : 'true'; ?>
+  $bootstrap = !empty($options['mod_bootstrap']) ? $options['mod_bootstrap'] : 'both';
+  steel_options('mod_bootstrap'); ?>
+  
+  <div class="radio-group">
+    <label for="steel_options[mod_bootstrap]"><input name="steel_options[mod_bootstrap]" type="radio" value="css"  <?php checked( $bootstrap, 'css'  ) ?>>CSS&nbsp;&nbsp;</label>
+    <label for="steel_options[mod_bootstrap]"><input name="steel_options[mod_bootstrap]" type="radio" value="js"   <?php checked( $bootstrap, 'js'   ) ?>>Javascript</label><br>
+    <label for="steel_options[mod_bootstrap]"><input name="steel_options[mod_bootstrap]" type="radio" value="both" <?php checked( $bootstrap, 'both' ) ?>>Both</label>
+    <label for="steel_options[mod_bootstrap]"><input name="steel_options[mod_bootstrap]" type="radio" value="none" <?php checked( $bootstrap, 'none' ) ?>>None</label>
+  </div>
 
-  <label for="steel_options[mod_bootstrap]"><input name="steel_options[mod_bootstrap]" type="radio" value="true"  <?php checked( $bootstrap, 'true'  ) ?>>Active</label>
-  <label for="steel_options[mod_bootstrap]"><input name="steel_options[mod_bootstrap]" type="radio" value="false" <?php checked( $bootstrap, 'false' ) ?>>Not Active</label>
   <?php
 }
 function mod_podcast_setting() {
@@ -171,8 +183,10 @@ function mod_podcast_setting() {
 
   $podcast = !empty($options['mod_podcast']) ? $options['mod_podcast'] : 'false'; ?>
 
-  <label for="steel_options[mod_podcast]"><input name="steel_options[mod_podcast]" type="radio" value="true"  <?php checked( $podcast, 'true'  ) ?>>Active</label>
-  <label for="steel_options[mod_podcast]"><input name="steel_options[mod_podcast]" type="radio" value="false" <?php checked( $podcast, 'false' ) ?>>Not Active</label>
+  <div class="radio-group">
+    <label for="steel_options[mod_podcast]"><input name="steel_options[mod_podcast]" type="radio" value="true"  <?php checked( $podcast, 'true'  ) ?>>Active</label>
+    <label for="steel_options[mod_podcast]"><input name="steel_options[mod_podcast]" type="radio" value="false" <?php checked( $podcast, 'false' ) ?>>Not Active</label>
+  </div>
   <?php
 }
 function mod_quotes_setting() {
@@ -180,8 +194,10 @@ function mod_quotes_setting() {
 
   $quotes = !empty($options['mod_quotes']) ? $options['mod_quotes'] : 'true'; ?>
 
-  <label for="steel_options[mod_quotes]"><input name="steel_options[mod_quotes]" type="radio" value="true"  <?php checked( $quotes, 'true'  ) ?>>Active</label>
-  <label for="steel_options[mod_quotes]"><input name="steel_options[mod_quotes]" type="radio" value="false" <?php checked( $quotes, 'false' ) ?>>Not Active</label>
+  <div class="radio-group">
+    <label for="steel_options[mod_quotes]"><input name="steel_options[mod_quotes]" type="radio" value="true"  <?php checked( $quotes, 'true'  ) ?>>Active</label>
+    <label for="steel_options[mod_quotes]"><input name="steel_options[mod_quotes]" type="radio" value="false" <?php checked( $quotes, 'false' ) ?>>Not Active</label>
+  </div>
   <?php
 }
 function mod_shortcodes_setting() {
@@ -189,8 +205,10 @@ function mod_shortcodes_setting() {
 
   $shortcodes = !empty($options['mod_shortcodes']) ? $options['mod_shortcodes'] : 'true'; ?>
 
-  <label for="steel_options[mod_shortcodes]"><input name="steel_options[mod_shortcodes]" type="radio" value="true"  <?php checked( $shortcodes, 'true'  ) ?>>Active</label>
-  <label for="steel_options[mod_shortcodes]"><input name="steel_options[mod_shortcodes]" type="radio" value="false" <?php checked( $shortcodes, 'false' ) ?>>Not Active</label>
+  <div class="radio-group">
+    <label for="steel_options[mod_shortcodes]"><input name="steel_options[mod_shortcodes]" type="radio" value="true"  <?php checked( $shortcodes, 'true'  ) ?>>Active</label>
+    <label for="steel_options[mod_shortcodes]"><input name="steel_options[mod_shortcodes]" type="radio" value="false" <?php checked( $shortcodes, 'false' ) ?>>Not Active</label>
+  </div>
   <?php
 }
 function mod_slides_setting() {
@@ -198,8 +216,10 @@ function mod_slides_setting() {
 
   $slides = !empty($options['mod_slides']) ? $options['mod_slides'] : 'false'; ?>
 
-  <label for="steel_options[mod_slides]"><input name="steel_options[mod_slides]" type="radio" value="true"  <?php checked( $slides, 'true'  ) ?>>Active</label>
-  <label for="steel_options[mod_slides]"><input name="steel_options[mod_slides]" type="radio" value="false" <?php checked( $slides, 'false' ) ?>>Not Active</label>
+  <div class="radio-group">
+    <label for="steel_options[mod_slides]"><input name="steel_options[mod_slides]" type="radio" value="true"  <?php checked( $slides, 'true'  ) ?>>Active</label>
+    <label for="steel_options[mod_slides]"><input name="steel_options[mod_slides]" type="radio" value="false" <?php checked( $slides, 'false' ) ?>>Not Active</label>
+  </div>
   <?php
 }
 function mod_teams_setting() {
@@ -207,8 +227,10 @@ function mod_teams_setting() {
 
   $teams = !empty($options['mod_teams']) ? $options['mod_teams'] : 'false'; ?>
 
-  <label for="steel_options[mod_teams]"><input name="steel_options[mod_teams]" type="radio" value="true"  <?php checked( $teams, 'true'  ) ?>>Active</label>
-  <label for="steel_options[mod_teams]"><input name="steel_options[mod_teams]" type="radio" value="false" <?php checked( $teams, 'false' ) ?>>Not Active</label>
+  <div class="radio-group">
+    <label for="steel_options[mod_teams]"><input name="steel_options[mod_teams]" type="radio" value="true"  <?php checked( $teams, 'true'  ) ?>>Active</label>
+    <label for="steel_options[mod_teams]"><input name="steel_options[mod_teams]" type="radio" value="false" <?php checked( $teams, 'false' ) ?>>Not Active</label>
+  <div class="radio-group">
   <?php
 }
 function mod_widgets_setting() {
@@ -216,8 +238,10 @@ function mod_widgets_setting() {
 
   $widgets = !empty($options['mod_widgets']) ? $options['mod_widgets'] : 'true'; ?>
 
-  <label for="steel_options[mod_widgets]"><input name="steel_options[mod_widgets]" type="radio" value="true"  <?php checked( $widgets, 'true'  ) ?>>Active</label>
-  <label for="steel_options[mod_widgets]"><input name="steel_options[mod_widgets]" type="radio" value="false" <?php checked( $widgets, 'false' ) ?>>Not Active</label>
+  <div class="radio-group">
+    <label for="steel_options[mod_widgets]"><input name="steel_options[mod_widgets]" type="radio" value="true"  <?php checked( $widgets, 'true'  ) ?>>Active</label>
+    <label for="steel_options[mod_widgets]"><input name="steel_options[mod_widgets]" type="radio" value="false" <?php checked( $widgets, 'false' ) ?>>Not Active</label>
+  </div>
   <?php
 }
 function steel_options_validate($input) {
@@ -231,8 +255,8 @@ function steel_options_validate($input) {
   $newinput['fb_app_id'] = trim($input['fb_app_id']);
   if (!preg_match('/^[0-9]{15}$/i', $newinput['fb_app_id']) & !empty($newinput['fb_app_id'])) { add_settings_error( 'fb_app_id', 'invalid', 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>' ); }
 
-  //$newinput['mod_bootstrap' ] = trim($input['mod_bootstrap' ]);
-    $newinput['mod_podcast'   ] = trim($input['mod_podcast'   ]);
+    $newinput['mod_bootstrap' ] = trim($input['mod_bootstrap' ]);
+  //$newinput['mod_podcast'   ] = trim($input['mod_podcast'   ]);
   //$newinput['mod_quotes'    ] = trim($input['mod_quotes'    ]);
   //$newinput['mod_shortcodes'] = trim($input['mod_shortcodes']);
     $newinput['mod_slides'    ] = trim($input['mod_slides'    ]);
@@ -388,19 +412,30 @@ function pin_it( $args = array() ) {
 /*
  * Add function is_module_active
  */
-function is_module_active( $mod ) {
-  $options = get_option('steel_options');
-  $default_on  = array('bootstrap','quotes','shortcodes','widgets');
-  if (in_array($mod, $default_on)) :
-    $mod_status = !empty($options[ 'mod_' . $mod ]) ? $options[ 'mod_' . $mod ] : 'true';
+function is_module_active( $mod, $check = null ) {
+  $module = steel_options( 'mod_' . $mod );
+  $default_on  = array('quotes','shortcodes','widgets');
+  if ($mod == 'bootstrap') :
+    $mod_status = !empty($module) ? !empty($check) && $module == $check ? 'true' : 'false' : 'true';
+  elseif (in_array($mod, $default_on)) :
+    $mod_status = !empty($module) ? $module : 'true';
   else :
-    $mod_status = !empty($options[ 'mod_' . $mod ]) ? $options[ 'mod_' . $mod ] : 'false';
+    $mod_status = !empty($module) ? $module : 'false';
   endif;
 
   if ($mod_status == 'true')
     return true;
   else
     return false;
+}
+
+/*
+ * Add function steel_options
+ */
+function steel_options( $key ) {
+  $options = get_option('steel_options');
+  $value = !empty($options[ $key ]) ? $options[ $key ] : null;
+  return $value;
 }
 
 /*
