@@ -48,6 +48,10 @@ Submit your questions to http://sparks.starverte.com/steel and we will try to an
 
 == Changelog ==
 
+= 1.1.3 =
+* Caption in "Bar" skin now overlays image instead of appearing beneath the image
+* jQuery conflicts fixed
+
 = 1.1.2 =
 * Extracted carousel and glyphicon styles from bootstrap.css so that carousel works even if Bootstrap module isn't active
 
