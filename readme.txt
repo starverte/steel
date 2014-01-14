@@ -3,7 +3,7 @@ Contributors: starverte, mbeall
 Tags: bootstrap, carousel, quotes, shortcodes, slides, teams, widgets
 Requires at least: 3.4
 Tested up to: 3.8
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -47,6 +47,10 @@ Like our plugin? Write us a review!
 Submit your questions to http://sparks.starverte.com/steel and we will try to answer them.
 
 == Changelog ==
+
+= 1.1.3 =
+* Caption in "Bar" skin now overlays image instead of appearing beneath the image
+* jQuery conflicts fixed
 
 = 1.1.2 =
 * Extracted carousel and glyphicon styles from bootstrap.css so that carousel works even if Bootstrap module isn't active
