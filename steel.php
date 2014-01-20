@@ -57,6 +57,8 @@ function steel_admin_scripts() {
   wp_enqueue_script( 'jquery-ui-core'     );
   wp_enqueue_script( 'jquery-ui-sortable' );
   wp_enqueue_script( 'jquery-ui-position' );
+  wp_enqueue_script( 'jquery-effects-core' );
+  wp_enqueue_script( 'jquery-effects-blind' );
 
   if (is_module_active('slides')) {
     wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), steel_version(), true );
