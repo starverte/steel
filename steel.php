@@ -31,6 +31,8 @@ if (is_module_active('slides'    )) { include_once dirname( __FILE__ ) . '/slide
 if (is_module_active('teams'     )) { include_once dirname( __FILE__ ) . '/teams.php';      }
 if (is_module_active('widgets'   )) { include_once dirname( __FILE__ ) . '/widgets.php';    }
 
+if (is_flint_active()) { include_once dirname( __FILE__ ) . '/templates.php'; }
+
 /**
  * Returns current plugin version.
  */
