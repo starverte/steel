@@ -70,3 +70,6 @@ function deleteSlide(id) {
   deleteOrder = deleteOrder.replace(",,",",");
   jQuery("#slides_order").val(deleteOrder);
 }
+function collapseSlide(id) {
+  jQuery("#slide_img_"+id).toggle("blind");
+}

@@ -101,9 +101,11 @@ add_action( 'add_meta_boxes', 'steel_teams_meta_boxes' );
 function steel_teams_meta_boxes() { add_meta_box('steel_teams_meta', 'Team Member Profile', 'steel_teams_meta', 'steel_profile', 'side', 'high'); }
 function steel_teams_meta() { ?>
   
-  <p><label>Title</label><input type="text"  size="10" name="profile_title" value="<?php echo steel_profile_meta ('title'); ?>" /></p>
-  <p><label>Email</label><input type="email" size="10" name="profile_email" value="<?php echo steel_profile_meta ('email'); ?>" /></p>
-  <p><label>Phone</label><input type="tel"   size="10" name="profile_phone" value="<?php echo steel_profile_phone();        ?>" /></p><?php
+  <p><label>Title</label><br /><input type="text"  size="25" name="profile_title" value="<?php echo steel_profile_meta ('title'); ?>" /></p>
+  <p><label>Email</label><br /><input type="email" size="25" name="profile_email" value="<?php echo steel_profile_meta ('email'); ?>" /></p>
+  <p><label>Phone</label><br /><input type="tel"   size="25" name="profile_phone" value="<?php echo steel_profile_phone();        ?>" /></p><?php
+  
+  do_action('steel_teams_add_meta');
 }
 
 /*
@@ -121,6 +123,7 @@ function save_steel_profile() {
     $new = preg_replace('/[^a-z0-9]+/i', '', $_POST["profile_phone"]);
     update_post_meta($post->ID, "profile_phone", $new);
   }
+  do_action('steel_teams_save_meta');
 }
 
 /*

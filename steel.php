@@ -31,6 +31,8 @@ if (is_module_active('slides'    )) { include_once dirname( __FILE__ ) . '/slide
 if (is_module_active('teams'     )) { include_once dirname( __FILE__ ) . '/teams.php';      }
 if (is_module_active('widgets'   )) { include_once dirname( __FILE__ ) . '/widgets.php';    }
 
+if (is_flint_active()) { include_once dirname( __FILE__ ) . '/templates.php'; }
+
 /**
  * Returns current plugin version.
  */
@@ -57,6 +59,8 @@ function steel_admin_scripts() {
   wp_enqueue_script( 'jquery-ui-core'     );
   wp_enqueue_script( 'jquery-ui-sortable' );
   wp_enqueue_script( 'jquery-ui-position' );
+  wp_enqueue_script( 'jquery-effects-core' );
+  wp_enqueue_script( 'jquery-effects-blind' );
 
   if (is_module_active('slides')) {
     wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), steel_version(), true );
