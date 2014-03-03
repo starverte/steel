@@ -228,8 +228,8 @@ function steel_slideshow( $post_id, $size = 'full' ) {
   }
 
   //Controls
-  $controls .= '<a class="left ' .'carousel-control" href="#carousel_'.$post_id.'" data-slide="prev"><span class="glyphicon glyphicon-chevron-left' .'"></span></a>';
-  $controls .= '<a class="right '.'carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="glyphicon glyphicon-chevron-right'.'"></span></a>';
+  $controls .= '<a class="left ' .'carousel-control" href="#carousel_'.$post_id.'" data-slide="prev"><span class="icon-prev' .'"></span></a>';
+  $controls .= '<a class="right '.'carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="icon-next'.'"></span></a>';
 
   //Output
 	$output .= !empty($slides_skin) && $slides_skin == 'Tabs' ? $indicators : '';

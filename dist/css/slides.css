@@ -119,10 +119,14 @@
   font-family: serif;
 }
 .carousel-control .icon-prev:before {
-  content: '\2039';
+  content: '\e079';
 }
 .carousel-control .icon-next:before {
-  content: '\203a';
+  content: '\e080';
+}
+.carousel-control .icon-prev:before,
+.carousel-control .icon-next:before {
+  font-family: 'Glyphicons Halflings';
 }
 .carousel-indicators {
   position: absolute;
@@ -217,6 +221,13 @@
 .carousel-bar .carousel-inner {
 }
 .carousel-bar .carousel-control {
+    width: 10%;
+}
+.carousel-bar .carousel-control .icon-prev:before {
+  content: '\e132';
+}
+.carousel-bar .carousel-control .icon-next:before {
+  content: '\e131';
 }
 .carousel-bar .carousel-indicators {
   display: none;
@@ -238,3 +249,4 @@
   margin-bottom: 0;
   padding-bottom: 0;
 }
+
