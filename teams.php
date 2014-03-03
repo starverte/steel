@@ -3,7 +3,6 @@
  * Allows creation and management of profiles that can belong to one or many "teams" for use with staff, elders, board members, and more
  *
  * @package Steel/Teams
- * @version 1.1.3
  */
 
 /*

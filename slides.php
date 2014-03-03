@@ -4,7 +4,6 @@
  * Uses Bootstrap Carousel plugin
  *
  * @package Steel/Slides
- * @version 1.1.4
  */
 
 add_action( 'init', 'steel_slides_init', 0 );

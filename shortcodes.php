@@ -3,7 +3,6 @@
  * Various shortcodes for easily adding customized content
  *
  * @package Steel/Shortcodes
- * @version 1.1.0
  */
  
 /*

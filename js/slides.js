@@ -2,7 +2,6 @@
  * Scripts to power the Slides module
  *
  * @package Steel/Slides
- * @version 1.1.0
  */
 
 var file_frame;

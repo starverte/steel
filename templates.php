@@ -5,7 +5,6 @@
  * by the Steel plugin and its modules.
  *
  * @package Steel/Templates
- * @version 1.1.4
  */
 
 add_action('flint_entry_meta_above_steel_profile','steel_profile_entry_meta_above',10);
