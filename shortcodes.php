@@ -2,10 +2,8 @@
 /*
  * Various shortcodes for easily adding customized content
  *
- * @package Steel
- * @module Shortcodes
- *
- * @since 1.1.0
+ * @package Steel/Shortcodes
+ * @version 1.1.0
  */
  
 /*

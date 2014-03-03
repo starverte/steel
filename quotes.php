@@ -2,9 +2,8 @@
 /*
  * Creates custom post-type "quotes" for displaying random quotes, testimonials, etc.
  *
- * @package Steel
- * @module Quotes
- *
+ * @package Steel/Quotes
+ * @version 1.1.0
  */
 
 /*

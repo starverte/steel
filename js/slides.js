@@ -1,10 +1,8 @@
 /*
  * Scripts to power the Slides module
  *
- * @package Steel
- * @module Slides
- *
- * @since 1.1.0
+ * @package Steel/Slides
+ * @version 1.1.0
  */
 
 var file_frame;

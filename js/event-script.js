@@ -1,9 +1,8 @@
 /*
  * Scripts for Sparks Events
  *
- * @package Steel
- *
- * @since 0.6.0
+ * @package Steel/Events
+ * @version 0.6.0
  */
  
 jQuery(function() {
