@@ -1,13 +1,11 @@
 <?php
-/*
+/**
  * Creates custom post-type "quotes" for displaying random quotes, testimonials, etc.
  *
- * @package Steel
- * @module Quotes
- *
+ * @package Steel/Quotes
  */
 
-/*
+/**
  * Register random quote widget
  */
 add_action( 'widgets_init', 'steel_quotes_widgets' );

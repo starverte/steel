@@ -3,7 +3,7 @@
 Plugin Name: Steel
 Plugin URI: https://github.com/starverte/steel.git
 Description: Core plugin of the Sparks Framework. Works for any theme; but when paired with Flint your WordPress site will be on fire.
-Version: 1.1.4
+Version: 1.1.5
 Author: Star Verte LLC
 Author URI: http://starverte.com/
 License: GPLv3
@@ -281,9 +281,8 @@ function steel_open( $scripts = array() ) {
   $scripts  = wp_parse_args( $scripts, $defaults );
 
   if ($scripts['facebook'] == true) {
-    $steel_options = get_option('steel_options');
-    if (!empty($steel_options['fb_app_id'])) {
-      $fb_app_id = $steel_options["fb_app_id"];
+    if (steel_options('fb_app_id')) {
+      $fb_app_id = steel_options('fb_app_id');
       echo '<div id="fb-root"></div><script>(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=' . $fb_app_id . '"; fjs.parentNode.insertBefore(js, fjs); }(document, \'script\', \'facebook-jssdk\')); </script>';
     }
     else { return; }
@@ -441,8 +440,11 @@ function is_module_active( $mod, $check = null ) {
  */
 function steel_options( $key ) {
   $options = get_option('steel_options');
-  $value = !empty($options[ $key ]) ? $options[ $key ] : null;
-  return $value;
+	if (empty($options[ $key ])) :
+	  return false;
+	else :
+	  return $options[ $key ];
+	endif;
 }
 
 /*

@@ -3,9 +3,7 @@
  * Allows creation of media slideshows (a.k.a. carousels, sliders, etc.) for use in template files, posts, pages and more
  * Uses Bootstrap Carousel plugin
  *
- * @package Steel
- * @module Slides
- *
+ * @package Steel/Slides
  */
 
 add_action( 'init', 'steel_slides_init', 0 );
@@ -228,8 +226,8 @@ function steel_slideshow( $post_id, $size = 'full' ) {
   }
 
   //Controls
-  $controls .= '<a class="left ' .'carousel-control" href="#carousel_'.$post_id.'" data-slide="prev"><span class="glyphicon glyphicon-chevron-left' .'"></span></a>';
-  $controls .= '<a class="right '.'carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="glyphicon glyphicon-chevron-right'.'"></span></a>';
+  $controls .= '<a class="left ' .'carousel-control" href="#carousel_'.$post_id.'" data-slide="prev"><span class="icon-prev' .'"></span></a>';
+  $controls .= '<a class="right '.'carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="icon-next'.'"></span></a>';
 
   //Output
 	$output .= !empty($slides_skin) && $slides_skin == 'Tabs' ? $indicators : '';
