@@ -25,11 +25,13 @@ License URI: http://www.gnu.org/licenses/
   along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if (is_module_active('quotes'    )) { include_once dirname( __FILE__ ) . '/quotes.php';     }
-if (is_module_active('shortcodes')) { include_once dirname( __FILE__ ) . '/shortcodes.php'; }
-if (is_module_active('slides'    )) { include_once dirname( __FILE__ ) . '/slides.php';     }
-if (is_module_active('teams'     )) { include_once dirname( __FILE__ ) . '/teams.php';      }
-if (is_module_active('widgets'   )) { include_once dirname( __FILE__ ) . '/widgets.php';    }
+  if (is_module_active('marketplace')) { include_once dirname( __FILE__ ) . '/marketplace.php'; }
+//if (is_module_active('podcast'    )) { include_once dirname( __FILE__ ) . '/podcast.php';     }
+  if (is_module_active('quotes'     )) { include_once dirname( __FILE__ ) . '/quotes.php';      }
+  if (is_module_active('shortcodes' )) { include_once dirname( __FILE__ ) . '/shortcodes.php';  }
+  if (is_module_active('slides'     )) { include_once dirname( __FILE__ ) . '/slides.php';      }
+  if (is_module_active('teams'      )) { include_once dirname( __FILE__ ) . '/teams.php';       }
+  if (is_module_active('widgets'    )) { include_once dirname( __FILE__ ) . '/widgets.php';     }
 
 if (is_flint_active()) { include_once dirname( __FILE__ ) . '/templates.php'; }
 
@@ -61,6 +63,10 @@ function steel_admin_scripts() {
   wp_enqueue_script( 'jquery-ui-position' );
   wp_enqueue_script( 'jquery-effects-core' );
   wp_enqueue_script( 'jquery-effects-blind' );
+
+	if (is_module_active('marketplace')) {
+		wp_enqueue_script( 'marketplace', plugins_url('steel/js/marketplace.js'  ), array('jquery'), steel_version(), true );
+	}
 
   if (is_module_active('slides')) {
     wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), steel_version(), true );
@@ -135,23 +141,24 @@ function steel_admin_init(){
 
   add_settings_field('fb_app_id', 'Facebook App ID', 'fb_app_id_setting', 'steel', 'steel_social' );
 
-  if (is_plugin_active('sparks-store/store.php')) {
-    add_settings_section('sparks_store', 'PayPal', 'sparks_store_text', 'steel');
+  if (is_module_active('marketplace')) {
+    add_settings_section('steel_marketplace', 'Marketplace', 'steel_marketplace_text', 'steel');
 
-    add_settings_field('paypal_merch_id', 'Merchant ID', 'paypal_merch_id_setting', 'steel', 'sparks_store' );
+    add_settings_field('paypal_merch_id', 'PayPal Merchant ID', 'paypal_merch_id_setting', 'steel', 'steel_marketplace' );
   }
 
   add_settings_section('steel_mods', 'Modules', 'steel_mods_output', 'steel');
 
-    add_settings_field('mod_bootstrap' , 'Bootstrap' , 'mod_bootstrap_setting' , 'steel', 'steel_mods' );
-  //add_settings_field('mod_podcast'   , 'Podcast'   , 'mod_podcast_setting'   , 'steel', 'steel_mods' );
-  //add_settings_field('mod_quotes'    , 'Quotes'    , 'mod_quotes_setting'    , 'steel', 'steel_mods' );
-  //add_settings_field('mod_shortcodes', 'Shortcodes', 'mod_shortcodes_setting', 'steel', 'steel_mods' );
-    add_settings_field('mod_slides'    , 'Slides'    , 'mod_slides_setting'    , 'steel', 'steel_mods' );
-    add_settings_field('mod_teams'     , 'Teams'     , 'mod_teams_setting'     , 'steel', 'steel_mods' );
-  //add_settings_field('mod_widgets'   , 'Widgets'   , 'mod_widgets_setting'   , 'steel', 'steel_mods' );
+    add_settings_field('mod_bootstrap'  , 'Bootstrap'  , 'mod_bootstrap_setting'  , 'steel', 'steel_mods' );
+		add_settings_field('mod_marketplace', 'Marketplace', 'mod_marketplace_setting', 'steel', 'steel_mods' );
+  //add_settings_field('mod_podcast'    , 'Podcast'    , 'mod_podcast_setting'    , 'steel', 'steel_mods' );
+  //add_settings_field('mod_quotes'     , 'Quotes'     , 'mod_quotes_setting'     , 'steel', 'steel_mods' );
+  //add_settings_field('mod_shortcodes' , 'Shortcodes' , 'mod_shortcodes_setting' , 'steel', 'steel_mods' );
+    add_settings_field('mod_slides'     , 'Slides'     , 'mod_slides_setting'     , 'steel', 'steel_mods' );
+    add_settings_field('mod_teams'      , 'Teams'      , 'mod_teams_setting'      , 'steel', 'steel_mods' );
+  //add_settings_field('mod_widgets'    , 'Widgets'    , 'mod_widgets_setting'    , 'steel', 'steel_mods' );
 }
-function sparks_store_text() { echo ''; }
+function steel_marketplace_text() { echo ''; }
 function paypal_merch_id_setting() {
   $options = get_option('steel_options');
 
@@ -183,6 +190,17 @@ function mod_bootstrap_setting() {
     <label for="steel_options[mod_bootstrap]"><input name="steel_options[mod_bootstrap]" type="radio" value="none" <?php checked( $bootstrap, 'none' ) ?>>None</label>
   </div>
 
+  <?php
+}
+function mod_marketplace_setting() {
+  $options = get_option('steel_options');
+
+  $marketplace = !empty($options['mod_marketplace']) ? $options['mod_marketplace'] : 'false'; ?>
+
+  <div class="radio-group">
+    <label for="steel_options[mod_marketplace]"><input name="steel_options[mod_marketplace]" type="radio" value="true"  <?php checked( $marketplace, 'true'  ) ?>>Active</label>
+    <label for="steel_options[mod_marketplace]"><input name="steel_options[mod_marketplace]" type="radio" value="false" <?php checked( $marketplace, 'false' ) ?>>Not Active</label>
+  </div>
   <?php
 }
 function mod_podcast_setting() {
@@ -253,7 +271,7 @@ function mod_widgets_setting() {
 }
 function steel_options_validate($input) {
   global $newinput;
-  if (is_plugin_active('sparks-store/store.php')) {
+  if (is_module_active('marketplace')) {
     $newinput['paypal_merch_id'] = trim($input['paypal_merch_id']);
     if(!preg_match('/^[a-z0-9]{13}$/i', $newinput['paypal_merch_id']) & !empty($newinput['paypal_merch_id'])) { add_settings_error( 'paypal_merch_id', 'invalid', 'Invalid PayPal Merchant ID. <span style="font-weight:normal;display:block;">A PayPal Merchant ID consists of 13 alphanumeric characters.</span>' ); }
     $newinput['paypal_merch_id'] = trim($input['paypal_merch_id']);
@@ -262,13 +280,14 @@ function steel_options_validate($input) {
   $newinput['fb_app_id'] = trim($input['fb_app_id']);
   if (!preg_match('/^[0-9]{15}$/i', $newinput['fb_app_id']) & !empty($newinput['fb_app_id'])) { add_settings_error( 'fb_app_id', 'invalid', 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>' ); }
 
-    $newinput['mod_bootstrap' ] = trim($input['mod_bootstrap' ]);
-  //$newinput['mod_podcast'   ] = trim($input['mod_podcast'   ]);
-  //$newinput['mod_quotes'    ] = trim($input['mod_quotes'    ]);
-  //$newinput['mod_shortcodes'] = trim($input['mod_shortcodes']);
-    $newinput['mod_slides'    ] = trim($input['mod_slides'    ]);
-    $newinput['mod_teams'     ] = trim($input['mod_teams'     ]);
-  //$newinput['mod_widgets'   ] = trim($input['mod_widgets'   ]);
+    $newinput['mod_bootstrap'  ] = trim($input['mod_bootstrap'  ]);
+		$newinput['mod_marketplace'] = trim($input['mod_marketplace']);
+  //$newinput['mod_podcast'    ] = trim($input['mod_podcast'    ]);
+  //$newinput['mod_quotes'     ] = trim($input['mod_quotes'     ]);
+  //$newinput['mod_shortcodes' ] = trim($input['mod_shortcodes' ]);
+    $newinput['mod_slides'     ] = trim($input['mod_slides'     ]);
+    $newinput['mod_teams'      ] = trim($input['mod_teams'      ]);
+  //$newinput['mod_widgets'    ] = trim($input['mod_widgets'    ]);
 
   return $newinput;
 }
