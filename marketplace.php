@@ -98,7 +98,7 @@ function steel_marketplace_init() {
 add_action( 'add_meta_boxes', 'steel_product_meta_boxes' );
 function steel_product_meta_boxes() {
 	add_meta_box('steel_product_details', 'Product Details', 'steel_product_details', 'steel_product', 'side'        );
-	add_meta_box('steel_product_views'  , 'Product Views'  , 'steel_product_views'  , 'steel_product', 'side', 'high');
+	add_meta_box('steel_product_view_meta'  , 'Product Views'  , 'steel_product_view_meta'  , 'steel_product', 'side', 'high');
 }
 function steel_product_details() { ?>
 
@@ -119,7 +119,7 @@ function steel_product_details() { ?>
   
 <?php
 }
-function steel_product_views() {
+function steel_product_view_meta() {
   $product_view_order = steel_product_meta( 'view_order' );
 
   $product_views = explode(',', $product_view_order);
