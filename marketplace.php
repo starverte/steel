@@ -103,12 +103,14 @@ function steel_product_meta_boxes() {
 }
 function steel_product_details() { ?>
 
-  <p><input type="text" size="25" name="product_ref" placeholder="Ref #" value="<?php echo steel_product_meta ('ref'); ?>" /></p>
-  <p><input type="text" size="25" name="product_price" placeholder="Price" value="<?php echo steel_product_meta ('price'); ?>" /></p>
-
+  <p><span class="form-addon-left">Ref #</span><input type="text" size="18" name="product_ref" placeholder="Ref #" value="<?php echo steel_product_meta ('ref'); ?>" /></p>
+  <p>
+    <label>Base price</label><br />
+    <span class="form-addon-left">$</span><input type="text" size="21" name="product_price" placeholder="Price" value="<?php echo steel_product_meta ('price'); ?>" />
+  </p>
   <p>
     <label>Additional shipping cost</label><br />
-    <input type="text" size="25" name="product_shipping" value="<?php echo steel_product_meta('shipping'); ?>" />
+    <span class="form-addon-left">$</span><input type="text" size="21" name="product_shipping" value="<?php echo steel_product_meta('shipping'); ?>" />
   </p>
 
   <p>
