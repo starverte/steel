@@ -87,9 +87,9 @@ function steel_marketplace_init() {
   );
 
   register_taxonomy( 'steel_product_category', 'steel_product', $args2 );
-	register_taxonomy_for_object_type( 'post_tag', 'steel_product' );
+  register_taxonomy_for_object_type( 'post_tag', 'steel_product' );
 
-	add_image_size( 'steel-product-view-thumb', 250, 155, true);
+  add_image_size( 'steel-product-view-thumb', 250, 155, true);
 }
 
 /*
@@ -97,8 +97,8 @@ function steel_marketplace_init() {
  */
 add_action( 'add_meta_boxes', 'steel_product_meta_boxes' );
 function steel_product_meta_boxes() {
-	add_meta_box('steel_product_details', 'Product Details', 'steel_product_details', 'steel_product', 'side'        );
-	add_meta_box('steel_product_view_meta'  , 'Product Views'  , 'steel_product_view_meta'  , 'steel_product', 'side', 'high');
+  add_meta_box('steel_product_details', 'Product Details', 'steel_product_details', 'steel_product', 'side'        );
+  add_meta_box('steel_product_view_meta'  , 'Product Views'  , 'steel_product_view_meta'  , 'steel_product', 'side', 'high');
 }
 function steel_product_details() { ?>
 
@@ -160,12 +160,12 @@ function save_steel_product() {
   if(preg_match('/\edit\.php/', $_SERVER['REQUEST_URI']) && (isset($post_id))) { return $post_id; } //Detects if the save action is coming from a quick edit/batch edit.
   if (isset($_POST['product_ref'     ])) { update_post_meta($post->ID, 'product_ref'     , $_POST['product_ref'     ]); }
   if (isset($_POST['product_price'   ])) { update_post_meta($post->ID, 'product_price'   , $_POST['product_price'   ]); }
-	if (isset($_POST['product_shipping'])) { update_post_meta($post->ID, 'product_shipping', $_POST['product_shipping']); }
-	if (isset($_POST['product_width'   ])) { update_post_meta($post->ID, 'product_width'   , $_POST['product_width'   ]); }
-	if (isset($_POST['product_height'  ])) { update_post_meta($post->ID, 'product_height'  , $_POST['product_height'  ]); }
-	if (isset($_POST['product_depth'   ])) { update_post_meta($post->ID, 'product_depth'   , $_POST['product_depth'   ]); }
+  if (isset($_POST['product_shipping'])) { update_post_meta($post->ID, 'product_shipping', $_POST['product_shipping']); }
+  if (isset($_POST['product_width'   ])) { update_post_meta($post->ID, 'product_width'   , $_POST['product_width'   ]); }
+  if (isset($_POST['product_height'  ])) { update_post_meta($post->ID, 'product_height'  , $_POST['product_height'  ]); }
+  if (isset($_POST['product_depth'   ])) { update_post_meta($post->ID, 'product_depth'   , $_POST['product_depth'   ]); }
 
-	if (isset($_POST['product_view_order']   )) {
+  if (isset($_POST['product_view_order']   )) {
     update_post_meta($post->ID, 'product_view_order'   , $_POST['product_view_order']);
     $product_views = explode(',', get_post_meta($post->ID, 'product_view_order', true));
     foreach ($product_views as $product_view) {
@@ -184,20 +184,20 @@ function steel_product_meta( $key, $post_id = NULL ) {
 }
 
 function steel_product_dimensions( $args = array(), $sep = ' x ' ) {
-	$defaults = array (
-		'sep1' => $sep,
-		'sep2' => $sep,
-		'dimensions' => 3,
-		'unit' => ' in',
-	);
-	$args = wp_parse_args($args, $defaults);
-	$args = (object) $args;
+  $defaults = array (
+    'sep1' => $sep,
+    'sep2' => $sep,
+    'dimensions' => 3,
+    'unit' => ' in',
+  );
+  $args = wp_parse_args($args, $defaults);
+  $args = (object) $args;
 
-	$width  = steel_product_meta('width' );
-	$height = steel_product_meta('height');
-	$depth  = steel_product_meta('width' );
+  $width  = steel_product_meta('width' );
+  $height = steel_product_meta('height');
+  $depth  = steel_product_meta('width' );
 
-	if ( $dimensions = 3 && !empty($width) && !empty($height) && !empty($depth)) { printf( $product_width . $args->unit . $args->sep1 . $product_height . $args->unit . $args->sep2 . $product_depth . $args->unit ); }
-		elseif ( !empty($width) && !empty($height) ) { printf( $product_width . $args->unit . $args->sep1 . $product_height . $args->unit ); }
+  if ( $dimensions = 3 && !empty($width) && !empty($height) && !empty($depth)) { printf( $product_width . $args->unit . $args->sep1 . $product_height . $args->unit . $args->sep2 . $product_depth . $args->unit ); }
+    elseif ( !empty($width) && !empty($height) ) { printf( $product_width . $args->unit . $args->sep1 . $product_height . $args->unit ); }
 }
 ?>
