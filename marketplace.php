@@ -3,6 +3,7 @@
  * This module allows you to easily create an ecommerce part of your WordPress site
  *
  * @package Steel/Marketplace
+ * @TODO: Remove backwards compatibility with Sparks Store in Steel 1.4
  */
 
 add_action( 'init', 'steel_marketplace_init', 0 );
@@ -120,7 +121,16 @@ function steel_product_details() { ?>
 <?php
 }
 function steel_product_view_meta() {
+  global $post;
   $product_view_order = steel_product_meta( 'view_order' );
+  
+  //Backwards compatibility for Sparks Store
+  if (has_post_thumbnail()) {
+    $thumb_id = get_post_thumbnail_id();
+    $product_view_order .= ','.$thumb_id;
+    update_post_meta($post->ID, 'product_view_order'   , $product_view_order);
+    delete_post_meta($post->ID, '_thumbnail_id');
+  }
 
   $product_views = explode(',', $product_view_order);
 
