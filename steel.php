@@ -57,16 +57,16 @@ function steel_admin_scripts() {
   wp_enqueue_style( 'steel-font'       , plugins_url('steel/css/starverte.css') );
   wp_enqueue_style( 'dashicons'                                                 );
 
-  wp_enqueue_script( 'jquery'             );
-  wp_enqueue_script( 'jquery-ui-core'     );
-  wp_enqueue_script( 'jquery-ui-sortable' );
-  wp_enqueue_script( 'jquery-ui-position' );
+  wp_enqueue_script( 'jquery'              );
+  wp_enqueue_script( 'jquery-ui-core'      );
+  wp_enqueue_script( 'jquery-ui-sortable'  );
+  wp_enqueue_script( 'jquery-ui-position'  );
   wp_enqueue_script( 'jquery-effects-core' );
-  wp_enqueue_script( 'jquery-effects-blind' );
+  wp_enqueue_script( 'jquery-effects-blind');
 
-	if (is_module_active('marketplace')) {
-		wp_enqueue_script( 'marketplace', plugins_url('steel/js/marketplace.js'  ), array('jquery'), steel_version(), true );
-	}
+  if (is_module_active('marketplace')) {
+    wp_enqueue_script( 'marketplace', plugins_url('steel/js/marketplace.js'  ), array('jquery'), steel_version(), true );
+  }
 
   if (is_module_active('slides')) {
     wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), steel_version(), true );
@@ -150,7 +150,7 @@ function steel_admin_init(){
   add_settings_section('steel_mods', 'Modules', 'steel_mods_output', 'steel');
 
     add_settings_field('mod_bootstrap'  , 'Bootstrap'  , 'mod_bootstrap_setting'  , 'steel', 'steel_mods' );
-		add_settings_field('mod_marketplace', 'Marketplace', 'mod_marketplace_setting', 'steel', 'steel_mods' );
+    add_settings_field('mod_marketplace', 'Marketplace', 'mod_marketplace_setting', 'steel', 'steel_mods' );
   //add_settings_field('mod_podcast'    , 'Podcast'    , 'mod_podcast_setting'    , 'steel', 'steel_mods' );
   //add_settings_field('mod_quotes'     , 'Quotes'     , 'mod_quotes_setting'     , 'steel', 'steel_mods' );
   //add_settings_field('mod_shortcodes' , 'Shortcodes' , 'mod_shortcodes_setting' , 'steel', 'steel_mods' );
@@ -281,7 +281,7 @@ function steel_options_validate($input) {
   if (!preg_match('/^[0-9]{15}$/i', $newinput['fb_app_id']) & !empty($newinput['fb_app_id'])) { add_settings_error( 'fb_app_id', 'invalid', 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>' ); }
 
     $newinput['mod_bootstrap'  ] = trim($input['mod_bootstrap'  ]);
-		$newinput['mod_marketplace'] = trim($input['mod_marketplace']);
+    $newinput['mod_marketplace'] = trim($input['mod_marketplace']);
   //$newinput['mod_podcast'    ] = trim($input['mod_podcast'    ]);
   //$newinput['mod_quotes'     ] = trim($input['mod_quotes'     ]);
   //$newinput['mod_shortcodes' ] = trim($input['mod_shortcodes' ]);
@@ -459,11 +459,11 @@ function is_module_active( $mod, $check = null ) {
  */
 function steel_options( $key ) {
   $options = get_option('steel_options');
-	if (empty($options[ $key ])) :
-	  return false;
-	else :
-	  return $options[ $key ];
-	endif;
+  if (empty($options[ $key ])) :
+    return false;
+  else :
+    return $options[ $key ];
+  endif;
 }
 
 /*
