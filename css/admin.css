@@ -26,6 +26,9 @@ span[class*='steel-icon-'] {
 .steel-icon-plus:before {
   content: "\f132";
 }
+.steel-icon-trash:before {
+  content: "\f182";
+}
 .steel-icon-dismiss:before {
   content: "\f153";
 }
@@ -51,14 +54,6 @@ span[class*='steel-icon-'] {
   margin: 0;
   padding: 0;
 }
-.slide {
-  margin: 5px 5px 5px 0;
-  float: left;
-  width: 300px;
-  height: 245px;
-  overflow: hidden;
-  background: #fff;
-}
 #slides img {
   margin: -5px 0 0;
 }
@@ -70,12 +65,10 @@ span[class*='steel-icon-'] {
   box-shadow: none;
   background: none;
 }
-
 #slides p {
   margin-top: -85px;
   margin-bottom: 0;
   position: relative;
-  
   width: 300px;
 }
 #slides p input,
@@ -116,9 +109,25 @@ span[class*='steel-icon-'] {
   color: #fff;
   cursor: pointer;
 }
+
 .slide {
+  margin: 5px 5px 5px 0;
+  float: left;
+  width: 300px;
+  height: 245px;
+  overflow: hidden;
+  background: #fff;
   border: 1px solid #f1f1f1;
   border-top: 0;
+}
+.slide-new {
+  margin: 5px 5px 5px 0;
+  float: left;
+  width: 300px;
+  height: 245px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #f1f1f1;
 }
 .slide:hover {
   border: 1px solid #ccc;

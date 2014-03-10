@@ -86,8 +86,8 @@ function steel_slides_slideshow() {
       $output .= '</div>';
     }
   }
+    $output .= '<a href="#" class="add_slide_media" title="Add slide to slideshow"><div class="slide-new"><span class="glyphicon glyphicon-plus-sign"></span> New Slide</div></a>';
   $output .= '</div>';
-  $output .= '<a href="#" class="button add_slide_media" id="btn_below" title="Add slide to slideshow" style="float:left;clear:both;"><span class="steel-icon-cover-photo"></span> New Slide</a>';
 
   echo $output; ?>
 
