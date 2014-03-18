@@ -64,8 +64,8 @@ function steel_slides_slideshow() {
   $slides = explode(',', $slides_order);
 
   $output = '';
-  $output .= '<a href="#" class="button add_slide_media" id="btn_above" title="Add slide to slideshow"><span class="steel-icon-cover-photo"></span> New Slide</a>';
-  $output .= '<div id="slides">';
+  $output .= '<a href="#" class="button add_slide_media" id="btn_above" title="Add slide to slideshow"><span class="steel-icon-cover-photo"></span> Add Slide</a>';
+  $output .= '<div id="slides_wrap"><div id="slides">';
   foreach ($slides as $slide) {
     if (!empty($slide)) {
       $image = wp_get_attachment_image_src( $slide, 'steel-slide-thumb' );
@@ -86,7 +86,7 @@ function steel_slides_slideshow() {
       $output .= '</div>';
     }
   }
-    $output .= '<a href="#" class="add_slide_media" title="Add slide to slideshow"><div class="slide-new"><span class="glyphicon glyphicon-plus-sign"></span> New Slide</div></a>';
+    $output .= '</div><a href="#" class="add_slide_media add_new_slide" title="Add slide to slideshow"><div class="slide-new"><p><span class="glyphicon glyphicon-plus-sign"></span><br>Add Slide</p></div></a>';
   $output .= '</div>';
 
   echo $output; ?>

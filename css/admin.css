@@ -135,8 +135,17 @@ span[class*='steel-icon-'] {
   width: 300px;
   height: 245px;
   overflow: hidden;
-  background: #fff;
+  background: #f1f1f1;
+  border: 1px solid #f7f7f7;
+  text-align: center;
+}
+.slide-new:hover {
+  background: #f7f7f7;
   border: 1px solid #f1f1f1;
+}
+.slide-new p {
+  font-size: 34px;
+  margin-top: 80px;
 }
 .slide:hover {
   border: 1px solid #ccc;
@@ -149,6 +158,12 @@ span[class*='steel-icon-'] {
 }
 .slide-controls {
   border-bottom: 1px solid #fff;
+}
+.slide-controls span {
+  max-width: 250px;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
 }
 .admin-color-fresh .slide-controls {
   background: #2ea2cc;
