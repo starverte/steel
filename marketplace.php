@@ -194,7 +194,6 @@ function save_steel_product() {
   }
 }
 
-
 /*
  * Display Product metadata
  */
