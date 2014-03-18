@@ -86,8 +86,8 @@ function steel_slides_slideshow() {
       $output .= '</div>';
     }
   }
+    $output .= '<a href="#" class="add_slide_media" title="Add slide to slideshow"><div class="slide-new"><span class="glyphicon glyphicon-plus-sign"></span> New Slide</div></a>';
   $output .= '</div>';
-  $output .= '<a href="#" class="button add_slide_media" id="btn_below" title="Add slide to slideshow" style="float:left;clear:both;"><span class="steel-icon-cover-photo"></span> New Slide</a>';
 
   echo $output; ?>
 
@@ -174,27 +174,27 @@ function steel_slideshow( $post_id, $size = 'full' ) {
   $i          = -1;
 
   //Indicators
-	if (empty($slides_skin) | (!empty($slides_skin) && $slides_skin == 'Default')) {
-		$indicators .= '<ol class="carousel-indicators">';
-		foreach ($slides as $slide) {
-			if (!empty($slide)) {
-				$count += 1;
-				$indicators .= $count >= 1 ? '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"></li>' : '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'" class="active"></li>';
-			}
-		}
-		$indicators .= '</ol>';
-	}
-	elseif (!empty($slides_skin) && $slides_skin == 'Tabs') {
-		$indicators .= '<ol class="nav nav-tabs">';
-		foreach ($slides as $slide) {
-			if (!empty($slide)) {
-				$count += 1;
-				$title   = steel_slides_meta( 'title_'  .$slide, $post_id );
-				$indicators .= $count >= 1 ? '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><a href="#carousel_'.$post_id.'">' . $title . '</a></li>' : '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><a href="#carousel_'.$post_id.'">' . $title . '</a></li>';
-			}
-		}
-		$indicators .= '</ol>';
-	}
+  if (empty($slides_skin) | (!empty($slides_skin) && $slides_skin == 'Default')) {
+    $indicators .= '<ol class="carousel-indicators">';
+    foreach ($slides as $slide) {
+      if (!empty($slide)) {
+        $count += 1;
+        $indicators .= $count >= 1 ? '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"></li>' : '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'" class="active"></li>';
+      }
+    }
+    $indicators .= '</ol>';
+  }
+  elseif (!empty($slides_skin) && $slides_skin == 'Tabs') {
+    $indicators .= '<ol class="nav nav-tabs">';
+    foreach ($slides as $slide) {
+      if (!empty($slide)) {
+        $count += 1;
+        $title   = steel_slides_meta( 'title_'  .$slide, $post_id );
+        $indicators .= $count >= 1 ? '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><a href="#carousel_'.$post_id.'">' . $title . '</a></li>' : '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><a href="#carousel_'.$post_id.'">' . $title . '</a></li>';
+      }
+    }
+    $indicators .= '</ol>';
+  }
 
   //Wrapper for slides
   foreach ($slides as $slide) {
@@ -230,7 +230,7 @@ function steel_slideshow( $post_id, $size = 'full' ) {
   $controls .= '<a class="right '.'carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="icon-next'.'"></span></a>';
 
   //Output
-	$output .= !empty($slides_skin) && $slides_skin == 'Tabs' ? $indicators : '';
+  $output .= !empty($slides_skin) && $slides_skin == 'Tabs' ? $indicators : '';
   $output .= '<div id="carousel_'.$post_id.'" class="carousel slide'.$slides_skin_class.'" data-ride="carousel">';
   $output .= empty($slides_skin) | (!empty($slides_skin) && $slides_skin == 'Default') ? $indicators : '';
   $output .= '<div class="carousel-inner">';
