@@ -101,26 +101,34 @@ function steel_product_meta_boxes() {
   add_meta_box('steel_product_details', 'Product Details', 'steel_product_details', 'steel_product', 'side'        );
   add_meta_box('steel_product_view_meta'  , 'Product Views'  , 'steel_product_view_meta'  , 'steel_product', 'side', 'high');
 }
-function steel_product_details() { ?>
-
-  <p class="product_ref"><span class="form-addon-left">Ref #</span><input type="text" size="18" name="product_ref" placeholder="Ref #" value="<?php echo steel_product_meta ('ref'); ?>" /></p>
-  <p class="product_price">
-    <label>Base price</label><br />
-    <span class="form-addon-left">$</span><input type="text" size="21" name="product_price" placeholder="Price" value="<?php echo steel_product_meta ('price'); ?>" />
-  </p>
-  <p class="product_shipping">
-    <label>Additional shipping cost</label><br />
-    <span class="form-addon-left">$</span><input type="text" size="21" name="product_shipping" value="<?php echo steel_product_meta('shipping'); ?>" />
-  </p>
-
-  <p class="product_dimensions">
-    <label>Dimensions</label><br />
-    <input type="text" size="5" name="product_width" placeholder="Width" value="<?php echo steel_product_meta('width'); ?>" /> x
-    <input type="text" size="5" name="product_height" placeholder="Height" value="<?php echo steel_product_meta('height'); ?>" /> x
-    <input type="text" size="5" name="product_depth" placeholder="Depth" value="<?php echo steel_product_meta('depth'); ?>" />
-  </p>
-  
-<?php
+function steel_product_details() {
+  if (product_details_display('product_ref')) {?>
+    <p class="product_ref"><span class="form-addon-left">Ref #</span><input type="text" size="18" name="product_ref" placeholder="Ref #" value="<?php echo steel_product_meta ('ref'); ?>" /></p>
+  <?php
+  }
+  if (product_details_display('product_price')) {?>
+    <p class="product_price">
+      <label>Base price</label><br />
+      <span class="form-addon-left">$</span><input type="text" size="21" name="product_price" placeholder="Price" value="<?php echo steel_product_meta ('price'); ?>" />
+    </p>
+  <?php
+  }
+  if (product_details_display('product_shipping')) {?>
+    <p class="product_shipping">
+      <label>Additional shipping cost</label><br />
+      <span class="form-addon-left">$</span><input type="text" size="21" name="product_shipping" value="<?php echo steel_product_meta('shipping'); ?>" />
+    </p>
+  <?php
+  }
+  if (product_details_display('product_dimensions')) {?>
+    <p class="product_dimensions">
+      <label>Dimensions</label><br />
+      <input type="text" size="5" name="product_width" placeholder="Width" value="<?php echo steel_product_meta('width'); ?>" /> x
+      <input type="text" size="5" name="product_height" placeholder="Height" value="<?php echo steel_product_meta('height'); ?>" /> x
+      <input type="text" size="5" name="product_depth" placeholder="Depth" value="<?php echo steel_product_meta('depth'); ?>" />
+    </p>
+  <?php
+  }
 }
 function steel_product_view_meta() {
   global $post;
@@ -211,5 +219,26 @@ function steel_product_dimensions( $args = array(), $sep = ' x ' ) {
 
   if ( $dimensions = 3 && !empty($width) && !empty($height) && !empty($depth)) { printf( $product_width . $args->unit . $args->sep1 . $product_height . $args->unit . $args->sep2 . $product_depth . $args->unit ); }
     elseif ( !empty($width) && !empty($height) ) { printf( $product_width . $args->unit . $args->sep1 . $product_height . $args->unit ); }
+}
+
+/*
+ * Add function product_details_display
+ */
+function product_details_display($key) {
+  $options = get_option('marketplace_options');
+  $default = array('product_ref','product_price','product_shipping',);
+  if (empty($options[ $key ])) :
+    if (in_array( $key, $default )) :
+      return true;
+    else :
+      return false;
+    endif;
+  else :
+    if ($options[$key] == 'true') :
+      return true;
+    else :
+      return false;
+    endif;
+  endif;
 }
 ?>
