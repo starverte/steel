@@ -102,7 +102,7 @@ function steel_slides_info() {
 }
 function steel_slides_settings() {
   global $post;
-  $skins = array('Default','Bar','Tabs');
+  $skins = array('Default','Bar','Clear','Tabs');
   $the_skin = steel_slides_meta( 'skin' ); ?>
 
   <p><label for="slides_skin">Skin</label>&nbsp;&nbsp;&nbsp;<select id="slides_skin" name="slides_skin">

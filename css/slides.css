@@ -247,3 +247,15 @@
   padding-bottom: 0;
 }
 
+/* Clear skin */
+.carousel-clear .carousel-control.left {
+  background-image: none;
+  background-repeat: no-repeat;
+  filter: none;
+}
+.carousel-clear .carousel-control.right {
+  background-image: none;
+  background-repeat: no-repeat;
+  filter: none;
+}
+

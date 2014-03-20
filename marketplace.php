@@ -90,6 +90,8 @@ function steel_marketplace_init() {
   register_taxonomy( 'steel_product_category', 'steel_product', $args2 );
   register_taxonomy_for_object_type( 'post_tag', 'steel_product' );
 
+	add_image_size( 'steel-product'      , 580, 360, true);
+	add_image_size( 'steel-product-thumb', 150, 95, true);
   add_image_size( 'steel-product-view-thumb', 250, 155, true);
 }
 
@@ -239,5 +241,84 @@ function product_details_display($key) {
       return false;
     endif;
   endif;
+}
+
+/*
+ * Display product_viewshow by id
+ */
+function steel_product_thumbnail( $size = 'full' ) {
+	global $post;
+	$post_id = $post->ID;
+	$product_view_order = steel_product_meta( 'view_order' );
+	$product_views = explode(',', $product_view_order);
+	
+  if (has_post_thumbnail()) { the_post_thumbnail(); }
+	elseif ($product_view_order) {
+	
+		$output     = '';
+		$indicators = '';
+		$items      = '';
+		$controls   = '';
+		$thumbs     = '';
+		$count      = -1;
+		$i          = -1;
+		$t          = -1;
+	
+		
+		$indicators .= '<ol class="carousel-indicators">';
+		foreach ($product_views as $product_view) {
+			if (!empty($product_view)) {
+				$count += 1;
+				$indicators .= $count >= 1 ? '<li data-target="#product_views" data-slide-to="'.$count.'"></li>' : '<li data-target="#product_views" data-slide-to="'.$count.'" class="active"></li>';
+			}
+		}
+		$indicators .= '</ol>';
+	
+		//Wrapper for product_views
+		foreach ($product_views as $product_view) {
+			if (!empty($product_view)) {
+				$image   = wp_get_attachment_image_src( $product_view, 'steel-product' );
+				$title   = steel_product_meta( 'view_title_'  .$product_view, $post_id );
+				$i += 1;
+	
+				$items .= $i >= 1 ? '<div class="item">' : '<div class="item active">';
+				$items .= !empty($link) ? '<a href="'.$link.'">' : '';
+				$items .= '<img id="product_view_img_'.$product_view.'" src="'.$image[0].'" alt="'.$title.'">';
+				$items .= !empty($link) ? '</a>' : '';
+	
+				if (!empty($title) || !empty($content)) {
+					$items .= '<div class="carousel-caption">';
+					
+						if (!empty($title)) { $items .= '<p id="product_views_title_'.$product_view.'">' .$title.'</p>'; }
+					
+					$items .= '</div>';//.carousel-caption
+				}
+				$items .= '</div>';//.item
+			}
+		}
+		//Wrapper for product_views
+		foreach ($product_views as $product_view) {
+			if (!empty($product_view) & $i >= 1) {
+				$image   = wp_get_attachment_image_src( $product_view, 'steel-product-thumb' );
+				$title   = steel_product_meta( 'view_title_'  .$product_view, $post_id );
+				$t += 1;
+	
+				$thumbs .= $t >= 1 ? '<a href="#product_views" data-slide-to="'.$t.'">' : '<a href="#product_views" data-slide-to="'.$t.'" class="active">';
+				$thumbs .= '<img id="product_view_img_'.$product_view.'" src="'.$image[0].'" alt="'.$title.'">';
+				$thumbs .= '</a>';//.thumb
+			}
+		}
+	
+		//Output
+		$output .= '<div id="product_views" class="carousel product_views" data-ride="carousel" data-interval="false">';
+		
+		$output .= '<div class="carousel-inner">';
+		$output .= $items;
+		$output .= '</div>';
+		$output .= $thumbs;
+		$output .= '</div>';
+	
+		echo $output;
+	}
 }
 ?>
