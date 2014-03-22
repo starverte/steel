@@ -102,10 +102,13 @@ function steel_slides_info() {
 }
 function steel_slides_settings() {
   global $post;
-  $skins = array('Default','Bar','Clear','Tabs');
-  $the_skin = steel_slides_meta( 'skin' ); ?>
+  $skins = array('Default','Bar','Simple','Tabs');
+  $the_skin = steel_slides_meta( 'skin' );
+  $transitions = array('Default','Fade');
+  $the_transition = steel_slides_meta( 'transition' ); ?>
 
-  <p><label for="slides_skin">Skin</label>&nbsp;&nbsp;&nbsp;<select id="slides_skin" name="slides_skin">
+  <p><label for="slides_skin">Skin</label>&nbsp;&nbsp;&nbsp;
+     <select id="slides_skin" name="slides_skin">
         <option value="">Select</option>
         <?php 
           foreach ($skins as $skin) {
@@ -115,7 +118,21 @@ function steel_slides_settings() {
             echo $option;
           }
         ?>
-      </select></p><?php
+      </select>
+  </p>
+  <p><label for="slides_transition">Transition</label>&nbsp;&nbsp;&nbsp;
+     <select id="slides_transition" name="slides_transition">
+        <option value="">Select</option>
+        <?php 
+          foreach ($transitions as $transition) {
+            $option  = '<option value="' . $transition . '" '. selected( $the_transition, $transition ) .'>';
+            $option .= $transition;
+            $option .= '</option>';
+            echo $option;
+          }
+        ?>
+      </select>
+  </p><?php
 }
 
 /*
@@ -143,6 +160,9 @@ function save_steel_slides() {
   
   if (!empty($_POST['slides_skin']))      { update_post_meta($post->ID, 'slides_skin', $_POST['slides_skin']); }
     elseif (isset($_POST['slides_skin'])) { update_post_meta($post->ID, 'slides_skin', 'Default'            ); } 
+  
+  if (!empty($_POST['slides_transition']))      { update_post_meta($post->ID, 'slides_transition', $_POST['slides_transition']); }
+    elseif (isset($_POST['slides_transition'])) { update_post_meta($post->ID, 'slides_transition', 'Default'            ); }
 }
 
 /*
@@ -157,12 +177,15 @@ function steel_slides_meta( $key, $post_id = NULL ) {
  * Display Slideshow by id
  */
 function steel_slideshow( $post_id, $size = 'full' ) {
-  $slides_media     = steel_slides_meta( 'media'    , $post_id );
-  $slides_order     = steel_slides_meta( 'order'    , $post_id );
-  $slides_media_url = steel_slides_meta( 'media_url', $post_id );
-  $slides_skin      = steel_slides_meta( 'skin'     , $post_id );
+  $slides_media      = steel_slides_meta( 'media'     , $post_id );
+  $slides_order      = steel_slides_meta( 'order'     , $post_id );
+  $slides_media_url  = steel_slides_meta( 'media_url' , $post_id );
+  $slides_skin       = steel_slides_meta( 'skin'      , $post_id );
+  $slides_transition = steel_slides_meta( 'transition', $post_id );
   
-  $slides_skin_class = !empty($slides_skin) ? ' carousel-'.strtolower($slides_skin) : ' carousel-default' ;
+  $slides_class  = 'carousel slide';
+  $slides_class .= !empty($slides_skin) ? ' carousel-'.strtolower($slides_skin) : ' carousel-default' ;
+  $slides_class .= !empty($slides_transition) && $slides_transition != 'Default' ? ' carousel-'.strtolower($slides_transition) : '' ;
 
   $slides = explode(',', $slides_order);
 
@@ -226,12 +249,14 @@ function steel_slideshow( $post_id, $size = 'full' ) {
   }
 
   //Controls
+  $controls .= (!empty($slides_skin) && $slides_skin == 'Simple') ? '<div class="carousel-controls">' : '';
   $controls .= '<a class="left ' .'carousel-control" href="#carousel_'.$post_id.'" data-slide="prev"><span class="icon-prev' .'"></span></a>';
   $controls .= '<a class="right '.'carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="icon-next'.'"></span></a>';
+  $controls .= (!empty($slides_skin) && $slides_skin == 'Simple') ? '</div>' : '';
 
   //Output
   $output .= !empty($slides_skin) && $slides_skin == 'Tabs' ? $indicators : '';
-  $output .= '<div id="carousel_'.$post_id.'" class="carousel slide'.$slides_skin_class.'" data-ride="carousel">';
+  $output .= '<div id="carousel_'.$post_id.'" class="'.$slides_class.'" data-ride="carousel">';
   $output .= empty($slides_skin) | (!empty($slides_skin) && $slides_skin == 'Default') ? $indicators : '';
   $output .= '<div class="carousel-inner">';
   $output .= $items;
