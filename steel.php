@@ -9,7 +9,7 @@ Author URI: http://starverte.com/
 License: GPLv3
 License URI: http://www.gnu.org/licenses/
 
-  Copyright 2013 Star Verte LLC (email : info@starverte.com)
+  Copyright 2014 Star Verte LLC (email : info@starverte.com)
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -25,6 +25,10 @@ License URI: http://www.gnu.org/licenses/
   along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+global $bs_ver, $steel_ver;
+$bs_ver    = '3.0.3';
+$steel_ver = '1.1.5';
+
 include_once dirname( __FILE__ ) . '/options.php';
 
   if (is_module_active('marketplace')) { include_once dirname( __FILE__ ) . '/marketplace.php'; }
@@ -39,16 +43,11 @@ if (is_flint_active()) { include_once dirname( __FILE__ ) . '/templates.php'; }
 
 /**
  * Returns current plugin version.
+ *
+ * Deprecated Steel 1.2. Use $steel_ver instead.
+ * @TODO Remove backwards compatibility in Steel 1.4
  */
-function steel_version() {
-  if ( ! function_exists( 'get_plugins' ) )
-    require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-  $plugin_folder = get_plugins( '/' . plugin_basename( dirname( __FILE__ ) ) );
-  $plugin_file = basename( ( __FILE__ ) );
-
-  return $plugin_folder[$plugin_file]['Version'];
-}
+function steel_version() { return $steel_ver; }
 
 /**
  * Load scripts
@@ -68,11 +67,11 @@ function steel_admin_scripts() {
   wp_enqueue_script( 'jquery-effects-blind');
 
   if (is_module_active('marketplace')) {
-    wp_enqueue_script( 'marketplace', plugins_url('steel/js/marketplace.js'  ), array('jquery'), steel_version(), true );
+    wp_enqueue_script( 'marketplace', plugins_url('steel/js/marketplace.js'  ), array('jquery'), $steel_ver, true );
   }
 
   if (is_module_active('slides')) {
-    wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), steel_version(), true );
+    wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), $steel_ver, true );
   }
 
   wp_enqueue_media();
@@ -84,7 +83,7 @@ function steel_scripts() {
     wp_deregister_script('bootstrap');
 
     // Load Twitter Bootstrap
-    wp_enqueue_script( 'bootstrap', plugins_url('steel/js/bootstrap.min.js'  ), array('jquery'), '3.0.3', true );
+    wp_enqueue_script( 'bootstrap', plugins_url('steel/js/bootstrap.min.js'  ), array('jquery'), $bs_ver, true );
   }
   
   if (is_module_active('bootstrap', 'css')||is_module_active('bootstrap', 'both')) {
@@ -92,22 +91,22 @@ function steel_scripts() {
     wp_deregister_style ('bootstrap-css');
 
     // Load Twitter Bootstrap
-    wp_enqueue_style ( 'bootstrap-css', plugins_url('steel/css/bootstrap.min.css'), array() , '3.0.3' );
+    wp_enqueue_style ( 'bootstrap-css', plugins_url('steel/css/bootstrap.min.css'), array() , $bs_ver );
   }
   else {
     wp_deregister_style ('bootstrap-css');
-    wp_enqueue_style ( 'glyphicons', plugins_url('steel/css/glyphicons.css'), array() , '3.0.3' );
+    wp_enqueue_style ( 'glyphicons', plugins_url('steel/css/glyphicons.css'), array() , $bs_ver );
   }
   
   if (is_module_active('slides')) {
-    wp_enqueue_style ( 'slides-mod-style', plugins_url('steel/css/slides.css'  ), array(), steel_version());
+    wp_enqueue_style ( 'slides-mod-style', plugins_url('steel/css/slides.css'  ), array(), $steel_ver);
   }
 
   // Load script for "Pin It" button
   wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js');
 
   // Load front-end scripts
-  wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array('jquery'), steel_version(), true );
+  wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array('jquery'), $steel_ver, true );
 }
 
 /*
