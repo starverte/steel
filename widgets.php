@@ -24,29 +24,30 @@ class Steel_Link_Widget extends WP_Widget {
     extract( $args );
     $title = apply_filters('widget_title', $instance['title'] );
     $href = $instance['href'];
-    switch ($instance['style']) {
-      case 'Default':
-        $style = 'btn btn-block';
+    $style = strtolower($instance['style']);
+    switch ($style) {
+      case 'default':
+        $style = 'btn btn-block btn-default';
       break;
-      case 'Primary':
+      case 'primary':
         $style = 'btn btn-block btn-primary';
       break;
-      case 'Info':
+      case 'info':
         $style = 'btn btn-block btn-info';
       break;
-      case 'Success':
+      case 'success':
         $style = 'btn btn-block btn-success';
       break;
-      case 'Warning':
+      case 'warning':
         $style = 'btn btn-block btn-warning';
       break;
-      case 'Danger':
+      case 'danger':
         $style = 'btn btn-block btn-danger';
       break;
-      case 'Inverse':
+      case 'inverse':
         $style = 'btn btn-block btn-inverse';
       break;
-      case 'Link':
+      case 'link':
         $style = 'btn btn-block btn-link';
       break;
     }
