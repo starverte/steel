@@ -25,13 +25,14 @@ License URI: http://www.gnu.org/licenses/
   along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-global $bs_ver, $steel_ver;
+global $bs_ver;
+global $steel_ver;
 $bs_ver    = '3.0.3';
 $steel_ver = '1.1.5';
 
+include_once dirname( __FILE__ ) . '/bootstrap.php';
 include_once dirname( __FILE__ ) . '/options.php';
 
-  if (is_module_active('marketplace')) { include_once dirname( __FILE__ ) . '/marketplace.php'; }
 //if (is_module_active('podcast'    )) { include_once dirname( __FILE__ ) . '/podcast.php';     }
   if (is_module_active('quotes'     )) { include_once dirname( __FILE__ ) . '/quotes.php';      }
   if (is_module_active('shortcodes' )) { include_once dirname( __FILE__ ) . '/shortcodes.php';  }
@@ -47,13 +48,15 @@ if (is_flint_active()) { include_once dirname( __FILE__ ) . '/templates.php'; }
  * Deprecated Steel 1.2. Use $steel_ver instead.
  * @TODO Remove backwards compatibility in Steel 1.4
  */
-function steel_version() { return $steel_ver; }
+function steel_version() { global $steel_ver; return $steel_ver; }
 
 /**
  * Load scripts
  */
 add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
 function steel_admin_scripts() {
+  global $bs_ver;
+global $steel_ver;
   wp_enqueue_style( 'steel-admin-style', plugins_url('steel/css/admin.css'    ) );
   wp_enqueue_style( 'steel-font'       , plugins_url('steel/css/starverte.css') );
   wp_enqueue_style( 'glyphicons'       , plugins_url('steel/css/glyphicons.css') );
@@ -66,10 +69,6 @@ function steel_admin_scripts() {
   wp_enqueue_script( 'jquery-effects-core' );
   wp_enqueue_script( 'jquery-effects-blind');
 
-  if (is_module_active('marketplace')) {
-    wp_enqueue_script( 'marketplace', plugins_url('steel/js/marketplace.js'  ), array('jquery'), $steel_ver, true );
-  }
-
   if (is_module_active('slides')) {
     wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), $steel_ver, true );
   }
@@ -78,6 +77,8 @@ function steel_admin_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
+  global $bs_ver;
+global $steel_ver;
   if (is_module_active('bootstrap', 'js')||is_module_active('bootstrap', 'both')) {
     // Make sure there aren't other instances of Twitter Bootstrap
     wp_deregister_script('bootstrap');
