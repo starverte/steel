@@ -48,6 +48,14 @@ Submit your questions to http://sparks.starverte.com/steel and we will try to an
 
 == Changelog ==
 
+= 1.1.6 =
+* Fixed `run.js` to avoid conflict with new Audio List feature in WordPress 3.9
+* Fixed columns shortcode to reflect Bootstrap integration
+* Added transitions to Slides module
+* New Navigation Menu widget
+
+For more details, check out https://github.com/starverte/steel/pull/125
+
 = 1.1.4 =
 * Simplified editor in Slides
 * Removed templates and integrated new Flint action hooks
@@ -58,7 +66,7 @@ Submit your questions to http://sparks.starverte.com/steel and we will try to an
 * jQuery conflicts fixed
 
 = 1.1.2 =
-* Extracted carousel and glyphicon styles from bootstrap.css so that carousel works even if Bootstrap module isn't active
+Extracted carousel and glyphicon styles from bootstrap.css so that carousel works even if Bootstrap module isn't active
 
 = 1.1.1 =
 * Added skins for Slides module
@@ -67,10 +75,11 @@ Submit your questions to http://sparks.starverte.com/steel and we will try to an
 = 1.1.0 =
 * Added numerous shortcodes to implement Bootstrap like [btn] and [glyph] (for complete list and use, check out http://sparks.starverte.com/steel/bootstrap/)
 * Added new Slides module (documentation will soon be available via http://sparks.starverte.com/steel/slides/)
-* For more details, check out https://github.com/starverte/steel/pull/102
+
+For more details, check out https://github.com/starverte/steel/pull/102
 
 = 1.0.1 =
-* Removed redundant `steel_version` and admin scripts functions
+Removed redundant `steel_version` and admin scripts functions
 
 = 1.0.0 =
 Updated branding and descriptions.
