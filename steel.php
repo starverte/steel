@@ -56,7 +56,7 @@ function steel_version() { global $steel_ver; return $steel_ver; }
 add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
 function steel_admin_scripts() {
   global $bs_ver;
-global $steel_ver;
+  global $steel_ver;
   wp_enqueue_style( 'steel-admin-style', plugins_url('steel/css/admin.css'    ) );
   wp_enqueue_style( 'steel-font'       , plugins_url('steel/css/starverte.css') );
   wp_enqueue_style( 'glyphicons'       , plugins_url('steel/css/glyphicons.css') );
@@ -78,7 +78,7 @@ global $steel_ver;
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
   global $bs_ver;
-global $steel_ver;
+  global $steel_ver;
   if (is_module_active('bootstrap', 'js')||is_module_active('bootstrap', 'both')) {
     // Make sure there aren't other instances of Twitter Bootstrap
     wp_deregister_script('bootstrap');
