@@ -1,19 +1,20 @@
 <?php
 /*
-* Creates custom widgets
-*
-* @package Steel
-* @module Widgets
-*
-*/
+ * Creates custom widgets
+ *
+ * @package Steel/Widgets
+ *
+ */
 
 add_action( 'widgets_init', 'steel_widgets' );
 function steel_widgets() {
   register_widget( 'Steel_Link_Widget' );
   register_widget( 'Steel_Link_Widget_Legacy' );
+  register_widget( 'Steel_Nav_Menu_Widget' );
 }
 
 class Steel_Link_Widget extends WP_Widget {
+
   function Steel_Link_Widget() {
     $widget_ops = array( 'classname' => 'link-widget', 'description' => __('A widget that only displays a title with a link', 'link-widget') );
     $control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'link-widget' );
@@ -24,34 +25,35 @@ class Steel_Link_Widget extends WP_Widget {
     extract( $args );
     $title = apply_filters('widget_title', $instance['title'] );
     $href = $instance['href'];
-    switch ($instance['style']) {
-      case 'Default':
-        $style = 'btn btn-block';
+    $style = strtolower($instance['style']);
+    switch ($style) {
+      case 'default':
+        $style = 'btn btn-block btn-default';
       break;
-      case 'Primary':
+      case 'primary':
         $style = 'btn btn-block btn-primary';
       break;
-      case 'Info':
+      case 'info':
         $style = 'btn btn-block btn-info';
       break;
-      case 'Success':
+      case 'success':
         $style = 'btn btn-block btn-success';
       break;
-      case 'Warning':
+      case 'warning':
         $style = 'btn btn-block btn-warning';
       break;
-      case 'Danger':
+      case 'danger':
         $style = 'btn btn-block btn-danger';
       break;
-      case 'Inverse':
+      case 'inverse':
         $style = 'btn btn-block btn-inverse';
       break;
-      case 'Link':
+      case 'link':
         $style = 'btn btn-block btn-link';
       break;
     }
     $show_info = isset( $instance['show_info'] ) ? $instance['show_info'] : false;
-    if ( $title ) { echo '<a class="'. $style . '" href=' . $href . ' type="button">' . $title . '</a>'; }
+    if ( $title ) { echo '<p><a class="'. $style . '" href=' . $href . ' type="button">' . $title . '</a></p>'; }
   }
   
   function update( $new_instance, $old_instance ) {
@@ -90,9 +92,11 @@ class Steel_Link_Widget extends WP_Widget {
       <button type="button" class="btn btn-link">Link</button>
     </div><?php
   }
+
 }
 
-class Steel_Link_Widget_Legacy extends WP_Widget {  
+class Steel_Link_Widget_Legacy extends WP_Widget { 
+ 
   function Steel_Link_Widget_Legacy() {
     $widget_ops = array( 'classname' => 'link-widget-legacy', 'description' => __('A widget that only displays a title with a link', 'link-widget-legacy') );
     $control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'link-widget-legacy' );
@@ -134,6 +138,72 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
       <label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e('Classes:', 'link-widget-legacy'); ?></label>
       <input id="<?php echo $this->get_field_id( 'class' ); ?>" name="<?php echo $this->get_field_name( 'class' ); ?>" value="<?php echo $instance['class']; ?>" style="width:100%;" />
     </p><?php    
+  }
+
+}
+
+class Steel_Nav_Menu_Widget extends WP_Widget {
+  
+  function __construct() {
+    $widget_ops = array( 'description' => __('Add a custom menu to your sidebar.') );
+    parent::__construct( 'steel_nav_menu_widget', __('Steel: Menu Panel'), $widget_ops );
+  }
+  
+  function widget($args, $instance) {
+    // Get menu
+    $nav_menu = ! empty( $instance['steel_nav_menu_widget'] ) ? wp_get_nav_menu_object( $instance['steel_nav_menu_widget'] ) : false;
+    
+    if ( !$nav_menu )
+      return;
+    
+    $instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
+    
+    echo '<div class="panel panel-default">';
+    
+    if ( !empty($instance['title']) )
+      echo '<div class="panel-heading"><h3 class="panel-title">'.$instance['title'].'</h3></div>';
+    
+    steel_list_group( array( 'fallback_cb' => '', 'menu' => $nav_menu ) );
+    
+    echo '</div>';
+  }
+  
+  function update( $new_instance, $old_instance ) {
+    $instance['title'] = strip_tags( stripslashes($new_instance['title']) );
+    $instance['steel_nav_menu_widget'] = (int) $new_instance['steel_nav_menu_widget'];
+    return $instance;
+  }
+  
+  function form( $instance ) {
+    $title = isset( $instance['title'] ) ? $instance['title'] : '';
+    $nav_menu = isset( $instance['steel_nav_menu_widget'] ) ? $instance['steel_nav_menu_widget'] : '';
+    
+    // Get menus
+    $menus = wp_get_nav_menus( array( 'orderby' => 'name' ) );
+    
+    // If no menus exists, direct the user to go and create some.
+    if ( !$menus ) {
+      echo '<p>'. sprintf( __('No menus have been created yet. <a href="%s">Create some</a>.'), admin_url('nav-menus.php') ) .'</p>';
+      return;
+    } ?>
+    
+    <p>
+      <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:') ?></label>
+      <input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $title; ?>" />
+    </p>
+    <p>
+      <label for="<?php echo $this->get_field_id('steel_nav_menu_widget'); ?>"><?php _e('Select Menu:'); ?></label>
+      <select id="<?php echo $this->get_field_id('steel_nav_menu_widget'); ?>" name="<?php echo $this->get_field_name('steel_nav_menu_widget'); ?>">
+      <?php
+        foreach ( $menus as $menu ) {
+          echo '<option value="' . $menu->term_id . '"'
+          . selected( $nav_menu, $menu->term_id, false )
+          . '>'. $menu->name . '</option>';
+        }
+      ?>
+      </select>
+    </p>
+    <?php
   }
 }
 ?>
