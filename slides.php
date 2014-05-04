@@ -253,16 +253,16 @@ function steel_slideshow( $post_id, $size = 'full' ) {
   }
   elseif (!empty($slides_skin) && $slides_skin == 'Thumbnails') {
     $indicators .= '<div class="carousel-thumbs hidden-sm hidden-xs">';
-  	$indicators .= '<span class="col-lg-'.$spc_lg.' col-md-'.$spc_lg.'"></span>';
+    $indicators .= '<span class="col-lg-'.$spc_lg.' col-md-'.$spc_lg.'"></span>';
     foreach ($slides as $slide) {
       if (!empty($slide)) {
         $count += 1;
-  			$image   = wp_get_attachment_image_src( $slide, 'steel-slide-thumb' );
+    		$image   = wp_get_attachment_image_src( $slide, 'steel-slide-thumb' );
         $title   = steel_slides_meta( 'title_'  .$slide, $post_id );
         $indicators .= $count >= 1 ? '<span class="col-lg-'.$col_lg.' col-md-'.$col_lg.'" data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><img id="slide_thumb_'.$slide.'" src="'.$image[0].'" alt="'.$title.'"></span>' : '<span class="col-lg-'.$col_lg.' col-md-'.$col_lg.'" data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><img id="slide_thumb_'.$slide.'" src="'.$image[0].'" alt="'.$title.'"></span>';
       }
     }
-  	$indicators .= '<span class="col-lg-'.$spc_lg.' col-md-'.$spc_lg.'"></span>';
+    $indicators .= '<span class="col-lg-'.$spc_lg.' col-md-'.$spc_lg.'"></span>';
     $indicators .= '</div>';
   }
 
