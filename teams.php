@@ -24,14 +24,14 @@ function steel_teams_init() {
     'not_found'           => __( 'No profiles found', 'steel' ),
     'not_found_in_trash'  => __( 'No profiles found in trash. Did you check recycling?', 'steel' ),
   );
-  
+
   $rewrite = array(
     'slug'                => 'profiles',
     'with_front'          => true,
     'pages'               => false,
     'feeds'               => false,
   );
-  
+
   $args = array(
     'label'               => __( 'steel_profile', 'steel' ),
     'description'         => __( 'Member(s) of "Teams"', 'steel' ),
@@ -52,9 +52,9 @@ function steel_teams_init() {
     'rewrite'             => $rewrite,
     'capability_type'     => 'page',
   );
-  
+
   register_post_type( 'steel_profile', $args );
-  
+
   $labels2 = array(
     'name'                       => _x( 'Teams', 'Taxonomy General Name', 'steel' ),
     'singular_name'              => _x( 'Team', 'Taxonomy Singular Name', 'steel' ),
@@ -71,13 +71,13 @@ function steel_teams_init() {
     'add_or_remove_items'        => __( 'Add or remove teams', 'steel' ),
     'choose_from_most_used'      => __( 'Choose from the most used teams', 'steel' ),
   );
-  
+
   $rewrite2 = array(
     'slug'                       => 'teams',
     'with_front'                 => true,
     'hierarchical'               => true,
   );
-  
+
   $args2 = array(
     'labels'                     => $labels2,
     'hierarchical'               => false,
@@ -88,7 +88,7 @@ function steel_teams_init() {
     'show_tagcloud'              => false,
     'rewrite'                    => $rewrite2,
   );
-  
+
   register_taxonomy( 'steel_team', 'steel_profile', $args2 );
 }
 
@@ -98,11 +98,11 @@ function steel_teams_init() {
 add_action( 'add_meta_boxes', 'steel_teams_meta_boxes' );
 function steel_teams_meta_boxes() { add_meta_box('steel_teams_meta', 'Team Member Profile', 'steel_teams_meta', 'steel_profile', 'side', 'high'); }
 function steel_teams_meta() { ?>
-  
+
   <p><label>Title</label><br /><input type="text"  size="25" name="profile_title" value="<?php echo steel_profile_meta ('title'); ?>" /></p>
   <p><label>Email</label><br /><input type="email" size="25" name="profile_email" value="<?php echo steel_profile_meta ('email'); ?>" /></p>
   <p><label>Phone</label><br /><input type="tel"   size="25" name="profile_phone" value="<?php echo steel_profile_phone();        ?>" /></p><?php
-  
+
   do_action('steel_teams_add_meta');
 }
 

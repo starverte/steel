@@ -60,7 +60,7 @@ function steel_slides_slideshow() {
   $slides_media     = steel_slides_meta( 'media' );
   $slides_order     = steel_slides_meta( 'order' );
   $slides_media_url = steel_slides_meta( 'media_url' );
-  
+
   $slides = explode(',', $slides_order);
 
   $output = '';
@@ -110,7 +110,7 @@ function steel_slides_settings() {
   <p><label for="slides_skin">Skin</label>&nbsp;&nbsp;&nbsp;
      <select id="slides_skin" name="slides_skin">
         <option value="">Select</option>
-        <?php 
+        <?php
           foreach ($skins as $skin) {
             $option  = '<option value="' . $skin . '" '. selected( $the_skin, $skin ) .'>';
             $option .= $skin;
@@ -123,7 +123,7 @@ function steel_slides_settings() {
   <p><label for="slides_transition">Transition</label>&nbsp;&nbsp;&nbsp;
      <select id="slides_transition" name="slides_transition">
         <option value="">Select</option>
-        <?php 
+        <?php
           foreach ($transitions as $transition) {
             $option  = '<option value="' . $transition . '" '. selected( $the_transition, $transition ) .'>';
             $option .= $transition;
@@ -157,10 +157,10 @@ function save_steel_slides() {
   if (isset($_POST['slides_author']   )) { update_post_meta($post->ID, 'slides_author'   , $_POST['slides_author']   ); }
   if (isset($_POST['slides_media']    )) { update_post_meta($post->ID, 'slides_media'    , $_POST['slides_media']    ); }
   if (isset($_POST['slides_media_url'])) { update_post_meta($post->ID, 'slides_media_url', $_POST['slides_media_url']); }
-  
+
   if (!empty($_POST['slides_skin']))      { update_post_meta($post->ID, 'slides_skin', $_POST['slides_skin']); }
-    elseif (isset($_POST['slides_skin'])) { update_post_meta($post->ID, 'slides_skin', 'Default'            ); } 
-  
+    elseif (isset($_POST['slides_skin'])) { update_post_meta($post->ID, 'slides_skin', 'Default'            ); }
+
   if (!empty($_POST['slides_transition']))      { update_post_meta($post->ID, 'slides_transition', $_POST['slides_transition']); }
     elseif (isset($_POST['slides_transition'])) { update_post_meta($post->ID, 'slides_transition', 'Default'            ); }
 }
@@ -182,7 +182,7 @@ function steel_slideshow( $post_id, $size = 'full' ) {
   $slides_media_url  = steel_slides_meta( 'media_url' , $post_id );
   $slides_skin       = steel_slides_meta( 'skin'      , $post_id );
   $slides_transition = steel_slides_meta( 'transition', $post_id );
-  
+
   $slides_class  = 'carousel slide';
   $slides_class .= !empty($slides_skin) ? ' carousel-'.strtolower($slides_skin) : ' carousel-default' ;
   $slides_class .= !empty($slides_transition) && $slides_transition != 'Default' ? ' carousel-'.strtolower($slides_transition) : '' ;

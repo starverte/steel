@@ -44,7 +44,7 @@ jQuery('.add_slide_media').click( function( event ){
 
   file_frame.on( 'select', function() {
     attachment = file_frame.state().get('selection').first().toJSON();
-    newSlide(attachment);      
+    newSlide(attachment);
   });
 
   file_frame.open();
