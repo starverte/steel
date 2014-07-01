@@ -25,7 +25,7 @@ function steel_menu_page() {
       <p class="submit"><input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" /></p>
     </form>
   </div>
-  <?php 
+  <?php
 }
 
 /*
@@ -33,7 +33,7 @@ function steel_menu_page() {
  */
 add_action('admin_init', 'steel_admin_init');
 function steel_admin_init(){
-  
+
   //Register Steel Options
   register_setting('steel_options', 'steel_options', 'steel_options_validate' );
 
@@ -69,7 +69,7 @@ function mod_bootstrap_field() {
 
   $bootstrap = !empty($options['mod_bootstrap']) ? $options['mod_bootstrap'] : 'both';
   steel_options('mod_bootstrap'); ?>
-  
+
   <div class="radio-group">
     <label for="steel_options[mod_bootstrap]"><input name="steel_options[mod_bootstrap]" type="radio" value="css"  <?php checked( $bootstrap, 'css'  ) ?>>CSS&nbsp;&nbsp;</label>
     <label for="steel_options[mod_bootstrap]"><input name="steel_options[mod_bootstrap]" type="radio" value="js"   <?php checked( $bootstrap, 'js'   ) ?>>Javascript</label><br>

@@ -12,7 +12,7 @@ function steel_profile_entry_meta_above() {
   $title = steel_profile_meta ('title');
   $email = steel_profile_meta ('email');
   $phone = steel_profile_phone();
-  
+
   $output  = '';
   $output .= !empty($title) ? '<h4>' . $title . '</h4>' : '';
   $output .= !empty($email) | !empty($phone) ? '<p>' : '';

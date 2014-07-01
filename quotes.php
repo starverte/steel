@@ -13,7 +13,7 @@ function steel_quotes_widgets() {
   register_widget( 'Steel_Quotes_Widget' );
 }
 class Steel_Quotes_Widget extends WP_Widget {
-  
+
   function Steel_Quotes_Widget() {
     $widget_ops = array( 'classname' => 'random-quotes-widget', 'description' => __('Displays a random quote', 'random-quotes-widget') );
     $control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'random-quotes-widget' );
@@ -54,7 +54,7 @@ class Steel_Quotes_Widget extends WP_Widget {
         )
       )
     );
-    
+
     while ($quotes->have_posts()) : $quotes->the_post(); ?>
       <blockquote><?php the_content(); ?></blockquote>
     <?php endwhile;
@@ -83,7 +83,7 @@ class Steel_Quotes_Widget extends WP_Widget {
       <label for="<?php echo $this->get_field_id('list'); ?>"><?php _e('Category:'); ?></label>
       <select id="<?php echo $this->get_field_id('list'); ?>" name="<?php echo $this->get_field_name('list'); ?>">
         <option value="">All Categories</option>
-        <?php 
+        <?php
           foreach ($cats as $cat) {
             $option  = '<option value="' . $cat->term_id . '" '. selected( $list, $cat->term_id ) .'>';
             $option .= $cat->cat_name;

@@ -60,7 +60,7 @@ function steel_slides_slideshow() {
   $slides_media     = steel_slides_meta( 'media' );
   $slides_order     = steel_slides_meta( 'order' );
   $slides_media_url = steel_slides_meta( 'media_url' );
-  
+
   $slides = explode(',', $slides_order);
 
   $output = '';
@@ -102,7 +102,7 @@ function steel_slides_info() {
 }
 function steel_slides_settings() {
   global $post;
-  $skins = array('Default','Bar','Simple','Tabs');
+  $skins = array('Default','Bar','Simple','Tabs','Thumbnails');
   $the_skin = steel_slides_meta( 'skin' );
   $transitions = array('Default','Fade');
   $the_transition = steel_slides_meta( 'transition' ); ?>
@@ -110,7 +110,7 @@ function steel_slides_settings() {
   <p><label for="slides_skin">Skin</label>&nbsp;&nbsp;&nbsp;
      <select id="slides_skin" name="slides_skin">
         <option value="">Select</option>
-        <?php 
+        <?php
           foreach ($skins as $skin) {
             $option  = '<option value="' . $skin . '" '. selected( $the_skin, $skin ) .'>';
             $option .= $skin;
@@ -123,7 +123,7 @@ function steel_slides_settings() {
   <p><label for="slides_transition">Transition</label>&nbsp;&nbsp;&nbsp;
      <select id="slides_transition" name="slides_transition">
         <option value="">Select</option>
-        <?php 
+        <?php
           foreach ($transitions as $transition) {
             $option  = '<option value="' . $transition . '" '. selected( $the_transition, $transition ) .'>';
             $option .= $transition;
@@ -157,10 +157,10 @@ function save_steel_slides() {
   if (isset($_POST['slides_author']   )) { update_post_meta($post->ID, 'slides_author'   , $_POST['slides_author']   ); }
   if (isset($_POST['slides_media']    )) { update_post_meta($post->ID, 'slides_media'    , $_POST['slides_media']    ); }
   if (isset($_POST['slides_media_url'])) { update_post_meta($post->ID, 'slides_media_url', $_POST['slides_media_url']); }
-  
+
   if (!empty($_POST['slides_skin']))      { update_post_meta($post->ID, 'slides_skin', $_POST['slides_skin']); }
-    elseif (isset($_POST['slides_skin'])) { update_post_meta($post->ID, 'slides_skin', 'Default'            ); } 
-  
+    elseif (isset($_POST['slides_skin'])) { update_post_meta($post->ID, 'slides_skin', 'Default'            ); }
+
   if (!empty($_POST['slides_transition']))      { update_post_meta($post->ID, 'slides_transition', $_POST['slides_transition']); }
     elseif (isset($_POST['slides_transition'])) { update_post_meta($post->ID, 'slides_transition', 'Default'            ); }
 }
@@ -182,7 +182,7 @@ function steel_slideshow( $post_id, $size = 'full' ) {
   $slides_media_url  = steel_slides_meta( 'media_url' , $post_id );
   $slides_skin       = steel_slides_meta( 'skin'      , $post_id );
   $slides_transition = steel_slides_meta( 'transition', $post_id );
-  
+
   $slides_class  = 'carousel slide';
   $slides_class .= !empty($slides_skin) ? ' carousel-'.strtolower($slides_skin) : ' carousel-default' ;
   $slides_class .= !empty($slides_transition) && $slides_transition != 'Default' ? ' carousel-'.strtolower($slides_transition) : '' ;
@@ -195,29 +195,6 @@ function steel_slideshow( $post_id, $size = 'full' ) {
   $controls   = '';
   $count      = -1;
   $i          = -1;
-
-  //Indicators
-  if (empty($slides_skin) | (!empty($slides_skin) && $slides_skin == 'Default')) {
-    $indicators .= '<ol class="carousel-indicators">';
-    foreach ($slides as $slide) {
-      if (!empty($slide)) {
-        $count += 1;
-        $indicators .= $count >= 1 ? '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"></li>' : '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'" class="active"></li>';
-      }
-    }
-    $indicators .= '</ol>';
-  }
-  elseif (!empty($slides_skin) && $slides_skin == 'Tabs') {
-    $indicators .= '<ol class="nav nav-tabs">';
-    foreach ($slides as $slide) {
-      if (!empty($slide)) {
-        $count += 1;
-        $title   = steel_slides_meta( 'title_'  .$slide, $post_id );
-        $indicators .= $count >= 1 ? '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><a href="#carousel_'.$post_id.'">' . $title . '</a></li>' : '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><a href="#carousel_'.$post_id.'">' . $title . '</a></li>';
-      }
-    }
-    $indicators .= '</ol>';
-  }
 
   //Wrapper for slides
   foreach ($slides as $slide) {
@@ -248,6 +225,47 @@ function steel_slideshow( $post_id, $size = 'full' ) {
     }
   }
 
+  $col_lg = floor(12/($i + 1));
+  $rem_lg = 12 - ($col_lg * ($i + 1));
+  $spc_lg = floor($rem_lg/2);
+
+  //Indicators
+  if (empty($slides_skin) | (!empty($slides_skin) && $slides_skin == 'Default')) {
+    $indicators .= '<ol class="carousel-indicators">';
+    foreach ($slides as $slide) {
+      if (!empty($slide)) {
+        $count += 1;
+        $indicators .= $count >= 1 ? '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"></li>' : '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'" class="active"></li>';
+      }
+    }
+    $indicators .= '</ol>';
+  }
+  elseif (!empty($slides_skin) && $slides_skin == 'Tabs') {
+    $indicators .= '<ol class="nav nav-tabs carousel-indicators">';
+    foreach ($slides as $slide) {
+      if (!empty($slide)) {
+        $count += 1;
+        $title   = steel_slides_meta( 'title_'  .$slide, $post_id );
+        $indicators .= $count >= 1 ? '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><a href="#carousel_'.$post_id.'">' . $title . '</a></li>' : '<li class="active" data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><a href="#carousel_'.$post_id.'">' . $title . '</a></li>';
+      }
+    }
+    $indicators .= '</ol>';
+  }
+  elseif (!empty($slides_skin) && $slides_skin == 'Thumbnails') {
+    $indicators .= '<div class="carousel-thumbs hidden-sm hidden-xs">';
+    $indicators .= '<span class="col-lg-'.$spc_lg.' col-md-'.$spc_lg.'"></span>';
+    foreach ($slides as $slide) {
+      if (!empty($slide)) {
+        $count += 1;
+        $image   = wp_get_attachment_image_src( $slide, 'steel-slide-thumb' );
+        $title   = steel_slides_meta( 'title_'  .$slide, $post_id );
+        $indicators .= $count >= 1 ? '<span class="col-lg-'.$col_lg.' col-md-'.$col_lg.'" data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><img id="slide_thumb_'.$slide.'" src="'.$image[0].'" alt="'.$title.'"></span>' : '<span class="col-lg-'.$col_lg.' col-md-'.$col_lg.'" data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><img id="slide_thumb_'.$slide.'" src="'.$image[0].'" alt="'.$title.'"></span>';
+      }
+    }
+    $indicators .= '<span class="col-lg-'.$spc_lg.' col-md-'.$spc_lg.'"></span>';
+    $indicators .= '</div>';
+  }
+
   //Controls
   $controls .= (!empty($slides_skin) && $slides_skin == 'Simple') ? '<div class="carousel-controls">' : '';
   $controls .= '<a class="left ' .'carousel-control" href="#carousel_'.$post_id.'" data-slide="prev"><span class="icon-prev' .'"></span></a>';
@@ -263,6 +281,7 @@ function steel_slideshow( $post_id, $size = 'full' ) {
   $output .= '</div>';
   $output .= $controls;
   $output .= '</div>';
+  $output .= !empty($slides_skin) && $slides_skin == 'Thumbnails' ? $indicators : '';
 
   return $output;
 }

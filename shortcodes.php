@@ -4,7 +4,7 @@
  *
  * @package Steel/Shortcodes
  */
- 
+
 /*
  * Create [column] shortcode
  */
@@ -38,7 +38,7 @@ function column_shortcode( $atts, $content = null ) {
   }
   else {
     if (!empty($title)) { return '<div class="' . $style . '"><h3>' . esc_attr($title) .'</h3>' . $new . '</div>'; }
-    else { return '<div class="' . $style . '">' . $new . '</div>'; }  
+    else { return '<div class="' . $style . '">' . $new . '</div>'; }
   }
 }
 
@@ -51,7 +51,7 @@ function tooltip_shortcode( $atts, $content = null ) {
     'title' => '',
     'placement' => 'top auto'
   ), $atts ) );
-  
+
   $new = strip_tags($content, '<a><strong><em>');
   return '<a class="steel-tooltip" href="#" data-toggle="tooltip" title="' . $title . '" data-placement="' . $placement . '">' . $new . '</a>';
 }
@@ -106,7 +106,7 @@ function btn_shortcode( $atts, $content = null ) {
       $data = '';
       break;
   }
-  
+
   $output  = '<a ';
   $output .= 'class="btn '. $btn_class .'" ';
   $output .= $toggle != 'popover' ? 'href="' . $link . '"' : '';
@@ -214,9 +214,9 @@ function panel_shortcode( $atts, $content = null ) {
     'title'   => null,
     'footer'  => null
   ), $atts ) );
-  
+
   $new = strip_tags($content, '<a><strong><em><code><ol><ul><li>');
-  
+
   global $group_id, $panel_int;
   $panel_int += 1;
 
@@ -236,10 +236,10 @@ function panel_shortcode( $atts, $content = null ) {
     $output .= '</div>'; //.panel-heading
   }
   elseif (!empty($heading)) { $output .= '<div class="panel-heading">' . $heading . '</div>'; }
-  
+
   $collapse_class = 'panel-collapse collapse';
   $collapse_class .= $panel_int == 1 ? ' in' : '';
-  
+
   $output .= !empty($group_id) ? '<div class="' . $collapse_class . '" id="' . $group_id . '-' . $panel_int . '">' : '';
   $output .= '<div class="panel-body">' . $new . '</div>';
   $output .= !empty($group_id) ? '</div>' : '';
@@ -259,7 +259,7 @@ if ( shortcode_exists( 'panel_group' ) ) { remove_shortcode( 'panel_group' ); }
 add_shortcode( 'panel_group', 'panel_group_shortcode' );
 function panel_group_shortcode( $atts, $content = null ) {
   $new = strip_tags($content, '<a><strong><em><code><ol><ul><li>');
-  
+
   global $group_id, $panel_int;
   $group_id  = rand(0,999);
   $panel_int = 0;
