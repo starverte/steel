@@ -3,7 +3,7 @@ Contributors: starverte, mbeall
 Tags: bootstrap, carousel, quotes, shortcodes, slides, teams, widgets
 Requires at least: 3.4
 Tested up to: 3.9
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -47,6 +47,11 @@ Like our plugin? Write us a review!
 Submit your questions to http://sparks.starverte.com/steel and we will try to answer them.
 
 == Changelog ==
+= 1.1.7 =
+* Clean up code
+* Upgrade to Bootstrap 3.2
+
+For more details, check out https://github.com/starverte/steel/pull/126
 
 = 1.1.6 =
 * Fixed `run.js` to avoid conflict with new Audio List feature in WordPress 3.9
