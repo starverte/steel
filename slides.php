@@ -176,7 +176,9 @@ function steel_slides_meta( $key, $post_id = NULL ) {
 /*
  * Display Slideshow by id
  */
-function steel_slideshow( $post_id, $size = 'full' ) {
+function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
+  $name = empty($name) ? $post_id : $name;
+
   $slides_media      = steel_slides_meta( 'media'     , $post_id );
   $slides_order      = steel_slides_meta( 'order'     , $post_id );
   $slides_media_url  = steel_slides_meta( 'media_url' , $post_id );
@@ -274,7 +276,7 @@ function steel_slideshow( $post_id, $size = 'full' ) {
 
   //Output
   $output .= !empty($slides_skin) && $slides_skin == 'Tabs' ? $indicators : '';
-  $output .= '<div id="carousel_'.$post_id.'" class="'.$slides_class.'" data-ride="carousel">';
+  $output .= '<div id="carousel_'.$name.'" class="'.$slides_class.'" data-ride="carousel">';
   $output .= empty($slides_skin) | (!empty($slides_skin) && $slides_skin == 'Default') ? $indicators : '';
   $output .= '<div class="carousel-inner">';
   $output .= $items;
@@ -299,7 +301,7 @@ function steel_slideshow_shortcode( $atts, $content = null ) {
   }
   elseif (!empty($name)) {
     $show = get_page_by_title( $name, OBJECT, 'steel_slides' );
-    $output = steel_slideshow( $show->ID, $size );
+    $output = steel_slideshow( $show->ID, $size, $name );
   }
   else {
     return;
