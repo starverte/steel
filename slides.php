@@ -216,7 +216,7 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
         $items .= '<div class="carousel-caption">';
         if ($slides_skin != 'Bar') {
           if (!empty($title  )) { $items .= '<h3 id="slides_title_'.$slide.'">' .$title  .'</h3>'; }
-          if (!empty($content)) { $items .= '<p id="slides_content_'.$slide.'">'.$content.'</p>' ; }
+          if (!empty($content)) { $items .= '<p class="hidden-xs" id="slides_content_'.$slide.'">'.$content.'</p>' ; }
         }
         else {
           if (!empty($title)) { $items .= '<p id="slides_title_'.$slide.'">' .$title.'</p>'; }
