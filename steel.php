@@ -27,11 +27,12 @@ License URI: http://www.gnu.org/licenses/
 
 global $bs_ver;
 global $steel_ver;
-$bs_ver    = '3.1.1';
-$steel_ver = '1.1.6';
+$bs_ver    = '3.2.0';
+$steel_ver = '1.1.7';
 
 include_once dirname( __FILE__ ) . '/bootstrap.php';
 include_once dirname( __FILE__ ) . '/options.php';
+include_once dirname( __FILE__ ) . '/siteinfo.php';
 
 //if (is_module_active('podcast'    )) { include_once dirname( __FILE__ ) . '/podcast.php';     }
   if (is_module_active('quotes'     )) { include_once dirname( __FILE__ ) . '/quotes.php';      }
