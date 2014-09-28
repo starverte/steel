@@ -34,7 +34,7 @@ include_once dirname( __FILE__ ) . '/bootstrap.php';
 include_once dirname( __FILE__ ) . '/options.php';
 include_once dirname( __FILE__ ) . '/siteinfo.php';
 
-//if (is_module_active('podcast'    )) { include_once dirname( __FILE__ ) . '/podcast.php';     }
+  if (is_module_active('podcast'    )) { include_once dirname( __FILE__ ) . '/podcast.php';     }
   if (is_module_active('quotes'     )) { include_once dirname( __FILE__ ) . '/quotes.php';      }
   if (is_module_active('shortcodes' )) { include_once dirname( __FILE__ ) . '/shortcodes.php';  }
   if (is_module_active('slides'     )) { include_once dirname( __FILE__ ) . '/slides.php';      }
@@ -69,6 +69,10 @@ function steel_admin_scripts() {
   wp_enqueue_script( 'jquery-ui-position'  );
   wp_enqueue_script( 'jquery-effects-core' );
   wp_enqueue_script( 'jquery-effects-blind');
+
+  if (is_module_active('podcast')) {
+    wp_enqueue_script( 'podcast-mod', plugins_url('steel/js/podcast.js'  ), array('jquery'), $steel_ver, true );
+  }
 
   if (is_module_active('slides')) {
     wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), $steel_ver, true );
