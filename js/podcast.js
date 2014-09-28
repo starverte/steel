@@ -1,7 +1,7 @@
 /*
  * Scripts to power the Episodes module
  *
- * @package Steel/Podcast
+ * @package Steel\Podcast
  */
 
 var file_frame;

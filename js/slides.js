@@ -1,7 +1,7 @@
 /*
  * Scripts to power the Slides module
  *
- * @package Steel/Slides
+ * @package Steel\Slides
  */
 
 var file_frame;

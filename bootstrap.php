@@ -2,7 +2,7 @@
 /**
  * Modifies Walker_Nav_Menu to display a list group.
  *
- * @package Steel/Bootstrap
+ * @package Steel\Bootstrap
  * @uses Walker_Nav_Menu
  */
 

@@ -1,7 +1,7 @@
 /*
  * Scripts for Sparks Events
  *
- * @package Steel/Events
+ * @package Steel\Events
  */
 
 jQuery(function() {

@@ -2,7 +2,7 @@
 /*
  * Allows creation of audio playlists that can be formatted for and submitted to iTunes
  *
- * @package Steel/Podcast
+ * @package Steel\Podcast
  */
 
 add_action( 'init', 'steel_podcast_init', 0 );

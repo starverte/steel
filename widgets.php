@@ -2,7 +2,7 @@
 /*
  * Creates custom widgets
  *
- * @package Steel/Widgets
+ * @package Steel\Widgets
  *
  */
 
