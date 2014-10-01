@@ -63,19 +63,19 @@ function steel_podcast_podcast() {
   $series = explode(',', $series_order);
 
   $output = '';
-  $output .= '<a href="#" class="button add_episode_media" id="btn_above" title="Add episode to podcast"><span class="steel-icon-cover-photo"></span> Add Episode</a>';
+  $output .= '<a href="#" class="button add_episode_media" id="btn_above" title="Add episode to podcast"><span class="dashicons dashicons-playlist-audio"></span> Add Episode</a>';
   $output .= '<div id="series_wrap"><div id="series">';
   foreach ($series as $episode) {
     if (!empty($episode)) {
       $output .= '<div class="episode" id="';
       $output .= $episode;
       $output .= '">';
-      $output .= '<div class="episode-controls"><span id="controls_'.$episode.'">'.steel_episode_meta( $episode.'_title' ).'</span><a class="del-episode" href="#" onclick="deleteEpisode(\''.$episode.'\')" title="Delete episode"><span class="steel-icon-dismiss" style="float:right"></span></a></div>';
+      $output .= '<div class="episode-controls"><span id="controls_'.$episode.'">'.steel_episode_meta( $episode.'_title' ).'</span><a class="del-episode" href="#" onclick="deleteEpisode(\''.$episode.'\')" title="Delete episode"><span class="dashicons dashicons-dismiss" style="float:right"></span></a></div>';
       $output .= '<p><input type="text" size="32" class="episode-title" name="episode_'.$episode.'_title" id="episode_'.$episode.'_title" value="'.steel_episode_meta( $episode.'_title' ).'" placeholder="Title" /><br>';
       $output .= '<textarea cols="28" rows="3" name="episode_'.$episode.'_summary" id="episode_'.$episode.'_summary" placeholder="Summary">'.steel_episode_meta( $episode.'_summary' ).'</textarea></p>';
-      $output .= '<span class="steel-icon-calendar" style="float:left;padding:5px;"></span><input type="text" size="22" name="episode_'.$episode.'_date" id="episode_'.$episode.'_date" value="'.steel_episode_meta( $episode.'_date' ).'" placeholder="mm/dd/yyyy" style="margin:0;">';
-      $output .= '<span class="steel-icon-businessman" style="float:left;padding:5px;"></span><input type="text" size="22" name="episode_'.$episode.'_author" id="episode_'.$episode.'_author" value="'.steel_episode_meta( $episode.'_author' ).'" placeholder="Author" style="margin:0;">';
-      $output .= '<span class="steel-icon-clock" style="float:left;padding:5px;"></span><input type="text" size="22" name="episode_'.$episode.'_duration" id="episode_'.$episode.'_duration" value="'.steel_episode_meta( $episode.'_duration' ).'" placeholder="HH:MM:SS" style="margin:0;">';
+      $output .= '<span class="dashicons dashicons-calendar" style="float:left;padding:5px;"></span><input type="text" size="22" name="episode_'.$episode.'_date" id="episode_'.$episode.'_date" value="'.steel_episode_meta( $episode.'_date' ).'" placeholder="mm/dd/yyyy" style="margin:0;">';
+      $output .= '<span class="dashicons dashicons-businessman" style="float:left;padding:5px;"></span><input type="text" size="22" name="episode_'.$episode.'_author" id="episode_'.$episode.'_author" value="'.steel_episode_meta( $episode.'_author' ).'" placeholder="Author" style="margin:0;">';
+      $output .= '<span class="dashicons dashicons-clock" style="float:left;padding:5px;"></span><input type="text" size="22" name="episode_'.$episode.'_duration" id="episode_'.$episode.'_duration" value="'.steel_episode_meta( $episode.'_duration' ).'" placeholder="HH:MM:SS" style="margin:0;">';
       $output .= '</div>';
     }
   }

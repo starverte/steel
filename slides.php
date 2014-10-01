@@ -64,7 +64,7 @@ function steel_slides_slideshow() {
   $slides = explode(',', $slides_order);
 
   $output = '';
-  $output .= '<a href="#" class="button add_slide_media" id="btn_above" title="Add slide to slideshow"><span class="steel-icon-cover-photo"></span> Add Slide</a>';
+  $output .= '<a href="#" class="button add_slide_media" id="btn_above" title="Add slide to slideshow"><span class="dashicons dashicons-images-alt"></span> Add Slide</a>';
   $output .= '<div id="slides_wrap"><div id="slides">';
   foreach ($slides as $slide) {
     if (!empty($slide)) {
@@ -72,7 +72,7 @@ function steel_slides_slideshow() {
       $output .= '<div class="slide" id="';
       $output .= $slide;
       $output .= '">';
-      $output .= '<div class="slide-controls"><span id="controls_'.$slide.'">'.steel_slides_meta( 'title_'.$slide ).'</span><a class="del-slide" href="#" onclick="deleteSlide(\''.$slide.'\')" title="Delete slide"><span class="steel-icon-dismiss" style="float:right"></span></a></div>';
+      $output .= '<div class="slide-controls"><span id="controls_'.$slide.'">'.steel_slides_meta( 'title_'.$slide ).'</span><a class="del-slide" href="#" onclick="deleteSlide(\''.$slide.'\')" title="Delete slide"><span class="dashicons dashicons-dismiss" style="float:right"></span></a></div>';
       $output .= '<img id="slide_img_'.$slide.'" src="'.$image[0].'" width="'.$image[1].'" height="'.$image[2].'">';
       $output .= '<p><input type="text" size="32" class="slide-title" name="slides_title_';
       $output .= $slide;
@@ -80,7 +80,7 @@ function steel_slides_slideshow() {
       $output .= '<textarea cols="32" name="slides_content_';
       $output .= $slide;
       $output .= '" id="slides_content_'.$slide.'" placeholder="Caption">'.steel_slides_meta( 'content_'.$slide ).'</textarea></p>';
-      $output .= '<span class="steel-icon-link" style="float:left;padding:5px;"></span><input type="text" size="28" name="slides_link_';
+      $output .= '<span class="dashicons dashicons-link" style="float:left;padding:5px;"></span><input type="text" size="28" name="slides_link_';
       $output .= $slide;
       $output .= '" id="slides_link_'.$slide.'" value="'.steel_slides_meta( 'link_'.$slide ).'" placeholder="Link" style="margin:0;" />';
       $output .= '</div>';

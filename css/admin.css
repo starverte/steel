@@ -6,53 +6,12 @@
   font-family: 'Star Verte' !important;
   content: 'c'!important;
 }
-span[class*='steel-icon-'] {
-  display: inline-block;
+.dashicons {
   width: 18px;
   height: 18px;
   margin: 0 2px;
-  font: 400 18px/1 dashicons;
-  vertical-align: text-top;
-
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  speak: none;
-}
-.steel-icon-businessman:before {
-  content: "\f338";
-}
-.steel-icon-calendar:before {
-  content: "\f145";
-}
-.steel-icon-clock:before {
-  content: "\f469";
-}
-.steel-icon-cover-photo:before {
-  content: "\f128";
-}
-.steel-icon-format-audio:before {
-  content: "\f127";
-}
-.steel-icon-media:before {
-  content: "\f236";
-}
-.steel-icon-media-audio:before {
-  content: "\f500";
-}
-.steel-icon-plus:before {
-  content: "\f132";
-}
-.steel-icon-trash:before {
-  content: "\f182";
-}
-.steel-icon-dismiss:before {
-  content: "\f153";
-}
-.steel-icon-link:before {
-  content: "\f103";
-}
-.steel-icon-down:before {
-  content: "\f333";
+  font-size: 18px;
+  vertical-align: sub;
 }
 .form-addon-left {
   padding: 5px 12px;
