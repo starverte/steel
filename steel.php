@@ -58,27 +58,31 @@ add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
 function steel_admin_scripts() {
   global $bs_ver;
   global $steel_ver;
-  wp_enqueue_style( 'steel-admin-style', plugins_url('steel/css/admin.css'    ) );
-  wp_enqueue_style( 'steel-font'       , plugins_url('steel/css/starverte.css') );
-  wp_enqueue_style( 'glyphicons'       , plugins_url('steel/css/glyphicons.css') );
-  wp_enqueue_style( 'dashicons'                                                 );
+  wp_enqueue_style( 'dashicons'                                                  );
+  wp_enqueue_style( 'bs-glyphicons'    , plugins_url('steel/css/glyphicons.css') );
+  wp_enqueue_style( 'bs-grid'          , plugins_url('steel/css/grid.css'      ) );
+  wp_enqueue_style( 'steel-admin-style', plugins_url('steel/css/admin.css'     ) );
+  wp_enqueue_style( 'steel-font'       , plugins_url('steel/css/starverte.css' ) );
 
   wp_enqueue_script( 'jquery'              );
   wp_enqueue_script( 'jquery-ui-core'      );
+  wp_enqueue_script( 'jquery-ui-accordion');
+  wp_enqueue_script( 'jquery-ui-datepicker');
   wp_enqueue_script( 'jquery-ui-sortable'  );
   wp_enqueue_script( 'jquery-ui-position'  );
   wp_enqueue_script( 'jquery-effects-core' );
   wp_enqueue_script( 'jquery-effects-blind');
 
+  wp_enqueue_media();
+
   if (is_module_active('podcast')) {
     wp_enqueue_script( 'podcast-mod', plugins_url('steel/js/podcast.js'  ), array('jquery'), $steel_ver, true );
+    wp_enqueue_script( 'podcast-channel', plugins_url('steel/js/podcast-channel.js'  ), array('jquery'), $steel_ver, true );
   }
 
   if (is_module_active('slides')) {
     wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), $steel_ver, true );
   }
-
-  wp_enqueue_media();
 }
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
