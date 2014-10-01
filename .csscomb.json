@@ -2,7 +2,8 @@
   "exclude": [
     ".git/**",
     "css/bootstrap.css",
-    "css/bootstrap.min.css"
+    "css/bootstrap.min.css",
+    "css/glyphicons.css"
   ],
   "always-semicolon": true,
   "block-indent": 2,
