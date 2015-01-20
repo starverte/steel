@@ -2,7 +2,7 @@
 /**
  * Creates custom post-type "quotes" for displaying random quotes, testimonials, etc.
  *
- * @package Steel/Quotes
+ * @package Steel\Quotes
  */
 
 /**

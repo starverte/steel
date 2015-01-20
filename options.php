@@ -43,7 +43,7 @@ function steel_admin_init(){
 
   add_settings_section('steel_mods', 'Modules', 'steel_mods_section', 'steel');
     add_settings_field('mod_bootstrap'  , 'Bootstrap'  , 'mod_bootstrap_field'  , 'steel', 'steel_mods' );
-  //add_settings_field('mod_podcast'    , 'Podcast'    , 'mod_podcast_field'    , 'steel', 'steel_mods' );
+    add_settings_field('mod_podcast'    , 'Podcast'    , 'mod_podcast_field'    , 'steel', 'steel_mods' );
   //add_settings_field('mod_quotes'     , 'Quotes'     , 'mod_quotes_field'     , 'steel', 'steel_mods' );
   //add_settings_field('mod_shortcodes' , 'Shortcodes' , 'mod_shortcodes_field' , 'steel', 'steel_mods' );
     add_settings_field('mod_slides'     , 'Slides'     , 'mod_slides_field'     , 'steel', 'steel_mods' );
@@ -156,7 +156,7 @@ function steel_options_validate($input) {
   if (!preg_match('/^[0-9]{15}$/i', $newinput['fb_app_id']) & !empty($newinput['fb_app_id'])) { add_settings_error( 'fb_app_id', 'invalid', 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>' ); }
 
     $newinput['mod_bootstrap'  ] = trim($input['mod_bootstrap'  ]);
-  //$newinput['mod_podcast'    ] = trim($input['mod_podcast'    ]);
+    $newinput['mod_podcast'    ] = trim($input['mod_podcast'    ]);
   //$newinput['mod_quotes'     ] = trim($input['mod_quotes'     ]);
   //$newinput['mod_shortcodes' ] = trim($input['mod_shortcodes' ]);
     $newinput['mod_slides'     ] = trim($input['mod_slides'     ]);
