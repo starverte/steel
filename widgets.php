@@ -128,11 +128,11 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
 
     <p>
       <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'link-widget-legacy'); ?></label>
-      <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+      <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php if (!empty($instance['title'])) { echo $instance['title']; } ?>" style="width:100%;" />
     </p>
     <p>
       <label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Link:', 'link-widget-legacy'); ?></label>
-      <input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo $instance['href']; ?>" style="width:100%;" />
+      <input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php if (!empty($instance['href'])) { echo $instance['href']; } ?>" style="width:100%;" />
     </p>
     <p>
       <label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e('Classes:', 'link-widget-legacy'); ?></label>
