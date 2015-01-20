@@ -32,7 +32,6 @@ $steel_ver = '1.1.7';
 
 include_once dirname( __FILE__ ) . '/bootstrap.php';
 include_once dirname( __FILE__ ) . '/options.php';
-include_once dirname( __FILE__ ) . '/siteinfo.php';
 
   if (is_module_active('podcast'    )) { include_once dirname( __FILE__ ) . '/podcast.php';     }
   if (is_module_active('quotes'     )) { include_once dirname( __FILE__ ) . '/quotes.php';      }
