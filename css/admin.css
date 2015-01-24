@@ -3,8 +3,8 @@
   line-height: 2em;
 }
 #toplevel_page_steel .wp-menu-image::before {
-  font-family: 'Star Verte' !important;
-  content: 'c'!important;
+  font-family: "Star Verte" !important;
+  content: "c"!important;
 }
 .dashicons {
   width: 18px;
@@ -15,7 +15,7 @@
 }
 .form-addon-left {
   padding: 5px 12px;
-  padding-bottom:4px;
+  padding-bottom: 4px;
   margin: 1px;
   margin-right: -1px;
   background: #ddd;

@@ -87,9 +87,9 @@ add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
   global $bs_ver;
   global $steel_ver;
-  
+
   $options = steel_get_options();
-  
+
   if ($options['load_bootstrap_js'] == true) {
     // Make sure there aren't other instances of Twitter Bootstrap
     wp_deregister_script('bootstrap');
@@ -262,7 +262,7 @@ function pin_it( $args = array() ) {
  */
 function is_module_active( $module ) {
   $options = steel_get_options();
-  
+
   if ($options['load_'.$module] == true)
     return true;
   else
