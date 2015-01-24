@@ -124,37 +124,35 @@ function load_widgets_field() {
 /*
  * Validate settings for Steel Options page
  */
-function steel_options_validate($input) {
-  global $newinput;
+function steel_options_validate($raw) {
+  $valid['fb_app_id'] = trim($raw['fb_app_id']);
+  if (!preg_match('/^[0-9]{15}$/i', $valid['fb_app_id']) & !empty($valid['fb_app_id'])) { add_settings_error( 'fb_app_id', 'invalid', 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>' ); }
 
-  $newinput['fb_app_id'] = trim($input['fb_app_id']);
-  if (!preg_match('/^[0-9]{15}$/i', $newinput['fb_app_id']) & !empty($newinput['fb_app_id'])) { add_settings_error( 'fb_app_id', 'invalid', 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>' ); }
-  
-    $newinput['load_bootstrap_css'] = isset($input['load_bootstrap_css']) ? true : false;
-    $newinput['load_bootstrap_js' ] = isset($input['load_bootstrap_js' ]) ? true : false;
-  
-  //$newinput['load_podcast_mod'   ] = isset($input['load_podcast_mod'   ]) ? true : false;
-  //$newinput['load_quotes'    ] = isset($input['load_quotes'    ]) ? true : false;
-  //$newinput['load_shortcodes'] = isset($input['load_shortcodes']) ? true : false;
-    $newinput['load_slides'    ] = isset($input['load_slides'    ]) ? true : false;
-    $newinput['load_teams'     ] = isset($input['load_teams'     ]) ? true : false;
-  //$newinput['load_widgets'   ] = isset($input['load_widgets'   ]) ? true : false;
+  $valid['load_bootstrap_css'] = isset($raw['load_bootstrap_css']) ? true : false;
+  $valid['load_bootstrap_js' ] = isset($raw['load_bootstrap_js' ]) ? true : false;
 
-  return $newinput;
+  //$valid['load_podcast_mod'] = isset($raw['load_podcast_mod']) ? true : false;
+  //$valid['load_quotes'     ] = isset($raw['load_quotes'     ]) ? true : false;
+  //$valid['load_shortcodes' ] = isset($raw['load_shortcodes' ]) ? true : false;
+    $valid['load_slides'     ] = isset($raw['load_slides'     ]) ? true : false;
+    $valid['load_teams'      ] = isset($raw['load_teams'      ]) ? true : false;
+  //$valid['load_widgets'    ] = isset($raw['load_widgets'    ]) ? true : false;
+
+  return apply_filters( 'steel_options_validate', $raw, $valid );
 }
 
 function steel_get_option_defaults() {
   $defaults = array(
     'load_bootstrap_css' => true,
     'load_bootstrap_js'  => true,
-    
+
     'load_facebook'      => true,
     'load_twitter'       => false,
     'load_pinterest'     => false,
     'load_linkedin'      => false,
-    
+
     'fb_app_id'          => '',
-    
+
     'load_podcast'       => false,
     'load_quotes'        => true,
     'load_shortcodes'    => true,
@@ -162,7 +160,7 @@ function steel_get_option_defaults() {
     'load_teams'         => false,
     'load_widgets'       => true,
   );
-  
+
   //BEGIN - backwards compatibility
   $options = get_option( 'steel_options' );
 
