@@ -5,11 +5,11 @@
   font-style: normal;
   font-weight: normal;
 
-  src: url("../fonts/starverte.eot");
   src: url("../fonts/starverte.eot?#iefix") format("embedded-opentype"),
   url("../fonts/starverte.woff") format("woff"),
   url("../fonts/starverte.ttf") format("truetype"),
   url("../fonts/starverte.svg#starverte") format("svg");
+  src: url("../fonts/starverte.eot");
 }
 
 [data-icon]:before {
