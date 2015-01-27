@@ -5,8 +5,8 @@
   font-style: normal;
   font-weight: normal;
 
-  src:url("../fonts/starverte.eot");
-  src:url("../fonts/starverte.eot?#iefix") format("embedded-opentype"),
+  src: url("../fonts/starverte.eot");
+  src: url("../fonts/starverte.eot?#iefix") format("embedded-opentype"),
   url("../fonts/starverte.woff") format("woff"),
   url("../fonts/starverte.ttf") format("truetype"),
   url("../fonts/starverte.svg#starverte") format("svg");
@@ -21,9 +21,9 @@
   text-transform: none !important;
   content: attr(data-icon);
 
-  speak: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  speak: none;
 }
 
 [class^="icon-"]:before,
@@ -35,9 +35,9 @@
   line-height: 1;
   text-transform: none !important;
 
-  speak: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  speak: none;
 }
 
 .icon-sparks:before {
