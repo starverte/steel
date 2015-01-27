@@ -3,7 +3,7 @@
  * Allows creation of media slideshows (a.k.a. carousels, sliders, etc.) for use in template files, posts, pages and more
  * Uses Bootstrap Carousel plugin
  *
- * @package Steel/Slides
+ * @package Steel\Slides
  */
 
 add_action( 'init', 'steel_slides_init', 0 );
@@ -64,7 +64,7 @@ function steel_slides_slideshow() {
   $slides = explode(',', $slides_order);
 
   $output = '';
-  $output .= '<a href="#" class="button add_slide_media" id="btn_above" title="Add slide to slideshow"><span class="steel-icon-cover-photo"></span> Add Slide</a>';
+  $output .= '<a href="#" class="button add_slide_media" id="btn_above" title="Add slide to slideshow"><span class="dashicons dashicons-images-alt"></span> Add Slide</a>';
   $output .= '<div id="slides_wrap"><div id="slides">';
   foreach ($slides as $slide) {
     if (!empty($slide)) {
@@ -72,7 +72,7 @@ function steel_slides_slideshow() {
       $output .= '<div class="slide" id="';
       $output .= $slide;
       $output .= '">';
-      $output .= '<div class="slide-controls"><span id="controls_'.$slide.'">'.steel_slides_meta( 'title_'.$slide ).'</span><a class="del-slide" href="#" onclick="deleteSlide(\''.$slide.'\')" title="Delete slide"><span class="steel-icon-dismiss" style="float:right"></span></a></div>';
+      $output .= '<div class="slide-controls"><span id="controls_'.$slide.'">'.steel_slides_meta( 'title_'.$slide ).'</span><a class="del-slide" href="#" onclick="deleteSlide(\''.$slide.'\')" title="Delete slide"><span class="dashicons dashicons-dismiss" style="float:right"></span></a></div>';
       $output .= '<img id="slide_img_'.$slide.'" src="'.$image[0].'" width="'.$image[1].'" height="'.$image[2].'">';
       $output .= '<p><input type="text" size="32" class="slide-title" name="slides_title_';
       $output .= $slide;
@@ -80,7 +80,7 @@ function steel_slides_slideshow() {
       $output .= '<textarea cols="32" name="slides_content_';
       $output .= $slide;
       $output .= '" id="slides_content_'.$slide.'" placeholder="Caption">'.steel_slides_meta( 'content_'.$slide ).'</textarea></p>';
-      $output .= '<span class="steel-icon-link" style="float:left;padding:5px;"></span><input type="text" size="28" name="slides_link_';
+      $output .= '<span class="dashicons dashicons-link" style="float:left;padding:5px;"></span><input type="text" size="28" name="slides_link_';
       $output .= $slide;
       $output .= '" id="slides_link_'.$slide.'" value="'.steel_slides_meta( 'link_'.$slide ).'" placeholder="Link" style="margin:0;" />';
       $output .= '</div>';
@@ -176,7 +176,9 @@ function steel_slides_meta( $key, $post_id = NULL ) {
 /*
  * Display Slideshow by id
  */
-function steel_slideshow( $post_id, $size = 'full' ) {
+function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
+  $name = empty($name) ? $post_id : $name;
+
   $slides_media      = steel_slides_meta( 'media'     , $post_id );
   $slides_order      = steel_slides_meta( 'order'     , $post_id );
   $slides_media_url  = steel_slides_meta( 'media_url' , $post_id );
@@ -214,7 +216,7 @@ function steel_slideshow( $post_id, $size = 'full' ) {
         $items .= '<div class="carousel-caption">';
         if ($slides_skin != 'Bar') {
           if (!empty($title  )) { $items .= '<h3 id="slides_title_'.$slide.'">' .$title  .'</h3>'; }
-          if (!empty($content)) { $items .= '<p id="slides_content_'.$slide.'">'.$content.'</p>' ; }
+          if (!empty($content)) { $items .= '<p class="hidden-xs" id="slides_content_'.$slide.'">'.$content.'</p>' ; }
         }
         else {
           if (!empty($title)) { $items .= '<p id="slides_title_'.$slide.'">' .$title.'</p>'; }
@@ -274,7 +276,7 @@ function steel_slideshow( $post_id, $size = 'full' ) {
 
   //Output
   $output .= !empty($slides_skin) && $slides_skin == 'Tabs' ? $indicators : '';
-  $output .= '<div id="carousel_'.$post_id.'" class="'.$slides_class.'" data-ride="carousel">';
+  $output .= '<div id="carousel_'.$name.'" class="'.$slides_class.'" data-ride="carousel">';
   $output .= empty($slides_skin) | (!empty($slides_skin) && $slides_skin == 'Default') ? $indicators : '';
   $output .= '<div class="carousel-inner">';
   $output .= $items;
@@ -299,7 +301,7 @@ function steel_slideshow_shortcode( $atts, $content = null ) {
   }
   elseif (!empty($name)) {
     $show = get_page_by_title( $name, OBJECT, 'steel_slides' );
-    $output = steel_slideshow( $show->ID, $size );
+    $output = steel_slideshow( $show->ID, $size, $name );
   }
   else {
     return;
