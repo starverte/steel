@@ -42,13 +42,13 @@ function steel_admin_init(){
   add_settings_field('fb_app_id', 'Facebook App ID', 'fb_app_id_field', 'steel', 'steel_social' );
 
   add_settings_section('steel_mods', 'Modules', 'steel_mods_section', 'steel');
-    add_settings_field('load_bootstrap'  , 'Bootstrap'  , 'load_bootstrap_field'  , 'steel', 'steel_mods' );
-  //add_settings_field('load_podcast_mod'    , 'Podcast'    , 'load_podcast_load_field'    , 'steel', 'steel_mods' );
-  //add_settings_field('load_quotes'     , 'Quotes'     , 'load_quotes_field'     , 'steel', 'steel_mods' );
-  //add_settings_field('load_shortcodes' , 'Shortcodes' , 'load_shortcodes_field' , 'steel', 'steel_mods' );
-    add_settings_field('load_slides'     , 'Slides'     , 'load_slides_field'     , 'steel', 'steel_mods' );
-    add_settings_field('load_teams'      , 'Teams'      , 'load_teams_field'      , 'steel', 'steel_mods' );
-  //add_settings_field('load_widgets'    , 'Widgets'    , 'load_widgets_field'    , 'steel', 'steel_mods' );
+    add_settings_field('load_bootstrap'  , 'Bootstrap'  , 'load_bootstrap_field'   , 'steel', 'steel_mods' );
+  //add_settings_field('load_podcast_mod', 'Podcast'    , 'load_podcast_load_field', 'steel', 'steel_mods' );
+  //add_settings_field('load_quotes'     , 'Quotes'     , 'load_quotes_field'      , 'steel', 'steel_mods' );
+  //add_settings_field('load_shortcodes' , 'Shortcodes' , 'load_shortcodes_field'  , 'steel', 'steel_mods' );
+    add_settings_field('load_slides'     , 'Slides'     , 'load_slides_field'      , 'steel', 'steel_mods' );
+    add_settings_field('load_teams'      , 'Teams'      , 'load_teams_field'       , 'steel', 'steel_mods' );
+  //add_settings_field('load_widgets'    , 'Widgets'    , 'load_widgets_field'     , 'steel', 'steel_mods' );
 }
 
 /*
