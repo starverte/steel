@@ -123,6 +123,7 @@ function steel_scripts() {
 /*
  * Add function steel_open
  */
+add_action('flint_open','steel_open');
 function steel_open() {
   $options = steel_get_options();
 
