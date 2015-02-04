@@ -25,11 +25,6 @@ License URI: http://www.gnu.org/licenses/
   along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-global $bs_ver;
-global $steel_ver;
-$bs_ver    = '3.2.0';
-$steel_ver = '1.1.7';
-
 include_once dirname( __FILE__ ) . '/bootstrap.php';
 include_once dirname( __FILE__ ) . '/options.php';
 
@@ -45,18 +40,16 @@ if (is_flint_active()) { include_once dirname( __FILE__ ) . '/templates.php'; }
 /**
  * Returns current plugin version.
  *
- * Deprecated Steel 1.2. Use $steel_ver instead.
+ * Deprecated Steel 1.2. Use actual version number instead.
  * @TODO Remove backwards compatibility in Steel 1.4
  */
-function steel_version() { global $steel_ver; return $steel_ver; }
+function steel_version() { return '1.2.1'; }
 
 /**
  * Load scripts
  */
 add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
 function steel_admin_scripts() {
-  global $bs_ver;
-  global $steel_ver;
   wp_enqueue_style( 'dashicons'                                                  );
   wp_enqueue_style( 'bs-glyphicons'    , plugins_url('steel/css/glyphicons.css') );
   wp_enqueue_style( 'bs-grid'          , plugins_url('steel/css/grid.css'      ) );
@@ -75,19 +68,16 @@ function steel_admin_scripts() {
   wp_enqueue_media();
 
   if (is_module_active('podcast')) {
-    wp_enqueue_script( 'podcast-mod', plugins_url('steel/js/podcast.js'  ), array('jquery'), $steel_ver, true );
-    wp_enqueue_script( 'podcast-channel', plugins_url('steel/js/podcast-channel.js'  ), array('jquery'), $steel_ver, true );
+    wp_enqueue_script( 'podcast-mod', plugins_url('steel/js/podcast.js'  ), array('jquery'), '1.2.1', true );
+    wp_enqueue_script( 'podcast-channel', plugins_url('steel/js/podcast-channel.js'  ), array('jquery'), '1.2.1', true );
   }
 
   if (is_module_active('slides')) {
-    wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), $steel_ver, true );
+    wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), '1.2.1', true );
   }
 }
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
-  global $bs_ver;
-  global $steel_ver;
-
   $options = steel_get_options();
 
   if ($options['load_bootstrap_js'] == true) {
@@ -95,7 +85,7 @@ function steel_scripts() {
     wp_deregister_script('bootstrap');
 
     // Load Twitter Bootstrap
-    wp_enqueue_script( 'bootstrap', plugins_url('steel/js/bootstrap.min.js'  ), array('jquery'), $bs_ver, true );
+    wp_enqueue_script( 'bootstrap', plugins_url('steel/js/bootstrap.min.js'  ), array('jquery'), '3.3.2', true );
   }
 
   if ($options['load_bootstrap_css'] == true) {
@@ -103,21 +93,21 @@ function steel_scripts() {
     wp_deregister_style('bootstrap-css');
 
     // Load Twitter Bootstrap
-    wp_enqueue_style( 'bootstrap-css', plugins_url('steel/css/bootstrap.min.css'), array() , $bs_ver );
+    wp_enqueue_style( 'bootstrap-css', plugins_url('steel/css/bootstrap.min.css'), array() , '3.3.2' );
   }
   else {
-    wp_enqueue_style( 'glyphicons', plugins_url('steel/css/glyphicons.css'), array() , $bs_ver );
+    wp_enqueue_style( 'glyphicons', plugins_url('steel/css/glyphicons.css'), array() , '3.3.2' );
   }
 
   if (is_module_active('slides')) {
-    wp_enqueue_style( 'slides-mod-style', plugins_url('steel/css/slides.css'  ), array(), $steel_ver);
+    wp_enqueue_style( 'slides-mod-style', plugins_url('steel/css/slides.css'  ), array(), '1.2.1');
   }
 
   // Load script for "Pin It" button
   wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js');
 
   // Load front-end scripts
-  wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array('jquery'), $steel_ver, true );
+  wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array('jquery'), '1.2.1', true );
 }
 
 /*
