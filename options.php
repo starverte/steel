@@ -37,6 +37,10 @@ function steel_admin_init(){
   //Register Steel Options
   register_setting('steel_options', 'steel_options', 'steel_options_validate' );
 
+  add_settings_section('steel_analytics', 'Analytics', 'steel_analytics_section', 'steel');
+
+  add_settings_field('ga_id', 'Google Analytics Property ID', 'ga_id_field', 'steel', 'steel_analytics' );
+
   add_settings_section('steel_social', 'Social Media', 'steel_social_section', 'steel');
 
   add_settings_field('fb_app_id', 'Facebook App ID', 'fb_app_id_field', 'steel', 'steel_social' );
@@ -54,6 +58,13 @@ function steel_admin_init(){
 /*
  * Callback settings for Sparks Options page
  */
+function steel_analytics_section() { echo 'Website Analytics'; }
+function ga_id_field() {
+  $options = steel_get_options();
+
+  $output  = '<input id="ga_id" name="steel_options[ga_id]" size="40" type="text" value="' . $options['ga_id'] . '" placeholder="UA-XXXXX-X">';
+  echo $output;
+}
 function steel_social_section() { echo 'Social media profile information'; }
 function fb_app_id_field() {
   $options = steel_get_options();
@@ -125,6 +136,9 @@ function load_widgets_field() {
  * Validate settings for Steel Options page
  */
 function steel_options_validate($raw) {
+  $valid['ga_id'] = trim($raw['ga_id']);
+  if (!preg_match('/^UA-\d{4,}-\d+$/', $valid['ga_id']) & !empty($valid['ga_id'])) { add_settings_error( 'ga_id', 'invalid', 'Invalid Google Analytics Property ID. <span style="font-weight:normal;display:block;">A Google Analtyics Property ID is in the format UA-########-#.</span>' ); }
+
   $valid['fb_app_id'] = trim($raw['fb_app_id']);
   if (!preg_match('/^[0-9]{15}$/i', $valid['fb_app_id']) & !empty($valid['fb_app_id'])) { add_settings_error( 'fb_app_id', 'invalid', 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>' ); }
 
@@ -150,6 +164,8 @@ function steel_get_option_defaults() {
     'load_twitter'       => false,
     'load_pinterest'     => false,
     'load_linkedin'      => false,
+
+    'ga_id'              => '',
 
     'fb_app_id'          => '',
 
