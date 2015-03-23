@@ -309,8 +309,9 @@ function steel_ga_script() {
   $ga_id = $options['ga_id'];
 
   if (!empty($ga_id)) {
-    if (is_logged_in()) { ?>
-      <!-- Google Analtyics code disabled because user is logged in. --><?php
+    if (is_user_logged_in()) { ?>
+      <!-- Google Analtyics code disabled because user is logged in. -->
+      <?php
     }
     else { ?>
       <script type="text/javascript">
