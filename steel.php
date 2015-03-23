@@ -310,7 +310,7 @@ function steel_ga_script() {
 
   if (!empty($ga_id)) {
     if (is_user_logged_in()) { ?>
-      <!-- Google Analtyics code disabled because user is logged in. -->
+      <!-- Google Analytics code disabled because user is logged in. -->
       <?php
     }
     else { ?>
