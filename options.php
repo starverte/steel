@@ -37,7 +37,7 @@ function steel_admin_init(){
   //Register Steel Options
   register_setting('steel_options', 'steel_options', 'steel_options_validate' );
 
-  add_settings_section('steel_analytics', 'Analytics', 'steel_analytics_section', 'steel');
+  add_settings_section('steel_analytics', 'Website Analytics', 'steel_analytics_section', 'steel');
 
   add_settings_field('ga_id', 'Google Analytics Property ID', 'ga_id_field', 'steel', 'steel_analytics' );
 
@@ -58,7 +58,7 @@ function steel_admin_init(){
 /*
  * Callback settings for Sparks Options page
  */
-function steel_analytics_section() { echo 'Website Analytics'; }
+function steel_analytics_section() {}
 function ga_id_field() {
   $options = steel_get_options();
 
