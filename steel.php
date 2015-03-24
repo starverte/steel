@@ -85,7 +85,7 @@ function steel_scripts() {
     wp_deregister_script('bootstrap');
 
     // Load Twitter Bootstrap
-    wp_enqueue_script( 'bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.js', array('jquery'), '3.3.2', true );
+    wp_enqueue_script( 'bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', array('jquery'), '3.3.4', true );
   }
 
   if ($options['load_bootstrap_css'] == true) {
@@ -93,10 +93,10 @@ function steel_scripts() {
     wp_deregister_style('bootstrap-css');
 
     // Load Twitter Bootstrap
-    wp_enqueue_style( 'bootstrap-css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css', array() , '3.3.2' );
+    wp_enqueue_style( 'bootstrap-css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css', array() , '3.3.4' );
   }
   else {
-    wp_enqueue_style( 'glyphicons', plugins_url('steel/css/glyphicons.css'), array() , '3.3.2' );
+    wp_enqueue_style( 'glyphicons', plugins_url('steel/css/glyphicons.css'), array() , '3.3.4' );
   }
 
   if (is_module_active('slides')) {
