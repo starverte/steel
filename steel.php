@@ -3,7 +3,7 @@
 Plugin Name: Steel
 Plugin URI: https://github.com/starverte/steel.git
 Description: Core plugin of the Sparks Framework. Works for any theme; but when paired with Flint your WordPress site will be on fire.
-Version: 1.2.1
+Version: 1.2.2
 Author: Star Verte LLC
 Author URI: http://starverte.com/
 License: GPLv3
