@@ -6,4 +6,3 @@
 
 jQuery( ".steel-tooltip" ).tooltip();
 jQuery( ".steel-popover" ).popover();
-jQuery( ".steel-accordion" ).accordion();

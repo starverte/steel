@@ -37,6 +37,10 @@ function steel_admin_init(){
   //Register Steel Options
   register_setting('steel_options', 'steel_options', 'steel_options_validate' );
 
+  add_settings_section('steel_analytics', 'Website Analytics', 'steel_analytics_section', 'steel');
+
+  add_settings_field('ga_id', 'Google Analytics Property ID', 'ga_id_field', 'steel', 'steel_analytics' );
+
   add_settings_section('steel_social', 'Social Media', 'steel_social_section', 'steel');
 
   add_settings_field('fb_app_id', 'Facebook App ID', 'fb_app_id_field', 'steel', 'steel_social' );
@@ -54,6 +58,13 @@ function steel_admin_init(){
 /*
  * Callback settings for Sparks Options page
  */
+function steel_analytics_section() {}
+function ga_id_field() {
+  $options = steel_get_options();
+
+  $output  = '<input id="ga_id" name="steel_options[ga_id]" size="40" type="text" value="' . $options['ga_id'] . '" placeholder="UA-XXXXX-X">';
+  echo $output;
+}
 function steel_social_section() { echo 'Social media profile information'; }
 function fb_app_id_field() {
   $options = steel_get_options();
@@ -66,8 +77,8 @@ function load_bootstrap_field() {
   $options = steel_get_options(); ?>
 
   <div class="radio-group">
-    <label for="steel_options[load_bootstrap_css]"><input name="steel_options[load_bootstrap_css]" type="checkbox" value="css"  <?php checked( $options['load_bootstrap_css'], true  ) ?>>Load CSS&nbsp;&nbsp;</label>
-    <label for="steel_options[load_bootstrap_js]"><input name="steel_options[load_bootstrap_js]" type="checkbox" value="js"   <?php checked( $options['load_bootstrap_js'], true   ) ?>>Load Javascript</label><br>
+    <label for="steel_options[load_bootstrap_css]"><input name="steel_options[load_bootstrap_css]" type="checkbox" value="true"  <?php checked( $options['load_bootstrap_css'], true  ) ?>>Load CSS&nbsp;&nbsp;</label>
+    <label for="steel_options[load_bootstrap_js]"><input name="steel_options[load_bootstrap_js]" type="checkbox" value="true"   <?php checked( $options['load_bootstrap_js'], true   ) ?>>Load Javascript</label><br>
   </div>
 
   <?php
@@ -125,20 +136,23 @@ function load_widgets_field() {
  * Validate settings for Steel Options page
  */
 function steel_options_validate($raw) {
+  $valid['ga_id'] = trim($raw['ga_id']);
+  if (!preg_match('/^UA-\d{4,}-\d+$/', $valid['ga_id']) & !empty($valid['ga_id'])) { add_settings_error( 'ga_id', 'invalid', 'Invalid Google Analytics Property ID. <span style="font-weight:normal;display:block;">A Google Analtyics Property ID is in the format UA-########-#.</span>' ); }
+
   $valid['fb_app_id'] = trim($raw['fb_app_id']);
   if (!preg_match('/^[0-9]{15}$/i', $valid['fb_app_id']) & !empty($valid['fb_app_id'])) { add_settings_error( 'fb_app_id', 'invalid', 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>' ); }
 
-  $valid['load_bootstrap_css'] = isset($raw['load_bootstrap_css']) ? true : false;
-  $valid['load_bootstrap_js' ] = isset($raw['load_bootstrap_js' ]) ? true : false;
+  $valid['load_bootstrap_css'] = $raw['load_bootstrap_css'] == 'true' ? true : false;
+  $valid['load_bootstrap_js' ] = $raw['load_bootstrap_js' ] == 'true' ? true : false;
 
-  //$valid['load_podcast_mod'] = isset($raw['load_podcast_mod']) ? true : false;
-  //$valid['load_quotes'     ] = isset($raw['load_quotes'     ]) ? true : false;
-  //$valid['load_shortcodes' ] = isset($raw['load_shortcodes' ]) ? true : false;
-    $valid['load_slides'     ] = isset($raw['load_slides'     ]) ? true : false;
-    $valid['load_teams'      ] = isset($raw['load_teams'      ]) ? true : false;
-  //$valid['load_widgets'    ] = isset($raw['load_widgets'    ]) ? true : false;
+  //$valid['load_podcast_mod'] = $raw['load_podcast_mod'] == 'true' ? true : false;
+  //$valid['load_quotes'     ] = $raw['load_quotes'     ] == 'true' ? true : false;
+  //$valid['load_shortcodes' ] = $raw['load_shortcodes' ] == 'true' ? true : false;
+    $valid['load_slides'     ] = $raw['load_slides'     ] == 'true' ? true : false;
+    $valid['load_teams'      ] = $raw['load_teams'      ] == 'true' ? true : false;
+  //$valid['load_widgets'    ] = $raw['load_widgets'    ] == 'true' ? true : false;
 
-  return apply_filters( 'steel_options_validate', $raw, $valid );
+  return apply_filters( 'steel_save_options', $valid, $raw );
 }
 
 function steel_get_option_defaults() {
@@ -150,6 +164,8 @@ function steel_get_option_defaults() {
     'load_twitter'       => false,
     'load_pinterest'     => false,
     'load_linkedin'      => false,
+
+    'ga_id'              => '',
 
     'fb_app_id'          => '',
 

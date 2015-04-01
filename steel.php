@@ -3,7 +3,7 @@
 Plugin Name: Steel
 Plugin URI: https://github.com/starverte/steel.git
 Description: Core plugin of the Sparks Framework. Works for any theme; but when paired with Flint your WordPress site will be on fire.
-Version: 1.2.1
+Version: 1.2.2
 Author: Star Verte LLC
 Author URI: http://starverte.com/
 License: GPLv3
@@ -25,11 +25,6 @@ License URI: http://www.gnu.org/licenses/
   along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-global $bs_ver;
-global $steel_ver;
-$bs_ver    = '3.2.0';
-$steel_ver = '1.1.7';
-
 include_once dirname( __FILE__ ) . '/bootstrap.php';
 include_once dirname( __FILE__ ) . '/options.php';
 
@@ -45,18 +40,16 @@ if (is_flint_active()) { include_once dirname( __FILE__ ) . '/templates.php'; }
 /**
  * Returns current plugin version.
  *
- * Deprecated Steel 1.2. Use $steel_ver instead.
+ * Deprecated Steel 1.2. Use actual version number instead.
  * @TODO Remove backwards compatibility in Steel 1.4
  */
-function steel_version() { global $steel_ver; return $steel_ver; }
+function steel_version() { return '1.2.1'; }
 
 /**
  * Load scripts
  */
 add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
 function steel_admin_scripts() {
-  global $bs_ver;
-  global $steel_ver;
   wp_enqueue_style( 'dashicons'                                                  );
   wp_enqueue_style( 'bs-glyphicons'    , plugins_url('steel/css/glyphicons.css') );
   wp_enqueue_style( 'bs-grid'          , plugins_url('steel/css/grid.css'      ) );
@@ -75,19 +68,16 @@ function steel_admin_scripts() {
   wp_enqueue_media();
 
   if (is_module_active('podcast')) {
-    wp_enqueue_script( 'podcast-mod', plugins_url('steel/js/podcast.js'  ), array('jquery'), $steel_ver, true );
-    wp_enqueue_script( 'podcast-channel', plugins_url('steel/js/podcast-channel.js'  ), array('jquery'), $steel_ver, true );
+    wp_enqueue_script( 'podcast-mod', plugins_url('steel/js/podcast.js'  ), array('jquery'), '1.2.1', true );
+    wp_enqueue_script( 'podcast-channel', plugins_url('steel/js/podcast-channel.js'  ), array('jquery'), '1.2.1', true );
   }
 
   if (is_module_active('slides')) {
-    wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), $steel_ver, true );
+    wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), '1.2.1', true );
   }
 }
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
-  global $bs_ver;
-  global $steel_ver;
-
   $options = steel_get_options();
 
   if ($options['load_bootstrap_js'] == true) {
@@ -95,7 +85,7 @@ function steel_scripts() {
     wp_deregister_script('bootstrap');
 
     // Load Twitter Bootstrap
-    wp_enqueue_script( 'bootstrap', plugins_url('steel/js/bootstrap.min.js'  ), array('jquery'), $bs_ver, true );
+    wp_enqueue_script( 'bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', array('jquery'), '3.3.4', true );
   }
 
   if ($options['load_bootstrap_css'] == true) {
@@ -103,26 +93,27 @@ function steel_scripts() {
     wp_deregister_style('bootstrap-css');
 
     // Load Twitter Bootstrap
-    wp_enqueue_style( 'bootstrap-css', plugins_url('steel/css/bootstrap.min.css'), array() , $bs_ver );
+    wp_enqueue_style( 'bootstrap-css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css', array() , '3.3.4' );
   }
   else {
-    wp_enqueue_style( 'glyphicons', plugins_url('steel/css/glyphicons.css'), array() , $bs_ver );
+    wp_enqueue_style( 'glyphicons', plugins_url('steel/css/glyphicons.css'), array() , '3.3.4' );
   }
 
   if (is_module_active('slides')) {
-    wp_enqueue_style( 'slides-mod-style', plugins_url('steel/css/slides.css'  ), array(), $steel_ver);
+    wp_enqueue_style( 'slides-mod-style', plugins_url('steel/css/slides.css'  ), array(), '1.2.1');
   }
 
   // Load script for "Pin It" button
   wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js');
 
   // Load front-end scripts
-  wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array('jquery'), $steel_ver, true );
+  wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array('jquery'), '1.2.1', true );
 }
 
 /*
  * Add function steel_open
  */
+add_action('flint_open','steel_open');
 function steel_open() {
   $options = steel_get_options();
 
@@ -310,4 +301,29 @@ function steel_meta( $mod_prefix, $key, $post_id = NULL ) {
   $meta = !empty($custom[$mod_prefix.'_'.$key][0]) ? $custom[$mod_prefix.'_'.$key][0] : '';
   return $meta;
 }
-?>
+
+add_action('wp_footer','steel_ga_script');
+function steel_ga_script() {
+  $options = steel_get_options();
+
+  $ga_id = $options['ga_id'];
+
+  if (!empty($ga_id)) {
+    if (is_user_logged_in()) { ?>
+      <!-- Google Analytics code disabled because user is logged in. -->
+      <?php
+    }
+    else { ?>
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '<?php echo $ga_id; ?>']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script><?php
+    }
+  }
+}
