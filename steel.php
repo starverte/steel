@@ -85,7 +85,7 @@ function steel_scripts() {
     wp_deregister_script('bootstrap');
 
     // Load Twitter Bootstrap
-    wp_enqueue_script( 'bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.js', array('jquery'), '3.3.2', true );
+    wp_enqueue_script( 'bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', array('jquery'), '3.3.4', true );
   }
 
   if ($options['load_bootstrap_css'] == true) {
@@ -93,10 +93,10 @@ function steel_scripts() {
     wp_deregister_style('bootstrap-css');
 
     // Load Twitter Bootstrap
-    wp_enqueue_style( 'bootstrap-css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css', array() , '3.3.2' );
+    wp_enqueue_style( 'bootstrap-css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css', array() , '3.3.4' );
   }
   else {
-    wp_enqueue_style( 'glyphicons', plugins_url('steel/css/glyphicons.css'), array() , '3.3.2' );
+    wp_enqueue_style( 'glyphicons', plugins_url('steel/css/glyphicons.css'), array() , '3.3.4' );
   }
 
   if (is_module_active('slides')) {
@@ -301,4 +301,29 @@ function steel_meta( $mod_prefix, $key, $post_id = NULL ) {
   $meta = !empty($custom[$mod_prefix.'_'.$key][0]) ? $custom[$mod_prefix.'_'.$key][0] : '';
   return $meta;
 }
-?>
+
+add_action('wp_footer','steel_ga_script');
+function steel_ga_script() {
+  $options = steel_get_options();
+
+  $ga_id = $options['ga_id'];
+
+  if (!empty($ga_id)) {
+    if (is_user_logged_in()) { ?>
+      <!-- Google Analytics code disabled because user is logged in. -->
+      <?php
+    }
+    else { ?>
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '<?php echo $ga_id; ?>']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script><?php
+    }
+  }
+}
