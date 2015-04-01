@@ -69,11 +69,10 @@ function steel_slides_slideshow() {
   foreach ($slides as $slide) {
     if (!empty($slide)) {
       $image = wp_get_attachment_image_src( $slide, 'steel-slide-thumb' );
-      $title = !empty(steel_slides_meta( 'title_'.$slide )) ? steel_slides_meta( 'title_'.$slide ) : '&nbsp;';
       $output .= '<div class="slide" id="';
       $output .= $slide;
       $output .= '">';
-      $output .= '<div class="slide-controls"><span id="controls_'.$slide.'">'.$title.'</span><a class="del-slide" href="#" onclick="deleteSlide(\''.$slide.'\')" title="Delete slide"><span class="dashicons dashicons-dismiss" style="float:right"></span></a></div>';
+      $output .= '<div class="slide-controls"><span id="controls_'.$slide.'">'.steel_slides_meta( 'title_'.$slide ).'</span><a class="del-slide" href="#" onclick="deleteSlide(\''.$slide.'\')" title="Delete slide"><span class="dashicons dashicons-dismiss" style="float:right"></span></a></div>';
       $output .= '<img id="slide_img_'.$slide.'" src="'.$image[0].'" width="'.$image[1].'" height="'.$image[2].'">';
       $output .= '<p><input type="text" size="32" class="slide-title" name="slides_title_';
       $output .= $slide;
