@@ -139,8 +139,8 @@
   text-overflow: ellipsis;
 }
 .admin-color-fresh .slide-controls {
-  background: #2ea2cc;
-  border-color: #0074a2;
+  background: #00a0d2;
+  border-color: #0073aa;
 }
 .admin-color-fresh .slide-controls:hover,
 .admin-color-fresh .slide:hover .slide-controls {
@@ -309,8 +309,8 @@
   text-overflow: ellipsis;
 }
 .admin-color-fresh .episode-controls {
-  background: #2ea2cc;
-  border-color: #0074a2;
+  background: #00a0d2;
+  border-color: #0073aa;
 }
 .admin-color-fresh .episode-controls:hover,
 .admin-color-fresh .episode:hover .episode-controls {
