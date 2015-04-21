@@ -245,11 +245,15 @@
   padding-bottom: 0;
   margin-bottom: 0;
 }
+.carousel-gallery {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .carousel-gallery img,
 .entry-content .carousel-gallery img {
+  padding: 0;
   border: 0;
   border-radius: 0;
-  padding: 0;
 }
 
 /* Simple skin */
