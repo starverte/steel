@@ -338,4 +338,34 @@ function steel_slideshow_shortcode( $atts, $content = null ) {
   }
   return $output;
 }
-?>
+
+function steel_get_slides($format = null) {
+  if ('options' == $format) {
+    $args = array( 'post_type' => 'steel_slides', 'posts_per_page' => -1 );
+    $slideshows = get_posts( $args );
+    $slides = array();
+    $slides[0] = 'None';
+    if ( $slideshows ) {
+      foreach ( $slideshows as $slideshow ) {
+        $post_id = $slideshow->ID;
+        $title = $slideshow->post_title;
+        $slides[$post_id] = $title;
+      }
+      wp_reset_postdata();
+    }
+    return $slides;
+  }
+  else {
+    return;
+  }
+}
+
+function steel_sanitize_get_slides( $input ) {
+  $valid = steel_get_slides('options');
+
+  if ( array_key_exists( $input, $valid ) ) {
+    return $input;
+  } else {
+    return;
+  }
+}
