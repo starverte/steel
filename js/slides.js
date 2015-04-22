@@ -1,9 +1,3 @@
-/*
- * Scripts to power the Slides module
- *
- * @package Steel\Slides
- */
-
 var file_frame;
 
 jQuery(function($) {
