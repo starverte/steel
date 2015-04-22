@@ -177,6 +177,10 @@ function steel_slides_meta( $key, $post_id = NULL ) {
  * Display Slideshow by id
  */
 function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
+  if ( 0 == $post_id ) {
+    return;
+  }
+
   $name = empty($name) ? $post_id : $name;
 
   $slides_media      = steel_slides_meta( 'media'     , $post_id );
