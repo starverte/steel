@@ -54,27 +54,27 @@ function steel_slides_init() {
  */
 add_action( 'add_meta_boxes', 'steel_slides_meta_boxes' );
 function steel_slides_meta_boxes() {
-  add_meta_box('steel_slides_slideshow', 'Add/Edit Slides'     , 'steel_slides_slideshow', 'steel_slides', 'advanced', 'high'  );
-  add_meta_box('steel_slides_info'     , 'Using this Slideshow', 'steel_slides_info'     , 'steel_slides', 'side');
-  add_meta_box('steel_slides_settings' , 'Slideshow Settings'  , 'steel_slides_settings' , 'steel_slides', 'side');
+  add_meta_box( 'steel_slides_slideshow', 'Add/Edit Slides'     , 'steel_slides_slideshow', 'steel_slides', 'advanced', 'high' );
+  add_meta_box( 'steel_slides_info'     , 'Using this Slideshow', 'steel_slides_info'     , 'steel_slides', 'side' );
+  add_meta_box( 'steel_slides_settings' , 'Slideshow Settings'  , 'steel_slides_settings' , 'steel_slides', 'side' );
 }
 function steel_slides_slideshow() {
   $slides_media     = steel_slides_meta( 'media' );
   $slides_order     = steel_slides_meta( 'order' );
   $slides_media_url = steel_slides_meta( 'media_url' );
 
-  $slides = explode(',', $slides_order);
+  $slides = explode( ',', $slides_order);
 
   $output = '';
   $output .= '<a href="#" class="button add_slide_media" id="btn_above" title="Add slide to slideshow"><span class="dashicons dashicons-images-alt"></span> Add Slide</a>';
   $output .= '<div id="slides_wrap"><div id="slides">';
-  foreach ($slides as $slide) {
+  foreach( $slides as $slide ) {
     if (!empty($slide)) {
       $image = wp_get_attachment_image_src( $slide, 'steel-slide-thumb' );
       $output .= '<div class="slide" id="';
       $output .= $slide;
       $output .= '">';
-      $output .= '<div class="slide-controls"><span id="controls_'.$slide.'">'.steel_slides_meta( 'title_'.$slide ).'</span><a class="del-slide" href="#" onclick="deleteSlide(\''.$slide.'\')" title="Delete slide"><span class="dashicons dashicons-dismiss" style="float:right"></span></a></div>';
+      $output .= '<div class="slide-controls"><span id="controls_'.$slide.'">'.steel_slides_meta( 'title_'.$slide ).'</span><a class="del-slide" href="#" onclick="deleteSlide(\''.$slide.'\' )" title="Delete slide"><span class="dashicons dashicons-dismiss" style="float:right"></span></a></div>';
       $output .= '<img id="slide_img_'.$slide.'" src="'.$image[0].'" width="'.$image[1].'" height="'.$image[2].'">';
       $output .= '<p><input type="text" size="32" class="slide-title" name="slides_title_';
       $output .= $slide;
@@ -104,16 +104,16 @@ function steel_slides_info() {
 }
 function steel_slides_settings() {
   global $post;
-  $skins = array('Default','Bar','Gallery','Simple','Tabs','Thumbnails');
+  $skins = array( 'Default','Bar','Gallery','Simple','Tabs','Thumbnails' );
   $the_skin = steel_slides_meta( 'skin' );
-  $transitions = array('Default','Fade');
+  $transitions = array( 'Default','Fade' );
   $the_transition = steel_slides_meta( 'transition' ); ?>
 
   <p><label for="slides_skin">Skin</label>&nbsp;&nbsp;&nbsp;
      <select id="slides_skin" name="slides_skin">
         <option value="">Select</option>
         <?php
-          foreach ($skins as $skin) {
+          foreach( $skins as $skin ) {
             $option  = '<option value="' . $skin . '" '. selected( $the_skin, $skin ) .'>';
             $option .= $skin;
             $option .= '</option>';
@@ -126,7 +126,7 @@ function steel_slides_settings() {
      <select id="slides_transition" name="slides_transition">
         <option value="">Select</option>
         <?php
-          foreach ($transitions as $transition) {
+          foreach( $transitions as $transition ) {
             $option  = '<option value="' . $transition . '" '. selected( $the_transition, $transition ) .'>';
             $option .= $transition;
             $option .= '</option>';
@@ -140,31 +140,31 @@ function steel_slides_settings() {
 /*
  * Save data from meta boxes
  */
-add_action('save_post', 'save_steel_slides');
+add_action( 'save_post', 'save_steel_slides' );
 function save_steel_slides() {
   global $post;
-  if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && (isset($post_id))) { return $post_id; }
-  if (defined('DOING_AJAX') && DOING_AJAX && (isset($post_id))) { return $post_id; }
-  if (preg_match('/\edit\.php/', $_SERVER['REQUEST_URI']) && (isset($post_id))) { return $post_id; }
-  if (isset($_POST['slides_order']   )) {
-    update_post_meta($post->ID, 'slides_order'   , $_POST['slides_order']);
-    $slides = explode(',', get_post_meta($post->ID, 'slides_order', true));
-    foreach ($slides as $slide) {
-      if (isset($_POST['slides_title_'   . $slide])) { update_post_meta($post->ID, 'slides_title_'  . $slide, $_POST['slides_title_'   . $slide]); }
-      if (isset($_POST['slides_content_' . $slide])) { update_post_meta($post->ID, 'slides_content_'. $slide, $_POST['slides_content_' . $slide]); }
-      if (isset($_POST['slides_link_'    . $slide])) { update_post_meta($post->ID, 'slides_link_'   . $slide, $_POST['slides_link_'    . $slide]); }
+  if (defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset($post_id))) { return $post_id; }
+  if (defined( 'DOING_AJAX' ) && DOING_AJAX && (isset($post_id))) { return $post_id; }
+  if (preg_match( '/\edit\.php/', $_SERVER['REQUEST_URI']) && (isset($post_id))) { return $post_id; }
+  if (isset($_POST['slides_order'])) {
+    update_post_meta( $post->ID, 'slides_order', $_POST['slides_order'] );
+    $slides = explode( ',', get_post_meta( $post->ID, 'slides_order', true ) );
+    foreach( $slides as $slide ) {
+      if (isset($_POST['slides_title_'   . $slide])) { update_post_meta( $post->ID, 'slides_title_'  . $slide, $_POST['slides_title_'   . $slide] ); }
+      if (isset($_POST['slides_content_' . $slide])) { update_post_meta( $post->ID, 'slides_content_'. $slide, $_POST['slides_content_' . $slide] ); }
+      if (isset($_POST['slides_link_'    . $slide])) { update_post_meta( $post->ID, 'slides_link_'   . $slide, $_POST['slides_link_'    . $slide] ); }
     }
   }
 
-  if (isset($_POST['slides_author']   )) { update_post_meta($post->ID, 'slides_author'   , $_POST['slides_author']   ); }
-  if (isset($_POST['slides_media']    )) { update_post_meta($post->ID, 'slides_media'    , $_POST['slides_media']    ); }
-  if (isset($_POST['slides_media_url'])) { update_post_meta($post->ID, 'slides_media_url', $_POST['slides_media_url']); }
+  if (isset($_POST['slides_author']   )) { update_post_meta( $post->ID, 'slides_author'   , $_POST['slides_author']    ); }
+  if (isset($_POST['slides_media']    )) { update_post_meta( $post->ID, 'slides_media'    , $_POST['slides_media']     ); }
+  if (isset($_POST['slides_media_url'])) { update_post_meta( $post->ID, 'slides_media_url', $_POST['slides_media_url'] ); }
 
-  if (!empty($_POST['slides_skin']))      { update_post_meta($post->ID, 'slides_skin', $_POST['slides_skin']); }
-    elseif (isset($_POST['slides_skin'])) { update_post_meta($post->ID, 'slides_skin', 'Default'            ); }
+  if (!empty($_POST['slides_skin']))      { update_post_meta( $post->ID, 'slides_skin', $_POST['slides_skin'] ); }
+    elseif (isset($_POST['slides_skin'])) { update_post_meta( $post->ID, 'slides_skin', 'Default'             ); }
 
-  if (!empty($_POST['slides_transition']))      { update_post_meta($post->ID, 'slides_transition', $_POST['slides_transition']); }
-    elseif (isset($_POST['slides_transition'])) { update_post_meta($post->ID, 'slides_transition', 'Default'            ); }
+  if (!empty($_POST['slides_transition']))      { update_post_meta( $post->ID, 'slides_transition', $_POST['slides_transition'] ); }
+    elseif (isset($_POST['slides_transition'])) { update_post_meta( $post->ID, 'slides_transition', 'Default'                   ); }
 }
 
 /*
@@ -179,7 +179,7 @@ function steel_slides_meta( $key, $post_id = NULL ) {
  * Display Slideshow by id
  */
 function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
-  if ( 0 == $post_id ) {
+  if ( 0 === $post_id ) {
     return;
   }
 
@@ -195,10 +195,10 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
   $slides_transition = empty($slides_transition) ? 'Default' : $slides_transition;
 
   $slides_class  = 'carousel slide';
-  $slides_class .= ' carousel-'.strtolower($slides_skin);
-  $slides_class .= $slides_transition != 'Default' ? ' carousel-'.strtolower($slides_transition) : '' ;
+  $slides_class .= ' carousel-' . strtolower($slides_skin);
+  $slides_class .= 'Default' !== $slides_transition ? ' carousel-' . strtolower($slides_transition) : '' ;
 
-  $slides = explode(',', $slides_order);
+  $slides = explode( ',', $slides_order);
 
   $output     = '';
   $indicators = '';
@@ -208,21 +208,21 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
   $i          = -1;
   $total      = -1;
 
-  foreach ($slides as $slide) {
+  foreach( $slides as $slide ) {
     if (!empty($slide)) {
       $total += 1;
     }
   }
 
-  $col_lg = floor(12/($total + 1));
-  $rem_lg = 12 - ($col_lg * ($total + 1));
-  $spc_lg = floor($rem_lg/2);
+  $col_lg = floor( 12 / ( $total + 1 ) );
+  $rem_lg = 12 - ( $col_lg * ( $total + 1 ) );
+  $spc_lg = floor( $rem_lg / 2 );
 
-  if ($slides_skin != 'Gallery') {
+  if ( 'Gallery' !== $slides_skin ) {
     $carousel_div = '<div id="carousel_'.$name.'" class="'.$slides_class.'" data-ride="carousel">';
 
     //Wrapper for slides
-    foreach ($slides as $slide) {
+    foreach( $slides as $slide ) {
       if (!empty($slide)) {
         $image   = wp_get_attachment_image_src( $slide, $size );
         $title   = steel_slides_meta( 'title_'  .$slide, $post_id );
@@ -235,10 +235,10 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
         $items .= '<img id="slide_img_'.$slide.'" src="'.$image[0].'" alt="'.$title.'">';
         $items .= !empty($link) ? '</a>' : '';
 
-        if (!empty($title) || !empty($content)) {
+        if ( !empty($title) || !empty($content) ) {
           $items .= '<div class="carousel-caption">';
-          if ($slides_skin != 'Bar') {
-            if (!empty($title  )) { $items .= '<h3 id="slides_title_'.$slide.'">' .$title  .'</h3>'; }
+          if ( 'Bar' !== $slides_skin ) {
+            if (!empty($title)) { $items .= '<h3 id="slides_title_'.$slide.'">' .$title  .'</h3>'; }
             if (!empty($content)) { $items .= '<p class="hidden-xs" id="slides_content_'.$slide.'">'.$content.'</p>' ; }
           }
           else {
@@ -254,7 +254,7 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
     $carousel_div = '<div id="carousel_'.$name.'" class="row carousel-gallery">';
 
     //Wrapper for slides for Gallery skin
-    foreach ($slides as $slide) {
+    foreach( $slides as $slide ) {
       if (!empty($slide)) {
         $count += 1;
         $image   = wp_get_attachment_image_src( $slide, 'full' );
@@ -265,9 +265,9 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
   }
 
   //Indicators
-  if (empty($slides_skin) | ($slides_skin == 'Default')) {
+  if ( empty($slides_skin) || 'Default' === $slides_skin ) {
     $indicators .= '<ol class="carousel-indicators">';
-    foreach ($slides as $slide) {
+    foreach( $slides as $slide ) {
       if (!empty($slide)) {
         $count += 1;
         $indicators .= $count >= 1 ? '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"></li>' : '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'" class="active"></li>';
@@ -275,9 +275,9 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
     }
     $indicators .= '</ol>';
   }
-  elseif ($slides_skin == 'Tabs') {
+  elseif ( 'Tabs' === $slides_skin ) {
     $indicators .= '<ol class="nav nav-tabs carousel-indicators">';
-    foreach ($slides as $slide) {
+    foreach( $slides as $slide ) {
       if (!empty($slide)) {
         $count += 1;
         $title   = steel_slides_meta( 'title_'  .$slide, $post_id );
@@ -286,10 +286,10 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
     }
     $indicators .= '</ol>';
   }
-  elseif ($slides_skin == 'Thumbnails') {
+  elseif ( 'Thumbnails' === $slides_skin ) {
     $indicators .= '<div class="carousel-thumbs hidden-sm hidden-xs">';
     $indicators .= '<span class="col-lg-'.$spc_lg.' col-md-'.$spc_lg.'"></span>';
-    foreach ($slides as $slide) {
+    foreach( $slides as $slide ) {
       if (!empty($slide)) {
         $count += 1;
         $image   = wp_get_attachment_image_src( $slide, 'steel-slide-thumb' );
@@ -300,26 +300,26 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
     $indicators .= '<span class="col-lg-'.$spc_lg.' col-md-'.$spc_lg.'"></span>';
     $indicators .= '</div>';
   }
-  elseif ($slides_skin == 'Gallery') {
+  elseif ( 'Gallery' === $slides_skin ) {
     $indicators = '';
   }
 
   //Controls
-  $controls .= ($slides_skin == 'Simple') ? '<div class="carousel-controls">' : '';
+  $controls .= ( 'Simple' === $slides_skin ) ? '<div class="carousel-controls">' : '';
   $controls .= '<a class="left ' .'carousel-control" href="#carousel_'.$post_id.'" data-slide="prev"><span class="icon-prev' .'"></span></a>';
   $controls .= '<a class="right '.'carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="icon-next'.'"></span></a>';
-  $controls .= ($slides_skin == 'Simple') ? '</div>' : '';
+  $controls .= ( 'Simple' === $slides_skin ) ? '</div>' : '';
 
   //Output
-  $output .= $slides_skin == 'Tabs' ? $indicators : '';
+  $output .= 'Tabs' === $slides_skin ? $indicators : '';
   $output .= $carousel_div;
-  $output .= empty($slides_skin) | ($slides_skin == 'Default') ? $indicators : '';
-  $output .= $slides_skin == 'Gallery' ? '' : '<div class="carousel-inner">';
+  $output .= empty($slides_skin) || 'Default' === $slides_skin ? $indicators : '';
+  $output .= 'Gallery' === $slides_skin ? '' : '<div class="carousel-inner">';
   $output .= $items;
-  $output .= $slides_skin == 'Gallery' ? '' : '</div>';
-  $output .= $slides_skin == 'Gallery' ? '' : $controls;
+  $output .= 'Gallery' === $slides_skin ? '' : '</div>';
+  $output .= 'Gallery' === $slides_skin ? '' : $controls;
   $output .= '</div>';
-  $output .= $slides_skin == 'Thumbnails' ? $indicators : '';
+  $output .= 'Thumbnails' === $slides_skin ? $indicators : '';
 
   return $output;
 }
@@ -345,14 +345,14 @@ function steel_slideshow_shortcode( $atts, $content = null ) {
   return $output;
 }
 
-function steel_get_slides($format = null) {
-  if ('options' == $format) {
+function steel_get_slides( $format = null ) {
+  if ( 'options' === $format ) {
     $args = array( 'post_type' => 'steel_slides', 'posts_per_page' => -1 );
     $slideshows = get_posts( $args );
     $slides = array();
     $slides[0] = 'None';
     if ( $slideshows ) {
-      foreach ( $slideshows as $slideshow ) {
+      foreach( $slideshows as $slideshow ) {
         $post_id = $slideshow->ID;
         $title = $slideshow->post_title;
         $slides[$post_id] = $title;
@@ -367,7 +367,7 @@ function steel_get_slides($format = null) {
 }
 
 function steel_sanitize_get_slides( $input ) {
-  $valid = steel_get_slides('options');
+  $valid = steel_get_slides( 'options' );
 
   if ( array_key_exists( $input, $valid ) ) {
     return $input;
