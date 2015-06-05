@@ -196,7 +196,7 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
 
   $slides_class  = 'carousel slide';
   $slides_class .= ' carousel-' . strtolower($slides_skin);
-  $slides_class .= $slides_transition != 'Default' ? ' carousel-' . strtolower($slides_transition) : '' ;
+  $slides_class .= 'Default' !== $slides_transition ? ' carousel-' . strtolower($slides_transition) : '' ;
 
   $slides = explode( ',', $slides_order);
 
@@ -218,7 +218,7 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
   $rem_lg = 12 - ( $col_lg * ( $total + 1 ) );
   $spc_lg = floor( $rem_lg / 2 );
 
-  if ( $slides_skin != 'Gallery' ) {
+  if ( 'Gallery' !== $slides_skin ) {
     $carousel_div = '<div id="carousel_'.$name.'" class="'.$slides_class.'" data-ride="carousel">';
 
     //Wrapper for slides
@@ -237,7 +237,7 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
 
         if ( !empty($title) || !empty($content) ) {
           $items .= '<div class="carousel-caption">';
-          if ( $slides_skin != 'Bar' ) {
+          if ( 'Bar' !== $slides_skin ) {
             if (!empty($title)) { $items .= '<h3 id="slides_title_'.$slide.'">' .$title  .'</h3>'; }
             if (!empty($content)) { $items .= '<p class="hidden-xs" id="slides_content_'.$slide.'">'.$content.'</p>' ; }
           }
