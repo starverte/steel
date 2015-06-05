@@ -104,9 +104,9 @@ function steel_slides_info() {
 }
 function steel_slides_settings() {
   global $post;
-  $skins = array( 'Default','Bar','Gallery','Simple','Tabs','Thumbnails' );
+  $skins = array( 'Default', 'Bar', 'Gallery', 'Simple', 'Tabs', 'Thumbnails' );
   $the_skin = steel_slides_meta( 'skin' );
-  $transitions = array( 'Default','Fade' );
+  $transitions = array( 'Default', 'Fade' );
   $the_transition = steel_slides_meta( 'transition' ); ?>
 
   <p><label for="slides_skin">Skin</label>&nbsp;&nbsp;&nbsp;
@@ -225,9 +225,9 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
     foreach( $slides as $slide ) {
       if (!empty($slide)) {
         $image   = wp_get_attachment_image_src( $slide, $size );
-        $title   = steel_slides_meta( 'title_'  .$slide, $post_id );
-        $content = steel_slides_meta( 'content_'.$slide, $post_id );
-        $link    = steel_slides_meta( 'link_'   .$slide, $post_id );
+        $title   = steel_slides_meta( 'title_'   . $slide, $post_id );
+        $content = steel_slides_meta( 'content_' . $slide, $post_id );
+        $link    = steel_slides_meta( 'link_'    . $slide, $post_id );
         $i += 1;
 
         $items .= $i >= 1 ? '<div class="item">' : '<div class="item active">';
@@ -257,9 +257,15 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
     foreach( $slides as $slide ) {
       if (!empty($slide)) {
         $count += 1;
-        $image   = wp_get_attachment_image_src( $slide, 'full' );
-        $title   = steel_slides_meta( 'title_'  .$slide, $post_id );
-        $items  .= '<span class="col-lg-'.$col_lg.' col-md-'.$col_lg.'"><img id="slide_thumb_'.$slide.'" src="'.$image[0].'" alt="'.$title.'"></span>';
+        $image  = wp_get_attachment_image_src( $slide, 'full' );
+        $title  = steel_slides_meta( 'title_' . $slide, $post_id );
+        $link   = steel_slides_meta( 'link_'  . $slide, $post_id );
+
+        $items .= '<span class="col-lg-' . $col_lg . ' col-md-' . $col_lg . '">';
+        $items .= !empty($link) ? '<a href="'.$link.'">' : '';
+        $items .= '<img id="slide_thumb_' . $slide . '" src="' . $image[0] . '" alt="' . $title . '">';
+        $items .= !empty($link) ? '</a>' : '';
+        $items .= '</span>';
       }
     }
   }
