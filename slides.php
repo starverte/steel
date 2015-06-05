@@ -5,7 +5,7 @@
  *
  * @package Steel\Slides
  *
- * @since 1.2.4
+ * @since 1.2.5
  */
 
 add_action( 'init', 'steel_slides_init', 0 );
