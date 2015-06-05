@@ -47,6 +47,15 @@ Like our plugin? Write us a review!
 Submit your questions to http://sparks.starverte.com/steel and we will try to answer them.
 
 == Changelog ==
+= 1.2.5 =
+- Code quality improvements
+- Bug fix: Gallery skin outputs links as expected
+
+= 1.2.4 =
+- Update core colors for WordPress 4.2
+- New Gallery skin for Slides
+- New functions `steel_get_slides` and `steel_sanitize_get_slides` for use in building `<select>` fields
+
 = 1.2.3 =
 * Fixed fatal error in slides.php
 
