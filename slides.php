@@ -179,7 +179,7 @@ function steel_slides_meta( $key, $post_id = NULL ) {
  * Display Slideshow by id
  */
 function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
-  if ( 0 == $post_id ) {
+  if ( 0 === $post_id ) {
     return;
   }
 
@@ -265,7 +265,7 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
   }
 
   //Indicators
-  if ( empty($slides_skin) || $slides_skin == 'Default' ) {
+  if ( empty($slides_skin) || 'Default' === $slides_skin ) {
     $indicators .= '<ol class="carousel-indicators">';
     foreach( $slides as $slide ) {
       if (!empty($slide)) {
@@ -275,7 +275,7 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
     }
     $indicators .= '</ol>';
   }
-  elseif ( $slides_skin == 'Tabs' ) {
+  elseif ( 'Tabs' === $slides_skin ) {
     $indicators .= '<ol class="nav nav-tabs carousel-indicators">';
     foreach( $slides as $slide ) {
       if (!empty($slide)) {
@@ -286,7 +286,7 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
     }
     $indicators .= '</ol>';
   }
-  elseif ( $slides_skin == 'Thumbnails' ) {
+  elseif ( 'Thumbnails' === $slides_skin ) {
     $indicators .= '<div class="carousel-thumbs hidden-sm hidden-xs">';
     $indicators .= '<span class="col-lg-'.$spc_lg.' col-md-'.$spc_lg.'"></span>';
     foreach( $slides as $slide ) {
@@ -300,26 +300,26 @@ function steel_slideshow( $post_id, $size = 'full', $name = NULL ) {
     $indicators .= '<span class="col-lg-'.$spc_lg.' col-md-'.$spc_lg.'"></span>';
     $indicators .= '</div>';
   }
-  elseif ( $slides_skin == 'Gallery' ) {
+  elseif ( 'Gallery' === $slides_skin ) {
     $indicators = '';
   }
 
   //Controls
-  $controls .= ( $slides_skin == 'Simple' ) ? '<div class="carousel-controls">' : '';
+  $controls .= ( 'Simple' === $slides_skin ) ? '<div class="carousel-controls">' : '';
   $controls .= '<a class="left ' .'carousel-control" href="#carousel_'.$post_id.'" data-slide="prev"><span class="icon-prev' .'"></span></a>';
   $controls .= '<a class="right '.'carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="icon-next'.'"></span></a>';
-  $controls .= ( $slides_skin == 'Simple' ) ? '</div>' : '';
+  $controls .= ( 'Simple' === $slides_skin ) ? '</div>' : '';
 
   //Output
-  $output .= $slides_skin == 'Tabs' ? $indicators : '';
+  $output .= 'Tabs' === $slides_skin ? $indicators : '';
   $output .= $carousel_div;
-  $output .= empty($slides_skin) || $slides_skin == 'Default' ? $indicators : '';
-  $output .= $slides_skin == 'Gallery' ? '' : '<div class="carousel-inner">';
+  $output .= empty($slides_skin) || 'Default' === $slides_skin ? $indicators : '';
+  $output .= 'Gallery' === $slides_skin ? '' : '<div class="carousel-inner">';
   $output .= $items;
-  $output .= $slides_skin == 'Gallery' ? '' : '</div>';
-  $output .= $slides_skin == 'Gallery' ? '' : $controls;
+  $output .= 'Gallery' === $slides_skin ? '' : '</div>';
+  $output .= 'Gallery' === $slides_skin ? '' : $controls;
   $output .= '</div>';
-  $output .= $slides_skin == 'Thumbnails' ? $indicators : '';
+  $output .= 'Thumbnails' === $slides_skin ? $indicators : '';
 
   return $output;
 }
@@ -346,7 +346,7 @@ function steel_slideshow_shortcode( $atts, $content = null ) {
 }
 
 function steel_get_slides( $format = null ) {
-  if ( 'options' == $format) {
+  if ( 'options' === $format ) {
     $args = array( 'post_type' => 'steel_slides', 'posts_per_page' => -1 );
     $slideshows = get_posts( $args );
     $slides = array();
