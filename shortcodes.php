@@ -240,7 +240,7 @@ function panel_shortcode( $atts, $content = null ) {
   elseif (!empty($heading)) { $output .= '<div class="panel-heading">' . $heading . '</div>'; }
 
   $collapse_class = 'panel-collapse collapse';
-  $collapse_class .= $panel_int == 1 ? ' in' : '';
+  $collapse_class .= 1 === $panel_int ? ' in' : '';
 
   $output .= !empty($group_id) ? '<div class="' . $collapse_class . '" id="' . $group_id . '-' . $panel_int . '">' : '';
   $output .= '<div class="panel-body">' . $new . '</div>';

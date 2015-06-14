@@ -142,15 +142,15 @@ function steel_options_validate($raw) {
   $valid['fb_app_id'] = trim($raw['fb_app_id']);
   if (!preg_match('/^[0-9]{15}$/i', $valid['fb_app_id']) & !empty($valid['fb_app_id'])) { add_settings_error( 'fb_app_id', 'invalid', 'Invalid Facebook App ID. <span style="font-weight:normal;display:block;">A Facebook App ID consists of 15 digits.</span>' ); }
 
-  $valid['load_bootstrap_css'] = $raw['load_bootstrap_css'] == 'true' ? true : false;
-  $valid['load_bootstrap_js' ] = $raw['load_bootstrap_js' ] == 'true' ? true : false;
+  $valid['load_bootstrap_css'] = 'true' === $raw['load_bootstrap_css'] ? true : false;
+  $valid['load_bootstrap_js' ] = 'true' === $raw['load_bootstrap_js' ] ? true : false;
 
-  //$valid['load_podcast_mod'] = $raw['load_podcast_mod'] == 'true' ? true : false;
-  //$valid['load_quotes'     ] = $raw['load_quotes'     ] == 'true' ? true : false;
-  //$valid['load_shortcodes' ] = $raw['load_shortcodes' ] == 'true' ? true : false;
-    $valid['load_slides'     ] = $raw['load_slides'     ] == 'true' ? true : false;
-    $valid['load_teams'      ] = $raw['load_teams'      ] == 'true' ? true : false;
-  //$valid['load_widgets'    ] = $raw['load_widgets'    ] == 'true' ? true : false;
+  //$valid['load_podcast_mod'] = 'true' === $raw['load_podcast_mod'] ? true : false;
+  //$valid['load_quotes'     ] = 'true' === $raw['load_quotes'     ] ? true : false;
+  //$valid['load_shortcodes' ] = 'true' === $raw['load_shortcodes' ] ? true : false;
+    $valid['load_slides'     ] = 'true' === $raw['load_slides'     ] ? true : false;
+    $valid['load_teams'      ] = 'true' === $raw['load_teams'      ] ? true : false;
+  //$valid['load_widgets'    ] = 'true' === $raw['load_widgets'    ] ? true : false;
 
   return apply_filters( 'steel_save_options', $valid, $raw );
 }
@@ -181,51 +181,51 @@ function steel_get_option_defaults() {
   $options = get_option( 'steel_options' );
 
   if (!empty($options['mod_bootstrap'])) {
-    if ($options['mod_bootstrap'] == 'css' || $options['mod_bootstrap'] == 'both' )
+    if ('css' === $options['mod_bootstrap'] || 'both' === $options['mod_bootstrap'] )
       $defaults['load_bootstrap_css'] = true;
-    if ($options['mod_bootstrap'] == 'js' || $options['mod_bootstrap'] == 'both' )
+    if ('js' === $options['mod_bootstrap'] || 'both' === $options['mod_bootstrap'] )
       $defaults['load_bootstrap_js'] = true;
   }
 
   if (!empty($options['mod_podcast'])) {
-    if ($options['mod_podcast'] == 'true')
+    if ('true' === $options['mod_podcast'])
       $defaults['load_podcast_mod'] = true;
-    elseif ($options['mod_podcast'] == 'false')
+    elseif ('false' === $options['mod_podcast'])
       $defaults['load_podcast_mod'] = false;
   }
 
   if (!empty($options['mod_quotes'])) {
-    if ($options['mod_quotes'] == 'true')
+    if ('true' === $options['mod_quotes'])
       $defaults['load_quotes'] = true;
-    elseif ($options['mod_quotes'] == 'false')
+    elseif ('false' === $options['mod_quotes'])
       $defaults['load_quotes'] = false;
   }
 
   if (!empty($options['mod_shortcodes'])) {
-    if ($options['mod_shortcodes'] == 'true')
+    if ('true' === $options['mod_shortcodes'])
       $defaults['load_shortcodes'] = true;
-    elseif ($options['mod_shortcodes'] == 'false')
+    elseif ('false' === $options['mod_shortcodes'])
       $defaults['load_shortcodes'] = false;
   }
 
   if (!empty($options['mod_slides'])) {
-    if ($options['mod_slides'] == 'true')
+    if ('true' === $options['mod_slides'])
       $defaults['load_slides'] = true;
-    elseif ($options['mod_slides'] == 'false')
+    elseif ('false' === $options['mod_slides'])
       $defaults['load_slides'] = false;
   }
 
   if (!empty($options['mod_teams'])) {
-    if ($options['mod_teams'] == 'true')
+    if ('true' === $options['mod_teams'])
       $defaults['load_teams'] = true;
-    elseif ($options['mod_teams'] == 'false')
+    elseif ('false' === $options['mod_teams'])
       $defaults['load_teams'] = false;
   }
 
   if (!empty($options['mod_widgets'])) {
-    if ($options['mod_widgets'] == 'true')
+    if ('true' === $options['mod_widgets'])
       $defaults['load_widgets'] = true;
-    elseif ($options['mod_widgets'] == 'false')
+    elseif ('false' === $options['mod_widgets'])
       $defaults['load_widgets'] = false;
   }
   //END - backwards compatibility

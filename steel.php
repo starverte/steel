@@ -80,7 +80,7 @@ add_action( 'wp_enqueue_scripts', 'steel_scripts' );
 function steel_scripts() {
   $options = steel_get_options();
 
-  if ($options['load_bootstrap_js'] == true) {
+  if (true === $options['load_bootstrap_js']) {
     // Make sure there aren't other instances of Twitter Bootstrap
     wp_deregister_script('bootstrap');
 
@@ -88,7 +88,7 @@ function steel_scripts() {
     wp_enqueue_script( 'bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js', array('jquery'), '3.3.4', true );
   }
 
-  if ($options['load_bootstrap_css'] == true) {
+  if (true === $options['load_bootstrap_css']) {
     // Make sure there aren't other instances of Twitter Bootstrap
     wp_deregister_style('bootstrap-css');
 
@@ -117,7 +117,7 @@ add_action('flint_open','steel_open');
 function steel_open() {
   $options = steel_get_options();
 
-  if ($options['load_facebook'] == true  && !empty($options['fb_app_id'])) {
+  if (true === $options['load_facebook']  && !empty($options['fb_app_id'])) {
       echo '<div id="fb-root"></div><script>(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=' . $options['fb_app_id'] . '"; fjs.parentNode.insertBefore(js, fjs); }(document, \'script\', \'facebook-jssdk\')); </script>';
   }
   else { return; }
@@ -254,7 +254,7 @@ function pin_it( $args = array() ) {
 function is_module_active( $module ) {
   $options = steel_get_options();
 
-  if ($options['load_'.$module] == true)
+  if (true === $options['load_'.$module])
     return true;
   else
     return false;
@@ -278,7 +278,7 @@ function is_flint_active() {
   $name = $theme->get( 'Name' );
   $template = $theme->get( 'Template' );
   $template = !empty($template) ? $template : strtolower ( $name );
-  if ($template == 'flint')
+  if ('flint' === $template)
     return true;
   else
     return false;
@@ -297,7 +297,7 @@ function steel_get_image_url( $attachment_id, $size = 'thumbnail', $icon = false
  */
 function steel_meta( $mod_prefix, $key, $post_id = NULL ) {
   global $post;
-  $custom = $post_id == NULL ? get_post_custom($post->ID) : get_post_custom($post_id);
+  $custom = NULL === $post_id ? get_post_custom($post->ID) : get_post_custom($post_id);
   $meta = !empty($custom[$mod_prefix.'_'.$key][0]) ? $custom[$mod_prefix.'_'.$key][0] : '';
   return $meta;
 }
