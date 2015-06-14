@@ -153,7 +153,7 @@ function tweet_this( $data_count = 'horizontal' , $data_size = '' , $data_via = 
   $args = wp_parse_args($args, $defaults);
   $args = (object) $args;
 
-  if ( $args->data_hashtags != '' ) {
+  if ( '' !== $args->data_hashtags ) {
     $tweet_class = 'twitter-hashtag-button';
     $hashtag     = '#' . $args->data_hashtags;
     $link        = 'https://twitter.com/intent/tweet?button_hashtag=' . $hashtag;

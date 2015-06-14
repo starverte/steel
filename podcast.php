@@ -180,7 +180,7 @@ function steel_podcast( $post_id, $size = 'full', $name = NULL ) {
 
   $series_class  = 'carousel episode';
   $series_class .= !empty($series_skin) ? ' carousel-'.strtolower($series_skin) : ' carousel-default' ;
-  $series_class .= !empty($series_transition) && $series_transition != 'Default' ? ' carousel-'.strtolower($series_transition) : '' ;
+  $series_class .= !empty($series_transition) && 'Default' !== $series_transition ? ' carousel-'.strtolower($series_transition) : '' ;
 
   $series = explode(',', $series_order);
 
@@ -207,7 +207,7 @@ function steel_podcast( $post_id, $size = 'full', $name = NULL ) {
 
       if (!empty($title) || !empty($content)) {
         $items .= '<div class="carousel-caption">';
-        if ($series_skin != 'Bar') {
+        if ('Bar' !== $series_skin) {
           if (!empty($title  )) { $items .= '<h3 id="episode_'.$episode.'_title">' .$title  .'</h3>'; }
           if (!empty($content)) { $items .= '<p class="hidden-xs" id="episode_'.$episode.'_summary">'.$content.'</p>' ; }
         }

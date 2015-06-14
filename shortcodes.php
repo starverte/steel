@@ -110,7 +110,7 @@ function btn_shortcode( $atts, $content = null ) {
 
   $output  = '<a ';
   $output .= 'class="btn '. $btn_class .'" ';
-  $output .= $toggle != 'popover' ? 'href="' . $link . '"' : '';
+  $output .= 'popover' !== $toggle ? 'href="' . $link . '"' : '';
   $output .= $data;
   $output .= !empty($title)  ? ' title="'  . $title  . '"' : '';
   $output .= !empty($target) ? ' target="' . $target . '"' : '';
