@@ -180,7 +180,7 @@ function steel_podcast( $post_id, $size = 'full', $name = NULL ) {
 
   $series_class  = 'carousel episode';
   $series_class .= !empty($series_skin) ? ' carousel-'.strtolower($series_skin) : ' carousel-default' ;
-  $series_class .= !empty($series_transition) && $series_transition != 'Default' ? ' carousel-'.strtolower($series_transition) : '' ;
+  $series_class .= !empty($series_transition) && 'Default' !== $series_transition ? ' carousel-'.strtolower($series_transition) : '' ;
 
   $series = explode(',', $series_order);
 
@@ -207,7 +207,7 @@ function steel_podcast( $post_id, $size = 'full', $name = NULL ) {
 
       if (!empty($title) || !empty($content)) {
         $items .= '<div class="carousel-caption">';
-        if ($series_skin != 'Bar') {
+        if ('Bar' !== $series_skin) {
           if (!empty($title  )) { $items .= '<h3 id="episode_'.$episode.'_title">' .$title  .'</h3>'; }
           if (!empty($content)) { $items .= '<p class="hidden-xs" id="episode_'.$episode.'_summary">'.$content.'</p>' ; }
         }
@@ -225,7 +225,7 @@ function steel_podcast( $post_id, $size = 'full', $name = NULL ) {
   $spc_lg = floor($rem_lg/2);
 
   //Indicators
-  if (empty($series_skin) | (!empty($series_skin) && $series_skin == 'Default')) {
+  if (empty($series_skin) | (!empty($series_skin) && 'Default' === $series_skin)) {
     $indicators .= '<ol class="carousel-indicators">';
     foreach ($series as $episode) {
       if (!empty($episode)) {
@@ -235,7 +235,7 @@ function steel_podcast( $post_id, $size = 'full', $name = NULL ) {
     }
     $indicators .= '</ol>';
   }
-  elseif (!empty($series_skin) && $series_skin == 'Tabs') {
+  elseif (!empty($series_skin) && 'Tabs' === $series_skin) {
     $indicators .= '<ol class="nav nav-tabs carousel-indicators">';
     foreach ($series as $episode) {
       if (!empty($episode)) {
@@ -246,7 +246,7 @@ function steel_podcast( $post_id, $size = 'full', $name = NULL ) {
     }
     $indicators .= '</ol>';
   }
-  elseif (!empty($series_skin) && $series_skin == 'Thumbnails') {
+  elseif (!empty($series_skin) && 'Thumbnails' === $series_skin) {
     $indicators .= '<div class="carousel-thumbs hidden-sm hidden-xs">';
     $indicators .= '<span class="col-lg-'.$spc_lg.' col-md-'.$spc_lg.'"></span>';
     foreach ($series as $episode) {
@@ -262,21 +262,21 @@ function steel_podcast( $post_id, $size = 'full', $name = NULL ) {
   }
 
   //Controls
-  $controls .= (!empty($series_skin) && $series_skin == 'Simple') ? '<div class="carousel-controls">' : '';
+  $controls .= (!empty($series_skin) && 'Simple' === $series_skin) ? '<div class="carousel-controls">' : '';
   $controls .= '<a class="left ' .'carousel-control" href="#carousel_'.$post_id.'" data-episode="prev"><span class="icon-prev' .'"></span></a>';
   $controls .= '<a class="right '.'carousel-control" href="#carousel_'.$post_id.'" data-episode="next"><span class="icon-next'.'"></span></a>';
-  $controls .= (!empty($series_skin) && $series_skin == 'Simple') ? '</div>' : '';
+  $controls .= (!empty($series_skin) && 'Simple' === $series_skin) ? '</div>' : '';
 
   //Output
-  $output .= !empty($series_skin) && $series_skin == 'Tabs' ? $indicators : '';
+  $output .= !empty($series_skin) && 'Tabs' === $series_skin ? $indicators : '';
   $output .= '<div id="carousel_'.$name.'" class="'.$series_class.'" data-ride="carousel">';
-  $output .= empty($series_skin) | (!empty($series_skin) && $series_skin == 'Default') ? $indicators : '';
+  $output .= empty($series_skin) | (!empty($series_skin) && 'Default' === $series_skin) ? $indicators : '';
   $output .= '<div class="carousel-inner">';
   $output .= $items;
   $output .= '</div>';
   $output .= $controls;
   $output .= '</div>';
-  $output .= !empty($series_skin) && $series_skin == 'Thumbnails' ? $indicators : '';
+  $output .= !empty($series_skin) && 'Thumbnails' === $series_skin ? $indicators : '';
 
   return $output;
 }
