@@ -17,7 +17,7 @@ class Steel_Quotes_Widget extends WP_Widget {
   function Steel_Quotes_Widget() {
     $widget_ops = array( 'classname' => 'random-quotes-widget', 'description' => __('Displays a random quote', 'random-quotes-widget') );
     $control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'random-quotes-widget' );
-    self::__construct( 'random-quotes-widget', __('Steel: Random Quote(s)', 'random-quotes-widget'), $widget_ops, $control_ops );
+    $this->WP_Widget( 'random-quotes-widget', __('Steel: Random Quote(s)', 'random-quotes-widget'), $widget_ops, $control_ops );
   }
 
   function widget($args, $instance) {
@@ -76,12 +76,12 @@ class Steel_Quotes_Widget extends WP_Widget {
     $cats = get_categories();
     ?>
     <p>
-      <label for="<?php echo self::get_field_id('title'); ?>"><?php _e('Title:') ?></label>
-      <input type="text" class="widefat" id="<?php echo self::get_field_id('title'); ?>" name="<?php echo self::get_field_name('title'); ?>" value="<?php echo $title; ?>" />
+      <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:') ?></label>
+      <input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $title; ?>" />
     </p>
     <p>
-      <label for="<?php echo self::get_field_id('list'); ?>"><?php _e('Category:'); ?></label>
-      <select id="<?php echo self::get_field_id('list'); ?>" name="<?php echo self::get_field_name('list'); ?>">
+      <label for="<?php echo $this->get_field_id('list'); ?>"><?php _e('Category:'); ?></label>
+      <select id="<?php echo $this->get_field_id('list'); ?>" name="<?php echo $this->get_field_name('list'); ?>">
         <option value="">All Categories</option>
         <?php
           foreach ($cats as $cat) {

@@ -18,7 +18,7 @@ class Steel_Link_Widget extends WP_Widget {
   function Steel_Link_Widget() {
     $widget_ops = array( 'classname' => 'link-widget', 'description' => __('A widget that only displays a title with a link', 'link-widget') );
     $control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'link-widget' );
-    self::__construct( 'link-widget', __('Steel: Custom Link Widget', 'link-widget'), $widget_ops, $control_ops );
+    $this->WP_Widget( 'link-widget', __('Steel: Custom Link Widget', 'link-widget'), $widget_ops, $control_ops );
   }
 
   function widget( $args, $instance ) {
@@ -70,16 +70,16 @@ class Steel_Link_Widget extends WP_Widget {
     $style = !empty($instance['style']) ? $instance['style'] : ''; ?>
 
     <p>
-      <label for="<?php echo self::get_field_id( 'title' ); ?>"><?php _e('Title:', 'link-widget'); ?></label>
-      <input id="<?php echo self::get_field_id( 'title' ); ?>" name="<?php echo self::get_field_name( 'title' ); ?>" value="<?php echo $title; ?>" style="width:100%;" />
+      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'link-widget'); ?></label>
+      <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $title; ?>" style="width:100%;" />
     </p>
     <p>
-      <label for="<?php echo self::get_field_id( 'href' ); ?>"><?php _e('Link:', 'link-widget'); ?></label>
-      <input id="<?php echo self::get_field_id( 'href' ); ?>" name="<?php echo self::get_field_name( 'href' ); ?>" value="<?php echo $href; ?>" style="width:100%;" />
+      <label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Link:', 'link-widget'); ?></label>
+      <input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo $href; ?>" style="width:100%;" />
     </p>
     <p>
-      <label for="<?php echo self::get_field_id( 'style' ); ?>"><?php _e('Button Style:', 'link-widget'); ?></label>
-      <input id="<?php echo self::get_field_id( 'style' ); ?>" name="<?php echo self::get_field_name( 'style' ); ?>" value="<?php echo $style; ?>" style="width:100%;" />
+      <label for="<?php echo $this->get_field_id( 'style' ); ?>"><?php _e('Button Style:', 'link-widget'); ?></label>
+      <input id="<?php echo $this->get_field_id( 'style' ); ?>" name="<?php echo $this->get_field_name( 'style' ); ?>" value="<?php echo $style; ?>" style="width:100%;" />
     </p>
     <div class="btn-group" data-toggle="buttons-radio">
       <button type="button" class="btn">Default</button>
@@ -100,7 +100,7 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
   function Steel_Link_Widget_Legacy() {
     $widget_ops = array( 'classname' => 'link-widget-legacy', 'description' => __('A widget that only displays a title with a link', 'link-widget-legacy') );
     $control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'link-widget-legacy' );
-    self::__construct( 'link-widget-legacy', __('Steel: Custom Link Widget (Legacy)', 'link-widget-legacy'), $widget_ops, $control_ops );
+    $this->WP_Widget( 'link-widget-legacy', __('Steel: Custom Link Widget (Legacy)', 'link-widget-legacy'), $widget_ops, $control_ops );
   }
 
   function widget( $args, $instance ) {
@@ -127,16 +127,16 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
     $instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
     <p>
-      <label for="<?php echo self::get_field_id( 'title' ); ?>"><?php _e('Title:', 'link-widget-legacy'); ?></label>
-      <input id="<?php echo self::get_field_id( 'title' ); ?>" name="<?php echo self::get_field_name( 'title' ); ?>" value="<?php if (!empty($instance['title'])) { echo $instance['title']; } ?>" style="width:100%;" />
+      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'link-widget-legacy'); ?></label>
+      <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php if (!empty($instance['title'])) { echo $instance['title']; } ?>" style="width:100%;" />
     </p>
     <p>
-      <label for="<?php echo self::get_field_id( 'href' ); ?>"><?php _e('Link:', 'link-widget-legacy'); ?></label>
-      <input id="<?php echo self::get_field_id( 'href' ); ?>" name="<?php echo self::get_field_name( 'href' ); ?>" value="<?php if (!empty($instance['href'])) { echo $instance['href']; } ?>" style="width:100%;" />
+      <label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Link:', 'link-widget-legacy'); ?></label>
+      <input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php if (!empty($instance['href'])) { echo $instance['href']; } ?>" style="width:100%;" />
     </p>
     <p>
-      <label for="<?php echo self::get_field_id( 'class' ); ?>"><?php _e('Classes:', 'link-widget-legacy'); ?></label>
-      <input id="<?php echo self::get_field_id( 'class' ); ?>" name="<?php echo self::get_field_name( 'class' ); ?>" value="<?php echo $instance['class']; ?>" style="width:100%;" />
+      <label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e('Classes:', 'link-widget-legacy'); ?></label>
+      <input id="<?php echo $this->get_field_id( 'class' ); ?>" name="<?php echo $this->get_field_name( 'class' ); ?>" value="<?php echo $instance['class']; ?>" style="width:100%;" />
     </p><?php
   }
 
@@ -188,12 +188,12 @@ class Steel_Nav_Menu_Widget extends WP_Widget {
     } ?>
 
     <p>
-      <label for="<?php echo self::get_field_id('title'); ?>"><?php _e('Title:') ?></label>
-      <input type="text" class="widefat" id="<?php echo self::get_field_id('title'); ?>" name="<?php echo self::get_field_name('title'); ?>" value="<?php echo $title; ?>" />
+      <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:') ?></label>
+      <input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $title; ?>" />
     </p>
     <p>
-      <label for="<?php echo self::get_field_id('steel_nav_menu_widget'); ?>"><?php _e('Select Menu:'); ?></label>
-      <select id="<?php echo self::get_field_id('steel_nav_menu_widget'); ?>" name="<?php echo self::get_field_name('steel_nav_menu_widget'); ?>">
+      <label for="<?php echo $this->get_field_id('steel_nav_menu_widget'); ?>"><?php _e('Select Menu:'); ?></label>
+      <select id="<?php echo $this->get_field_id('steel_nav_menu_widget'); ?>" name="<?php echo $this->get_field_name('steel_nav_menu_widget'); ?>">
       <?php
         foreach ( $menus as $menu ) {
           echo '<option value="' . $menu->term_id . '"'
