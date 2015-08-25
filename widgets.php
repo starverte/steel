@@ -18,7 +18,7 @@ class Steel_Link_Widget extends WP_Widget {
   function Steel_Link_Widget() {
     $widget_ops = array( 'classname' => 'link-widget', 'description' => __('A widget that only displays a title with a link', 'link-widget') );
     $control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'link-widget' );
-    $this->WP_Widget( 'link-widget', __('Steel: Custom Link Widget', 'link-widget'), $widget_ops, $control_ops );
+    $this->__construct( 'link-widget', __('Steel: Custom Link Widget', 'link-widget'), $widget_ops, $control_ops );
   }
 
   function widget( $args, $instance ) {
@@ -100,7 +100,7 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
   function Steel_Link_Widget_Legacy() {
     $widget_ops = array( 'classname' => 'link-widget-legacy', 'description' => __('A widget that only displays a title with a link', 'link-widget-legacy') );
     $control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'link-widget-legacy' );
-    $this->WP_Widget( 'link-widget-legacy', __('Steel: Custom Link Widget (Legacy)', 'link-widget-legacy'), $widget_ops, $control_ops );
+    $this->__construct( 'link-widget-legacy', __('Steel: Custom Link Widget (Legacy)', 'link-widget-legacy'), $widget_ops, $control_ops );
   }
 
   function widget( $args, $instance ) {

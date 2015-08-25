@@ -2,8 +2,8 @@
 Contributors: starverte, mbeall
 Tags: bootstrap, carousel, quotes, shortcodes, slides, teams, widgets
 Requires at least: 3.9
-Tested up to: 4.2
-Stable tag: 1.2.6
+Tested up to: 4.3
+Stable tag: 1.2.7
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -47,6 +47,9 @@ Like our plugin? Write us a review!
 Submit your questions to http://sparks.starverte.com/steel and we will try to answer them.
 
 == Changelog ==
+= 1.2.7 =
+- Changed `$this->WP_Widget` to `$this->__construct` (deprecated with WordPress 4.3)
+
 = 1.2.6 =
 - Upgraded to Bootstrap 3.3.5
 - Code quality improvements
