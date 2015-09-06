@@ -215,3 +215,13 @@ function steel_init() {
   }
 }
 add_action( 'init', 'steel_init', 0 );
+
+
+function steel_add_meta_boxes() {
+  if ( steel_is_module_active('podcast') ) {
+    add_meta_box( 'steel_podcast_episode_list', 'Add/Edit Series'   , 'steel_podcast_episode_list', 'steel_podcast', 'side', 'high'  );
+    add_meta_box( 'steel_podcast_info'        , 'Using this Podcast', 'steel_podcast_info'        , 'steel_podcast', 'side');
+    add_meta_box( 'steel_podcast_settings'    , 'Podcast Settings'  , 'steel_podcast_settings'    , 'steel_podcast', 'side');
+  }
+}
+add_action( 'add_meta_boxes', 'steel_add_meta_boxes' );
