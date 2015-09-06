@@ -218,6 +218,12 @@ function steel_init() {
     register_post_type( 'steel_slides', $args );
     add_image_size( 'steel-slide-thumb', 300, 185, true);
   }
+  if ( steel_is_module_active('teams') ) {
+    $profile_args = steel_get_profile_args();
+    $team_args = steel_get_team_args();
+    register_post_type( 'steel_profile', $profile_args );
+    register_taxonomy( 'steel_team', 'steel_profile', $team_args );
+  }
 }
 add_action( 'init', 'steel_init', 0 );
 
@@ -231,6 +237,9 @@ function steel_add_meta_boxes() {
     add_meta_box( 'steel_slides_slideshow', 'Add/Edit Slides'     , 'steel_slides_slideshow', 'steel_slides', 'advanced', 'high' );
     add_meta_box( 'steel_slides_info'     , 'Using this Slideshow', 'steel_slides_info'     , 'steel_slides', 'side' );
     add_meta_box( 'steel_slides_settings' , 'Slideshow Settings'  , 'steel_slides_settings' , 'steel_slides', 'side' );
+  }
+  if ( steel_is_module_active('teams') ) {
+    add_meta_box( 'steel_teams_meta', 'Team Member Profile', 'steel_teams_meta', 'steel_profile', 'side', 'high' );
   }
 }
 add_action( 'add_meta_boxes', 'steel_add_meta_boxes' );
