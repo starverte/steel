@@ -202,7 +202,7 @@ function steel_widgets_init() {
   if (steel_is_module_active('widgets')) {
     register_widget( 'Steel_Widget_Button' );
     register_widget( 'Steel_Link_Widget_Legacy' );
-    register_widget( 'Steel_Nav_Menu_Widget' );
+    register_widget( 'Steel_Widget_List_Group' );
   }
 }
 add_action( 'widgets_init', 'steel_widgets_init' );
