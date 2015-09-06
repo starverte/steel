@@ -8,8 +8,7 @@
  * @since 1.2.5
  */
 
-add_action( 'init', 'steel_slides_init', 0 );
-function steel_slides_init() {
+function steel_get_slides_args() {
   $labels = array(
     'name'                => _x( 'Slideshows', 'Post Type General Name', 'steel' ),
     'singular_name'       => _x( 'Slideshow', 'Post Type Singular Name', 'steel' ),
@@ -44,20 +43,9 @@ function steel_slides_init() {
     'rewrite'             => true,
     'capability_type'     => 'post',
   );
-  register_post_type( 'steel_slides', $args );
-
-  add_image_size( 'steel-slide-thumb', 300, 185, true);
+  return $args;
 }
 
-/*
- * Create custom meta boxes
- */
-add_action( 'add_meta_boxes', 'steel_slides_meta_boxes' );
-function steel_slides_meta_boxes() {
-  add_meta_box( 'steel_slides_slideshow', 'Add/Edit Slides'     , 'steel_slides_slideshow', 'steel_slides', 'advanced', 'high' );
-  add_meta_box( 'steel_slides_info'     , 'Using this Slideshow', 'steel_slides_info'     , 'steel_slides', 'side' );
-  add_meta_box( 'steel_slides_settings' , 'Slideshow Settings'  , 'steel_slides_settings' , 'steel_slides', 'side' );
-}
 function steel_slides_slideshow() {
   $slides_media     = steel_slides_meta( 'media' );
   $slides_order     = steel_slides_meta( 'order' );
