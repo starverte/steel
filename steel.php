@@ -206,3 +206,12 @@ function steel_widgets_init() {
   }
 }
 add_action( 'widgets_init', 'steel_widgets_init' );
+
+function steel_init() {
+  if ( steel_is_module_active('podcast') ) {
+    $args = steel_get_podcast_args();
+    register_post_type( 'steel_podcast', $args );
+    add_image_size( 'steel-episode-thumb', 300, 185, true);
+  }
+}
+add_action( 'init', 'steel_init', 0 );
