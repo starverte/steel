@@ -197,7 +197,7 @@ function steel_footer() {
 
 function steel_widgets_init() {
   if (steel_is_module_active('quotes')) {
-    register_widget( 'Steel_Quotes_Widget' );
+    register_widget( 'Steel_Widget_Random_Quote' );
   }
   if (steel_is_module_active('widgets')) {
     register_widget( 'Steel_Widget_Button' );
