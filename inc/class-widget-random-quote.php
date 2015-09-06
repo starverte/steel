@@ -5,9 +5,16 @@
 class Steel_Widget_Random_Quote extends WP_Widget {
 
   function __construct() {
-    $widget_ops = array( 'classname' => 'random-quotes-widget', 'description' => __('Displays a random quote', 'random-quotes-widget') );
-    $control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'random-quotes-widget' );
-    $this->__construct( 'random-quotes-widget', __('Steel: Random Quote(s)', 'random-quotes-widget'), $widget_ops, $control_ops );
+    $widget_ops = array(
+      'classname' => 'steel-widget-random-quote',
+      'description' => __('Displays a random quote', 'steel')
+    );
+    $control_ops = array(
+      'width' => 300,
+      'height' => 350,
+      'id_base' => 'steel-widget-random-quote'
+    );
+    $this->__construct( 'steel-widget-random-quote', __('Steel: Random Quote', 'steel'), $widget_ops, $control_ops );
   }
 
   function widget($args, $instance) {
