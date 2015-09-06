@@ -38,15 +38,6 @@ include_once dirname( __FILE__ ) . '/options.php';
 if (is_flint_active()) { include_once dirname( __FILE__ ) . '/templates.php'; }
 
 /**
- * Returns current plugin version.
- *
- * @deprecated 1.2.0 Use actual version number instead.
- *
- * @todo Remove backwards compatibility in Steel 1.4
- */
-function steel_version() { return '1.2.7'; }
-
-/**
  * Load scripts
  */
 add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );

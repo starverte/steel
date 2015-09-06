@@ -125,37 +125,10 @@ function save_steel_profile() {
 }
 
 /*
- * Display Team Profile metadata
- * @deprecated 1.2.6 Use steel_profile_meta() instead
- *
- * @todo: Remove in Steel 1.2.x
- */
-function profile_title() {
-  $meta = steel_profile_meta( 'title' );
-  echo $meta;
-}
-function profile_email() {
-  $meta = steel_profile_meta( 'email' );
-  echo $meta;
-}
-
-/*
- * Display profile phone number
- * @deprecated 1.2.6 Use steel_profile_meta() instead
- *
- * @todo: Remove in Steel 1.2.x
- */
-function profile_phone( $pattern = "$1.$2.$3" ) {
-  $meta = steel_profile_phone( $pattern );
-  echo $meta;
-}
-
-/*
- * Display Team Profile metadata
+ * Return Team Profile metadata
  */
 function steel_profile_meta( $key, $post_id = NULL ) {
-  $meta = steel_meta( 'profile', $key, $post_id );
-  return $meta;
+  return steel_meta( 'profile', $key, $post_id );
 }
 
 /*
@@ -165,4 +138,3 @@ function steel_profile_phone( $pattern = "$1.$2.$3", $post_id = NULL ) {
   $phone = steel_profile_meta( 'phone', $post_id );
   return preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", $pattern, $phone);
 }
-?>
