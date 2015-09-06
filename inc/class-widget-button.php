@@ -5,9 +5,16 @@
 class Steel_Widget_Button extends WP_Widget {
 
   function __construct() {
-    $widget_ops = array( 'classname' => 'link-widget', 'description' => __('A widget that only displays a title with a link', 'link-widget') );
-    $control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'link-widget' );
-    $this->__construct( 'link-widget', __('Steel: Custom Link Widget', 'link-widget'), $widget_ops, $control_ops );
+    $widget_ops = array(
+      'classname' => 'steel-widget-button',
+      'description' => __('A widget that displays a linked button', 'steel')
+    );
+    $control_ops = array(
+      'width' => 300,
+      'height' => 350,
+      'id_base' => 'steel-widget-button'
+    );
+    $this->__construct( 'steel-widget-button', __('Steel: Button', 'steel'), $widget_ops, $control_ops );
   }
 
   function widget( $args, $instance ) {
@@ -59,15 +66,15 @@ class Steel_Widget_Button extends WP_Widget {
     $style = !empty($instance['style']) ? $instance['style'] : ''; ?>
 
     <p>
-      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'link-widget'); ?></label>
+      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'steel'); ?></label>
       <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $title; ?>" style="width:100%;" />
     </p>
     <p>
-      <label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Link:', 'link-widget'); ?></label>
+      <label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Link:', 'steel'); ?></label>
       <input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo $href; ?>" style="width:100%;" />
     </p>
     <p>
-      <label for="<?php echo $this->get_field_id( 'style' ); ?>"><?php _e('Button Style:', 'link-widget'); ?></label>
+      <label for="<?php echo $this->get_field_id( 'style' ); ?>"><?php _e('Button Style:', 'steel'); ?></label>
       <input id="<?php echo $this->get_field_id( 'style' ); ?>" name="<?php echo $this->get_field_name( 'style' ); ?>" value="<?php echo $style; ?>" style="width:100%;" />
     </p>
     <div class="btn-group" data-toggle="buttons-radio">
@@ -83,3 +90,4 @@ class Steel_Widget_Button extends WP_Widget {
   }
 
 }
+
