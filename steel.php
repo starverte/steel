@@ -28,28 +28,21 @@ License URI: http://www.gnu.org/licenses/
 include_once dirname( __FILE__ ) . '/bootstrap.php';
 include_once dirname( __FILE__ ) . '/options.php';
 
-  if (is_module_active('podcast'    )) { include_once dirname( __FILE__ ) . '/podcast.php';     }
-  if (is_module_active('quotes'     )) { include_once dirname( __FILE__ ) . '/quotes.php';      }
-  if (is_module_active('shortcodes' )) { include_once dirname( __FILE__ ) . '/shortcodes.php';  }
-  if (is_module_active('slides'     )) { include_once dirname( __FILE__ ) . '/slides.php';      }
-  if (is_module_active('teams'      )) { include_once dirname( __FILE__ ) . '/teams.php';       }
-  if (is_module_active('widgets'    )) { include_once dirname( __FILE__ ) . '/widgets.php';     }
+if (steel_is_module_active('podcast'     )) { include_once dirname( __FILE__ ) . '/podcast.php';     }
+if (steel_is_module_active('quotes'      )) { include_once dirname( __FILE__ ) . '/quotes.php';      }
+if (steel_is_module_active('shortcodes'  )) { include_once dirname( __FILE__ ) . '/shortcodes.php';  }
+if (steel_is_module_active('social_media')) { include_once dirname( __FILE__ ) . '/social_media.php';}
+if (steel_is_module_active('slides'      )) { include_once dirname( __FILE__ ) . '/slides.php';      }
+if (steel_is_module_active('teams'       )) { include_once dirname( __FILE__ ) . '/teams.php';       }
+if (steel_is_module_active('widgets'     )) { include_once dirname( __FILE__ ) . '/widgets.php';     }
 
-if (is_flint_active()) { include_once dirname( __FILE__ ) . '/templates.php'; }
-
-/**
- * Returns current plugin version.
- *
- * Deprecated Steel 1.2. Use actual version number instead.
- * @TODO Remove backwards compatibility in Steel 1.4
- */
-function steel_version() { return '1.2.1'; }
+if (steel_is_flint_active()) { include_once dirname( __FILE__ ) . '/templates.php'; }
 
 /**
  * Load scripts
  */
-add_action( 'admin_enqueue_scripts', 'steel_admin_scripts' );
-function steel_admin_scripts() {
+add_action( 'admin_enqueue_scripts', 'steel_admin_enqueue_scripts' );
+function steel_admin_enqueue_scripts() {
   wp_enqueue_style( 'dashicons'                                                  );
   wp_enqueue_style( 'bs-glyphicons'    , plugins_url('steel/css/glyphicons.css') );
   wp_enqueue_style( 'bs-grid'          , plugins_url('steel/css/grid.css'      ) );
@@ -67,13 +60,13 @@ function steel_admin_scripts() {
 
   wp_enqueue_media();
 
-  if (is_module_active('podcast')) {
-    wp_enqueue_script( 'podcast-mod', plugins_url('steel/js/podcast.js'  ), array('jquery'), '1.2.1', true );
-    wp_enqueue_script( 'podcast-channel', plugins_url('steel/js/podcast-channel.js'  ), array('jquery'), '1.2.1', true );
+  if (steel_is_module_active('podcast')) {
+    wp_enqueue_script( 'podcast-mod', plugins_url('steel/js/podcast.js'  ), array('jquery'), '1.2.7', true );
+    wp_enqueue_script( 'podcast-channel', plugins_url('steel/js/podcast-channel.js'  ), array('jquery'), '1.2.7', true );
   }
 
-  if (is_module_active('slides')) {
-    wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), '1.2.1', true );
+  if (steel_is_module_active('slides')) {
+    wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), '1.2.7', true );
   }
 }
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
@@ -99,15 +92,15 @@ function steel_scripts() {
     wp_enqueue_style( 'glyphicons', plugins_url('steel/css/glyphicons.css'), array() , '3.3.5' );
   }
 
-  if (is_module_active('slides')) {
-    wp_enqueue_style( 'slides-mod-style', plugins_url('steel/css/slides.css'  ), array(), '1.2.1');
+  if (steel_is_module_active('slides')) {
+    wp_enqueue_style( 'slides-mod-style', plugins_url('steel/css/slides.css'  ), array(), '1.2.7');
   }
 
   // Load script for "Pin It" button
   wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js');
 
   // Load front-end scripts
-  wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array('jquery'), '1.2.1', true );
+  wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array('jquery'), '1.2.7', true );
 }
 
 /*
@@ -132,153 +125,27 @@ function steel_request( $query_vars ) {
     return $query_vars;
 }
 
-/*
- * Create function tweet_this
+/**
+ * Check to see if a particular Steel module is active.
  */
-function tweet_this( $data_count = 'horizontal' , $data_size = '' , $data_via = '' , $args = array() ) {
-  $url      = get_permalink();
-  $title    = the_title( '', '', false);
-  $language = get_bloginfo( 'language' );
-
-  $defaults = array(
-    'data_url'      => $url,
-    'data_text'     => $title,
-    'data_related'  => '',
-    'data_lang'     => $language,
-    'data_counturl' => $url,
-    'data_hashtags' => '',
-    'data_dnt'      => '',
-  );
-
-  $args = wp_parse_args($args, $defaults);
-  $args = (object) $args;
-
-  if ( '' !== $args->data_hashtags ) {
-    $tweet_class = 'twitter-hashtag-button';
-    $hashtag     = '#' . $args->data_hashtags;
-    $link        = 'https://twitter.com/intent/tweet?button_hashtag=' . $hashtag;
-  }
-  else {
-    $tweet_class = 'twitter-share-button';
-    $hashtag     = '';
-    $link        = 'https://twitter.com/share';
-  }
-
-  printf(
-    '<a href="%s" class="%s" data-count="%s" data-size="%s" data-via="%s" data-url="%s" data-text="%s" data-related="%s" data-lang="%s" data-counturl="%s" data_hashtags="%s" data-dnt="%s">Tweet</a>',
-
-    $link,
-    $tweet_class,
-    $data_count,
-    $data_size,
-    $data_via,
-    $args->data_url,
-    $args->data_text,
-    $args->data_related,
-    $args->data_lang,
-    $args->data_counturl,
-    $args->data_hashtags,
-    $args->data_dnt
-  );
-  printf('<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>');
-}
-
-/*
- * Create function like_this (Facebook)
- */
-function like_this( $args = array() ) {
-  $url = get_permalink();
-
-  $defaults = array(
-    'data_href'       => $url,
-    'data_send'       => 'false',
-    'data_layout'     => 'standard',
-    'data_show_faces' => 'false',
-    'data_width'      => '450',
-    'data_action'     => 'like',
-    'data_font'       => 'lucida grande',
-    'data_color'      => 'light',
-    'data_ref'        => '',
-  );
-
-  $args = wp_parse_args($args, $defaults);
-  $args = (object) $args;
-
-  printf(
-    '<div class="fb-like" data-href="%s" data-send="%s" data-layout="%s" data-show-faces="%s" data-width="%s" data-action="%s" data-font="%s" data-colorscheme="%s" data-ref="%s"></div>',
-
-    $args->data_href,
-    $args->data_send,
-    $args->data_layout,
-    $args->data_show_faces,
-    $args->data_width,
-    $args->data_action,
-    $args->data_font,
-    $args->data_color,
-    $args->data_ref
-  );
-}
-
-/*
- * Create function pin_it (Pinterest)
- */
-function pin_it( $args = array() ) {
-  $url       = get_permalink();
-  $title     = the_title( '', '', false);
-  $thumb_id  = get_post_thumbnail_id();
-  $thumbnail = wp_get_attachment_url( $thumb_id );
-
-  $defaults = array(
-    'data_url' => $url,
-    'data_thumb' => $thumbnail,
-    'data_text' => $title,
-    'data_count' => 'horizontal',
-  );
-
-  $args = wp_parse_args($args, $defaults);
-  $args = (object) $args;
-
-  printf(
-    '<a href="http://pinterest.com/pin/create/button/?url=%s&media=%s&description=%s" class="pin-it-button" count-layout="%s"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>',
-
-    $args->data_url,
-    $args->data_thumb,
-    $args->data_text,
-    $args->data_count
-  );
-}
-
-/*
- * Add function is_module_active
- */
-function is_module_active( $module ) {
+function steel_is_module_active( $module ) {
   $options = steel_get_options();
 
-  if (true === $options['load_'.$module])
+  if ( true === $options['load_'.$module] )
     return true;
   else
     return false;
 }
 
-/*
- * Create function to remove admin bar from front end by default
+/**
+ * Check to see if theme Flint is active.
  */
-add_action('after_setup_theme', 'remove_admin_bar');
-function remove_admin_bar() {
-  if (!current_user_can('administrator') && !is_admin()) {
-    show_admin_bar(false);
-  }
-}
-
-/*
- * Add function is_flint_active
- */
-function is_flint_active() {
+function steel_is_flint_active() {
   $theme = wp_get_theme();
   $name = $theme->get( 'Name' );
   $template = $theme->get( 'Template' );
   $template = !empty($template) ? $template : strtolower ( $name );
-  if ('flint' === $template)
+  if ( 'flint' === $template )
     return true;
   else
     return false;
@@ -302,8 +169,8 @@ function steel_meta( $mod_prefix, $key, $post_id = NULL ) {
   return $meta;
 }
 
-add_action('wp_footer','steel_ga_script');
-function steel_ga_script() {
+add_action('wp_footer','steel_footer');
+function steel_footer() {
   $options = steel_get_options();
 
   $ga_id = $options['ga_id'];
@@ -327,3 +194,15 @@ function steel_ga_script() {
     }
   }
 }
+
+function steel_widgets_init() {
+  if (steel_is_module_active('quotes')) {
+    register_widget( 'Steel_Quotes_Widget' );
+  }
+  if (steel_is_module_active('widgets')) {
+    register_widget( 'Steel_Link_Widget' );
+    register_widget( 'Steel_Link_Widget_Legacy' );
+    register_widget( 'Steel_Nav_Menu_Widget' );
+  }
+}
+add_action( 'widgets_init', 'steel_widgets_init' );

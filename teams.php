@@ -109,8 +109,8 @@ function steel_teams_meta() { ?>
 /*
  * Save data from meta boxes
  */
-add_action('save_post', 'save_steel_profile');
-function save_steel_profile() {
+add_action('save_post', 'steel_save_profile');
+function steel_save_profile() {
   global $post;
   if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && (isset($post_id))) { return $post_id; }
   if(defined('DOING_AJAX') && DOING_AJAX && (isset($post_id))) { return $post_id; } //Prevents the metaboxes from being overwritten while quick editing.
@@ -125,37 +125,10 @@ function save_steel_profile() {
 }
 
 /*
- * Display Team Profile metadata
- * Deprecated, use steel_profile_meta() instead
- *
- * TODO: Remove in Steel 1.2.x
- */
-function profile_title() {
-  $meta = steel_profile_meta( 'title' );
-  echo $meta;
-}
-function profile_email() {
-  $meta = steel_profile_meta( 'email' );
-  echo $meta;
-}
-
-/*
- * Display profile phone number
- * Deprecated, use steel_profile_phone() instead
- *
- * TODO: Remove in Steel 1.2.x
- */
-function profile_phone( $pattern = "$1.$2.$3" ) {
-  $meta = steel_profile_phone( $pattern );
-  echo $meta;
-}
-
-/*
- * Display Team Profile metadata
+ * Return Team Profile metadata
  */
 function steel_profile_meta( $key, $post_id = NULL ) {
-  $meta = steel_meta( 'profile', $key, $post_id );
-  return $meta;
+  return steel_meta( 'profile', $key, $post_id );
 }
 
 /*
@@ -165,4 +138,3 @@ function steel_profile_phone( $pattern = "$1.$2.$3", $post_id = NULL ) {
   $phone = steel_profile_meta( 'phone', $post_id );
   return preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", $pattern, $phone);
 }
-?>

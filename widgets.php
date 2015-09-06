@@ -6,13 +6,6 @@
  *
  */
 
-add_action( 'widgets_init', 'steel_widgets' );
-function steel_widgets() {
-  register_widget( 'Steel_Link_Widget' );
-  register_widget( 'Steel_Link_Widget_Legacy' );
-  register_widget( 'Steel_Nav_Menu_Widget' );
-}
-
 class Steel_Link_Widget extends WP_Widget {
 
   function Steel_Link_Widget() {

@@ -131,8 +131,8 @@ function steel_podcast_settings() {
 /*
  * Save data from meta boxes
  */
-add_action('save_post', 'save_steel_podcast');
-function save_steel_podcast() {
+add_action('save_post', 'steel_save_podcast');
+function steel_save_podcast() {
   global $post;
   if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && (isset($post_id))) { return $post_id; }
   if (defined('DOING_AJAX') && DOING_AJAX && (isset($post_id))) { return $post_id; }

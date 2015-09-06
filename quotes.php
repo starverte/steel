@@ -5,13 +5,6 @@
  * @package Steel\Quotes
  */
 
-/**
- * Register random quote widget
- */
-add_action( 'widgets_init', 'steel_quotes_widgets' );
-function steel_quotes_widgets() {
-  register_widget( 'Steel_Quotes_Widget' );
-}
 class Steel_Quotes_Widget extends WP_Widget {
 
   function Steel_Quotes_Widget() {
