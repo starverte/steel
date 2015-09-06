@@ -5,8 +5,10 @@
  * @package Steel\Podcast
  */
 
-add_action( 'init', 'steel_podcast_init', 0 );
-function steel_podcast_init() {
+/**
+ * Return arguments for registering steel_podcast
+ */
+function steel_get_podcast_args() {
   $labels = array(
     'name'                => _x( 'Podcasts', 'Post Type General Name', 'steel' ),
     'singular_name'       => _x( 'Podcast', 'Post Type Singular Name', 'steel' ),
@@ -41,21 +43,10 @@ function steel_podcast_init() {
     'rewrite'             => true,
     'capability_type'     => 'post',
   );
-  register_post_type( 'steel_podcast', $args );
-
-  add_image_size( 'steel-episode-thumb', 300, 185, true);
+  return $args;
 }
 
-/*
- * Create custom meta boxes
- */
-add_action( 'add_meta_boxes', 'steel_podcast_meta_boxes' );
-function steel_podcast_meta_boxes() {
-  add_meta_box('steel_podcast_podcast', 'Add/Edit Series'     , 'steel_podcast_podcast', 'steel_podcast', 'side', 'high'  );
-  add_meta_box('steel_podcast_info'     , 'Using this Podcast', 'steel_podcast_info'     , 'steel_podcast', 'side');
-  add_meta_box('steel_podcast_settings' , 'Podcast Settings'  , 'steel_podcast_settings' , 'steel_podcast', 'side');
-}
-function steel_podcast_podcast() {
+function steel_podcast_episode_list() {
   $series_media     = steel_podcast_meta( 'media' );
   $series_order     = steel_podcast_meta( 'order' );
   $series_media_url = steel_podcast_meta( 'media_url' );

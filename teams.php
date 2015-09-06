@@ -5,11 +5,7 @@
  * @package Steel\Teams
  */
 
-/*
- * Create custom post type
- */
-add_action( 'init', 'steel_teams_init', 0 );
-function steel_teams_init() {
+function steel_get_profile_args() {
   $labels = array(
     'name'                => _x( 'Profiles', 'Post Type General Name', 'steel' ),
     'singular_name'       => _x( 'Profile', 'Post Type Singular Name', 'steel' ),
@@ -24,14 +20,12 @@ function steel_teams_init() {
     'not_found'           => __( 'No profiles found', 'steel' ),
     'not_found_in_trash'  => __( 'No profiles found in trash. Did you check recycling?', 'steel' ),
   );
-
   $rewrite = array(
     'slug'                => 'profiles',
     'with_front'          => true,
     'pages'               => false,
     'feeds'               => false,
   );
-
   $args = array(
     'label'               => __( 'steel_profile', 'steel' ),
     'description'         => __( 'Member(s) of "Teams"', 'steel' ),
@@ -52,10 +46,11 @@ function steel_teams_init() {
     'rewrite'             => $rewrite,
     'capability_type'     => 'page',
   );
+  return $args;
+}
 
-  register_post_type( 'steel_profile', $args );
-
-  $labels2 = array(
+function steel_get_team_args() {
+  $labels = array(
     'name'                       => _x( 'Teams', 'Taxonomy General Name', 'steel' ),
     'singular_name'              => _x( 'Team', 'Taxonomy Singular Name', 'steel' ),
     'menu_name'                  => __( 'Teams', 'steel' ),
@@ -71,32 +66,24 @@ function steel_teams_init() {
     'add_or_remove_items'        => __( 'Add or remove teams', 'steel' ),
     'choose_from_most_used'      => __( 'Choose from the most used teams', 'steel' ),
   );
-
-  $rewrite2 = array(
+  $rewrite = array(
     'slug'                       => 'teams',
     'with_front'                 => true,
     'hierarchical'               => true,
   );
-
-  $args2 = array(
-    'labels'                     => $labels2,
+  $args = array(
+    'labels'                     => $labels,
     'hierarchical'               => false,
     'public'                     => true,
     'show_ui'                    => true,
     'show_admin_column'          => true,
     'show_in_nav_menus'          => true,
     'show_tagcloud'              => false,
-    'rewrite'                    => $rewrite2,
+    'rewrite'                    => $rewrite,
   );
-
-  register_taxonomy( 'steel_team', 'steel_profile', $args2 );
+  return $args;
 }
 
-/*
- * Create custom meta boxes
- */
-add_action( 'add_meta_boxes', 'steel_teams_meta_boxes' );
-function steel_teams_meta_boxes() { add_meta_box('steel_teams_meta', 'Team Member Profile', 'steel_teams_meta', 'steel_profile', 'side', 'high'); }
 function steel_teams_meta() { ?>
 
   <p><label>Title</label><br /><input type="text"  size="25" name="profile_title" value="<?php echo steel_profile_meta ('title'); ?>" /></p>

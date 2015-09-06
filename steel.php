@@ -69,8 +69,8 @@ function steel_admin_enqueue_scripts() {
     wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), '1.2.7', true );
   }
 }
-add_action( 'wp_enqueue_scripts', 'steel_scripts' );
-function steel_scripts() {
+add_action( 'wp_enqueue_scripts', 'steel_enqueue_scripts' );
+function steel_enqueue_scripts() {
   $options = steel_get_options();
 
   if (true === $options['load_bootstrap_js']) {
@@ -197,12 +197,49 @@ function steel_footer() {
 
 function steel_widgets_init() {
   if (steel_is_module_active('quotes')) {
-    register_widget( 'Steel_Quotes_Widget' );
+    register_widget( 'Steel_Widget_Random_Quote' );
   }
   if (steel_is_module_active('widgets')) {
-    register_widget( 'Steel_Link_Widget' );
-    register_widget( 'Steel_Link_Widget_Legacy' );
-    register_widget( 'Steel_Nav_Menu_Widget' );
+    register_widget( 'Steel_Widget_Button' );
+    register_widget( 'Steel_Widget_Link' );
+    register_widget( 'Steel_Widget_List_Group' );
   }
 }
 add_action( 'widgets_init', 'steel_widgets_init' );
+
+function steel_init() {
+  if ( steel_is_module_active('podcast') ) {
+    $args = steel_get_podcast_args();
+    register_post_type( 'steel_podcast', $args );
+    add_image_size( 'steel-episode-thumb', 300, 185, true);
+  }
+  if ( steel_is_module_active('slides') ) {
+    $args = steel_get_slides_args();
+    register_post_type( 'steel_slides', $args );
+    add_image_size( 'steel-slide-thumb', 300, 185, true);
+  }
+  if ( steel_is_module_active('teams') ) {
+    $profile_args = steel_get_profile_args();
+    $team_args = steel_get_team_args();
+    register_post_type( 'steel_profile', $profile_args );
+    register_taxonomy( 'steel_team', 'steel_profile', $team_args );
+  }
+}
+add_action( 'init', 'steel_init', 0 );
+
+function steel_add_meta_boxes() {
+  if ( steel_is_module_active('podcast') ) {
+    add_meta_box( 'steel_podcast_episode_list', 'Add/Edit Series'   , 'steel_podcast_episode_list', 'steel_podcast', 'side', 'high'  );
+    add_meta_box( 'steel_podcast_info'        , 'Using this Podcast', 'steel_podcast_info'        , 'steel_podcast', 'side');
+    add_meta_box( 'steel_podcast_settings'    , 'Podcast Settings'  , 'steel_podcast_settings'    , 'steel_podcast', 'side');
+  }
+  if ( steel_is_module_active('slides') ) {
+    add_meta_box( 'steel_slides_slideshow', 'Add/Edit Slides'     , 'steel_slides_slideshow', 'steel_slides', 'advanced', 'high' );
+    add_meta_box( 'steel_slides_info'     , 'Using this Slideshow', 'steel_slides_info'     , 'steel_slides', 'side' );
+    add_meta_box( 'steel_slides_settings' , 'Slideshow Settings'  , 'steel_slides_settings' , 'steel_slides', 'side' );
+  }
+  if ( steel_is_module_active('teams') ) {
+    add_meta_box( 'steel_teams_meta', 'Team Member Profile', 'steel_teams_meta', 'steel_profile', 'side', 'high' );
+  }
+}
+add_action( 'add_meta_boxes', 'steel_add_meta_boxes' );
