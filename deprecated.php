@@ -75,3 +75,63 @@ function profile_phone( $pattern = "$1.$2.$3" ) {
   steel_deprecated_function( __FUNCTION__, '1.2.6', 'steel_profile_phone()' );
   echo steel_profile_phone( $pattern );
 }
+
+/**
+ * Check to see if theme Flint is active.
+ *
+ * @deprecated 1.3.0 Use steel_is_flint_active()
+ */
+function is_flint_active() {
+  steel_deprecated_function( __FUNCTION__, '1.3.0', 'steel_is_flint_active()' );
+  return steel_is_flint_active();
+}
+
+/**
+ * Generate Like button
+ *
+ * @deprecated 1.3.0 Use steel_btn_like()
+ *
+ * @param array $args An array of arguments
+ */
+function like_this( $args = array() ) {
+  steel_deprecated_function( __FUNCTION__, '1.3.0', 'steel_btn_like()' );
+  return steel_btn_like( $args );
+}
+
+/**
+ * Generate Pin It button (Pinterest)
+ *
+ * @deprecated 1.3.0 Use steel_btn_pin_it()
+ *
+ * @param array $args An array of arguments
+ */
+function pin_it( $args = array() ) {
+  steel_deprecated_function( __FUNCTION__, '1.3.0', 'steel_btn_pin_it()' );
+  return steel_btn_pin_it( $args );
+}
+
+/**
+ * Check to see if a particular Steel module is active.
+ *
+ * @deprecated 1.3.0 Use steel_is_module_active()
+ */
+function is_module_active( $module ) {
+  steel_deprecated_function( __FUNCTION__, '1.3.0', 'steel_is_module_active()' );
+  return steel_is_module_active( $module );
+}
+
+/**
+ * Generate Tweet button
+ *
+ * @deprecated 1.3.0 Use steel_btn_tweet()
+ *
+ * @param string $data_count The direction to display the Tweet count (horizontal, vertical, or none)
+ * @param string $data_size  The size of the button (default or large)
+ * @param string $data_via   The attribution will appear in a Tweet as " via @username" translated into the language of the Tweet author.
+ * @param array  $args       An array of additional arguments
+ */
+function tweet_this( $data_count = 'horizontal' , $data_size = '' , $data_via = '' , $args = array() ) {
+  steel_deprecated_function( __FUNCTION__, '1.3.0', 'steel_btn_tweet()' );
+  return steel_btn_tweet( $data_count, $data_size, $data_via, $args );
+}
+
