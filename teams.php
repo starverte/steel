@@ -126,9 +126,9 @@ function save_steel_profile() {
 
 /*
  * Display Team Profile metadata
- * Deprecated, use steel_profile_meta() instead
+ * @deprecated 1.2.6 Use steel_profile_meta() instead
  *
- * TODO: Remove in Steel 1.2.x
+ * @todo: Remove in Steel 1.2.x
  */
 function profile_title() {
   $meta = steel_profile_meta( 'title' );
@@ -141,9 +141,9 @@ function profile_email() {
 
 /*
  * Display profile phone number
- * Deprecated, use steel_profile_phone() instead
+ * @deprecated 1.2.6 Use steel_profile_meta() instead
  *
- * TODO: Remove in Steel 1.2.x
+ * @todo: Remove in Steel 1.2.x
  */
 function profile_phone( $pattern = "$1.$2.$3" ) {
   $meta = steel_profile_phone( $pattern );

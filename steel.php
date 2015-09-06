@@ -40,10 +40,11 @@ if (is_flint_active()) { include_once dirname( __FILE__ ) . '/templates.php'; }
 /**
  * Returns current plugin version.
  *
- * Deprecated Steel 1.2. Use actual version number instead.
- * @TODO Remove backwards compatibility in Steel 1.4
+ * @deprecated 1.2.0 Use actual version number instead.
+ *
+ * @todo Remove backwards compatibility in Steel 1.4
  */
-function steel_version() { return '1.2.1'; }
+function steel_version() { return '1.2.7'; }
 
 /**
  * Load scripts
@@ -68,12 +69,12 @@ function steel_admin_scripts() {
   wp_enqueue_media();
 
   if (is_module_active('podcast')) {
-    wp_enqueue_script( 'podcast-mod', plugins_url('steel/js/podcast.js'  ), array('jquery'), '1.2.1', true );
-    wp_enqueue_script( 'podcast-channel', plugins_url('steel/js/podcast-channel.js'  ), array('jquery'), '1.2.1', true );
+    wp_enqueue_script( 'podcast-mod', plugins_url('steel/js/podcast.js'  ), array('jquery'), '1.2.7', true );
+    wp_enqueue_script( 'podcast-channel', plugins_url('steel/js/podcast-channel.js'  ), array('jquery'), '1.2.7', true );
   }
 
   if (is_module_active('slides')) {
-    wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), '1.2.1', true );
+    wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), '1.2.7', true );
   }
 }
 add_action( 'wp_enqueue_scripts', 'steel_scripts' );
@@ -100,14 +101,14 @@ function steel_scripts() {
   }
 
   if (is_module_active('slides')) {
-    wp_enqueue_style( 'slides-mod-style', plugins_url('steel/css/slides.css'  ), array(), '1.2.1');
+    wp_enqueue_style( 'slides-mod-style', plugins_url('steel/css/slides.css'  ), array(), '1.2.7');
   }
 
   // Load script for "Pin It" button
   wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js');
 
   // Load front-end scripts
-  wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array('jquery'), '1.2.1', true );
+  wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array('jquery'), '1.2.7', true );
 }
 
 /*
