@@ -69,8 +69,8 @@ function steel_admin_enqueue_scripts() {
     wp_enqueue_script( 'slides-mod', plugins_url('steel/js/slides.js'  ), array('jquery'), '1.2.7', true );
   }
 }
-add_action( 'wp_enqueue_scripts', 'steel_scripts' );
-function steel_scripts() {
+add_action( 'wp_enqueue_scripts', 'steel_enqueue_scripts' );
+function steel_enqueue_scripts() {
   $options = steel_get_options();
 
   if (true === $options['load_bootstrap_js']) {
