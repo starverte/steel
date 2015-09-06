@@ -200,7 +200,7 @@ function steel_widgets_init() {
     register_widget( 'Steel_Quotes_Widget' );
   }
   if (steel_is_module_active('widgets')) {
-    register_widget( 'Steel_Link_Widget' );
+    register_widget( 'Steel_Widget_Button' );
     register_widget( 'Steel_Link_Widget_Legacy' );
     register_widget( 'Steel_Nav_Menu_Widget' );
   }
