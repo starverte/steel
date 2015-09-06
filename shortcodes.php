@@ -26,6 +26,8 @@ if ( shortcode_exists('tooltip')     ) { remove_shortcode('tooltip'); }
  * Add Bootstrap alert.
  * Provide contextual feedback messages for typical user actions
  * with the handful of available and flexible alert messages.
+ *
+ * @internal
  */
 function steel_shortcode_alert( $atts, $content = null ) {
   extract( shortcode_atts( array( 'color' => 'info' ), $atts ) );
@@ -43,6 +45,8 @@ add_shortcode( 'alert', 'steel_shortcode_alert' );
  *
  * Add Bootstrap badge.
  * Easily highlight new or unread items to links and more.
+ *
+ * @internal
  */
 function steel_shortcode_badge( $atts, $content = null ) {
   $new = strip_tags($content, '<a>');
@@ -55,6 +59,8 @@ add_shortcode( 'badge', 'steel_shortcode_badge' );
  *
  * Add Bootstrap button.
  * Use Bootstrap’s custom button styles for actions in forms, dialogs, and more.
+ *
+ * @internal
  */
 function steel_shortcode_btn( $atts, $content = null ) {
   extract( shortcode_atts( array(
@@ -112,6 +118,8 @@ add_shortcode( 'btn', 'steel_shortcode_btn' );
  *
  * Add Bootstrap button group.
  * Group a series of buttons together on a single line with the button group.
+ *
+ * @internal
  */
 function steel_shortcode_btn_group( $atts, $content = null ) {
   $new = strip_tags($content, '<a><strong><code>');
@@ -127,6 +135,8 @@ add_shortcode( 'btn_group', 'steel_shortcode_btn_group' );
  * [column] shortcode
  *
  * Add columns to a post or page.
+ *
+ * @internal
  */
 function steel_shortcode_column( $atts, $content = null ) {
   extract( shortcode_atts( array(
@@ -165,6 +175,8 @@ add_shortcode( 'column', 'steel_shortcode_column' );
  * [glyph] shortcode
  *
  * Add Bootstrap glyphicon.
+ *
+ * @internal
  */
 function steel_shortcode_glyphicon( $atts, $content = null ) {
   extract( shortcode_atts( array( 'icon' => '' ), $atts ) );
@@ -177,6 +189,8 @@ add_shortcode( 'glyph', 'steel_shortcode_glyphicon' );
  *
  * Add Bootstrap label.
  * Small and adaptive tag for adding context to just about any content.
+ *
+ * @internal
  */
 function steel_shortcode_label( $atts, $content = null ) {
   extract( shortcode_atts( array( 'color' => 'default' ), $atts ) );
@@ -195,6 +209,8 @@ add_shortcode( 'label', 'steel_shortcode_label' );
  * Add Bootstrap panel.
  * While not always necessary, sometimes you need to put your DOM in a box.
  * For those situations, try the panel component.
+ *
+ * @internal
  */
 function steel_shortcode_panel( $atts, $content = null ) {
   extract( shortcode_atts( array(
@@ -247,6 +263,8 @@ add_shortcode( 'panel', 'steel_shortcode_panel' );
  *
  * Add Bootstrap panel group.
  * Extend the default collapse behavior to create an accordion with the panel component.
+ *
+ * @internal
  */
 function steel_shortcode_panel_group( $atts, $content = null ) {
   $new = strip_tags($content, '<a><strong><em><code><ol><ul><li>');
@@ -268,6 +286,8 @@ add_shortcode( 'panel_group', 'steel_shortcode_panel_group' );
  * Add Bootstrap progress bar.
  * Stylize the HTML5 <progress> element with a few extra classes
  * and some crafty browser-specific CSS.
+ *
+ * @internal
  */
 function steel_shortcode_progress( $atts, $content = null ) {
   extract( shortcode_atts( array(
@@ -299,6 +319,8 @@ add_shortcode( 'progress', 'steel_shortcode_progress' );
  * [tooltip] shortcode
  *
  * Add Bootstrap tooltip.
+ *
+ * @internal
  */
 function steel_shortcode_tooltip( $atts, $content = null ) {
   extract( shortcode_atts( array(
