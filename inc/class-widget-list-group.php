@@ -1,6 +1,8 @@
 <?php
 /**
+ * List group widget class
  *
+ * @since 1.3.0
  */
 class Steel_Widget_List_Group extends WP_Widget {
 
