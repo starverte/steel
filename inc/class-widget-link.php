@@ -45,8 +45,7 @@ class Steel_Widget_Link extends WP_Widget {
    * value of `$instance` should be returned. If false is returned, the instance won't be
    * saved/updated.
    *
-   * @param array $new_instance New settings for this instance as input by the user via
-   *                            {@see WP_Widget::form()}.
+   * @param array $new_instance New settings for this instance as input by the user
    * @param array $old_instance Old settings for this instance.
    * @return array Settings to save or bool false to cancel saving.
    */
