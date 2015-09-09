@@ -6,6 +6,9 @@
  */
 class Steel_Widget_List_Group extends WP_Widget {
 
+  /**
+   * PHP5 constructor.
+   */
   function __construct() {
     $widget_ops = array(
       'classname' => 'steel-widget-list-group',
@@ -18,8 +21,14 @@ class Steel_Widget_List_Group extends WP_Widget {
     );
     $this->__construct( 'steel-widget-list-group', __('Steel: Menu Panel', 'steel'), $widget_ops, $control_ops );
 
+  /**
+   * Echo the widget content.
+   *
+   * @param array $args     Display arguments including before_title, after_title,
+   *                        before_widget, and after_widget.
+   * @param array $instance The settings for the particular instance of the widget.
+   */
   function widget($args, $instance) {
-    // Get menu
     $nav_menu = ! empty( $instance['list-group'] ) ? wp_get_nav_menu_object( $instance['list-group'] ) : false;
 
     if ( !$nav_menu )
@@ -37,20 +46,36 @@ class Steel_Widget_List_Group extends WP_Widget {
     echo '</div>';
   }
 
+  /**
+   * Update a particular instance.
+   *
+   * This function should check that $new_instance is set correctly. The newly-calculated
+   * value of `$instance` should be returned. If false is returned, the instance won't be
+   * saved/updated.
+   *
+   * @param array $new_instance New settings for this instance as input by the user via
+   *                            {@see WP_Widget::form()}.
+   * @param array $old_instance Old settings for this instance.
+   * @return array Settings to save or bool false to cancel saving.
+   */
   function update( $new_instance, $old_instance ) {
     $instance['title'] = strip_tags( stripslashes($new_instance['title']) );
     $instance['list-group'] = (int) $new_instance['list-group'];
     return $instance;
   }
 
+  /**
+   * Output the settings update form.
+   *
+   * @param array $instance Current settings.
+   * @return string Default return is 'noform'.
+   */
   function form( $instance ) {
     $title = isset( $instance['title'] ) ? $instance['title'] : '';
     $nav_menu = isset( $instance['list-group'] ) ? $instance['list-group'] : '';
 
-    // Get menus
     $menus = wp_get_nav_menus( array( 'orderby' => 'name' ) );
 
-    // If no menus exists, direct the user to go and create some.
     if ( !$menus ) {
       echo '<p>'. sprintf( __('No menus have been created yet. <a href="%s">Create some</a>.'), admin_url('nav-menus.php') ) .'</p>';
       return;
