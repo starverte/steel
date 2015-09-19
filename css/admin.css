@@ -3,8 +3,8 @@
   line-height: 2em;
 }
 #toplevel_page_steel .wp-menu-image::before {
-  font-family: "Star Verte" !important;
-  content: "c"!important;
+  font-family: "starverte" !important;
+  content: "\e801"!important;
 }
 .dashicons {
   width: 18px;

@@ -57,7 +57,7 @@ function steel_admin_init(){
 }
 
 /*
- * Callback settings for Sparks Options page
+ * Callback settings for Steel Options page
  */
 function steel_analytics_section() {}
 function steel_settings_field_ga_id() {

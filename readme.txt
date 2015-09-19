@@ -7,7 +7,7 @@ Stable tag: 1.2.7
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl.html
 
-Core plugin of the Sparks Framework. Works for any theme; but when paired with Flint your WordPress site will be on fire.
+Steel brings the power of Matchstix to a simple user interface, making any site’s impact spread like wildfire. No programming required.
 
 == Description ==
 
@@ -44,7 +44,7 @@ Like our plugin? Write us a review!
 
 == Frequently Asked Questions ==
 
-Submit your questions to http://sparks.starverte.com/steel and we will try to answer them.
+Submit your questions to http://matchstix.io/steel and we will try to answer them.
 
 == Changelog ==
 = 1.2.7 =
@@ -109,8 +109,8 @@ Extracted carousel and glyphicon styles from bootstrap.css so that carousel work
 * Added ability to turn off Bootstrap module
 
 = 1.1.0 =
-* Added numerous shortcodes to implement Bootstrap like [btn] and [glyph] (for complete list and use, check out http://sparks.starverte.com/steel/bootstrap/)
-* Added new Slides module (documentation will soon be available via http://sparks.starverte.com/steel/slides/)
+* Added numerous shortcodes to implement Bootstrap like [btn] and [glyph] (for complete list and use, check out http://matchstix.io/steel/bootstrap/)
+* Added new Slides module (documentation will soon be available via http://matchstix.io/steel/slides/)
 
 For more details, check out https://github.com/starverte/steel/pull/102
 
