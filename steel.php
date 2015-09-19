@@ -2,7 +2,7 @@
 /*
 Plugin Name: Steel
 Plugin URI: https://github.com/starverte/steel.git
-Description: Core plugin of the Sparks Framework. Works for any theme; but when paired with Flint your WordPress site will be on fire.
+Description: Steel brings the power of Matchstix to a simple user interface, making any site’s impact spread like wildfire. No programming required.
 Version: 1.2.7
 Author: Star Verte LLC
 Author URI: http://starverte.com/
