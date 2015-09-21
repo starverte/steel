@@ -14,7 +14,7 @@ class Steel_Widget_Button extends WP_Widget {
       'height' => 350,
       'id_base' => 'steel-widget-button'
     );
-    $this->__construct( 'steel-widget-button', __('Steel: Button', 'steel'), $widget_ops, $control_ops );
+    parent::__construct( 'steel-widget-button', __('Steel: Button', 'steel'), $widget_ops, $control_ops );
   }
 
   function widget( $args, $instance ) {

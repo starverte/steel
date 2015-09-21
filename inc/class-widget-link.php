@@ -14,7 +14,7 @@ class Steel_Widget_Link extends WP_Widget {
       'height' => 350,
       'id_base' => 'steel-widget-link'
     );
-    $this->__construct( 'steel-widget-link', __('Steel: Custom Link Widget (Legacy)', 'steel'), $widget_ops, $control_ops );
+    parent::__construct( 'steel-widget-link', __('Steel: Custom Link Widget (Legacy)', 'steel'), $widget_ops, $control_ops );
   }
 
   function widget( $args, $instance ) {

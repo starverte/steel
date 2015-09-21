@@ -14,7 +14,7 @@ class Steel_Widget_Random_Quote extends WP_Widget {
       'height' => 350,
       'id_base' => 'steel-widget-random-quote'
     );
-    $this->__construct( 'steel-widget-random-quote', __('Steel: Random Quote', 'steel'), $widget_ops, $control_ops );
+    parent::__construct( 'steel-widget-random-quote', __('Steel: Random Quote', 'steel'), $widget_ops, $control_ops );
   }
 
   function widget($args, $instance) {
