@@ -1,9 +1,20 @@
 <?php
 /**
+ * Widgets: Steel_Widget_Button class
  *
+ * @package Steel\Widgets
+ */
+
+/**
+ * Button widget
+ *
+ * @uses WP_Widget
  */
 class Steel_Widget_Button extends WP_Widget {
 
+	/**
+	 * PHP5 constructor.
+	 */
   function __construct() {
     $widget_ops = array(
       'classname' => 'steel-widget-button',
@@ -17,6 +28,13 @@ class Steel_Widget_Button extends WP_Widget {
     parent::__construct( 'steel-widget-button', __('Steel: Button', 'steel'), $widget_ops, $control_ops );
   }
 
+	/**
+	 * Echo the widget content.
+	 *
+	 * @param array $args     Display arguments including before_title, after_title,
+	 *                        before_widget, and after_widget.
+	 * @param array $instance The settings for the particular instance of the widget.
+	 */
   function widget( $args, $instance ) {
     extract( $args );
     $title = apply_filters('widget_title', $instance['title'] );
@@ -52,6 +70,18 @@ class Steel_Widget_Button extends WP_Widget {
     if ( $title ) { echo '<p><a class="'. $style . '" href=' . $href . ' type="button">' . $title . '</a></p>'; }
   }
 
+	/**
+	 * Update a particular instance.
+	 *
+	 * This function should check that $new_instance is set correctly. The newly-calculated
+	 * value of `$instance` should be returned. If false is returned, the instance won't be
+	 * saved/updated.
+	 *
+	 * @param array $new_instance New settings for this instance as input by the user via
+	 *                            {@see WP_Widget::form()}.
+	 * @param array $old_instance Old settings for this instance.
+	 * @return array Settings to save or bool false to cancel saving.
+	 */
   function update( $new_instance, $old_instance ) {
     $instance = $old_instance;
     $instance['title'] = strip_tags( $new_instance['title'] );
@@ -60,6 +90,12 @@ class Steel_Widget_Button extends WP_Widget {
     return $instance;
   }
 
+	/**
+	 * Output the settings update form.
+	 *
+	 * @param array $instance Current settings.
+	 * @return string Default return is 'noform'.
+	 */
   function form( $instance ) {
     $title = !empty($instance['title']) ? $instance['title'] : '';
     $href  = !empty($instance['href'])  ? $instance['href']  : 'http://';

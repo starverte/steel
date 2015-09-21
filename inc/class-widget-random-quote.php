@@ -1,9 +1,20 @@
 <?php
 /**
+ * Widgets: Steel_Widget_Random_Quote class
  *
+ * @package Steel\Widgets
+ */
+
+/**
+ * Random quote widget
+ *
+ * @uses WP_Widget
  */
 class Steel_Widget_Random_Quote extends WP_Widget {
 
+	/**
+	 * PHP5 constructor.
+	 */
   function __construct() {
     $widget_ops = array(
       'classname' => 'steel-widget-random-quote',
@@ -17,6 +28,13 @@ class Steel_Widget_Random_Quote extends WP_Widget {
     parent::__construct( 'steel-widget-random-quote', __('Steel: Random Quote', 'steel'), $widget_ops, $control_ops );
   }
 
+	/**
+	 * Echo the widget content.
+	 *
+	 * @param array $args     Display arguments including before_title, after_title,
+	 *                        before_widget, and after_widget.
+	 * @param array $instance The settings for the particular instance of the widget.
+	 */
   function widget($args, $instance) {
     // Get list
     $cat = !empty( $instance['cat'] ) ? get_category( $instance['cat'] ) : false;
@@ -59,12 +77,30 @@ class Steel_Widget_Random_Quote extends WP_Widget {
     echo $args['after_widget'];
   }
 
+	/**
+	 * Update a particular instance.
+	 *
+	 * This function should check that $new_instance is set correctly. The newly-calculated
+	 * value of `$instance` should be returned. If false is returned, the instance won't be
+	 * saved/updated.
+	 *
+	 * @param array $new_instance New settings for this instance as input by the user via
+	 *                            {@see WP_Widget::form()}.
+	 * @param array $old_instance Old settings for this instance.
+	 * @return array Settings to save or bool false to cancel saving.
+	 */
   function update( $new_instance, $old_instance ) {
     $instance['title'] = strip_tags( stripslashes($new_instance['title']) );
     $instance['list'] = (int) $new_instance['list'];
     return $instance;
   }
 
+	/**
+	 * Output the settings update form.
+	 *
+	 * @param array $instance Current settings.
+	 * @return string Default return is 'noform'.
+	 */
   function form( $instance ) {
     $title = !empty($instance['title']) ? $instance['title'] : '';
     $list  = !empty($instance['list'])  ? $instance['list']  : '';
