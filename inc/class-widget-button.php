@@ -1,13 +1,20 @@
 <?php
 /**
- * Button widget class
+ * Widgets: Steel_Widget_Button class
  *
+ * @package Steel\Widgets
  * @since 1.3.0
+ */
+
+/**
+ * Button widget
+ *
+ * @uses WP_Widget
  */
 class Steel_Widget_Button extends WP_Widget {
 
   /**
-   * PHP5 constructor
+   * PHP5 constructor.
    */
   function __construct() {
     $widget_ops = array(
@@ -19,7 +26,7 @@ class Steel_Widget_Button extends WP_Widget {
       'height' => 350,
       'id_base' => 'steel-widget-button'
     );
-    $this->__construct( 'steel-widget-button', __('Steel: Button', 'steel'), $widget_ops, $control_ops );
+    parent::__construct( 'steel-widget-button', __('Steel: Button', 'steel'), $widget_ops, $control_ops );
   }
 
   /**
@@ -71,7 +78,8 @@ class Steel_Widget_Button extends WP_Widget {
    * value of `$instance` should be returned. If false is returned, the instance won't be
    * saved/updated.
    *
-   * @param array $new_instance New settings for this instance as input by the user
+   * @param array $new_instance New settings for this instance as input by the user via
+   *                            {@see WP_Widget::form()}.
    * @param array $old_instance Old settings for this instance.
    * @return array Settings to save or bool false to cancel saving.
    */

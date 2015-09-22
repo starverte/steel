@@ -1,8 +1,15 @@
 <?php
 /**
- * List group widget class
+ * Widgets: Steel_Widget_List_Group class
  *
+ * @package Steel\Widgets
  * @since 1.3.0
+ */
+
+/**
+ * List group widget
+ *
+ * @uses WP_Widget
  */
 class Steel_Widget_List_Group extends WP_Widget {
 
@@ -19,7 +26,8 @@ class Steel_Widget_List_Group extends WP_Widget {
       'height' => 350,
       'id_base' => 'steel-widget-list-group'
     );
-    $this->__construct( 'steel-widget-list-group', __('Steel: Menu Panel', 'steel'), $widget_ops, $control_ops );
+    parent::__construct( 'steel-widget-list-group', __('Steel: Menu Panel', 'steel'), $widget_ops, $control_ops );
+  }
 
   /**
    * Echo the widget content.

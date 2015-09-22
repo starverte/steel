@@ -1,14 +1,22 @@
 <?php
 /**
- * Create Bootstrap list group of nav menu items.
+ * Widgets: Steel_Walker_Nav_Menu_List_Group class
  *
+ * @package Steel\Widgets
  * @since 1.3.0
+ */
+
+/**
+ * Create HTML list of nav menu items, styled as list group.
+ *
  * @uses Walker_Nav_Menu
  */
 class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
 
   /**
    * Starts the list before the elements are added.
+   *
+   * @see Walker_Nav_Menu::start_lvl()
    *
    * @param string $output Passed by reference. Used to append additional content.
    * @param int    $depth  Depth of menu item. Used for padding.
@@ -22,6 +30,8 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
   /**
    * Ends the list of after the elements are added.
    *
+   * @see Walker_Nav_Menu::end_lvl()
+   *
    * @param string $output Passed by reference. Used to append additional content.
    * @param int    $depth  Depth of menu item. Used for padding.
    * @param array  $args   An array of arguments. @see wp_nav_menu()
@@ -33,6 +43,8 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
 
   /**
    * Start the element output.
+   *
+   * @see Walker_Nav_Menu::start_el()
    *
    * @param string $output Passed by reference. Used to append additional content.
    * @param object $item   Menu item data object.
@@ -94,6 +106,8 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
 
   /**
    * Ends the element output, if needed.
+   *
+   * @see Walker_Nav_Menu::end_el()
    *
    * @param string $output Passed by reference. Used to append additional content.
    * @param object $item   Page data object. Not used.
