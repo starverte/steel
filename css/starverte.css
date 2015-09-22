@@ -3,11 +3,11 @@
   font-style: normal;
   font-weight: normal;
 
-  src: url("../font/starverte.eot?22458953#iefix") format("embedded-opentype"),
-  url("../font/starverte.woff?22458953") format("woff"),
-  url("../font/starverte.ttf?22458953") format("truetype"),
-  url("../font/starverte.svg?22458953#starverte") format("svg");
-  src: url("../font/starverte.eot?22458953");
+  src: url("../fonts/starverte.eot?22458953#iefix") format("embedded-opentype"),
+  url("../fonts/starverte.woff?22458953") format("woff"),
+  url("../fonts/starverte.ttf?22458953") format("truetype"),
+  url("../fonts/starverte.svg?22458953#starverte") format("svg");
+  src: url("../fonts/starverte.eot?22458953");
 }
 
 [class^="icon-"]:before,

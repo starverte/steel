@@ -23,7 +23,7 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
    * @param array  $args   An array of arguments. @see wp_nav_menu()
    */
   function start_lvl( &$output, $depth = 0, $args = array() ) {
-    $indent = str_repeat("\t", $depth);
+    $indent = str_repeat( "\t", $depth );
     $output .= "\n$indent<div class=\"sub-menu\">\n";
   }
 
@@ -37,7 +37,7 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
    * @param array  $args   An array of arguments. @see wp_nav_menu()
    */
   function end_lvl( &$output, $depth = 0, $args = array() ) {
-    $indent = str_repeat("\t", $depth);
+    $indent = str_repeat( "\t", $depth );
     $output .= "$indent</div>\n";
   }
 
@@ -117,5 +117,4 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
   function end_el( &$output, $item, $depth = 0, $args = array() ) {
     $output .= "\n";
   }
-
 }

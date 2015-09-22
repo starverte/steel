@@ -13,5 +13,10 @@
     <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect" />
     <exclude name="PEAR.Functions.FunctionCallSignature.Indent" />
     <exclude name="WordPress.VIP" />
+
+    <!-- Temporary exclusions. -->
+    <exclude name="WordPress.CSRF" />
+    <exclude name="WordPress.Files" />
+    <exclude name="WordPress.XSS" />
   </rule>
 </ruleset>

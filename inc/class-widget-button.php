@@ -19,14 +19,14 @@ class Steel_Widget_Button extends WP_Widget {
   function __construct() {
     $widget_ops = array(
       'classname' => 'steel-widget-button',
-      'description' => __('A widget that displays a linked button', 'steel')
+      'description' => __( 'A widget that displays a linked button', 'steel' ),
     );
     $control_ops = array(
       'width' => 300,
       'height' => 350,
-      'id_base' => 'steel-widget-button'
+      'id_base' => 'steel-widget-button',
     );
-    parent::__construct( 'steel-widget-button', __('Steel: Button', 'steel'), $widget_ops, $control_ops );
+    parent::__construct( 'steel-widget-button', __( 'Steel: Button', 'steel' ), $widget_ops, $control_ops );
   }
 
   /**
@@ -38,10 +38,10 @@ class Steel_Widget_Button extends WP_Widget {
    */
   function widget( $args, $instance ) {
     extract( $args );
-    $title = apply_filters('widget_title', $instance['title'] );
+    $title = apply_filters( 'widget_title', $instance['title'] );
     $href = $instance['href'];
-    $style = strtolower($instance['style']);
-    switch ($style) {
+    $style = strtolower( $instance['style'] );
+    switch ( $style ) {
       case 'default':
         $style = 'btn btn-block btn-default';
       break;
@@ -86,7 +86,7 @@ class Steel_Widget_Button extends WP_Widget {
   function update( $new_instance, $old_instance ) {
     $instance = $old_instance;
     $instance['title'] = strip_tags( $new_instance['title'] );
-    $instance['href']  = strip_tags( $new_instance['href']  );
+    $instance['href']  = strip_tags( $new_instance['href'] );
     $instance['style'] = strip_tags( $new_instance['style'] );
     return $instance;
   }
@@ -98,20 +98,20 @@ class Steel_Widget_Button extends WP_Widget {
    * @return string Default return is 'noform'.
    */
   function form( $instance ) {
-    $title = !empty($instance['title']) ? $instance['title'] : '';
-    $href  = !empty($instance['href'])  ? $instance['href']  : 'http://';
-    $style = !empty($instance['style']) ? $instance['style'] : ''; ?>
+    $title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+    $href  = ! empty( $instance['href'] )  ? $instance['href']  : 'http://';
+    $style = ! empty( $instance['style'] ) ? $instance['style'] : ''; ?>
 
     <p>
-      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'steel'); ?></label>
+      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'steel' ); ?></label>
       <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $title; ?>" style="width:100%;" />
     </p>
     <p>
-      <label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Link:', 'steel'); ?></label>
+      <label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e( 'Link:', 'steel' ); ?></label>
       <input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo $href; ?>" style="width:100%;" />
     </p>
     <p>
-      <label for="<?php echo $this->get_field_id( 'style' ); ?>"><?php _e('Button Style:', 'steel'); ?></label>
+      <label for="<?php echo $this->get_field_id( 'style' ); ?>"><?php _e( 'Button Style:', 'steel' ); ?></label>
       <input id="<?php echo $this->get_field_id( 'style' ); ?>" name="<?php echo $this->get_field_name( 'style' ); ?>" value="<?php echo $style; ?>" style="width:100%;" />
     </p>
     <div class="btn-group" data-toggle="buttons-radio">
@@ -125,6 +125,5 @@ class Steel_Widget_Button extends WP_Widget {
       <button type="button" class="btn btn-link">Link</button>
     </div><?php
   }
-
 }
 
