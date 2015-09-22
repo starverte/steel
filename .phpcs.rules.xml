@@ -15,11 +15,8 @@
     <exclude name="WordPress.VIP" />
 
     <!-- Temporary exclusions. -->
-    <exclude name="WordPress.Arrays" />
     <exclude name="WordPress.CSRF" />
     <exclude name="WordPress.Files" />
-    <exclude name="WordPress.NamingConventions" />
-    <exclude name="WordPress.WhiteSpace" />
     <exclude name="WordPress.XSS" />
   </rule>
 </ruleset>
