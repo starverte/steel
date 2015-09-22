@@ -23,17 +23,17 @@
  */
 function steel_deprecated_function( $function, $version, $replacement = null ) {
 
-	/**
-	 * Filter whether to trigger an error for deprecated functions.
-	 *
-	 * @param bool $trigger Whether to trigger the error for deprecated functions. Default true.
-	 */
-	if ( WP_DEBUG && apply_filters( 'deprecated_function_trigger_error', true ) ) {
+  /**
+   * Filter whether to trigger an error for deprecated functions.
+   *
+   * @param bool $trigger Whether to trigger the error for deprecated functions. Default true.
+   */
+  if ( WP_DEBUG && apply_filters( 'deprecated_function_trigger_error', true ) ) {
     if ( ! is_null( $replacement ) )
       trigger_error( sprintf( __('%1$s is <strong>deprecated</strong> since Steel version %2$s! Use %3$s instead.', 'steel'), $function, $version, $replacement ) );
     else
       trigger_error( sprintf( __('%1$s is <strong>deprecated</strong> since Steel version %2$s with no alternative available.', 'steel'), $function, $version ) );
-	}
+  }
 }
 
 /**
@@ -49,8 +49,9 @@ function steel_version() {
   return $steel_plugin_data['Version'];
 }
 
-/*
+/**
  * Display Team Profile Title
+ *
  * @deprecated 1.2.6 Use steel_profile_meta() instead
  */
 function profile_title() {
@@ -58,8 +59,9 @@ function profile_title() {
   echo steel_profile_meta( 'title' );
 }
 
-/*
+/**
  * Display Team Profile Email
+ *
  * @deprecated 1.2.6 Use steel_profile_meta() instead
  */
 function profile_email() {
@@ -67,9 +69,12 @@ function profile_email() {
   echo steel_profile_meta( 'email' );
 }
 
-/*
+/**
  * Display profile phone number
+ *
  * @deprecated 1.2.6 Use steel_profile_phone() instead
+ *
+ * @param string $pattern The format to display the phone number
  */
 function profile_phone( $pattern = "$1.$2.$3" ) {
   steel_deprecated_function( __FUNCTION__, '1.2.6', 'steel_profile_phone()' );
@@ -114,6 +119,8 @@ function pin_it( $args = array() ) {
  * Check to see if a particular Steel module is active.
  *
  * @deprecated 1.3.0 Use steel_is_module_active()
+ *
+ * @param string $module The name of the module to check status of
  */
 function is_module_active( $module ) {
   steel_deprecated_function( __FUNCTION__, '1.3.0', 'steel_is_module_active()' );
@@ -142,6 +149,9 @@ function tweet_this( $data_count = 'horizontal' , $data_size = '' , $data_via = 
  */
 class Steel_Link_Widget extends WP_Widget {
 
+  /**
+   * PHP5 constructor
+   */
   function __construct() {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Button' );
     $widget_ops = array(
@@ -156,6 +166,13 @@ class Steel_Link_Widget extends WP_Widget {
     $this->__construct( 'link-widget', __('Steel: Custom Link Widget (deprecated)', 'steel'), $widget_ops, $control_ops );
   }
 
+  /**
+   * Echo the widget content.
+   *
+   * @param array $args     Display arguments including before_title, after_title,
+   *                        before_widget, and after_widget.
+   * @param array $instance The settings for the particular instance of the widget.
+   */
   function widget( $args, $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Button' );
     extract( $args );
@@ -192,6 +209,17 @@ class Steel_Link_Widget extends WP_Widget {
     if ( $title ) { echo '<p><a class="'. $style . '" href=' . $href . ' type="button">' . $title . '</a></p>'; }
   }
 
+  /**
+   * Update a particular instance.
+   *
+   * This function should check that $new_instance is set correctly. The newly-calculated
+   * value of `$instance` should be returned. If false is returned, the instance won't be
+   * saved/updated.
+   *
+   * @param array $new_instance New settings for this instance as input by the user
+   * @param array $old_instance Old settings for this instance.
+   * @return array Settings to save or bool false to cancel saving.
+   */
   function update( $new_instance, $old_instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Button' );
     $instance = $old_instance;
@@ -201,6 +229,12 @@ class Steel_Link_Widget extends WP_Widget {
     return $instance;
   }
 
+  /**
+   * Output the settings update form.
+   *
+   * @param array $instance Current settings.
+   * @return string Default return is 'noform'.
+   */
   function form( $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Button' );
     $title = !empty($instance['title']) ? $instance['title'] : '';
@@ -240,6 +274,9 @@ class Steel_Link_Widget extends WP_Widget {
  */
 class Steel_Link_Widget_Legacy extends WP_Widget {
 
+  /**
+   * PHP5 constructor
+   */
   function __construct() {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Link' );
     $widget_ops = array(
@@ -254,6 +291,13 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
     $this->__construct( 'link-widget-legacy', __('Steel: Custom Link Widget (deprecated)', 'steel'), $widget_ops, $control_ops );
   }
 
+  /**
+   * Echo the widget content.
+   *
+   * @param array $args     Display arguments including before_title, after_title,
+   *                        before_widget, and after_widget.
+   * @param array $instance The settings for the particular instance of the widget.
+   */
   function widget( $args, $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Link' );
     extract( $args );
@@ -264,6 +308,17 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
     if ( $title ) { echo '<a class="link-widget-link '. $class . '" href=' . $href . '>' . $before_widget . $before_title . $title . $after_title . $after_widget . '</a>'; }
   }
 
+  /**
+   * Update a particular instance.
+   *
+   * This function should check that $new_instance is set correctly. The newly-calculated
+   * value of `$instance` should be returned. If false is returned, the instance won't be
+   * saved/updated.
+   *
+   * @param array $new_instance New settings for this instance as input by the user
+   * @param array $old_instance Old settings for this instance.
+   * @return array Settings to save or bool false to cancel saving.
+   */
   function update( $new_instance, $old_instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Link' );
     $instance = $old_instance;
@@ -273,6 +328,12 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
     return $instance;
   }
 
+  /**
+   * Output the settings update form.
+   *
+   * @param array $instance Current settings.
+   * @return string Default return is 'noform'.
+   */
   function form( $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Link' );
     $defaults = array( 'title' => __('', 'link-widget-legacy'), 'show_info' => true );
@@ -303,6 +364,9 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
  */
 class Steel_Widget_List_Group extends WP_Widget {
 
+  /**
+   * PHP5 constructor
+   */
   function __construct() {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_List_Group' );
     $widget_ops = array(
@@ -311,9 +375,15 @@ class Steel_Widget_List_Group extends WP_Widget {
     parent::__construct( 'steel_nav_menu_widget', __('Steel: Menu Panel (deprecated)'), $widget_ops );
   }
 
+  /**
+   * Echo the widget content.
+   *
+   * @param array $args     Display arguments including before_title, after_title,
+   *                        before_widget, and after_widget.
+   * @param array $instance The settings for the particular instance of the widget.
+   */
   function widget($args, $instance) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_List_Group' );
-    // Get menu
     $nav_menu = ! empty( $instance['steel_nav_menu_widget'] ) ? wp_get_nav_menu_object( $instance['steel_nav_menu_widget'] ) : false;
 
     if ( !$nav_menu )
@@ -331,6 +401,17 @@ class Steel_Widget_List_Group extends WP_Widget {
     echo '</div>';
   }
 
+  /**
+   * Update a particular instance.
+   *
+   * This function should check that $new_instance is set correctly. The newly-calculated
+   * value of `$instance` should be returned. If false is returned, the instance won't be
+   * saved/updated.
+   *
+   * @param array $new_instance New settings for this instance as input by the user
+   * @param array $old_instance Old settings for this instance.
+   * @return array Settings to save or bool false to cancel saving.
+   */
   function update( $new_instance, $old_instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_List_Group' );
     $instance['title'] = strip_tags( stripslashes($new_instance['title']) );
@@ -338,15 +419,19 @@ class Steel_Widget_List_Group extends WP_Widget {
     return $instance;
   }
 
+  /**
+   * Output the settings update form.
+   *
+   * @param array $instance Current settings.
+   * @return string Default return is 'noform'.
+   */
   function form( $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_List_Group' );
     $title = isset( $instance['title'] ) ? $instance['title'] : '';
     $nav_menu = isset( $instance['steel_nav_menu_widget'] ) ? $instance['steel_nav_menu_widget'] : '';
 
-    // Get menus
     $menus = wp_get_nav_menus( array( 'orderby' => 'name' ) );
 
-    // If no menus exists, direct the user to go and create some.
     if ( !$menus ) {
       echo '<p>'. sprintf( __('No menus have been created yet. <a href="%s">Create some</a>.'), admin_url('nav-menus.php') ) .'</p>';
       return;
@@ -379,6 +464,9 @@ class Steel_Widget_List_Group extends WP_Widget {
  */
 class Steel_Quotes_Widget extends WP_Widget {
 
+  /**
+   * PHP5 constructor
+   */
   function __construct() {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Random_Quote' );
     $widget_ops = array(
@@ -393,9 +481,15 @@ class Steel_Quotes_Widget extends WP_Widget {
     $this->__construct( 'random-quotes-widget', __('Steel: Random Quotes (deprecated)', 'steel'), $widget_ops, $control_ops );
   }
 
+  /**
+   * Echo the widget content.
+   *
+   * @param array $args     Display arguments including before_title, after_title,
+   *                        before_widget, and after_widget.
+   * @param array $instance The settings for the particular instance of the widget.
+   */
   function widget($args, $instance) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Random_Quote' );
-    // Get list
     $cat = !empty( $instance['cat'] ) ? get_category( $instance['cat'] ) : false;
 
     if ( !$cat )
@@ -436,6 +530,17 @@ class Steel_Quotes_Widget extends WP_Widget {
     echo $args['after_widget'];
   }
 
+  /**
+   * Update a particular instance.
+   *
+   * This function should check that $new_instance is set correctly. The newly-calculated
+   * value of `$instance` should be returned. If false is returned, the instance won't be
+   * saved/updated.
+   *
+   * @param array $new_instance New settings for this instance as input by the user
+   * @param array $old_instance Old settings for this instance.
+   * @return array Settings to save or bool false to cancel saving.
+   */
   function update( $new_instance, $old_instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Random_Quote' );
     $instance['title'] = strip_tags( stripslashes($new_instance['title']) );
@@ -443,12 +548,17 @@ class Steel_Quotes_Widget extends WP_Widget {
     return $instance;
   }
 
+  /**
+   * Output the settings update form.
+   *
+   * @param array $instance Current settings.
+   * @return string Default return is 'noform'.
+   */
   function form( $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Random_Quote' );
     $title = !empty($instance['title']) ? $instance['title'] : '';
     $list  = !empty($instance['list'])  ? $instance['list']  : '';
 
-    // Get menus
     $cats = get_categories();
     ?>
     <p>

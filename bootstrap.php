@@ -3,12 +3,19 @@
  * Modifies Walker_Nav_Menu to display a list group.
  *
  * @package Steel\Bootstrap
- * @uses Walker_Nav_Menu
  */
 
 include_once dirname( __FILE__ ) . '/inc/class-walker-nav-menu-list-group.php';
 
-function Steel_Walker_Nav_Menu_List_Group( $args = array() ) {
+/**
+ * Display Bootstrap list group
+ *
+ * @uses Steel_Walker_Nav_Menu_List_Group
+ * @uses wp_nav_menu()
+ *
+ * @param $args array Arguments for the list group
+ */
+function steel_list_group( $args = array() ) {
   $defaults = array(
       'theme_location'  => '',
       'menu'            => '',
