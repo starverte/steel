@@ -30,9 +30,8 @@ function steel_deprecated_function( $function, $version, $replacement = null ) {
    */
   if ( WP_DEBUG && apply_filters( 'deprecated_function_trigger_error', true ) ) {
     if ( ! is_null( $replacement ) )
-      trigger_error( sprintf( __('%1$s is <strong>deprecated</strong> since Steel version %2$s! Use %3$s instead.', 'steel'), $function, $version, $replacement ) );
-    else
-      trigger_error( sprintf( __('%1$s is <strong>deprecated</strong> since Steel version %2$s with no alternative available.', 'steel'), $function, $version ) );
+      trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since Steel version %2$s! Use %3$s instead.', 'steel' ), $function, $version, $replacement ) );
+    else trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since Steel version %2$s with no alternative available.', 'steel' ), $function, $version ) );
   }
 }
 
@@ -137,7 +136,7 @@ function is_module_active( $module ) {
  * @param string $data_via   The attribution will appear in a Tweet as " via @username" translated into the language of the Tweet author.
  * @param array  $args       An array of additional arguments
  */
-function tweet_this( $data_count = 'horizontal' , $data_size = '' , $data_via = '' , $args = array() ) {
+function tweet_this( $data_count = 'horizontal', $data_size = '', $data_via = '', $args = array() ) {
   steel_deprecated_function( __FUNCTION__, '1.3.0', 'steel_btn_tweet()' );
   return steel_btn_tweet( $data_count, $data_size, $data_via, $args );
 }
@@ -156,14 +155,14 @@ class Steel_Link_Widget extends WP_Widget {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Button' );
     $widget_ops = array(
       'classname' => 'link-widget',
-      'description' => __('A widget that only displays a title with a link', 'steel')
+      'description' => __( 'A widget that only displays a title with a link', 'steel' ),
     );
     $control_ops = array(
       'width' => 300,
       'height' => 350,
-      'id_base' => 'link-widget'
+      'id_base' => 'link-widget',
     );
-    $this->__construct( 'link-widget', __('Steel: Custom Link Widget (deprecated)', 'steel'), $widget_ops, $control_ops );
+    $this->__construct( 'link-widget', __( 'Steel: Custom Link Widget (deprecated)', 'steel' ), $widget_ops, $control_ops );
   }
 
   /**
@@ -176,10 +175,10 @@ class Steel_Link_Widget extends WP_Widget {
   function widget( $args, $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Button' );
     extract( $args );
-    $title = apply_filters('widget_title', $instance['title'] );
+    $title = apply_filters( 'widget_title', $instance['title'] );
     $href = $instance['href'];
-    $style = strtolower($instance['style']);
-    switch ($style) {
+    $style = strtolower( $instance['style'] );
+    switch ( $style ) {
       case 'default':
         $style = 'btn btn-block btn-default';
       break;
@@ -224,7 +223,7 @@ class Steel_Link_Widget extends WP_Widget {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Button' );
     $instance = $old_instance;
     $instance['title'] = strip_tags( $new_instance['title'] );
-    $instance['href']  = strip_tags( $new_instance['href']  );
+    $instance['href']  = strip_tags( $new_instance['href'] );
     $instance['style'] = strip_tags( $new_instance['style'] );
     return $instance;
   }
@@ -237,20 +236,20 @@ class Steel_Link_Widget extends WP_Widget {
    */
   function form( $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Button' );
-    $title = !empty($instance['title']) ? $instance['title'] : '';
-    $href  = !empty($instance['href'])  ? $instance['href']  : 'http://';
-    $style = !empty($instance['style']) ? $instance['style'] : ''; ?>
+    $title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+    $href  = ! empty( $instance['href'] )  ? $instance['href']  : 'http://';
+    $style = ! empty( $instance['style'] ) ? $instance['style'] : ''; ?>
 
     <p>
-      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'steel'); ?></label>
+      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'steel' ); ?></label>
       <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $title; ?>" style="width:100%;" />
     </p>
     <p>
-      <label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Link:', 'steel'); ?></label>
+      <label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e( 'Link:', 'steel' ); ?></label>
       <input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo $href; ?>" style="width:100%;" />
     </p>
     <p>
-      <label for="<?php echo $this->get_field_id( 'style' ); ?>"><?php _e('Button Style:', 'steel'); ?></label>
+      <label for="<?php echo $this->get_field_id( 'style' ); ?>"><?php _e( 'Button Style:', 'steel' ); ?></label>
       <input id="<?php echo $this->get_field_id( 'style' ); ?>" name="<?php echo $this->get_field_name( 'style' ); ?>" value="<?php echo $style; ?>" style="width:100%;" />
     </p>
     <div class="btn-group" data-toggle="buttons-radio">
@@ -264,7 +263,6 @@ class Steel_Link_Widget extends WP_Widget {
       <button type="button" class="btn btn-link">Link</button>
     </div><?php
   }
-
 }
 
 /**
@@ -281,14 +279,14 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Link' );
     $widget_ops = array(
       'classname' => 'link-widget-legacy',
-      'description' => __('A widget that only displays a title with a link', 'steel')
+      'description' => __( 'A widget that only displays a title with a link', 'steel' ),
     );
     $control_ops = array(
       'width' => 300,
       'height' => 350,
-      'id_base' => 'link-widget-legacy'
+      'id_base' => 'link-widget-legacy',
     );
-    $this->__construct( 'link-widget-legacy', __('Steel: Custom Link Widget (deprecated)', 'steel'), $widget_ops, $control_ops );
+    $this->__construct( 'link-widget-legacy', __( 'Steel: Custom Link Widget (deprecated)', 'steel' ), $widget_ops, $control_ops );
   }
 
   /**
@@ -301,7 +299,7 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
   function widget( $args, $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Link' );
     extract( $args );
-    $title = apply_filters('widget_title', $instance['title'] );
+    $title = apply_filters( 'widget_title', $instance['title'] );
     $href = $instance['href'];
     $class = $instance['class'];
     $show_info = isset( $instance['show_info'] ) ? $instance['show_info'] : false;
@@ -336,25 +334,24 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
    */
   function form( $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Link' );
-    $defaults = array( 'title' => __('', 'link-widget-legacy'), 'show_info' => true );
-    $defaults = array( 'href' => __('http://', 'link-widget-legacy'), 'show_info' => true );
-    $defaults = array( 'class' => __('', 'link-widget-legacy'), 'show_info' => true );
+    $defaults = array( 'title' => __( '', 'link-widget-legacy' ), 'show_info' => true );
+    $defaults = array( 'href' => __( 'http://', 'link-widget-legacy' ), 'show_info' => true );
+    $defaults = array( 'class' => __( '', 'link-widget-legacy' ), 'show_info' => true );
     $instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
     <p>
-      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'steel'); ?></label>
-      <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php if (!empty($instance['title'])) { echo $instance['title']; } ?>" style="width:100%;" />
+      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'steel' ); ?></label>
+      <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php if ( ! empty( $instance['title'] ) ) { echo $instance['title']; } ?>" style="width:100%;" />
     </p>
     <p>
-      <label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Link:', 'steel'); ?></label>
-      <input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php if (!empty($instance['href'])) { echo $instance['href']; } ?>" style="width:100%;" />
+      <label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e( 'Link:', 'steel' ); ?></label>
+      <input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php if ( ! empty( $instance['href'] ) ) { echo $instance['href']; } ?>" style="width:100%;" />
     </p>
     <p>
-      <label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e('Classes:', 'steel'); ?></label>
+      <label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e( 'Classes:', 'steel' ); ?></label>
       <input id="<?php echo $this->get_field_id( 'class' ); ?>" name="<?php echo $this->get_field_name( 'class' ); ?>" value="<?php echo $instance['class']; ?>" style="width:100%;" />
     </p><?php
   }
-
 }
 
 /**
@@ -370,9 +367,9 @@ class Steel_Widget_List_Group extends WP_Widget {
   function __construct() {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_List_Group' );
     $widget_ops = array(
-      'description' => __('Add a custom menu to your sidebar.')
+      'description' => __( 'Add a custom menu to your sidebar.' ),
     );
-    parent::__construct( 'steel_nav_menu_widget', __('Steel: Menu Panel (deprecated)'), $widget_ops );
+    parent::__construct( 'steel_nav_menu_widget', __( 'Steel: Menu Panel (deprecated)' ), $widget_ops );
   }
 
   /**
@@ -382,18 +379,18 @@ class Steel_Widget_List_Group extends WP_Widget {
    *                        before_widget, and after_widget.
    * @param array $instance The settings for the particular instance of the widget.
    */
-  function widget($args, $instance) {
+  function widget( $args, $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_List_Group' );
     $nav_menu = ! empty( $instance['steel_nav_menu_widget'] ) ? wp_get_nav_menu_object( $instance['steel_nav_menu_widget'] ) : false;
 
-    if ( !$nav_menu )
+    if ( ! $nav_menu )
       return;
 
     $instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 
     echo '<div class="panel panel-default">';
 
-    if ( !empty($instance['title']) )
+    if ( ! empty( $instance['title'] ) )
       echo '<div class="panel-heading"><h3 class="panel-title">'.$instance['title'].'</h3></div>';
 
     Steel_Walker_Nav_Menu_List_Group( array( 'fallback_cb' => '', 'menu' => $nav_menu ) );
@@ -414,7 +411,7 @@ class Steel_Widget_List_Group extends WP_Widget {
    */
   function update( $new_instance, $old_instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_List_Group' );
-    $instance['title'] = strip_tags( stripslashes($new_instance['title']) );
+    $instance['title'] = strip_tags( stripslashes( $new_instance['title'] ) );
     $instance['steel_nav_menu_widget'] = (int) $new_instance['steel_nav_menu_widget'];
     return $instance;
   }
@@ -432,18 +429,18 @@ class Steel_Widget_List_Group extends WP_Widget {
 
     $menus = wp_get_nav_menus( array( 'orderby' => 'name' ) );
 
-    if ( !$menus ) {
-      echo '<p>'. sprintf( __('No menus have been created yet. <a href="%s">Create some</a>.'), admin_url('nav-menus.php') ) .'</p>';
+    if ( ! $menus ) {
+      echo '<p>'. sprintf( __( 'No menus have been created yet. <a href="%s">Create some</a>.' ), admin_url( 'nav-menus.php' ) ) .'</p>';
       return;
     } ?>
 
     <p>
-      <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:') ?></label>
-      <input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $title; ?>" />
+      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ) ?></label>
+      <input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $title; ?>" />
     </p>
     <p>
-      <label for="<?php echo $this->get_field_id('steel_nav_menu_widget'); ?>"><?php _e('Select Menu:'); ?></label>
-      <select id="<?php echo $this->get_field_id('steel_nav_menu_widget'); ?>" name="<?php echo $this->get_field_name('steel_nav_menu_widget'); ?>">
+      <label for="<?php echo $this->get_field_id( 'steel_nav_menu_widget' ); ?>"><?php _e( 'Select Menu:' ); ?></label>
+      <select id="<?php echo $this->get_field_id( 'steel_nav_menu_widget' ); ?>" name="<?php echo $this->get_field_name( 'steel_nav_menu_widget' ); ?>">
       <?php
         foreach ( $menus as $menu ) {
           echo '<option value="' . $menu->term_id . '"'
@@ -471,14 +468,14 @@ class Steel_Quotes_Widget extends WP_Widget {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Random_Quote' );
     $widget_ops = array(
       'classname' => 'random-quotes-widget',
-      'description' => __('Displays a random quote', 'steel')
+      'description' => __( 'Displays a random quote', 'steel' ),
     );
     $control_ops = array(
       'width' => 300,
       'height' => 350,
-      'id_base' => 'random-quotes-widget'
+      'id_base' => 'random-quotes-widget',
     );
-    $this->__construct( 'random-quotes-widget', __('Steel: Random Quotes (deprecated)', 'steel'), $widget_ops, $control_ops );
+    $this->__construct( 'random-quotes-widget', __( 'Steel: Random Quotes (deprecated)', 'steel' ), $widget_ops, $control_ops );
   }
 
   /**
@@ -488,18 +485,18 @@ class Steel_Quotes_Widget extends WP_Widget {
    *                        before_widget, and after_widget.
    * @param array $instance The settings for the particular instance of the widget.
    */
-  function widget($args, $instance) {
+  function widget( $args, $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Random_Quote' );
-    $cat = !empty( $instance['cat'] ) ? get_category( $instance['cat'] ) : false;
+    $cat = ! empty( $instance['cat'] ) ? get_category( $instance['cat'] ) : false;
 
-    if ( !$cat )
+    if ( ! $cat )
       return;
 
     $instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 
     echo $args['before_widget'];
 
-    if ( !empty($instance['title']) )
+    if ( ! empty( $instance['title'] ) )
       echo $args['before_title'] . $instance['title'] . $args['after_title'];
 
     $quotes = new WP_Query(
@@ -512,18 +509,18 @@ class Steel_Quotes_Widget extends WP_Widget {
           array(
             'taxonomy' => 'category',
             'field' => 'slug',
-            'terms' => $cat->slug
+            'terms' => $cat->slug,
           ),
           array(
             'taxonomy' => 'post_format',
             'field' => 'slug',
-            'terms' => array( 'post-format-quote' )
+            'terms' => array( 'post-format-quote' ),
           )
-        )
+        ),
       )
     );
 
-    while ($quotes->have_posts()) : $quotes->the_post(); ?>
+    while ( $quotes->have_posts() ) : $quotes->the_post(); ?>
       <blockquote><?php the_content(); ?></blockquote>
     <?php endwhile;
 
@@ -543,7 +540,7 @@ class Steel_Quotes_Widget extends WP_Widget {
    */
   function update( $new_instance, $old_instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Random_Quote' );
-    $instance['title'] = strip_tags( stripslashes($new_instance['title']) );
+    $instance['title'] = strip_tags( stripslashes( $new_instance['title'] ) );
     $instance['list'] = (int) $new_instance['list'];
     return $instance;
   }
@@ -556,21 +553,21 @@ class Steel_Quotes_Widget extends WP_Widget {
    */
   function form( $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Random_Quote' );
-    $title = !empty($instance['title']) ? $instance['title'] : '';
-    $list  = !empty($instance['list'])  ? $instance['list']  : '';
+    $title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+    $list  = ! empty( $instance['list'] )  ? $instance['list']  : '';
 
     $cats = get_categories();
     ?>
     <p>
-      <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:') ?></label>
-      <input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $title; ?>" />
+      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ) ?></label>
+      <input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $title; ?>" />
     </p>
     <p>
-      <label for="<?php echo $this->get_field_id('list'); ?>"><?php _e('Category:'); ?></label>
-      <select id="<?php echo $this->get_field_id('list'); ?>" name="<?php echo $this->get_field_name('list'); ?>">
+      <label for="<?php echo $this->get_field_id( 'list' ); ?>"><?php _e( 'Category:' ); ?></label>
+      <select id="<?php echo $this->get_field_id( 'list' ); ?>" name="<?php echo $this->get_field_name( 'list' ); ?>">
         <option value="">All Categories</option>
         <?php
-          foreach ($cats as $cat) {
+          foreach ( $cats as $cat ) {
             $option  = '<option value="' . $cat->term_id . '" '. selected( $list, $cat->term_id ) .'>';
             $option .= $cat->cat_name;
             $option .= '</option>';

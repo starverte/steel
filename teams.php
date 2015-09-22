@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Allows creation and management of profiles that can belong to one or many "teams" for use with staff, elders, board members, and more
  *
  * @package Steel\Teams
@@ -30,7 +30,7 @@ function steel_get_profile_args() {
     'label'               => __( 'steel_profile', 'steel' ),
     'description'         => __( 'Member(s) of "Teams"', 'steel' ),
     'labels'              => $labels,
-    'supports'            => array( 'title', 'editor', 'thumbnail', ),
+    'supports'            => array( 'title', 'editor', 'thumbnail' ),
     'hierarchical'        => false,
     'public'              => true,
     'show_ui'             => true,
@@ -86,42 +86,42 @@ function steel_get_team_args() {
 
 function steel_teams_meta() { ?>
 
-  <p><label>Title</label><br /><input type="text"  size="25" name="profile_title" value="<?php echo steel_profile_meta ('title'); ?>" /></p>
-  <p><label>Email</label><br /><input type="email" size="25" name="profile_email" value="<?php echo steel_profile_meta ('email'); ?>" /></p>
+  <p><label>Title</label><br /><input type="text"  size="25" name="profile_title" value="<?php echo steel_profile_meta( 'title' ); ?>" /></p>
+  <p><label>Email</label><br /><input type="email" size="25" name="profile_email" value="<?php echo steel_profile_meta( 'email' ); ?>" /></p>
   <p><label>Phone</label><br /><input type="tel"   size="25" name="profile_phone" value="<?php echo steel_profile_phone();        ?>" /></p><?php
 
-  do_action('steel_teams_add_meta');
+  do_action( 'steel_teams_add_meta' );
 }
 
 /*
  * Save data from meta boxes
  */
-add_action('save_post', 'steel_save_profile');
+add_action( 'save_post', 'steel_save_profile' );
 function steel_save_profile() {
   global $post;
-  if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && (isset($post_id))) { return $post_id; }
-  if(defined('DOING_AJAX') && DOING_AJAX && (isset($post_id))) { return $post_id; } //Prevents the metaboxes from being overwritten while quick editing.
-  if(preg_match('/\edit\.php/', $_SERVER['REQUEST_URI']) && (isset($post_id))) { return $post_id; } //Detects if the save action is coming from a quick edit/batch edit.
-  if (isset($_POST['profile_email'])) { update_post_meta($post->ID, "profile_email", $_POST["profile_email"]); }
-  if (isset($_POST['profile_title'])) { update_post_meta($post->ID, "profile_title", $_POST["profile_title"]); }
-  if (isset($_POST['profile_phone'])) {
-    $new = preg_replace('/[^a-z0-9]+/i', '', $_POST["profile_phone"]);
-    update_post_meta($post->ID, "profile_phone", $new);
+  if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset( $post_id )) ) { return $post_id; }
+  if ( defined( 'DOING_AJAX' ) && DOING_AJAX && (isset( $post_id )) ) { return $post_id; } //Prevents the metaboxes from being overwritten while quick editing.
+  if ( preg_match( '/\edit\.php/', $_SERVER['REQUEST_URI'] ) && (isset( $post_id )) ) { return $post_id; } //Detects if the save action is coming from a quick edit/batch edit.
+  if ( isset( $_POST['profile_email'] ) ) { update_post_meta( $post->ID, "profile_email", $_POST["profile_email"] ); }
+  if ( isset( $_POST['profile_title'] ) ) { update_post_meta( $post->ID, "profile_title", $_POST["profile_title"] ); }
+  if ( isset( $_POST['profile_phone'] ) ) {
+    $new = preg_replace( '/[^a-z0-9]+/i', '', $_POST["profile_phone"] );
+    update_post_meta( $post->ID, "profile_phone", $new );
   }
-  do_action('steel_teams_save_meta');
+  do_action( 'steel_teams_save_meta' );
 }
 
-/*
+/**
  * Return Team Profile metadata
  */
-function steel_profile_meta( $key, $post_id = NULL ) {
+function steel_profile_meta( $key, $post_id = null ) {
   return steel_meta( 'profile', $key, $post_id );
 }
 
-/*
+/**
  * Display profile phone number
  */
-function steel_profile_phone( $pattern = "$1.$2.$3", $post_id = NULL ) {
+function steel_profile_phone( $pattern = "$1.$2.$3", $post_id = null ) {
   $phone = steel_profile_meta( 'phone', $post_id );
-  return preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", $pattern, $phone);
+  return preg_replace( "/([0-9]{3})([0-9]{3})([0-9]{4})/", $pattern, $phone );
 }
