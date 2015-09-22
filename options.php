@@ -1,17 +1,21 @@
 <?php
 /**
- * Options pages for various modules
+ * Steel Options page
  *
  * @package Steel
  */
 
-/*
- * Add options pages
+/**
+ * Add Steel options menu page
  */
-add_action('admin_menu', 'steel_admin_menu');
 function steel_admin_menu() {
   add_menu_page('Steel', 'Steel', 'manage_options', 'steel', 'steel_menu_page', 'none');
 }
+add_action('admin_menu', 'steel_admin_menu');
+
+/**
+ * Display the content for the Steel options menu page
+ */
 function steel_menu_page() {
   ?>
   <div class="wrap">
@@ -28,13 +32,11 @@ function steel_menu_page() {
   <?php
 }
 
-/*
- * Register settings for options pages
+/**
+ * Register settings for Steel options menu page
  */
-add_action('admin_init', 'steel_admin_init');
 function steel_admin_init(){
 
-  //Register Steel Options
   register_setting('steel_options', 'steel_options', 'steel_options_validate' );
 
   add_settings_section('steel_analytics', 'Website Analytics', 'steel_analytics_section', 'steel');
@@ -47,7 +49,7 @@ function steel_admin_init(){
 
   add_settings_section('steel_mods', 'Modules', 'steel_mods_section', 'steel');
     add_settings_field('load_bootstrap'   , 'Bootstrap'   , 'steel_settings_field_bootstrap'   , 'steel', 'steel_mods' );
-  //add_settings_field('load_podcast_mod' , 'Podcast'     , 'steel_settings_field_podcast'     , 'steel', 'steel_mods' );
+  //add_settings_field('load_podcast'     , 'Podcast'     , 'steel_settings_field_podcast'     , 'steel', 'steel_mods' );
   //add_settings_field('load_quotes'      , 'Quotes'      , 'steel_settings_field_quotes'      , 'steel', 'steel_mods' );
   //add_settings_field('load_shortcodes'  , 'Shortcodes'  , 'steel_settings_field_shortcodes'  , 'steel', 'steel_mods' );
   //add_settings_field('load_social_media', 'Social Media', 'steel_settings_field_social_media', 'steel', 'steel_mods' );
@@ -55,25 +57,46 @@ function steel_admin_init(){
     add_settings_field('load_teams'       , 'Teams'       , 'steel_settings_field_teams'       , 'steel', 'steel_mods' );
   //add_settings_field('load_widgets'     , 'Widgets'     , 'steel_settings_field_widgets'     , 'steel', 'steel_mods' );
 }
+add_action('admin_init', 'steel_admin_init');
 
-/*
- * Callback settings for Steel Options page
+/**
+ * Display analytics section title
  */
 function steel_analytics_section() {}
+
+/**
+ * Display Google Analytics ID field
+ */
 function steel_settings_field_ga_id() {
   $options = steel_get_options();
 
   $output  = '<input id="ga_id" name="steel_options[ga_id]" size="40" type="text" value="' . $options['ga_id'] . '" placeholder="UA-XXXXX-X">';
   echo $output;
 }
+
+/**
+ * Display social section title
+ */
 function steel_social_section() { echo 'Social media profile information'; }
+
+/**
+ * Display Facebook App ID field
+ */
 function steel_settings_field_fb_app_id() {
   $options = steel_get_options();
 
   $output  = '<input id="fb_app_id" name="steel_options[fb_app_id]" size="40" type="text" value="' . $options['fb_app_id'] . '">';
   echo $output;
 }
+
+/**
+ * Display modules section title
+ */
 function steel_mods_section() { echo 'Select which modules should be active.'; }
+
+/**
+ * Display Bootstrap module field
+ */
 function steel_settings_field_bootstrap() {
   $options = steel_get_options(); ?>
 
@@ -84,14 +107,22 @@ function steel_settings_field_bootstrap() {
 
   <?php
 }
+
+/**
+ * Display Podcast module field
+ */
 function steel_settings_field_podcast() {
   $options = steel_get_options(); ?>
 
   <div class="radio-group">
-    <label for="steel_options[load_podcast_mod]"><input name="steel_options[load_podcast_mod]" type="checkbox" value="true"  <?php checked( $options['load_podcast_mod'], true  ) ?>>Active</label>
+    <label for="steel_options[load_podcast]"><input name="steel_options[load_podcast]" type="checkbox" value="true" <?php checked( $options['load_podcast'], true  ) ?>>Active</label>
   </div>
   <?php
 }
+
+/**
+ * Display Quotes module field
+ */
 function steel_settings_field_quotes() {
   $options = steel_get_options(); ?>
 
@@ -100,6 +131,10 @@ function steel_settings_field_quotes() {
   </div>
   <?php
 }
+
+/**
+ * Display Shortcodes module field
+ */
 function steel_settings_field_shortcodes() {
   $options = steel_get_options(); ?>
 
@@ -108,6 +143,10 @@ function steel_settings_field_shortcodes() {
   </div>
   <?php
 }
+
+/**
+ * Display Social Media module field
+ */
 function steel_settings_field_social_media() {
   $options = steel_get_options(); ?>
 
@@ -116,6 +155,10 @@ function steel_settings_field_social_media() {
   </div>
   <?php
 }
+
+/**
+ * Display Slides module field
+ */
 function steel_settings_field_slides() {
   $options = steel_get_options(); ?>
 
@@ -124,6 +167,10 @@ function steel_settings_field_slides() {
   </div>
   <?php
 }
+
+/**
+ * Display Teams module field
+ */
 function steel_settings_field_teams() {
   $options = steel_get_options(); ?>
 
@@ -132,6 +179,10 @@ function steel_settings_field_teams() {
   <div class="radio-group">
   <?php
 }
+
+/**
+ * Display Widgets module field
+ */
 function steel_settings_field_widgets() {
   $options = steel_get_options(); ?>
 
@@ -141,10 +192,12 @@ function steel_settings_field_widgets() {
   <?php
 }
 
-/*
+/**
  * Validate settings for Steel Options page
+ *
+ * @param mixed $raw The raw, unfiltered, form data
  */
-function steel_options_validate($raw) {
+function steel_options_validate( $raw ) {
   $valid['ga_id'] = trim($raw['ga_id']);
   if (!preg_match('/^UA-\d{4,}-\d+$/', $valid['ga_id']) & !empty($valid['ga_id'])) { add_settings_error( 'ga_id', 'invalid', 'Invalid Google Analytics Property ID. <span style="font-weight:normal;display:block;">A Google Analtyics Property ID is in the format UA-########-#.</span>' ); }
 
@@ -154,7 +207,7 @@ function steel_options_validate($raw) {
   $valid['load_bootstrap_css'] = 'true' === $raw['load_bootstrap_css'] ? true : false;
   $valid['load_bootstrap_js' ] = 'true' === $raw['load_bootstrap_js' ] ? true : false;
 
-  //$valid['load_podcast_mod' ] = 'true' === $raw['load_podcast_mod' ] ? true : false;
+    $valid['load_podcast'     ] = 'true' === $raw['load_podcast'     ] ? true : false;
   //$valid['load_quotes'      ] = 'true' === $raw['load_quotes'      ] ? true : false;
   //$valid['load_shortcodes'  ] = 'true' === $raw['load_shortcodes'  ] ? true : false;
   //$valid['load_social_media'] = 'true' === $raw['load_social_media'] ? true : false;
@@ -165,6 +218,9 @@ function steel_options_validate($raw) {
   return apply_filters( 'steel_save_options', $valid, $raw );
 }
 
+/**
+ * Retrieve option defaults
+ */
 function steel_get_option_defaults() {
   $defaults = array(
     'load_bootstrap_css' => true,
@@ -200,9 +256,9 @@ function steel_get_option_defaults() {
 
   if (!empty($options['mod_podcast'])) {
     if ('true' === $options['mod_podcast'])
-      $defaults['load_podcast_mod'] = true;
+      $defaults['load_podcast'] = true;
     elseif ('false' === $options['mod_podcast'])
-      $defaults['load_podcast_mod'] = false;
+      $defaults['load_podcast'] = false;
   }
 
   if (!empty($options['mod_quotes'])) {
