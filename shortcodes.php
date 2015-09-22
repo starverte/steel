@@ -4,7 +4,7 @@
  *
  * @package Steel\Shortcodes
  */
- 
+
 /**
  * Deregister shortcodes from other plugins and themes
  */
