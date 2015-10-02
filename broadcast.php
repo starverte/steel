@@ -146,18 +146,6 @@ function steel_save_podcast() {
 }
 
 /**
- * Display Series metadata
- */
-function steel_broadcast_meta( $key, $post_id = null ) {
-  $meta = steel_meta( 'series', $key, $post_id );
-  return $meta;
-}
-function steel_episode_meta( $key, $post_id = null ) {
-  $meta = steel_meta( 'episode', $key, $post_id );
-  return $meta;
-}
-
-/**
  * Display Podcast by id
  */
 function steel_broadcast( $post_id, $size = 'full', $name = null ) {
