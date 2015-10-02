@@ -46,6 +46,40 @@ function steel_broadcast_post_type_args() {
   return $args;
 }
 
+/**
+ * Return arguments for registering steel_broadcast_channel
+ */
+function steel_broadcast_channel_taxonomy_args() {
+  $labels = array(
+    'name'                       => _x( 'Channels', 'Taxonomy General Name', 'steel' ),
+    'singular_name'              => _x( 'Channel', 'Taxonomy Singular Name', 'steel' ),
+    'menu_name'                  => __( 'Channels', 'steel' ),
+    'all_items'                  => __( 'All Channels', 'steel' ),
+    'new_item_name'              => __( 'New Channel', 'steel' ),
+    'add_new_item'               => __( 'Add New Channel', 'steel' ),
+    'edit_item'                  => __( 'Edit Channel', 'steel' ),
+    'update_item'                => __( 'Update', 'steel' ),
+    'separate_items_with_commas' => __( 'Separate channels with commas', 'steel' ),
+    'search_items'               => __( 'Search channels', 'steel' ),
+    'add_or_remove_items'        => __( 'Add or remove channels', 'steel' ),
+    'choose_from_most_used'      => __( 'Choose from the most used channels', 'steel' ),
+  );
+  $rewrite = array(
+    'slug' => 'channels',
+  );
+  $args = array(
+    'labels'            => $labels,
+    'hierarchical'      => false,
+    'public'            => true,
+    'show_ui'           => true,
+    'show_admin_column' => true,
+    'show_in_nav_menus' => true,
+    'show_tagcloud'     => true,
+    'rewrite'           => $rewrite,
+  );
+  return $args;
+}
+
 function steel_broadcast_item_list() {
   $series_media     = steel_broadcast_meta( 'media' );
   $series_order     = steel_broadcast_meta( 'order' );
