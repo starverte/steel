@@ -217,11 +217,6 @@ function steel_init() {
 add_action( 'init', 'steel_init', 0 );
 
 function steel_add_meta_boxes() {
-  if ( steel_is_module_active( 'broadcast' ) ) {
-    add_meta_box( 'steel_broadcast_item_list', 'Add/Edit Series'   , 'steel_broadcast_item_list', 'steel_broadcast', 'side', 'high' );
-    add_meta_box( 'steel_broadcast_info'        , 'Using this Podcast', 'steel_broadcast_info'        , 'steel_broadcast', 'side' );
-    add_meta_box( 'steel_broadcast_settings'    , 'Podcast Settings'  , 'steel_broadcast_settings'    , 'steel_broadcast', 'side' );
-  }
   if ( steel_is_module_active( 'slides' ) ) {
     add_meta_box( 'steel_slides_slideshow', 'Add/Edit Slides'     , 'steel_slides_slideshow', 'steel_slides', 'advanced', 'high' );
     add_meta_box( 'steel_slides_info'     , 'Using this Slideshow', 'steel_slides_info'     , 'steel_slides', 'side' );

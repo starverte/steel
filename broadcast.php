@@ -89,6 +89,14 @@ function steel_broadcast_init() {
 }
 add_action( 'init', 'steel_broadcast_init' );
 
+/**
+ * Add meta boxes to Edit Series screen
+ */
+function steel_broadcast_add_meta_boxes() {
+  add_meta_box( 'steel_broadcast_item_list', 'Series Media', 'steel_broadcast_item_list', 'steel_broadcast', 'side', 'high' );
+}
+add_action( 'add_meta_boxes', 'steel_broadcast_add_meta_boxes' );
+
 function steel_broadcast_item_list() {
   $series_media     = steel_broadcast_meta( 'media' );
   $series_order     = steel_broadcast_meta( 'order' );
