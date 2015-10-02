@@ -46,7 +46,7 @@ function steel_broadcast_post_type_args() {
   return $args;
 }
 
-function steel_broadcast_episode_list() {
+function steel_broadcast_item_list() {
   $series_media     = steel_broadcast_meta( 'media' );
   $series_order     = steel_broadcast_meta( 'order' );
   $series_media_url = steel_broadcast_meta( 'media_url' );
