@@ -256,23 +256,3 @@ function steel_broadcast( $post_id, $size = 'full', $name = null ) {
 
   return $output;
 }
-
-/**
- * Create [steel_broadcast] shortcode
- */
-if ( shortcode_exists( 'steel_broadcast' ) ) { remove_shortcode( 'steel_broadcast' ); }
-add_shortcode( 'steel_broadcast', 'steel_broadcast_shortcode' );
-function steel_broadcast_shortcode( $atts, $content = null ) {
-  extract( shortcode_atts( array( 'id' => null, 'name' => null, 'size' => 'full' ), $atts ) );
-
-  if ( ! empty( $id ) ) {
-    $output = steel_broadcast( $id, $size );
-  } elseif ( ! empty( $name ) ) {
-    $show = get_page_by_title( $name, OBJECT, 'steel_broadcast' );
-    $output = steel_broadcast( $show->ID, $size, $name );
-  } else {
-    return;
-  }
-  return $output;
-}
-?>
