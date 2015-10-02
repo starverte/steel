@@ -8,7 +8,7 @@
 /**
  * Return arguments for registering steel_broadcast
  */
-function steel_get_broadcast_args() {
+function steel_broadcast_post_type_args() {
   $labels = array(
     'name'                => _x( 'Podcasts', 'Post Type General Name', 'steel' ),
     'singular_name'       => _x( 'Podcast', 'Post Type Singular Name', 'steel' ),
