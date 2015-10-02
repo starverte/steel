@@ -167,28 +167,61 @@ function steel_broadcast_item_list() {
 }
 
 /**
- * Save data from meta boxes
+ * Save steel_broadcast
  */
 function steel_broadcast_save() {
   global $post;
-  if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset( $post_id )) ) { return $post_id; }
-  if ( defined( 'DOING_AJAX' ) && DOING_AJAX && (isset( $post_id )) ) { return $post_id; }
-  if ( preg_match( '/\edit\.php/', $_SERVER['REQUEST_URI'] ) && (isset( $post_id )) ) { return $post_id; }
-  if ( isset( $_POST['series_order'] ) ) {
-    update_post_meta( $post->ID, 'series_order'   , $_POST['series_order'] );
-    $series = explode( ',', get_post_meta( $post->ID, 'series_order', true ) );
-    foreach ( $series as $episode ) {
-      if ( isset( $_POST[ 'episode_' . $episode . '_title'   ] ) ) { update_post_meta( $post->ID, 'episode_' . $episode . '_title'   , $_POST[ 'episode_' . $episode . '_title'   ] ); }
-      if ( isset( $_POST[ 'episode_' . $episode . '_summary' ] ) ) { update_post_meta( $post->ID, 'episode_' . $episode . '_summary' , $_POST[ 'episode_' . $episode . '_summary' ] ); }
-      if ( isset( $_POST[ 'episode_' . $episode . '_date'    ] ) ) { update_post_meta( $post->ID, 'episode_' . $episode . '_date'    , $_POST[ 'episode_' . $episode . '_date'    ] ); }
-      if ( isset( $_POST[ 'episode_' . $episode . '_author'  ] ) ) { update_post_meta( $post->ID, 'episode_' . $episode . '_author'  , $_POST[ 'episode_' . $episode . '_author'  ] ); }
-      if ( isset( $_POST[ 'episode_' . $episode . '_duration' ] ) ) { update_post_meta( $post->ID, 'episode_' . $episode . '_duration', $_POST[ 'episode_' . $episode . '_duration' ] ); }
-    }
+  if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset( $post_id )) ) {
+    return $post_id;
+  }
+  if ( defined( 'DOING_AJAX' ) && DOING_AJAX && (isset( $post_id )) ) {
+    return $post_id;
+  }
+  if ( preg_match( '/\edit\.php/', $_SERVER['REQUEST_URI'] ) && ( isset( $post_id ) ) ) {
+    return $post_id;
   }
 
-  if ( isset( $_POST['series_author'] ) ) { update_post_meta( $post->ID, 'series_author'   , $_POST['series_author'] ); }
-  if ( isset( $_POST['series_media'] ) ) { update_post_meta( $post->ID, 'series_media'    , $_POST['series_media'] ); }
-  if ( isset( $_POST['series_media_url'] ) ) { update_post_meta( $post->ID, 'series_media_url', $_POST['series_media_url'] ); }
+  $post_custom = get_post_custom();
+
+  if ( isset( $_POST['item_list'] ) ) {
+    update_post_meta( $post->ID, 'item_list', $_POST['item_list'] );
+    $items = explode( ',', $_POST['item_list'] );
+  } else {
+    $items = explode( ',', $post_custom['item_list'][0] );
+  }
+
+  $media = array();
+
+  foreach ( $items as $item_id ) {
+    array_push( $media, get_post( $item_id ) );
+  }
+
+  foreach ( $media as $medium ) {
+    $medium_array = array(
+      'ID' => $medium->ID,
+    );
+    $medium_metadata = wp_get_attachment_metadata( $medium->ID );
+
+    if ( isset( $_POST[ 'post_title_' . $medium->ID ] ) ) {
+      $medium_array['post_title'] = $_POST[ 'post_title_' . $medium->ID ];
+    }
+
+    if ( isset( $_POST[ 'post_content_' . $medium->ID ] ) ) {
+      $medium_array['post_content'] = $_POST[ 'post_content_' . $medium->ID ];
+    }
+
+    if ( isset( $_POST[ 'date_published_' . $medium->ID ] ) ) {
+      update_post_meta( $medium->ID, 'date_published', $_POST[ 'date_published_' . $medium->ID ] );
+    }
+
+    if ( isset( $_POST[ 'artist_' . $medium->ID ] ) ) {
+      $medium_metadata['artist'] = $_POST[ 'artist_' . $medium->ID ];
+    }
+
+    wp_update_post( $medium_array );
+    update_post_meta( $post->ID, 'medium_' . $medium->ID, $medium_array );
+    wp_update_attachment_metadata( $medium->ID, $medium_metadata );
+  }
 }
 add_action( 'save_post', 'steel_broadcast_save' );
 
