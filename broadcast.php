@@ -100,37 +100,70 @@ function steel_broadcast_add_meta_boxes() {
 }
 add_action( 'add_meta_boxes', 'steel_broadcast_add_meta_boxes' );
 
+/**
+ * Display media series items on Edit Series screen
+ */
 function steel_broadcast_item_list() {
-  $series_media     = steel_broadcast_meta( 'media' );
-  $series_order     = steel_broadcast_meta( 'order' );
-  $series_media_url = steel_broadcast_meta( 'media_url' );
+  global $post;
+  $post_custom = get_post_custom();
+  $media = array();
 
-  $series = explode( ',', $series_order );
-
-  $output = '';
-  $output .= '<a href="#" class="button add_episode_media" id="btn_above" title="Add episode to podcast"><span class="dashicons dashicons-playlist-audio"></span> Add Episode</a>';
-  $output .= '<div id="series_wrap"><div id="series">';
-  foreach ( $series as $episode ) {
-    if ( ! empty( $episode ) ) {
-      $output .= '<div class="episode" id="';
-      $output .= $episode;
-      $output .= '">';
-      $output .= '<div class="episode-controls"><span id="controls_'.$episode.'">'.steel_episode_meta( $episode.'_title' ).'</span><a class="del-episode" href="#" onclick="deleteEpisode(\''.$episode.'\')" title="Delete episode"><span class="dashicons dashicons-dismiss" style="float:right"></span></a></div>';
-      $output .= '<p><input type="text" size="32" class="episode-title" name="episode_'.$episode.'_title" id="episode_'.$episode.'_title" value="'.steel_episode_meta( $episode.'_title' ).'" placeholder="Title" /><br>';
-      $output .= '<textarea cols="28" rows="3" name="episode_'.$episode.'_summary" id="episode_'.$episode.'_summary" placeholder="Summary">'.steel_episode_meta( $episode.'_summary' ).'</textarea></p>';
-      $output .= '<span class="dashicons dashicons-calendar" style="float:left;padding:5px;"></span><input type="text" size="22" name="episode_'.$episode.'_date" id="episode_'.$episode.'_date" value="'.steel_episode_meta( $episode.'_date' ).'" placeholder="mm/dd/yyyy" style="margin:0;">';
-      $output .= '<span class="dashicons dashicons-businessman" style="float:left;padding:5px;"></span><input type="text" size="22" name="episode_'.$episode.'_author" id="episode_'.$episode.'_author" value="'.steel_episode_meta( $episode.'_author' ).'" placeholder="Author" style="margin:0;">';
-      $output .= '<span class="dashicons dashicons-clock" style="float:left;padding:5px;"></span><input type="text" size="22" name="episode_'.$episode.'_duration" id="episode_'.$episode.'_duration" value="'.steel_episode_meta( $episode.'_duration' ).'" placeholder="HH:MM:SS" style="margin:0;">';
-      $output .= '</div>';
+  if ( ! empty( $post_custom['item_list'][0] ) ) {
+    $items = explode( ',', $post_custom['item_list'][0] );
+    foreach ( $items as $item_id ) {
+      array_push( $media, get_post( $item_id ) );
     }
-  }
-    $output .= '</div><a href="#" class="add_episode_media add_new_episode" title="Add episode to podcast"><div class="episode-new"><p><span class="glyphicon glyphicon-plus-sign"></span><br>Add Episode</p></div></a>';
-  $output .= '</div>';
+  } ?>
 
-  echo $output; ?>
+  <a href="#" class="button btn-media-add" id="btn_above" title="Add item to series">
+    <span class="dashicons dashicons-images-alt"></span> Add item
+  </a>
+  <div id="series_wrap">
+    <div id="series" class="ui-sortable"><?php
 
-  <input type="hidden" name="series_order" id="series_order" value="<?php echo $series_order; ?>">
-  <div style="float:none; clear:both;"></div><?php
+    foreach ( $media as $medium ) {
+      if ( 0 != $medium->ID && $post->ID != $medium->ID ) {
+        $medium_custom = get_post_custom( $medium->ID );
+        $medium_metadata = wp_get_attachment_metadata( $medium->ID ); ?>
+        <div class="item ui-sortable-handle" id="<?php echo $medium->ID; ?>">
+          <header class="item-header">
+            <span id="controls_<?php echo $medium->ID; ?>"><?php echo $medium->post_title; ?></span><a class="item-delete" href="#" onclick="item_delete('<?php echo $medium->ID; ?>' )" title="Delete item"><span class="dashicons dashicons-dismiss"></span></a>
+          </header>
+          <p>
+            <input type="text" size="32" class="item-title" name="post_title_<?php echo $medium->ID; ?>" id="post_title_<?php echo $medium->ID; ?>" value="<?php echo $medium->post_title; ?>" placeholder="Title">
+            <textarea class="item-content" cols="32" name="post_content_<?php echo $medium->ID; ?>" id="post_content_<?php echo $medium->ID; ?>" placeholder="Summary"><?php echo $medium->post_content; ?></textarea>
+          </p>
+
+          <div class="item-h2">
+            <p><strong>Details</strong></p>
+          </div>
+          <span class="dashicons dashicons-calendar"></span>
+          <input class="item-date" type="text" size="28" name="date_published_<?php echo $medium->ID; ?>" id="date_published_<?php echo $medium->ID; ?>" value="<?php echo date( 'F j, Y', strtotime( $medium_custom['date_published'][0] ) ); ?>" placeholder="Date published">
+          <span class="dashicons dashicons-businessman"></span>
+          <input class="item-artist" type="text" size="28" name="artist_<?php echo $medium->ID; ?>" id="artist_<?php echo $medium->ID; ?>" value="<?php echo $medium_metadata['artist']; ?>" placeholder="Artist/Speaker">
+          <div class="clearfix"></div>
+          <div class="item-h2">
+            <p><strong>Files</strong></p>
+          </div>
+          <div>
+            <span class="dashicons dashicons-media-audio"></span>
+            <span class="audio-file"><?php echo basename( $medium->guid ); ?></span>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      <?php
+      }
+    } ?>
+
+    </div>
+    <a href="#" class="btn-media-add" title="Add item to series">
+      <div class="item-new">
+        <p><span class="glyphicon glyphicon-plus-sign"></span><br>Add item</p>
+      </div>
+    </a>
+  </div>
+  <input type="hidden" name="item_list" id="item_list" value="<?php echo $post_custom['item_list'][0]; ?>">
+  <div class="clearfix"></div><?php
 }
 
 /**
