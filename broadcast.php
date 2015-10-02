@@ -180,3 +180,89 @@ function steel_broadcast_add_form_fields() {
   </div><?php
 }
 add_action( 'steel_broadcast_channel_add_form_fields', 'steel_broadcast_add_form_fields', 10, 2 );
+
+/**
+ * Display custom form fields on Edit Channel screen
+ */
+function steel_broadcast_edit_form_fields( $term ) {
+  $the_term = $term->term_id;
+  $term_meta = get_option( 'steel_broadcast_channel_' . $the_term );
+  $itunes_cats = steel_broadcast_itunes_cats(); ?>
+  <tr class="form-field">
+    <th scope="row" valign="top"><label for="channel_meta[type]"><?php _e( 'Type', 'steel' ); ?></label></th>
+    <td>
+      <select name="channel_meta[type]">
+        <option value="html" <?php selected( $term_meta['type'], 'html' ); ?>><?php _e( 'Display', 'steel' ); ?></option>
+        <option value="rss" <?php selected( $term_meta['type'], 'rss' ); ?>><?php _e( 'Podcast', 'steel' ); ?></option>
+      </select>
+      <p class="description"><?php _e( 'Display outputs HTML, Podcast outputs RSS for iTunes', 'steel' ) ?></p>
+    </td>
+  </tr>
+  <tr class="form-field">
+    <th scope="row" valign="top"><label for="channel_meta[cover_photo_id]"><?php _e( 'Cover Photo', 'steel' ); ?></label></th>
+    <td>
+      <input type="hidden" name="channel_meta[cover_photo_id]" id="channel_cover_photo_id" value="<?php esc_attr_e( $term_meta['cover_photo_id'] ); ?>" />
+      <div id="channel_cover_photo">
+        <?php
+          if ( ! empty( $term_meta['cover_photo_id'] ) ) { ?>
+            <img class="cover-photo" src="<?php echo wp_get_attachment_url( $term_meta['cover_photo_id'] ); ?>" width="140" height="140" /><?php
+          }
+        ?>
+      </div>
+      <a href="#" class="button btn-channel-cover" title="<?php _e( 'Set Cover Photo', 'steel' ); ?>">
+        <span class="dashicons dashicons-format-image"></span> <?php _e( 'Set Cover Photo', 'steel' ); ?>
+      </a>
+      <p class="description"><?php _e( 'iTunes requires square JPG or PNG images that are at least 1400x1400 pixels', 'steel' ); ?></p>
+    </td>
+  </tr>
+  <tr>
+    <th scope="row" valign="top"><h3><?php _e( 'Podcast Information', 'steel' ); ?></h3></th>
+  </tr>
+  <tr class="form-field">
+    <th scope="row" valign="top"><label for="channel_meta[link]"><?php _e( 'Link', 'steel' ); ?></label></th>
+    <td>
+      <input type="text" name="channel_meta[link]" value="<?php echo $term_meta['link']; ?>" />
+      <p class="description"><?php _e( 'The podcast feed URL.', 'steel' ) ?></p>
+    </td>
+  </tr>
+  <tr class="form-field">
+    <th scope="row" valign="top"><label for="channel_meta[copyright]"><?php _e( 'Copyright Notice', 'steel' ); ?></label></th>
+    <td>
+      <input type="text" name="channel_meta[copyright]" value="<?php echo $term_meta['copyright']; ?>" />
+      <p class="description"><?php _e( 'i.e. "2015 Star Verte LLC. All Rights Reserved."', 'steel' ) ?></p>
+    </td>
+  </tr>
+  <tr class="form-field">
+    <th scope="row" valign="top"><label for="channel_meta[author]"><?php _e( 'Author', 'steel' ); ?></label></th>
+    <td>
+      <input type="text" name="channel_meta[author]" value="<?php echo $term_meta['author']; ?>" />
+      <p class="description"><?php _e( 'The individual or corporate author of the podcast.', 'steel' ) ?></p>
+    </td>
+  </tr>
+  <tr class="form-field">
+    <th scope="row" valign="top"><label for="channel_meta[category]"><?php _e( 'Category', 'steel' ); ?></label></th>
+    <td>
+      <select name="channel_meta[category]">
+        <?php foreach ( $itunes_cats as $key => $value ) : ?>
+        <option value="<?php echo esc_attr( $key ); ?>" <?php selected( $term_meta['category'], $key ); ?>><?php echo esc_attr( $value ); ?></option>
+        <?php endforeach; ?>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <th scope="row" valign="top"><h4><?php _e( 'Contact Information', 'steel' ); ?></h4></th>
+  </tr>
+  <tr class="form-field">
+    <th scope="row" valign="top"><label for="channel_meta[owner_name]"><?php _e( 'Name', 'steel' ); ?></label></th>
+    <td>
+      <input type="text" name="channel_meta[owner_name]" value="<?php echo $term_meta['owner_name']; ?>" />
+    </td>
+  </tr>
+  <tr class="form-field">
+    <th scope="row" valign="top"><label for="channel_meta[owner_email]"><?php _e( 'Email', 'steel' ); ?></label></th>
+    <td>
+      <input type="email" name="channel_meta[owner_email]" value="<?php echo $term_meta['owner_email']; ?>" />
+    </td>
+  </tr><?php
+}
+add_action( 'steel_broadcast_channel_edit_form_fields', 'steel_broadcast_edit_form_fields', 10, 2 );
