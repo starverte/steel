@@ -202,11 +202,6 @@ function steel_widgets_init() {
 add_action( 'widgets_init', 'steel_widgets_init' );
 
 function steel_init() {
-  if ( steel_is_module_active( 'broadcast' ) ) {
-    $args = steel_broadcast_post_type_args();
-    register_post_type( 'steel_broadcast', $args );
-    add_image_size( 'steel-episode-thumb', 300, 185, true );
-  }
   if ( steel_is_module_active( 'slides' ) ) {
     $args = steel_get_slides_args();
     register_post_type( 'steel_slides', $args );

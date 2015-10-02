@@ -80,6 +80,15 @@ function steel_broadcast_channel_taxonomy_args() {
   return $args;
 }
 
+/**
+ * Register custom post type and custom taxonomy
+ */
+function steel_broadcast_init() {
+  register_post_type( 'steel_broadcast', steel_broadcast_post_type_args() );
+  register_taxonomy( 'steel_broadcast_channel', 'steel_broadcast', steel_broadcast_channel_taxonomy_args() );
+}
+add_action( 'init', 'steel_broadcast_init' );
+
 function steel_broadcast_item_list() {
   $series_media     = steel_broadcast_meta( 'media' );
   $series_order     = steel_broadcast_meta( 'order' );
