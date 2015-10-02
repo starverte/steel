@@ -133,8 +133,7 @@ function steel_broadcast_item_list() {
 /**
  * Save data from meta boxes
  */
-add_action( 'save_post', 'steel_save_podcast' );
-function steel_save_podcast() {
+function steel_broadcast_save() {
   global $post;
   if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset( $post_id )) ) { return $post_id; }
   if ( defined( 'DOING_AJAX' ) && DOING_AJAX && (isset( $post_id )) ) { return $post_id; }
@@ -155,3 +154,4 @@ function steel_save_podcast() {
   if ( isset( $_POST['series_media'] ) ) { update_post_meta( $post->ID, 'series_media'    , $_POST['series_media'] ); }
   if ( isset( $_POST['series_media_url'] ) ) { update_post_meta( $post->ID, 'series_media_url', $_POST['series_media_url'] ); }
 }
+add_action( 'save_post', 'steel_broadcast_save' );
