@@ -78,46 +78,6 @@ function steel_broadcast_episode_list() {
   <input type="hidden" name="series_order" id="series_order" value="<?php echo $series_order; ?>">
   <div style="float:none; clear:both;"></div><?php
 }
-function steel_broadcast_info() {
-  global $post; ?>
-
-  <p>To use this episoder in your posts or pages use the following shortcode:</p>
-  <p><code>[steel_broadcast id="<?php echo $post->ID; ?>"]</code> or</p><p><code>[steel_broadcast name="<?php echo strtolower( $post->post_title ); ?>"]</code></p><?php
-}
-function steel_broadcast_settings() {
-  global $post;
-  $skins = array( 'Default','Bar','Simple','Tabs','Thumbnails' );
-  $the_skin = steel_broadcast_meta( 'skin' );
-  $transitions = array( 'Default','Fade' );
-  $the_transition = steel_broadcast_meta( 'transition' ); ?>
-
-  <p><label for="series_skin">Skin</label>&nbsp;&nbsp;&nbsp;
-     <select id="series_skin" name="series_skin">
-        <option value="">Select</option>
-        <?php
-          foreach ( $skins as $skin ) {
-            $option  = '<option value="' . $skin . '" '. selected( $the_skin, $skin ) .'>';
-            $option .= $skin;
-            $option .= '</option>';
-            echo $option;
-          }
-        ?>
-      </select>
-  </p>
-  <p><label for="series_transition">Transition</label>&nbsp;&nbsp;&nbsp;
-     <select id="series_transition" name="series_transition">
-        <option value="">Select</option>
-        <?php
-          foreach ( $transitions as $transition ) {
-            $option  = '<option value="' . $transition . '" '. selected( $the_transition, $transition ) .'>';
-            $option .= $transition;
-            $option .= '</option>';
-            echo $option;
-          }
-        ?>
-      </select>
-  </p><?php
-}
 
 /**
  * Save data from meta boxes
