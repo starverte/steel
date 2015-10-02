@@ -266,3 +266,22 @@ function steel_broadcast_edit_form_fields( $term ) {
   </tr><?php
 }
 add_action( 'steel_broadcast_channel_edit_form_fields', 'steel_broadcast_edit_form_fields', 10, 2 );
+
+/**
+ * Save custom form fields on New Channel and Edit Channel screens
+ */
+function steel_broadcast_channel_save( $term_id ) {
+  $the_term = $term_id;
+  if ( isset( $_POST['channel_meta'] ) ) {
+    $term_meta = get_option( 'steel_broadcast_channel_' . $the_term );
+    $term_keys = array_keys( $_POST['channel_meta'] );
+    foreach ( $term_keys as $key ) {
+      if ( isset ( $_POST['channel_meta'][ $key ] ) ) {
+        $term_meta[ $key ] = $_POST['channel_meta'][ $key ];
+      }
+    }
+    update_option( 'steel_broadcast_channel_' . $the_term, $term_meta );
+  }
+}
+add_action( 'edited_steel_broadcast_channel', 'steel_broadcast_channel_save', 10, 2 );
+add_action( 'create_steel_broadcast_channel', 'steel_broadcast_channel_save', 10, 2 );
