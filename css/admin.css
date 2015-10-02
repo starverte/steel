@@ -204,10 +204,10 @@
 }
 
 /* Podcast */
-.post-php.post-type-steel_podcast #misc-publishing-actions,
-.post-php.post-type-steel_podcast #minor-publishing-actions,
-.post-new-php.post-type-steel_podcast #misc-publishing-actions,
-.post-new-php.post-type-steel_podcast #minor-publishing-actions {
+.post-php.post-type-steel_broadcast #misc-publishing-actions,
+.post-php.post-type-steel_broadcast #minor-publishing-actions,
+.post-new-php.post-type-steel_broadcast #misc-publishing-actions,
+.post-new-php.post-type-steel_broadcast #minor-publishing-actions {
   display: none;
 }
 .add_episode_media {

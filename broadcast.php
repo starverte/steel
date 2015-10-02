@@ -2,13 +2,13 @@
 /**
  * Allows creation of audio playlists that can be formatted for and submitted to iTunes
  *
- * @package Steel\Podcast
+ * @package Steel\Broadcast
  */
 
 /**
- * Return arguments for registering steel_podcast
+ * Return arguments for registering steel_broadcast
  */
-function steel_get_podcast_args() {
+function steel_get_broadcast_args() {
   $labels = array(
     'name'                => _x( 'Podcasts', 'Post Type General Name', 'steel' ),
     'singular_name'       => _x( 'Podcast', 'Post Type Singular Name', 'steel' ),
@@ -24,7 +24,7 @@ function steel_get_podcast_args() {
     'not_found_in_trash'  => __( 'No podcasts found in Trash. Did you check recycling?', 'steel' ),
   );
   $args = array(
-    'label'               => __( 'steel_podcast', 'steel' ),
+    'label'               => __( 'steel_broadcast', 'steel' ),
     'description'         => __( 'Series of playlists that can be added to iTunes feed', 'steel' ),
     'labels'              => $labels,
     'supports'            => array( 'title', 'editor', 'thumbnails' ),
@@ -46,10 +46,10 @@ function steel_get_podcast_args() {
   return $args;
 }
 
-function steel_podcast_episode_list() {
-  $series_media     = steel_podcast_meta( 'media' );
-  $series_order     = steel_podcast_meta( 'order' );
-  $series_media_url = steel_podcast_meta( 'media_url' );
+function steel_broadcast_episode_list() {
+  $series_media     = steel_broadcast_meta( 'media' );
+  $series_order     = steel_broadcast_meta( 'order' );
+  $series_media_url = steel_broadcast_meta( 'media_url' );
 
   $series = explode( ',', $series_order );
 
@@ -78,18 +78,18 @@ function steel_podcast_episode_list() {
   <input type="hidden" name="series_order" id="series_order" value="<?php echo $series_order; ?>">
   <div style="float:none; clear:both;"></div><?php
 }
-function steel_podcast_info() {
+function steel_broadcast_info() {
   global $post; ?>
 
   <p>To use this episoder in your posts or pages use the following shortcode:</p>
-  <p><code>[steel_podcast id="<?php echo $post->ID; ?>"]</code> or</p><p><code>[steel_podcast name="<?php echo strtolower( $post->post_title ); ?>"]</code></p><?php
+  <p><code>[steel_broadcast id="<?php echo $post->ID; ?>"]</code> or</p><p><code>[steel_broadcast name="<?php echo strtolower( $post->post_title ); ?>"]</code></p><?php
 }
-function steel_podcast_settings() {
+function steel_broadcast_settings() {
   global $post;
   $skins = array( 'Default','Bar','Simple','Tabs','Thumbnails' );
-  $the_skin = steel_podcast_meta( 'skin' );
+  $the_skin = steel_broadcast_meta( 'skin' );
   $transitions = array( 'Default','Fade' );
-  $the_transition = steel_podcast_meta( 'transition' ); ?>
+  $the_transition = steel_broadcast_meta( 'transition' ); ?>
 
   <p><label for="series_skin">Skin</label>&nbsp;&nbsp;&nbsp;
      <select id="series_skin" name="series_skin">
@@ -148,7 +148,7 @@ function steel_save_podcast() {
 /**
  * Display Series metadata
  */
-function steel_podcast_meta( $key, $post_id = null ) {
+function steel_broadcast_meta( $key, $post_id = null ) {
   $meta = steel_meta( 'series', $key, $post_id );
   return $meta;
 }
@@ -160,14 +160,14 @@ function steel_episode_meta( $key, $post_id = null ) {
 /**
  * Display Podcast by id
  */
-function steel_podcast( $post_id, $size = 'full', $name = null ) {
+function steel_broadcast( $post_id, $size = 'full', $name = null ) {
   $name = empty( $name ) ? $post_id : $name;
 
-  $series_media      = steel_podcast_meta( 'media'     , $post_id );
-  $series_order      = steel_podcast_meta( 'order'     , $post_id );
-  $series_media_url  = steel_podcast_meta( 'media_url' , $post_id );
-  $series_skin       = steel_podcast_meta( 'skin'      , $post_id );
-  $series_transition = steel_podcast_meta( 'transition', $post_id );
+  $series_media      = steel_broadcast_meta( 'media'     , $post_id );
+  $series_order      = steel_broadcast_meta( 'order'     , $post_id );
+  $series_media_url  = steel_broadcast_meta( 'media_url' , $post_id );
+  $series_skin       = steel_broadcast_meta( 'skin'      , $post_id );
+  $series_transition = steel_broadcast_meta( 'transition', $post_id );
 
   $series_class  = 'carousel episode';
   $series_class .= ! empty( $series_skin ) ? ' carousel-'.strtolower( $series_skin ) : ' carousel-default' ;
@@ -186,9 +186,9 @@ function steel_podcast( $post_id, $size = 'full', $name = null ) {
   foreach ( $series as $episode ) {
     if ( ! empty( $episode ) ) {
       $image   = wp_get_attachment_image_src( $episode, $size );
-      $title   = steel_podcast_meta( 'title_'  .$episode, $post_id );
-      $content = steel_podcast_meta( 'content_'.$episode, $post_id );
-      $link    = steel_podcast_meta( 'link_'   .$episode, $post_id );
+      $title   = steel_broadcast_meta( 'title_'  .$episode, $post_id );
+      $content = steel_broadcast_meta( 'content_'.$episode, $post_id );
+      $link    = steel_broadcast_meta( 'link_'   .$episode, $post_id );
       $i += 1;
 
       $items .= $i >= 1 ? '<div class="item">' : '<div class="item active">';
@@ -229,7 +229,7 @@ function steel_podcast( $post_id, $size = 'full', $name = null ) {
     foreach ( $series as $episode ) {
       if ( ! empty( $episode ) ) {
         $count += 1;
-        $title   = steel_podcast_meta( 'title_'  .$episode, $post_id );
+        $title   = steel_broadcast_meta( 'title_'  .$episode, $post_id );
         $indicators .= $count >= 1 ? '<li data-target="#carousel_'.$post_id.'" data-episode-to="'.$count.'"><a href="#carousel_'.$post_id.'">' . $title . '</a></li>' : '<li class="active" data-target="#carousel_'.$post_id.'" data-episode-to="'.$count.'"><a href="#carousel_'.$post_id.'">' . $title . '</a></li>';
       }
     }
@@ -241,7 +241,7 @@ function steel_podcast( $post_id, $size = 'full', $name = null ) {
       if ( ! empty( $episode ) ) {
         $count += 1;
         $image   = wp_get_attachment_image_src( $episode, 'steel-episode-thumb' );
-        $title   = steel_podcast_meta( 'title_'  .$episode, $post_id );
+        $title   = steel_broadcast_meta( 'title_'  .$episode, $post_id );
         $indicators .= $count >= 1 ? '<span class="col-lg-'.$col_lg.' col-md-'.$col_lg.'" data-target="#carousel_'.$post_id.'" data-episode-to="'.$count.'"><img id="episode_thumb_'.$episode.'" src="'.$image[0].'" alt="'.$title.'"></span>' : '<span class="col-lg-'.$col_lg.' col-md-'.$col_lg.'" data-target="#carousel_'.$post_id.'" data-episode-to="'.$count.'"><img id="episode_thumb_'.$episode.'" src="'.$image[0].'" alt="'.$title.'"></span>';
       }
     }
@@ -270,18 +270,18 @@ function steel_podcast( $post_id, $size = 'full', $name = null ) {
 }
 
 /**
- * Create [steel_podcast] shortcode
+ * Create [steel_broadcast] shortcode
  */
-if ( shortcode_exists( 'steel_podcast' ) ) { remove_shortcode( 'steel_podcast' ); }
-add_shortcode( 'steel_podcast', 'steel_podcast_shortcode' );
-function steel_podcast_shortcode( $atts, $content = null ) {
+if ( shortcode_exists( 'steel_broadcast' ) ) { remove_shortcode( 'steel_broadcast' ); }
+add_shortcode( 'steel_broadcast', 'steel_broadcast_shortcode' );
+function steel_broadcast_shortcode( $atts, $content = null ) {
   extract( shortcode_atts( array( 'id' => null, 'name' => null, 'size' => 'full' ), $atts ) );
 
   if ( ! empty( $id ) ) {
-    $output = steel_podcast( $id, $size );
+    $output = steel_broadcast( $id, $size );
   } elseif ( ! empty( $name ) ) {
-    $show = get_page_by_title( $name, OBJECT, 'steel_podcast' );
-    $output = steel_podcast( $show->ID, $size, $name );
+    $show = get_page_by_title( $name, OBJECT, 'steel_broadcast' );
+    $output = steel_broadcast( $show->ID, $size, $name );
   } else {
     return;
   }

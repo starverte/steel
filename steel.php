@@ -28,7 +28,7 @@ License URI: http://www.gnu.org/licenses/
 include_once dirname( __FILE__ ) . '/bootstrap.php';
 include_once dirname( __FILE__ ) . '/options.php';
 
-if ( steel_is_module_active( 'podcast' ) ) { include_once dirname( __FILE__ ) . '/podcast.php';     }
+if ( steel_is_module_active( 'broadcast' ) ) { include_once dirname( __FILE__ ) . '/broadcast.php';     }
 if ( steel_is_module_active( 'quotes' ) ) { include_once dirname( __FILE__ ) . '/quotes.php';      }
 if ( steel_is_module_active( 'shortcodes' ) ) { include_once dirname( __FILE__ ) . '/shortcodes.php';  }
 if ( steel_is_module_active( 'social_media' ) ) { include_once dirname( __FILE__ ) . '/social_media.php';}
@@ -60,9 +60,8 @@ function steel_admin_enqueue_scripts() {
 
   wp_enqueue_media();
 
-  if ( steel_is_module_active( 'podcast' ) ) {
-    wp_enqueue_script( 'podcast-mod', plugins_url( 'steel/js/podcast.js' ), array( 'jquery' ), '1.2.7', true );
-    wp_enqueue_script( 'podcast-channel', plugins_url( 'steel/js/podcast-channel.js' ), array( 'jquery' ), '1.2.7', true );
+  if ( steel_is_module_active( 'broadcast' ) ) {
+    wp_enqueue_script( 'broadcast-mod', plugins_url( 'steel/js/broadcast.js' ), array( 'jquery' ), '1.2.7', true );
   }
 
   if ( steel_is_module_active( 'slides' ) ) {
@@ -203,9 +202,9 @@ function steel_widgets_init() {
 add_action( 'widgets_init', 'steel_widgets_init' );
 
 function steel_init() {
-  if ( steel_is_module_active( 'podcast' ) ) {
-    $args = steel_get_podcast_args();
-    register_post_type( 'steel_podcast', $args );
+  if ( steel_is_module_active( 'broadcast' ) ) {
+    $args = steel_get_broadcast_args();
+    register_post_type( 'steel_broadcast', $args );
     add_image_size( 'steel-episode-thumb', 300, 185, true );
   }
   if ( steel_is_module_active( 'slides' ) ) {
@@ -223,10 +222,10 @@ function steel_init() {
 add_action( 'init', 'steel_init', 0 );
 
 function steel_add_meta_boxes() {
-  if ( steel_is_module_active( 'podcast' ) ) {
-    add_meta_box( 'steel_podcast_episode_list', 'Add/Edit Series'   , 'steel_podcast_episode_list', 'steel_podcast', 'side', 'high' );
-    add_meta_box( 'steel_podcast_info'        , 'Using this Podcast', 'steel_podcast_info'        , 'steel_podcast', 'side' );
-    add_meta_box( 'steel_podcast_settings'    , 'Podcast Settings'  , 'steel_podcast_settings'    , 'steel_podcast', 'side' );
+  if ( steel_is_module_active( 'broadcast' ) ) {
+    add_meta_box( 'steel_broadcast_episode_list', 'Add/Edit Series'   , 'steel_broadcast_episode_list', 'steel_broadcast', 'side', 'high' );
+    add_meta_box( 'steel_broadcast_info'        , 'Using this Podcast', 'steel_broadcast_info'        , 'steel_broadcast', 'side' );
+    add_meta_box( 'steel_broadcast_settings'    , 'Podcast Settings'  , 'steel_broadcast_settings'    , 'steel_broadcast', 'side' );
   }
   if ( steel_is_module_active( 'slides' ) ) {
     add_meta_box( 'steel_slides_slideshow', 'Add/Edit Slides'     , 'steel_slides_slideshow', 'steel_slides', 'advanced', 'high' );
