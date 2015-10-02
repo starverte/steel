@@ -1,8 +1,11 @@
 <?php
 /**
- * Allows creation of audio playlists that can be formatted for and submitted to iTunes
+ * Create media series to broadcast on your website or podcast
  *
  * @package Steel\Broadcast
+ *
+ * @todo Use term meta in WordPress 4.4
+ *       (https://make.wordpress.org/core/2015/09/04/taxonomy-term-metadata-proposal)
  */
 
 /**
