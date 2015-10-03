@@ -1,6 +1,6 @@
 <?php
 /**
- * Create media series to broadcast on your website or podcast
+ * Create audio or video series to display on website or publish on podcast feed
  *
  * @package Steel\Broadcast
  *
