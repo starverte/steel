@@ -14,7 +14,10 @@ Steel brings the power of Matchstix to a simple user interface, making any siteâ
 Steel adds certain capabilities through several optional modules. We are continuing to add modules, so stay tuned.
 
 = Bootstrap =
-Bootstrap 3 is included with Steel, and comes alive through newly added shortcodes!
+Bootstrap 3 is included with Steel, and comes alive with shortcodes.
+
+= Broadcast =
+Create audio or video series to display on website or publish on podcast feed.
 
 = Quotes =
 Display a random quote (or testimonial) in the sidebar with our random quote widget. We are looking at embedding random quotes within a post or page in our next update.
@@ -28,7 +31,6 @@ Create profiles for board of directors, staff members, etc. and display them on 
 = Future Modules =
 * Aliases - Have multiple "pretty permalinks" point to the same post or page, or create a "pretty permalink" for an offsite link.
 * Events - Add an events calendar to your WordPress site
-* Podcast - Add a podcast with different channels and different feeds, available to listen online or via iTunes
 * Styles - This module will replace the need for shortcodes by adding buttons and styles to TinyMCE.
 
 Suggestions for other modules? Let us know via the Support tab.
