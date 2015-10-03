@@ -36,4 +36,3 @@ function set_cover_photo( attachment ) {
     '" width="140" height="140">'
   )
 };
-

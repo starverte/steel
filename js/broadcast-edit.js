@@ -100,4 +100,3 @@ function item_delete(id) {
   deleteOrder = deleteOrder.replace(",,",",");
   jQuery("#items").val(deleteOrder);
 }
-
