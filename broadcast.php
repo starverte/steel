@@ -386,7 +386,7 @@ function steel_broadcast_channel_save( $term_id ) {
     $term_meta = get_option( 'steel_broadcast_channel_' . $the_term );
     $term_keys = array_keys( $_POST['channel_meta'] );
     foreach ( $term_keys as $key ) {
-      if ( isset ( $_POST['channel_meta'][ $key ] ) ) {
+      if ( isset( $_POST['channel_meta'][ $key ] ) ) {
         $term_meta[ $key ] = $_POST['channel_meta'][ $key ];
       }
     }
