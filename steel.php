@@ -59,10 +59,12 @@ if ( steel_is_module_active( 'widgets' ) ) {
 if ( steel_is_flint_active() ) { include_once dirname( __FILE__ ) . '/templates.php'; }
 
 /**
- * Load scripts
+ * Register and load admin scripts and styles
  */
-add_action( 'admin_enqueue_scripts', 'steel_admin_enqueue_scripts' );
 function steel_admin_enqueue_scripts() {
+  global $post_type;
+  global $taxonomy;
+
   wp_enqueue_style( 'dashicons' );
   wp_enqueue_style( 'bs-glyphicons'    , plugins_url( 'steel/css/glyphicons.css' ) );
   wp_enqueue_style( 'bs-grid'          , plugins_url( 'steel/css/grid.css' ) );
@@ -80,15 +82,45 @@ function steel_admin_enqueue_scripts() {
 
   wp_enqueue_media();
 
-  if ( steel_is_module_active( 'broadcast' ) ) {
-    wp_enqueue_script( 'broadcast-mod', plugins_url( 'steel/js/broadcast.js' ), array( 'jquery' ), '1.2.7', true );
+  wp_enqueue_script( 'functions', plugins_url( 'steel/js/functions.js' ), array( 'jquery' ), '1.2.7', true );
+
+  if ( 'steel_broadcast' == $post_type ) {
+    wp_enqueue_script(
+      'broadcast-edit',
+      plugins_url( 'steel/js/broadcast-edit.js' ),
+      array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ),
+      '1.2.7',
+      true
+    );
+    wp_enqueue_style( 'broadcast-style-admin', plugins_url( 'steel/css/broadcast-admin.css' ) );
+  };
+
+  if ( 'steel_broadcast_channel' == $taxonomy ) {
+    wp_enqueue_script(
+      'broadcast-channel-edit',
+      plugins_url( 'steel/js/broadcast-channel-edit.js' ),
+      array( 'jquery' ),
+      '1.2.7',
+      true
+    );
   }
 
-  if ( steel_is_module_active( 'slides' ) ) {
-    wp_enqueue_script( 'slides-mod', plugins_url( 'steel/js/slides.js' ), array( 'jquery' ), '1.2.7', true );
+  if ( 'steel_slides' == $post_type ) {
+    wp_enqueue_script(
+      'slides-script',
+      plugins_url( 'steel/js/slides.js' ),
+      array( 'jquery' ),
+      '1.2.7',
+      true
+    );
+    wp_enqueue_style( 'slides-style-admin', plugins_url( 'steel/css/slides-admin.css' ) );
   }
 }
-add_action( 'wp_enqueue_scripts', 'steel_enqueue_scripts' );
+add_action( 'admin_enqueue_scripts', 'steel_admin_enqueue_scripts' );
+
+/**
+ * Register and load display scripts and styles
+ */
 function steel_enqueue_scripts() {
   $options = steel_get_options();
 
@@ -120,6 +152,7 @@ function steel_enqueue_scripts() {
   // Load front-end scripts
   wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array( 'jquery' ), '1.2.7', true );
 }
+add_action( 'wp_enqueue_scripts', 'steel_enqueue_scripts' );
 
 /*
  * Add function steel_open
