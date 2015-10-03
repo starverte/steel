@@ -28,13 +28,33 @@ License URI: http://www.gnu.org/licenses/
 include_once dirname( __FILE__ ) . '/bootstrap.php';
 include_once dirname( __FILE__ ) . '/options.php';
 
-if ( steel_is_module_active( 'broadcast' ) ) { include_once dirname( __FILE__ ) . '/broadcast.php';     }
-if ( steel_is_module_active( 'quotes' ) ) { include_once dirname( __FILE__ ) . '/quotes.php';      }
-if ( steel_is_module_active( 'shortcodes' ) ) { include_once dirname( __FILE__ ) . '/shortcodes.php';  }
-if ( steel_is_module_active( 'social_media' ) ) { include_once dirname( __FILE__ ) . '/social_media.php';}
-if ( steel_is_module_active( 'slides' ) ) { include_once dirname( __FILE__ ) . '/slides.php';      }
-if ( steel_is_module_active( 'teams' ) ) { include_once dirname( __FILE__ ) . '/teams.php';       }
-if ( steel_is_module_active( 'widgets' ) ) { include_once dirname( __FILE__ ) . '/widgets.php';     }
+if ( steel_is_module_active( 'broadcast' ) ) {
+  include_once dirname( __FILE__ ) . '/broadcast.php';
+}
+
+if ( steel_is_module_active( 'quotes' ) ) {
+  include_once dirname( __FILE__ ) . '/quotes.php';
+}
+
+if ( steel_is_module_active( 'shortcodes' ) ) {
+  include_once dirname( __FILE__ ) . '/shortcodes.php';
+}
+
+if ( steel_is_module_active( 'social_media' ) ) {
+  include_once dirname( __FILE__ ) . '/social_media.php';
+}
+
+if ( steel_is_module_active( 'slides' ) ) {
+  include_once dirname( __FILE__ ) . '/slides.php';
+}
+
+if ( steel_is_module_active( 'teams' ) ) {
+  include_once dirname( __FILE__ ) . '/teams.php';
+}
+
+if ( steel_is_module_active( 'widgets' ) ) {
+  include_once dirname( __FILE__ ) . '/widgets.php';
+}
 
 if ( steel_is_flint_active() ) { include_once dirname( __FILE__ ) . '/templates.php'; }
 
@@ -118,8 +138,10 @@ function steel_open() {
  */
 add_filter( 'request', 'steel_request' );
 function steel_request( $query_vars ) {
-  if ( ! empty( $_GET['s'] ) && empty( $_GET['s'] ) ) { $query_vars['s'] = " "; }
-    return $query_vars;
+  if ( ! empty( $_GET['s'] ) && empty( $_GET['s'] ) ) {
+    $query_vars['s'] = ' ';
+  }
+  return $query_vars;
 }
 
 /**
@@ -128,9 +150,11 @@ function steel_request( $query_vars ) {
 function steel_is_module_active( $module ) {
   $options = steel_get_options();
 
-  if ( true === $options[ 'load_'.$module ] )
+  if ( true === $options[ 'load_'.$module ] ) {
     return true;
-  else return false;
+  } else {
+    return false;
+  }
 }
 
 /**
@@ -141,9 +165,12 @@ function steel_is_flint_active() {
   $name = $theme->get( 'Name' );
   $template = $theme->get( 'Template' );
   $template = ! empty( $template ) ? $template : strtolower( $name );
-  if ( 'flint' === $template )
+
+  if ( 'flint' === $template ) {
     return true;
-  else return false;
+  } else {
+    return false;
+  }
 }
 
 /**
