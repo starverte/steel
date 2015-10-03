@@ -88,7 +88,12 @@ function steel_broadcast_channel_taxonomy_args() {
  */
 function steel_broadcast_init() {
   register_post_type( 'steel_broadcast', steel_broadcast_post_type_args() );
-  register_taxonomy( 'steel_broadcast_channel', 'steel_broadcast', steel_broadcast_channel_taxonomy_args() );
+
+  register_taxonomy(
+    'steel_broadcast_channel',
+    'steel_broadcast',
+    steel_broadcast_channel_taxonomy_args()
+  );
 }
 add_action( 'init', 'steel_broadcast_init' );
 
@@ -96,7 +101,14 @@ add_action( 'init', 'steel_broadcast_init' );
  * Add meta boxes to Edit Series screen
  */
 function steel_broadcast_add_meta_boxes() {
-  add_meta_box( 'steel_broadcast_item_list', 'Series Media', 'steel_broadcast_item_list', 'steel_broadcast', 'side', 'high' );
+  add_meta_box(
+    'steel_broadcast_item_list',
+    'Series Media',
+    'steel_broadcast_item_list',
+    'steel_broadcast',
+    'side',
+    'high'
+  );
 }
 add_action( 'add_meta_boxes', 'steel_broadcast_add_meta_boxes' );
 
@@ -127,7 +139,12 @@ function steel_broadcast_item_list() {
         $medium_metadata = wp_get_attachment_metadata( $medium->ID ); ?>
         <div class="item ui-sortable-handle" id="<?php echo $medium->ID; ?>">
           <header class="item-header">
-            <span id="controls_<?php echo $medium->ID; ?>"><?php echo $medium->post_title; ?></span><a class="item-delete" href="#" onclick="item_delete('<?php echo $medium->ID; ?>' )" title="Delete item"><span class="dashicons dashicons-dismiss"></span></a>
+            <span id="controls_<?php echo $medium->ID; ?>">
+              <?php echo $medium->post_title; ?>
+            </span>
+            <a class="item-delete" href="#" onclick="item_delete('<?php echo $medium->ID; ?>' )" title="Delete item">
+              <span class="dashicons dashicons-dismiss"></span>
+            </a>
           </header>
           <p>
             <input type="text" size="32" class="item-title" name="post_title_<?php echo $medium->ID; ?>" id="post_title_<?php echo $medium->ID; ?>" value="<?php echo $medium->post_title; ?>" placeholder="Title">
@@ -249,12 +266,7 @@ function steel_broadcast_add_form_fields() {
       <?php _e( 'Set Cover Photo', 'steel' ); ?>
     </a>
     <p class="description">
-      <?php
-        _e(
-          'iTunes requires square JPG or PNG images that are at least 1400x1400 pixels',
-          'steel'
-        );
-      ?>
+      <?php _e( 'iTunes requires square JPG or PNG images that are at least 1400x1400 pixels', 'steel' ); ?>
     </p>
   </div><?php
 }
