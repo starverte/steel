@@ -82,7 +82,13 @@ function steel_admin_enqueue_scripts() {
 
   wp_enqueue_media();
 
-  wp_enqueue_script( 'functions', plugins_url( 'steel/js/functions.js' ), array( 'jquery' ), '1.2.7', true );
+  wp_enqueue_script(
+    'functions',
+    plugins_url( 'steel/js/functions.js' ),
+    array( 'jquery' ),
+    '1.2.7',
+    true
+  );
 
   if ( 'steel_broadcast' == $post_type ) {
     wp_enqueue_script(
@@ -129,7 +135,13 @@ function steel_enqueue_scripts() {
     wp_deregister_script( 'bootstrap' );
 
     // Load Twitter Bootstrap
-    wp_enqueue_script( 'bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js', array( 'jquery' ), '3.3.5', true );
+    wp_enqueue_script(
+      'bootstrap',
+      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js',
+      array( 'jquery' ),
+      '3.3.5',
+      true
+    );
   }
 
   if ( true === $options['load_bootstrap_css'] ) {
@@ -137,9 +149,19 @@ function steel_enqueue_scripts() {
     wp_deregister_style( 'bootstrap-css' );
 
     // Load Twitter Bootstrap
-    wp_enqueue_style( 'bootstrap-css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css', array() , '3.3.5' );
+    wp_enqueue_style(
+      'bootstrap-css',
+      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css',
+      array(),
+      '3.3.5'
+    );
   } else {
-    wp_enqueue_style( 'glyphicons', plugins_url( 'steel/css/glyphicons.css' ), array() , '3.3.5' );
+    wp_enqueue_style(
+      'glyphicons',
+      plugins_url( 'steel/css/glyphicons.css' ),
+      array(),
+      '3.3.5'
+    );
   }
 
   if ( steel_is_module_active( 'slides' ) ) {
@@ -150,7 +172,13 @@ function steel_enqueue_scripts() {
   wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js' );
 
   // Load front-end scripts
-  wp_enqueue_script( 'steel-run', plugins_url( '/steel/js/run.js' ), array( 'jquery' ), '1.2.7', true );
+  wp_enqueue_script(
+    'steel-run',
+    plugins_url( '/steel/js/run.js' ),
+    array( 'jquery' ),
+    '1.2.7',
+    true
+  );
 }
 add_action( 'wp_enqueue_scripts', 'steel_enqueue_scripts' );
 
@@ -161,9 +189,23 @@ add_action( 'flint_open','steel_open' );
 function steel_open() {
   $options = steel_get_options();
 
-  if ( true === $options['load_facebook']  && ! empty( $options['fb_app_id'] ) ) {
-      echo '<div id="fb-root"></div><script>(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=' . $options['fb_app_id'] . '"; fjs.parentNode.insertBefore(js, fjs); }(document, \'script\', \'facebook-jssdk\')); </script>';
-  } else { return; }
+  if ( true === $options['load_facebook']  && ! empty( $options['fb_app_id'] ) ) { ?>
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+          return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?php echo $options['fb_app_id']; ?>";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script><?php
+  } else {
+    return;
+  }
 }
 
 /*
@@ -278,12 +320,41 @@ add_action( 'init', 'steel_init', 0 );
 
 function steel_add_meta_boxes() {
   if ( steel_is_module_active( 'slides' ) ) {
-    add_meta_box( 'steel_slides_slideshow', 'Add/Edit Slides'     , 'steel_slides_slideshow', 'steel_slides', 'advanced', 'high' );
-    add_meta_box( 'steel_slides_info'     , 'Using this Slideshow', 'steel_slides_info'     , 'steel_slides', 'side' );
-    add_meta_box( 'steel_slides_settings' , 'Slideshow Settings'  , 'steel_slides_settings' , 'steel_slides', 'side' );
+    add_meta_box(
+      'steel_slides_slideshow',
+      'Add/Edit Slides',
+      'steel_slides_slideshow',
+      'steel_slides',
+      'advanced',
+      'high'
+    );
+
+    add_meta_box(
+      'steel_slides_info',
+      'Using this Slideshow',
+      'steel_slides_info',
+      'steel_slides',
+      'side'
+    );
+
+    add_meta_box(
+      'steel_slides_settings',
+      'Slideshow Settings',
+      'steel_slides_settings',
+      'steel_slides',
+      'side'
+    );
   }
+
   if ( steel_is_module_active( 'teams' ) ) {
-    add_meta_box( 'steel_teams_meta', 'Team Member Profile', 'steel_teams_meta', 'steel_profile', 'side', 'high' );
+    add_meta_box(
+      'steel_teams_meta',
+      'Team Member Profile',
+      'steel_teams_meta',
+      'steel_profile',
+      'side',
+      'high'
+    );
   }
 }
 add_action( 'add_meta_boxes', 'steel_add_meta_boxes' );
