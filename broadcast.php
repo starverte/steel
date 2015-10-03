@@ -236,16 +236,26 @@ function steel_broadcast_add_form_fields() {
       <option value="html"><?php _e( 'Display', 'steel' ); ?></option>
       <option value="rss"><?php _e( 'Podcast', 'steel' ); ?></option>
     </select>
-    <p class="description"><?php _e( 'Display outputs HTML, Podcast outputs RSS for iTunes', 'steel' ) ?></p>
+    <p class="description">
+      <?php _e( 'Display outputs HTML, Podcast outputs RSS for iTunes', 'steel' ); ?>
+    </p>
   </div>
   <div class="form-field">
     <label for="channel_meta[cover_photo_id]"><?php _e( 'Cover Photo', 'steel' ); ?></label>
     <input type="hidden" name="channel_meta[cover_photo_id]" id="channel_cover_photo_id" value="" />
     <div id="channel_cover_photo"></div>
     <a href="#" class="button btn-channel-cover" title="<?php _e( 'Set Cover Photo', 'steel' ); ?>">
-      <span class="dashicons dashicons-format-image"></span> <?php _e( 'Set Cover Photo', 'steel' ); ?>
+      <span class="dashicons dashicons-format-image"></span>
+      <?php _e( 'Set Cover Photo', 'steel' ); ?>
     </a>
-    <p class="description"><?php _e( 'iTunes requires square JPG or PNG images that are at least 1400x1400 pixels', 'steel' ); ?></p>
+    <p class="description">
+      <?php
+        _e(
+          'iTunes requires square JPG or PNG images that are at least 1400x1400 pixels',
+          'steel'
+        );
+      ?>
+    </p>
   </div><?php
 }
 add_action( 'steel_broadcast_channel_add_form_fields', 'steel_broadcast_add_form_fields', 10, 2 );
