@@ -3,11 +3,11 @@
   font-style: normal;
   font-weight: normal;
 
-  src: url("../fonts/starverte.eot?22458953");
-  src: url("../fonts/starverte.eot?22458953#iefix") format("embedded-opentype"),
-       url("../fonts/starverte.woff?22458953") format("woff"),
-       url("../fonts/starverte.ttf?22458953") format("truetype"),
-       url("../fonts/starverte.svg?22458953#starverte") format("svg");
+  src: url("../fonts/starverte.eot?in4k8i");
+  src: url("../fonts/starverte.eot?in4k8i#iefix") format("embedded-opentype"),
+       url("../fonts/starverte.woff?in4k8i") format("woff"),
+       url("../fonts/starverte.ttf?in4k8i") format("truetype"),
+       url("../fonts/starverte.svg?in4k8i#starverte") format("svg");
 }
 
 [class^="icon-"]:before,
@@ -31,17 +31,11 @@
 }
 
 .icon-star:before {
-  content: "\e800";
-}
-.icon-msx-alt:before {
   content: "\e801";
 }
 .icon-msx:before {
   content: "\e802";
 }
 .icon-fcc:before {
-  content: "\e803";
-}
-.icon-fcc-alt:before {
-  content: "\e804";
+  content: "\e800";
 }
