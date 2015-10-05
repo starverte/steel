@@ -259,10 +259,10 @@ function steel_get_image_url( $attachment_id, $size = 'thumbnail', $icon = false
 /**
  * Display custom metadata
  */
-function steel_meta( $mod_prefix, $key, $post_id = null ) {
+function steel_meta( $module, $key, $post_id = 0 ) {
   global $post;
-  $custom = null === $post_id ? get_post_custom( $post->ID ) : get_post_custom( $post_id );
-  $meta = ! empty( $custom[ $mod_prefix.'_'.$key ][0] ) ? $custom[ $mod_prefix.'_'.$key ][0] : '';
+  $custom = get_post_custom( $post_id );
+  $meta = ! empty( $custom[ $module.'_'.$key ][0] ) ? $custom[ $module.'_'.$key ][0] : '';
   return $meta;
 }
 
