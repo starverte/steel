@@ -35,7 +35,7 @@ function steel_menu_page() {
 /**
  * Register settings for Steel options menu page
  */
-function steel_admin_init(){
+function steel_admin_init() {
 
   register_setting( 'steel_options', 'steel_options', 'steel_options_validate' );
 
@@ -112,7 +112,9 @@ function steel_settings_field_ga_id() {
 /**
  * Display social section title
  */
-function steel_social_section() { echo 'Social media profile information'; }
+function steel_social_section() {
+  echo 'Social media profile information';
+}
 
 /**
  * Display Facebook App ID field
@@ -126,7 +128,9 @@ function steel_settings_field_fb_app_id() {
 /**
  * Display modules section title
  */
-function steel_mods_section() { echo 'Select which modules should be active.'; }
+function steel_mods_section() {
+  echo 'Select which modules should be active.';
+}
 
 /**
  * Display Bootstrap module field
@@ -253,52 +257,61 @@ function steel_get_option_defaults() {
   $options = get_option( 'steel_options' );
 
   if ( ! empty( $options['mod_bootstrap'] ) ) {
-    if ('css' === $options['mod_bootstrap'] || 'both' === $options['mod_bootstrap'] )
+    if ( 'css' === $options['mod_bootstrap'] || 'both' === $options['mod_bootstrap'] ) {
       $defaults['load_bootstrap_css'] = true;
-    if ('js' === $options['mod_bootstrap'] || 'both' === $options['mod_bootstrap'] )
+    }
+
+    if ( 'js' === $options['mod_bootstrap'] || 'both' === $options['mod_bootstrap'] ) {
       $defaults['load_bootstrap_js'] = true;
+    }
   }
 
   if ( ! empty( $options['mod_podcast'] ) ) {
-    if ('true' === $options['mod_podcast'])
+    if ( 'true' === $options['mod_podcast'] ) {
       $defaults['load_broadcast'] = true;
-    elseif ('false' === $options['mod_podcast'])
+    } elseif ( 'false' === $options['mod_podcast'] ) {
       $defaults['load_broadcast'] = false;
+    }
   }
 
   if ( ! empty( $options['mod_quotes'] ) ) {
-    if ('true' === $options['mod_quotes'])
+    if ( 'true' === $options['mod_quotes'] ) {
       $defaults['load_quotes'] = true;
-    elseif ('false' === $options['mod_quotes'])
+    } elseif ( 'false' === $options['mod_quotes'] ) {
       $defaults['load_quotes'] = false;
+    }
   }
 
   if ( ! empty( $options['mod_shortcodes'] ) ) {
-    if ('true' === $options['mod_shortcodes'])
+    if ( 'true' === $options['mod_shortcodes'] ) {
       $defaults['load_shortcodes'] = true;
-    elseif ('false' === $options['mod_shortcodes'])
+    } elseif ( 'false' === $options['mod_shortcodes'] ) {
       $defaults['load_shortcodes'] = false;
+    }
   }
 
   if ( ! empty( $options['mod_slides'] ) ) {
-    if ('true' === $options['mod_slides'])
+    if ( 'true' === $options['mod_slides'] ) {
       $defaults['load_slides'] = true;
-    elseif ('false' === $options['mod_slides'])
+    } elseif ( 'false' === $options['mod_slides'] ) {
       $defaults['load_slides'] = false;
+    }
   }
 
   if ( ! empty( $options['mod_teams'] ) ) {
-    if ('true' === $options['mod_teams'])
+    if ( 'true' === $options['mod_teams'] ) {
       $defaults['load_teams'] = true;
-    elseif ('false' === $options['mod_teams'])
+    } elseif ( 'false' === $options['mod_teams'] ) {
       $defaults['load_teams'] = false;
+    }
   }
 
   if ( ! empty( $options['mod_widgets'] ) ) {
-    if ('true' === $options['mod_widgets'])
+    if ( 'true' === $options['mod_widgets'] ) {
       $defaults['load_widgets'] = true;
-    elseif ('false' === $options['mod_widgets'])
+    } elseif ( 'false' === $options['mod_widgets'] ) {
       $defaults['load_widgets'] = false;
+    }
   }
   //END - backwards compatibility
 
