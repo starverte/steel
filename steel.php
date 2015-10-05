@@ -290,15 +290,3 @@ function steel_footer() {
     }
   }
 }
-
-function steel_widgets_init() {
-  if ( steel_is_module_active( 'quotes' ) ) {
-    register_widget( 'Steel_Widget_Random_Quote' );
-  }
-  if ( steel_is_module_active( 'widgets' ) ) {
-    register_widget( 'Steel_Widget_Button' );
-    register_widget( 'Steel_Widget_Link' );
-    register_widget( 'Steel_Widget_List_Group' );
-  }
-}
-add_action( 'widgets_init', 'steel_widgets_init' );
