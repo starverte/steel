@@ -176,19 +176,17 @@ function steel_profile_meta( $key, $post_id = 0 ) {
   return steel_meta( 'profile', $key, $post_id );
 }
 
-// @codingStandardsIgnoreStart
 /**
  * Retrieve profile phone number based on post ID.
  *
  * @see WordPress 4.3.1 get_post_custom()
  *
  * @param string $pattern The pattern to display the phone number.
- *                        Default is "$1.$2.$3" which becomes '###.###.####'.
+ *                        Default is '$1.$2.$3' which becomes '###.###.####'.
  * @param int    $post_id Optional. Post ID. Default is ID of the global $post.
  * @return string Formatted phone number for given profile ID.
  */
-function steel_profile_phone( $pattern = "$1.$2.$3", $post_id = 0 ) {
+function steel_profile_phone( $pattern = '$1.$2.$3', $post_id = 0 ) {
   $phone = steel_profile_meta( 'phone', $post_id );
-  return preg_replace( "/([0-9]{3})([0-9]{3})([0-9]{4})/", $pattern, $phone );
+  return preg_replace( '/([0-9]{3})([0-9]{3})([0-9]{4})/', $pattern, $phone );
 }
-// @codingStandardsIgnoreEnd
