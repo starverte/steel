@@ -84,6 +84,20 @@ function steel_team_taxonomy_args() {
   return $args;
 }
 
+/**
+ * Register custom post type and custom taxonomy
+ */
+function steel_teams_init() {
+  register_post_type( 'steel_profile', steel_profile_post_type_args() );
+
+  register_taxonomy(
+    'steel_team',
+    'steel_profile',
+    steel_team_taxonomy_args()
+  );
+}
+add_action( 'init', 'steel_teams_init' );
+
 function steel_teams_meta() { ?>
 
   <p><label>Title</label><br /><input type="text"  size="25" name="profile_title" value="<?php echo steel_profile_meta( 'title' ); ?>" /></p>
