@@ -21,7 +21,7 @@
  * @param string $version     The version of Steel that deprecated the function.
  * @param string $replacement Optional. The function that should have been called. Default null.
  */
-function steel_deprecated_function( $function, $version, $replacement = null ) {
+function steel_deprecated_function( $function, $version, $replacement = '' ) {
 
   /**
    * Filter whether to trigger an error for deprecated functions.
@@ -29,9 +29,11 @@ function steel_deprecated_function( $function, $version, $replacement = null ) {
    * @param bool $trigger Whether to trigger the error for deprecated functions. Default true.
    */
   if ( WP_DEBUG && apply_filters( 'deprecated_function_trigger_error', true ) ) {
-    if ( ! is_null( $replacement ) )
+    if ( ! is_null( $replacement ) ) {
       trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since Steel version %2$s! Use %3$s instead.', 'steel' ), $function, $version, $replacement ) );
-    else trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since Steel version %2$s with no alternative available.', 'steel' ), $function, $version ) );
+    } else {
+      trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since Steel version %2$s with no alternative available.', 'steel' ), $function, $version ) );
+    }
   }
 }
 
@@ -383,15 +385,17 @@ class Steel_Widget_List_Group extends WP_Widget {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_List_Group' );
     $nav_menu = ! empty( $instance['steel_nav_menu_widget'] ) ? wp_get_nav_menu_object( $instance['steel_nav_menu_widget'] ) : false;
 
-    if ( ! $nav_menu )
+    if ( ! $nav_menu ) {
       return;
+    }
 
     $instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 
     echo '<div class="panel panel-default">';
 
-    if ( ! empty( $instance['title'] ) )
+    if ( ! empty( $instance['title'] ) ) {
       echo '<div class="panel-heading"><h3 class="panel-title">'.$instance['title'].'</h3></div>';
+    }
 
     Steel_Walker_Nav_Menu_List_Group( array( 'fallback_cb' => '', 'menu' => $nav_menu ) );
 
@@ -489,15 +493,17 @@ class Steel_Quotes_Widget extends WP_Widget {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Random_Quote' );
     $cat = ! empty( $instance['cat'] ) ? get_category( $instance['cat'] ) : false;
 
-    if ( ! $cat )
+    if ( ! $cat ) {
       return;
+    }
 
     $instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 
     echo $args['before_widget'];
 
-    if ( ! empty( $instance['title'] ) )
+    if ( ! empty( $instance['title'] ) ) {
       echo $args['before_title'] . $instance['title'] . $args['after_title'];
+    }
 
     $quotes = new WP_Query(
       array(
