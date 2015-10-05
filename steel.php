@@ -43,7 +43,7 @@ if ( steel_is_module_active( 'shortcodes' ) ) {
 }
 
 if ( steel_is_module_active( 'social_media' ) ) {
-  include_once dirname( __FILE__ ) . '/social_media.php';
+  include_once dirname( __FILE__ ) . '/social-media.php';
 }
 
 if ( steel_is_module_active( 'slides' ) ) {

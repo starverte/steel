@@ -44,7 +44,7 @@ module.exports = function(grunt) {
         'quotes.php',
         'shortcodes.php',
         'slides.php',
-        'social_media.php',
+        'social-media.php',
         'steel.php',
         'teams.php',
         'templates.php',
