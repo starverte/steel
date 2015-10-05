@@ -204,7 +204,7 @@ function steel_save_slides() {
 /**
  * Display Slides metadata
  */
-function steel_slides_meta( $key, $post_id = null ) {
+function steel_slides_meta( $key, $post_id = 0 ) {
   $meta = steel_meta( 'slides', $key, $post_id );
   return $meta;
 }
@@ -212,7 +212,7 @@ function steel_slides_meta( $key, $post_id = null ) {
 /**
  * Display Slideshow by id
  */
-function steel_slideshow( $post_id, $size = 'full', $name = null ) {
+function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
   if ( 0 === $post_id ) {
     return;
   }
@@ -341,8 +341,8 @@ function steel_slideshow( $post_id, $size = 'full', $name = null ) {
 
   //Controls
   $controls .= ( 'Simple' === $slides_skin ) ? '<div class="carousel-controls">' : '';
-  $controls .= '<a class="left ' .'carousel-control" href="#carousel_'.$post_id.'" data-slide="prev"><span class="icon-prev' .'"></span></a>';
-  $controls .= '<a class="right '.'carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="icon-next'.'"></span></a>';
+  $controls .= '<a class="left carousel-control" href="#carousel_'.$post_id.'" data-slide="prev"><span class="icon-prev"></span></a>';
+  $controls .= '<a class="right carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="icon-next"></span></a>';
   $controls .= ( 'Simple' === $slides_skin ) ? '</div>' : '';
 
   //Output
@@ -364,38 +364,33 @@ function steel_slideshow( $post_id, $size = 'full', $name = null ) {
  */
 if ( shortcode_exists( 'steel_slideshow' ) ) { remove_shortcode( 'steel_slideshow' ); }
 add_shortcode( 'steel_slideshow', 'steel_slideshow_shortcode' );
-function steel_slideshow_shortcode( $atts, $content = null ) {
-  extract( shortcode_atts( array( 'id' => null, 'name' => null, 'size' => 'full' ), $atts ) );
+function steel_slideshow_shortcode( $attr, $content = '' ) {
+  extract( shortcode_atts( array( 'id' => 0, 'name' => '', 'size' => 'full' ), $attr ) );
 
   if ( ! empty( $id ) ) {
-    $output = steel_slideshow( $id, $size );
+    return steel_slideshow( $id, $size );
   } elseif ( ! empty( $name ) ) {
     $show = get_page_by_title( $name, OBJECT, 'steel_slides' );
-    $output = steel_slideshow( $show->ID, $size, $name );
+    return steel_slideshow( $show->ID, $size, $name );
   } else {
     return;
   }
-  return $output;
 }
 
-function steel_get_slides( $format = null ) {
-  if ( 'options' === $format ) {
-    $args = array( 'post_type' => 'steel_slides', 'posts_per_page' => -1 );
-    $slideshows = get_posts( $args );
-    $slides = array();
-    $slides[0] = 'None';
-    if ( $slideshows ) {
-      foreach ( $slideshows as $slideshow ) {
-        $post_id = $slideshow->ID;
-        $title = $slideshow->post_title;
-        $slides[ $post_id ] = $title;
-      }
-      wp_reset_postdata();
+function steel_get_slides() {
+  $args = array( 'post_type' => 'steel_slides', 'posts_per_page' => -1 );
+  $slideshows = get_posts( $args );
+  $slides = array();
+  $slides[0] = 'None';
+  if ( $slideshows ) {
+    foreach ( $slideshows as $slideshow ) {
+      $post_id = $slideshow->ID;
+      $title = $slideshow->post_title;
+      $slides[ $post_id ] = $title;
     }
-    return $slides;
-  } else {
-    return;
+    wp_reset_postdata();
   }
+  return $slides;
 }
 
 function steel_sanitize_get_slides( $input ) {
