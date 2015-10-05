@@ -191,19 +191,19 @@ function steel_shortcode_column( $atts, $content = '' ) {
 
   if ( $first ) {
     if ( ! empty( $title ) ) {
-      return '<div class="row-fluid"><div class="' . $style . '"><h3>' . esc_atts( $title ) .'</h3>' . $new . '</div>';
+      return '<div class="row-fluid"><div class="' . $style . '"><h3>' . esc_attr( $title ) .'</h3>' . $new . '</div>';
     } else {
       return '<div class="row-fluid"><div class="' . $style . '">' . $new . '</div>';
     }
   } elseif ( $last ) {
     if ( ! empty( $title ) ) {
-      return '<div class="' . $style . '"><h3>' . esc_atts( $title ) .'</h3>' . $new . '</div></div>';
+      return '<div class="' . $style . '"><h3>' . esc_attr( $title ) .'</h3>' . $new . '</div></div>';
     } else {
       return '<div class="' . $style . '">' . $new . '</div></div>';
     }
   } else {
     if ( ! empty( $title ) ) {
-      return '<div class="' . $style . '"><h3>' . esc_atts( $title ) .'</h3>' . $new . '</div>';
+      return '<div class="' . $style . '"><h3>' . esc_attr( $title ) .'</h3>' . $new . '</div>';
     } else {
       return '<div class="' . $style . '">' . $new . '</div>';
     }
