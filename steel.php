@@ -302,17 +302,3 @@ function steel_widgets_init() {
   }
 }
 add_action( 'widgets_init', 'steel_widgets_init' );
-
-function steel_add_meta_boxes() {
-  if ( steel_is_module_active( 'teams' ) ) {
-    add_meta_box(
-      'steel_teams_meta',
-      'Team Member Profile',
-      'steel_teams_meta',
-      'steel_profile',
-      'side',
-      'high'
-    );
-  }
-}
-add_action( 'add_meta_boxes', 'steel_add_meta_boxes' );

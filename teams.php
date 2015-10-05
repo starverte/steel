@@ -98,7 +98,8 @@ function steel_teams_init() {
 }
 add_action( 'init', 'steel_teams_init' );
 
-function steel_teams_meta() { ?>
+function steel_teams_meta() {
+?>
 
   <p><label>Title</label><br /><input type="text"  size="25" name="profile_title" value="<?php echo steel_profile_meta( 'title' ); ?>" /></p>
   <p><label>Email</label><br /><input type="email" size="25" name="profile_email" value="<?php echo steel_profile_meta( 'email' ); ?>" /></p>
@@ -106,6 +107,21 @@ function steel_teams_meta() { ?>
 
   do_action( 'steel_teams_add_meta' );
 }
+
+/**
+ * Add meta boxes to Edit Profile screen
+ */
+function steel_teams_add_meta_boxes() {
+  add_meta_box(
+    'steel_teams_meta',
+    'Team Member Profile',
+    'steel_teams_meta',
+    'steel_profile',
+    'side',
+    'high'
+  );
+}
+add_action( 'add_meta_boxes', 'steel_teams_add_meta_boxes' );
 
 /*
  * Save data from meta boxes
