@@ -7,7 +7,9 @@
  * @package Steel\Templates
  */
 
-add_action( 'flint_entry_meta_above_steel_profile','steel_profile_entry_meta_above',10 );
+/**
+ * Display team profile information
+ */
 function steel_profile_entry_meta_above() {
   $title = steel_profile_meta( 'title' );
   $email = steel_profile_meta( 'email' );
@@ -22,3 +24,4 @@ function steel_profile_entry_meta_above() {
   $output .= ! empty( $email ) | ! empty( $phone ) ? '</p>' : '';
   echo $output;
 }
+add_action( 'flint_entry_meta_above_steel_profile','steel_profile_entry_meta_above', 10 );

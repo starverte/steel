@@ -95,7 +95,6 @@ class Steel_Widget_Button extends WP_Widget {
    * Output the settings update form.
    *
    * @param array $instance Current settings.
-   * @return string Default return is 'noform'.
    */
   function form( $instance ) {
     $title = ! empty( $instance['title'] ) ? $instance['title'] : '';

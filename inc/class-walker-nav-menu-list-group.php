@@ -20,7 +20,7 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
    *
    * @param string $output Passed by reference. Used to append additional content.
    * @param int    $depth  Depth of menu item. Used for padding.
-   * @param array  $args   An array of arguments. @see wp_nav_menu()
+   * @param array  $args   An array of arguments. @see wp_nav_menu().
    */
   function start_lvl( &$output, $depth = 0, $args = array() ) {
     $indent = str_repeat( "\t", $depth );
@@ -34,7 +34,7 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
    *
    * @param string $output Passed by reference. Used to append additional content.
    * @param int    $depth  Depth of menu item. Used for padding.
-   * @param array  $args   An array of arguments. @see wp_nav_menu()
+   * @param array  $args   An array of arguments. @see wp_nav_menu().
    */
   function end_lvl( &$output, $depth = 0, $args = array() ) {
     $indent = str_repeat( "\t", $depth );
@@ -49,7 +49,7 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
    * @param string $output Passed by reference. Used to append additional content.
    * @param object $item   Menu item data object.
    * @param int    $depth  Depth of menu item. Used for padding.
-   * @param array  $args   An array of arguments. @see wp_nav_menu()
+   * @param array  $args   An array of arguments. @see wp_nav_menu().
    * @param int    $id     Current item ID.
    */
   function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
@@ -112,7 +112,7 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
    * @param string $output Passed by reference. Used to append additional content.
    * @param object $item   Page data object. Not used.
    * @param int    $depth  Depth of page. Not Used.
-   * @param array  $args   An array of arguments. @see wp_nav_menu()
+   * @param array  $args   An array of arguments. @see wp_nav_menu().
    */
   function end_el( &$output, $item, $depth = 0, $args = array() ) {
     $output .= "\n";

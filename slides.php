@@ -8,7 +8,10 @@
  * @since 1.2.5
  */
 
-function steel_get_slides_args() {
+/**
+ * Return arguments for registering steel_slides
+ */
+function steel_slides_post_type_args() {
   $labels = array(
     'name'                => _x( 'Slideshows', 'Post Type General Name', 'steel' ),
     'singular_name'       => _x( 'Slideshow', 'Post Type Singular Name', 'steel' ),
@@ -46,6 +49,18 @@ function steel_get_slides_args() {
   return $args;
 }
 
+/**
+ * Register custom post type and image size
+ */
+function steel_slides_init() {
+  register_post_type( 'steel_slides', steel_slides_post_type_args() );
+  add_image_size( 'steel-slide-thumb', 300, 185, true );
+}
+add_action( 'init', 'steel_slides_init' );
+
+/**
+ * Display slides on Edit screen
+ */
 function steel_slides_slideshow() {
   $slides_media     = steel_slides_meta( 'media' );
   $slides_order     = steel_slides_meta( 'order' );
@@ -84,12 +99,20 @@ function steel_slides_slideshow() {
   <input type="hidden" name="slides_order" id="slides_order" value="<?php echo $slides_order; ?>">
   <div style="float:none; clear:both;"></div><?php
 }
+
+/**
+ * Display slideshow shortcode information on Edit screen
+ */
 function steel_slides_info() {
   global $post; ?>
 
   <p>To use this slider in your posts or pages use the following shortcode:</p>
   <p><code>[steel_slideshow id="<?php echo $post->ID; ?>"]</code> or</p><p><code>[steel_slideshow name="<?php echo strtolower( $post->post_title ); ?>"]</code></p><?php
 }
+
+/**
+ * Display slideshow settings on Edit screen
+ */
 function steel_slides_settings() {
   global $post;
   $skins = array( 'Default', 'Bar', 'Gallery', 'Simple', 'Tabs', 'Thumbnails' );
@@ -125,10 +148,40 @@ function steel_slides_settings() {
   </p><?php
 }
 
-/*
+/**
+ * Add meta boxes to Edit screen
+ */
+function steel_slides_add_meta_boxes() {
+  add_meta_box(
+    'steel_slides_slideshow',
+    'Add/Edit Slides',
+    'steel_slides_slideshow',
+    'steel_slides',
+    'advanced',
+    'high'
+  );
+
+  add_meta_box(
+    'steel_slides_info',
+    'Using this Slideshow',
+    'steel_slides_info',
+    'steel_slides',
+    'side'
+  );
+
+  add_meta_box(
+    'steel_slides_settings',
+    'Slideshow Settings',
+    'steel_slides_settings',
+    'steel_slides',
+    'side'
+  );
+}
+add_action( 'add_meta_boxes', 'steel_slides_add_meta_boxes' );
+
+/**
  * Save data from meta boxes
  */
-add_action( 'save_post', 'steel_save_slides' );
 function steel_save_slides() {
   global $post;
   if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset( $post_id )) ) { return $post_id; }
@@ -160,19 +213,34 @@ function steel_save_slides() {
     update_post_meta( $post->ID, 'slides_transition', 'Default' );
   }
 }
+add_action( 'save_post', 'steel_save_slides' );
 
 /**
- * Display Slides metadata
+ * Retrieve post meta field, based on post ID and key.
+ *
+ * The post meta fields are retrieved from the cache where possible,
+ * so the function is optimized to be called more than once.
+ *
+ * @see WordPress 4.3.1 get_post_custom()
+ *
+ * @param string $key     The meta key minus the module prefix.
+ * @param int    $post_id Optional. Post ID. Default is ID of the global $post.
+ * @return string Value for post meta for the given post and given key.
  */
-function steel_slides_meta( $key, $post_id = null ) {
+function steel_slides_meta( $key, $post_id = 0 ) {
   $meta = steel_meta( 'slides', $key, $post_id );
   return $meta;
 }
 
 /**
  * Display Slideshow by id
+ *
+ * @param int          $post_id The post ID of the slideshow.
+ * @param string|array $size    Optional. Registered image size to retrieve the source for
+ *                              or a flat array of height and width dimensions. Default 'full'.
+ * @param string       $name    Name of slideshow to use as identifier. Default is $post_id.
  */
-function steel_slideshow( $post_id, $size = 'full', $name = null ) {
+function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
   if ( 0 === $post_id ) {
     return;
   }
@@ -215,7 +283,6 @@ function steel_slideshow( $post_id, $size = 'full', $name = null ) {
   if ( 'Gallery' !== $slides_skin ) {
     $carousel_div = '<div id="carousel_'.$name.'" class="'.$slides_class.'" data-ride="carousel">';
 
-    //Wrapper for slides
     foreach ( $slides as $slide ) {
       if ( ! empty( $slide ) ) {
         $image   = wp_get_attachment_image_src( $slide, $size );
@@ -237,15 +304,14 @@ function steel_slideshow( $post_id, $size = 'full', $name = null ) {
           } else {
             if ( ! empty( $title ) ) { $items .= '<p id="slides_title_'.$slide.'">' .$title.'</p>'; }
           }
-          $items .= '</div>';//.carousel-caption
+          $items .= '</div>';// .carousel-caption
         }
-        $items .= '</div>';//.item
+        $items .= '</div>';// .item
       }
     }
   } else {
     $carousel_div = '<div id="carousel_'.$name.'" class="row carousel-gallery">';
 
-    //Wrapper for slides for Gallery skin
     foreach ( $slides as $slide ) {
       if ( ! empty( $slide ) ) {
         $count += 1;
@@ -262,7 +328,6 @@ function steel_slideshow( $post_id, $size = 'full', $name = null ) {
     }
   }
 
-  //Indicators
   if ( empty( $slides_skin ) || 'Default' === $slides_skin ) {
     $indicators .= '<ol class="carousel-indicators">';
     foreach ( $slides as $slide ) {
@@ -299,13 +364,11 @@ function steel_slideshow( $post_id, $size = 'full', $name = null ) {
     $indicators = '';
   }
 
-  //Controls
   $controls .= ( 'Simple' === $slides_skin ) ? '<div class="carousel-controls">' : '';
-  $controls .= '<a class="left ' .'carousel-control" href="#carousel_'.$post_id.'" data-slide="prev"><span class="icon-prev' .'"></span></a>';
-  $controls .= '<a class="right '.'carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="icon-next'.'"></span></a>';
+  $controls .= '<a class="left carousel-control" href="#carousel_'.$post_id.'" data-slide="prev"><span class="icon-prev"></span></a>';
+  $controls .= '<a class="right carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="icon-next"></span></a>';
   $controls .= ( 'Simple' === $slides_skin ) ? '</div>' : '';
 
-  //Output
   $output .= 'Tabs' === $slides_skin ? $indicators : '';
   $output .= $carousel_div;
   $output .= empty( $slides_skin ) || 'Default' === $slides_skin ? $indicators : '';
@@ -319,45 +382,57 @@ function steel_slideshow( $post_id, $size = 'full', $name = null ) {
   return $output;
 }
 
-/*
- * Create [steel_slideshow] shortcode
+/**
+ * Builds the Slideshow shortcode output.
+ *
+ * This implements the functionality of the Slideshow Shortcode for displaying
+ * a slideshow in a post.
+ *
+ * @see WordPress 4.3.1 add_shortcode()
+ * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @param array  $attr Attributes of the shortcode.
+ * @param string $content Shortcode content.
+ * @return string|void HTML content to display slideshow.
  */
-if ( shortcode_exists( 'steel_slideshow' ) ) { remove_shortcode( 'steel_slideshow' ); }
-add_shortcode( 'steel_slideshow', 'steel_slideshow_shortcode' );
-function steel_slideshow_shortcode( $atts, $content = null ) {
-  extract( shortcode_atts( array( 'id' => null, 'name' => null, 'size' => 'full' ), $atts ) );
+function steel_slideshow_shortcode( $attr, $content = '' ) {
+  extract( shortcode_atts( array( 'id' => 0, 'name' => '', 'size' => 'full' ), $attr ) );
 
   if ( ! empty( $id ) ) {
-    $output = steel_slideshow( $id, $size );
+    return steel_slideshow( $id, $size );
   } elseif ( ! empty( $name ) ) {
     $show = get_page_by_title( $name, OBJECT, 'steel_slides' );
-    $output = steel_slideshow( $show->ID, $size, $name );
+    return steel_slideshow( $show->ID, $size, $name );
   } else {
     return;
   }
-  return $output;
 }
+add_shortcode( 'steel_slideshow', 'steel_slideshow_shortcode' );
 
-function steel_get_slides( $format = null ) {
-  if ( 'options' === $format ) {
-    $args = array( 'post_type' => 'steel_slides', 'posts_per_page' => -1 );
-    $slideshows = get_posts( $args );
-    $slides = array();
-    $slides[0] = 'None';
-    if ( $slideshows ) {
-      foreach ( $slideshows as $slideshow ) {
-        $post_id = $slideshow->ID;
-        $title = $slideshow->post_title;
-        $slides[ $post_id ] = $title;
-      }
-      wp_reset_postdata();
+/**
+ * Return IDs for all slideshows
+ */
+function steel_get_slides() {
+  $args = array( 'post_type' => 'steel_slides', 'posts_per_page' => -1 );
+  $slideshows = get_posts( $args );
+  $slides = array();
+  $slides[0] = 'None';
+  if ( $slideshows ) {
+    foreach ( $slideshows as $slideshow ) {
+      $post_id = $slideshow->ID;
+      $title = $slideshow->post_title;
+      $slides[ $post_id ] = $title;
     }
-    return $slides;
-  } else {
-    return;
+    wp_reset_postdata();
   }
+  return $slides;
 }
 
+/**
+ * Sanitize options based on steel_get_slides
+ *
+ * @param mixed $input Unfiltered input.
+ */
 function steel_sanitize_get_slides( $input ) {
   $valid = steel_get_slides( 'options' );
 

@@ -274,6 +274,8 @@ add_action( 'steel_broadcast_channel_add_form_fields', 'steel_broadcast_add_form
 
 /**
  * Display custom form fields on Edit Channel screen
+ *
+ * @param object $term Current taxonomy term object.
  */
 function steel_broadcast_edit_form_fields( $term ) {
   $the_term = $term->term_id;
@@ -391,6 +393,8 @@ add_action( 'steel_broadcast_channel_edit_form_fields', 'steel_broadcast_edit_fo
 
 /**
  * Save custom form fields on New Channel and Edit Channel screens
+ *
+ * @param int $term_id Term ID.
  */
 function steel_broadcast_channel_save( $term_id ) {
   $the_term = $term_id;
