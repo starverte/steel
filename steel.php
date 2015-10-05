@@ -305,7 +305,7 @@ add_action( 'widgets_init', 'steel_widgets_init' );
 
 function steel_init() {
   if ( steel_is_module_active( 'teams' ) ) {
-    $profile_args = steel_get_profile_args();
+    $profile_args = steel_profile_post_type_args();
     $team_args = steel_get_team_args();
     register_post_type( 'steel_profile', $profile_args );
     register_taxonomy( 'steel_team', 'steel_profile', $team_args );

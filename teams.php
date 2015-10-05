@@ -5,7 +5,7 @@
  * @package Steel\Teams
  */
 
-function steel_get_profile_args() {
+function steel_profile_post_type_args() {
   $labels = array(
     'name'                => _x( 'Profiles', 'Post Type General Name', 'steel' ),
     'singular_name'       => _x( 'Profile', 'Post Type Singular Name', 'steel' ),
