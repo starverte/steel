@@ -46,6 +46,15 @@ function steel_slides_post_type_args() {
   return $args;
 }
 
+/**
+ * Register custom post type and image size
+ */
+function steel_slides_init() {
+  register_post_type( 'steel_slides', steel_slides_post_type_args() );
+  add_image_size( 'steel-slide-thumb', 300, 185, true );
+}
+add_action( 'init', 'steel_slides_init' );
+
 function steel_slides_slideshow() {
   $slides_media     = steel_slides_meta( 'media' );
   $slides_order     = steel_slides_meta( 'order' );
