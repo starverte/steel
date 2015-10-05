@@ -29,7 +29,7 @@ if ( shortcode_exists( 'tooltip' )     ) { remove_shortcode( 'tooltip' ); }
  *
  * @internal
  */
-function steel_shortcode_alert( $atts, $content = null ) {
+function steel_shortcode_alert( $atts, $content = '' ) {
   extract( shortcode_atts( array( 'color' => 'info' ), $atts ) );
 
   $new = strip_tags( $content, '<a><strong><em><code><ol><ul><li>' );
@@ -48,7 +48,7 @@ add_shortcode( 'alert', 'steel_shortcode_alert' );
  *
  * @internal
  */
-function steel_shortcode_badge( $atts, $content = null ) {
+function steel_shortcode_badge( $atts, $content = '' ) {
   $new = strip_tags( $content, '<a>' );
   return '<span class="badge">' . $new . '</span>';
 }
@@ -62,15 +62,15 @@ add_shortcode( 'badge', 'steel_shortcode_badge' );
  *
  * @internal
  */
-function steel_shortcode_btn( $atts, $content = null ) {
+function steel_shortcode_btn( $atts, $content = '' ) {
   extract( shortcode_atts( array(
     'color'     => 'default',
     'link'      => '#',
     'placement' => 'top auto',
-    'toggle'    => null,
-    'title'     => null,
-    'body'      => null,
-    'target'    => null,
+    'toggle'    => '',
+    'title'     => '',
+    'body'      => '',
+    'target'    => '',
   ), $atts ) );
 
   $new = strip_tags( $content, '<a><strong><em>' );
@@ -119,7 +119,7 @@ add_shortcode( 'btn', 'steel_shortcode_btn' );
  *
  * @internal
  */
-function steel_shortcode_btn_group( $atts, $content = null ) {
+function steel_shortcode_btn_group( $atts, $content = '' ) {
   $new = strip_tags( $content, '<a><strong><code>' );
 
   $output  = '<div class="btn-group">';
@@ -136,9 +136,9 @@ add_shortcode( 'btn_group', 'steel_shortcode_btn_group' );
  *
  * @internal
  */
-function steel_shortcode_column( $atts, $content = null ) {
+function steel_shortcode_column( $atts, $content = '' ) {
   extract( shortcode_atts( array(
-    'title' => null,
+    'title' => '',
     'num'   => '2',
     'first' => false,
     'last'  => false,
@@ -197,7 +197,7 @@ add_shortcode( 'column', 'steel_shortcode_column' );
  *
  * @internal
  */
-function steel_shortcode_glyphicon( $atts, $content = null ) {
+function steel_shortcode_glyphicon( $atts, $content = '' ) {
   extract( shortcode_atts( array( 'icon' => '' ), $atts ) );
   return '<i class="glyphicon glyphicon-'. $icon .'"></i> ';
 }
@@ -211,7 +211,7 @@ add_shortcode( 'glyph', 'steel_shortcode_glyphicon' );
  *
  * @internal
  */
-function steel_shortcode_label( $atts, $content = null ) {
+function steel_shortcode_label( $atts, $content = '' ) {
   extract( shortcode_atts( array( 'color' => 'default' ), $atts ) );
 
   $new = strip_tags( $content, '<a>' );
@@ -231,12 +231,12 @@ add_shortcode( 'label', 'steel_shortcode_label' );
  *
  * @internal
  */
-function steel_shortcode_panel( $atts, $content = null ) {
+function steel_shortcode_panel( $atts, $content = '' ) {
   extract( shortcode_atts( array(
     'color'   => 'default',
-    'heading' => null,
-    'title'   => null,
-    'footer'  => null,
+    'heading' => '',
+    'title'   => '',
+    'footer'  => '',
   ), $atts ) );
 
   $new = strip_tags( $content, '<a><strong><em><code><ol><ul><li>' );
@@ -284,7 +284,7 @@ add_shortcode( 'panel', 'steel_shortcode_panel' );
  *
  * @internal
  */
-function steel_shortcode_panel_group( $atts, $content = null ) {
+function steel_shortcode_panel_group( $atts, $content = '' ) {
   $new = strip_tags( $content, '<a><strong><em><code><ol><ul><li>' );
 
   global $group_id, $panel_int;
@@ -307,10 +307,10 @@ add_shortcode( 'panel_group', 'steel_shortcode_panel_group' );
  *
  * @internal
  */
-function steel_shortcode_progress( $atts, $content = null ) {
+function steel_shortcode_progress( $atts, $content = '' ) {
   extract( shortcode_atts( array(
     'color'   => 'default',
-    'percent' => null,
+    'percent' => 0,
     'style'   => false,
   ), $atts ) );
 
@@ -350,7 +350,7 @@ add_shortcode( 'progress', 'steel_shortcode_progress' );
  *
  * @internal
  */
-function steel_shortcode_tooltip( $atts, $content = null ) {
+function steel_shortcode_tooltip( $atts, $content = '' ) {
   extract( shortcode_atts( array(
     'title' => '',
     'placement' => 'top auto',
