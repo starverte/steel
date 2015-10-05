@@ -305,7 +305,7 @@ add_action( 'widgets_init', 'steel_widgets_init' );
 
 function steel_init() {
   if ( steel_is_module_active( 'slides' ) ) {
-    $args = steel_get_slides_args();
+    $args = steel_slides_post_type_args();
     register_post_type( 'steel_slides', $args );
     add_image_size( 'steel-slide-thumb', 300, 185, true );
   }

@@ -8,7 +8,7 @@
  * @since 1.2.5
  */
 
-function steel_get_slides_args() {
+function steel_slides_post_type_args() {
   $labels = array(
     'name'                => _x( 'Slideshows', 'Post Type General Name', 'steel' ),
     'singular_name'       => _x( 'Slideshow', 'Post Type Singular Name', 'steel' ),
