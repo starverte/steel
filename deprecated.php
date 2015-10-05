@@ -77,7 +77,7 @@ function profile_email() {
  *
  * @param string $pattern The format to display the phone number
  */
-function profile_phone( $pattern = "$1.$2.$3" ) {
+function profile_phone( $pattern = '$1.$2.$3' ) {
   steel_deprecated_function( __FUNCTION__, '1.2.6', 'steel_profile_phone()' );
   echo steel_profile_phone( $pattern );
 }

@@ -129,14 +129,24 @@ add_action( 'add_meta_boxes', 'steel_teams_add_meta_boxes' );
 add_action( 'save_post', 'steel_save_profile' );
 function steel_save_profile() {
   global $post;
-  if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset( $post_id )) ) { return $post_id; }
-  if ( defined( 'DOING_AJAX' ) && DOING_AJAX && (isset( $post_id )) ) { return $post_id; } //Prevents the metaboxes from being overwritten while quick editing.
-  if ( preg_match( '/\edit\.php/', $_SERVER['REQUEST_URI'] ) && (isset( $post_id )) ) { return $post_id; } //Detects if the save action is coming from a quick edit/batch edit.
-  if ( isset( $_POST['profile_email'] ) ) { update_post_meta( $post->ID, "profile_email", $_POST["profile_email"] ); }
-  if ( isset( $_POST['profile_title'] ) ) { update_post_meta( $post->ID, "profile_title", $_POST["profile_title"] ); }
+  if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset( $post_id )) ) {
+    return $post_id;
+  }
+  if ( defined( 'DOING_AJAX' ) && DOING_AJAX && (isset( $post_id )) ) {
+    return $post_id;
+  } //Prevents the metaboxes from being overwritten while quick editing.
+  if ( preg_match( '/\edit\.php/', $_SERVER['REQUEST_URI'] ) && (isset( $post_id )) ) {
+    return $post_id;
+  } //Detects if the save action is coming from a quick edit/batch edit.
+  if ( isset( $_POST['profile_email'] ) ) {
+    update_post_meta( $post->ID, 'profile_email', $_POST['profile_email'] );
+  }
+  if ( isset( $_POST['profile_title'] ) ) {
+    update_post_meta( $post->ID, 'profile_title', $_POST['profile_title'] );
+  }
   if ( isset( $_POST['profile_phone'] ) ) {
-    $new = preg_replace( '/[^a-z0-9]+/i', '', $_POST["profile_phone"] );
-    update_post_meta( $post->ID, "profile_phone", $new );
+    $new = preg_replace( '/[^a-z0-9]+/i', '', $_POST['profile_phone'] );
+    update_post_meta( $post->ID, 'profile_phone', $new );
   }
   do_action( 'steel_teams_save_meta' );
 }
@@ -144,14 +154,14 @@ function steel_save_profile() {
 /**
  * Return Team Profile metadata
  */
-function steel_profile_meta( $key, $post_id = null ) {
+function steel_profile_meta( $key, $post_id = 0 ) {
   return steel_meta( 'profile', $key, $post_id );
 }
 
 /**
  * Display profile phone number
  */
-function steel_profile_phone( $pattern = "$1.$2.$3", $post_id = null ) {
+function steel_profile_phone( $pattern = '$1.$2.$3', $post_id = 0 ) {
   $phone = steel_profile_meta( 'phone', $post_id );
-  return preg_replace( "/([0-9]{3})([0-9]{3})([0-9]{4})/", $pattern, $phone );
+  return preg_replace( '/([0-9]{3})([0-9]{3})([0-9]{4})/', $pattern, $phone );
 }
