@@ -87,16 +87,16 @@ function item_new(attachment) {
       '</div>' +
     '</div>'
   );
-  newOrder = jQuery("#items").val();
+  newOrder = jQuery("#item_list").val();
   newOrder = newOrder + ',' + attachment.id;
   newOrder = newOrder.replace(",,",",");
-  jQuery("#items").val(newOrder);
+  jQuery("#item_list").val(newOrder);
 };
 function item_delete(id) {
   jQuery("#"+id).remove();
-  deleteOrder = jQuery("#items").val();
+  deleteOrder = jQuery("#item_list").val();
   deleteOrder = deleteOrder.replace(","+id,"");
   deleteOrder = deleteOrder.replace(id,"");
   deleteOrder = deleteOrder.replace(",,",",");
-  jQuery("#items").val(deleteOrder);
+  jQuery("#item_list").val(deleteOrder);
 }
