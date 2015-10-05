@@ -21,7 +21,7 @@
  * @param string $version     The version of Steel that deprecated the function.
  * @param string $replacement Optional. The function that should have been called. Default null.
  */
-function steel_deprecated_function( $function, $version, $replacement = null ) {
+function steel_deprecated_function( $function, $version, $replacement = '' ) {
 
   /**
    * Filter whether to trigger an error for deprecated functions.
@@ -29,9 +29,11 @@ function steel_deprecated_function( $function, $version, $replacement = null ) {
    * @param bool $trigger Whether to trigger the error for deprecated functions. Default true.
    */
   if ( WP_DEBUG && apply_filters( 'deprecated_function_trigger_error', true ) ) {
-    if ( ! is_null( $replacement ) )
+    if ( ! is_null( $replacement ) ) {
       trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since Steel version %2$s! Use %3$s instead.', 'steel' ), $function, $version, $replacement ) );
-    else trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since Steel version %2$s with no alternative available.', 'steel' ), $function, $version ) );
+    } else {
+      trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since Steel version %2$s with no alternative available.', 'steel' ), $function, $version ) );
+    }
   }
 }
 
@@ -73,9 +75,9 @@ function profile_email() {
  *
  * @deprecated 1.2.6 Use steel_profile_phone() instead
  *
- * @param string $pattern The format to display the phone number
+ * @param string $pattern The format to display the phone number.
  */
-function profile_phone( $pattern = "$1.$2.$3" ) {
+function profile_phone( $pattern = '$1.$2.$3' ) {
   steel_deprecated_function( __FUNCTION__, '1.2.6', 'steel_profile_phone()' );
   echo steel_profile_phone( $pattern );
 }
@@ -95,7 +97,7 @@ function is_flint_active() {
  *
  * @deprecated 1.3.0 Use steel_btn_like()
  *
- * @param array $args An array of arguments
+ * @param array $args An array of arguments.
  */
 function like_this( $args = array() ) {
   steel_deprecated_function( __FUNCTION__, '1.3.0', 'steel_btn_like()' );
@@ -107,7 +109,7 @@ function like_this( $args = array() ) {
  *
  * @deprecated 1.3.0 Use steel_btn_pin_it()
  *
- * @param array $args An array of arguments
+ * @param array $args An array of arguments.
  */
 function pin_it( $args = array() ) {
   steel_deprecated_function( __FUNCTION__, '1.3.0', 'steel_btn_pin_it()' );
@@ -119,7 +121,7 @@ function pin_it( $args = array() ) {
  *
  * @deprecated 1.3.0 Use steel_is_module_active()
  *
- * @param string $module The name of the module to check status of
+ * @param string $module The name of the module to check status for.
  */
 function is_module_active( $module ) {
   steel_deprecated_function( __FUNCTION__, '1.3.0', 'steel_is_module_active()' );
@@ -131,10 +133,10 @@ function is_module_active( $module ) {
  *
  * @deprecated 1.3.0 Use steel_btn_tweet()
  *
- * @param string $data_count The direction to display the Tweet count (horizontal, vertical, or none)
- * @param string $data_size  The size of the button (default or large)
+ * @param string $data_count The direction to display the Tweet count (horizontal, vertical, or none).
+ * @param string $data_size  The size of the button (default or large).
  * @param string $data_via   The attribution will appear in a Tweet as " via @username" translated into the language of the Tweet author.
- * @param array  $args       An array of additional arguments
+ * @param array  $args       An array of additional arguments.
  */
 function tweet_this( $data_count = 'horizontal', $data_size = '', $data_via = '', $args = array() ) {
   steel_deprecated_function( __FUNCTION__, '1.3.0', 'steel_btn_tweet()' );
@@ -215,7 +217,7 @@ class Steel_Link_Widget extends WP_Widget {
    * value of `$instance` should be returned. If false is returned, the instance won't be
    * saved/updated.
    *
-   * @param array $new_instance New settings for this instance as input by the user
+   * @param array $new_instance New settings for this instance as input by the user.
    * @param array $old_instance Old settings for this instance.
    * @return array Settings to save or bool false to cancel saving.
    */
@@ -232,7 +234,6 @@ class Steel_Link_Widget extends WP_Widget {
    * Output the settings update form.
    *
    * @param array $instance Current settings.
-   * @return string Default return is 'noform'.
    */
   function form( $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Button' );
@@ -313,7 +314,7 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
    * value of `$instance` should be returned. If false is returned, the instance won't be
    * saved/updated.
    *
-   * @param array $new_instance New settings for this instance as input by the user
+   * @param array $new_instance New settings for this instance as input by the user.
    * @param array $old_instance Old settings for this instance.
    * @return array Settings to save or bool false to cancel saving.
    */
@@ -330,7 +331,6 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
    * Output the settings update form.
    *
    * @param array $instance Current settings.
-   * @return string Default return is 'noform'.
    */
   function form( $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Link' );
@@ -383,15 +383,17 @@ class Steel_Widget_List_Group extends WP_Widget {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_List_Group' );
     $nav_menu = ! empty( $instance['steel_nav_menu_widget'] ) ? wp_get_nav_menu_object( $instance['steel_nav_menu_widget'] ) : false;
 
-    if ( ! $nav_menu )
+    if ( ! $nav_menu ) {
       return;
+    }
 
     $instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 
     echo '<div class="panel panel-default">';
 
-    if ( ! empty( $instance['title'] ) )
+    if ( ! empty( $instance['title'] ) ) {
       echo '<div class="panel-heading"><h3 class="panel-title">'.$instance['title'].'</h3></div>';
+    }
 
     Steel_Walker_Nav_Menu_List_Group( array( 'fallback_cb' => '', 'menu' => $nav_menu ) );
 
@@ -405,7 +407,7 @@ class Steel_Widget_List_Group extends WP_Widget {
    * value of `$instance` should be returned. If false is returned, the instance won't be
    * saved/updated.
    *
-   * @param array $new_instance New settings for this instance as input by the user
+   * @param array $new_instance New settings for this instance as input by the user.
    * @param array $old_instance Old settings for this instance.
    * @return array Settings to save or bool false to cancel saving.
    */
@@ -489,15 +491,17 @@ class Steel_Quotes_Widget extends WP_Widget {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Random_Quote' );
     $cat = ! empty( $instance['cat'] ) ? get_category( $instance['cat'] ) : false;
 
-    if ( ! $cat )
+    if ( ! $cat ) {
       return;
+    }
 
     $instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 
     echo $args['before_widget'];
 
-    if ( ! empty( $instance['title'] ) )
+    if ( ! empty( $instance['title'] ) ) {
       echo $args['before_title'] . $instance['title'] . $args['after_title'];
+    }
 
     $quotes = new WP_Query(
       array(
@@ -534,7 +538,7 @@ class Steel_Quotes_Widget extends WP_Widget {
    * value of `$instance` should be returned. If false is returned, the instance won't be
    * saved/updated.
    *
-   * @param array $new_instance New settings for this instance as input by the user
+   * @param array $new_instance New settings for this instance as input by the user.
    * @param array $old_instance Old settings for this instance.
    * @return array Settings to save or bool false to cancel saving.
    */
@@ -549,7 +553,6 @@ class Steel_Quotes_Widget extends WP_Widget {
    * Output the settings update form.
    *
    * @param array $instance Current settings.
-   * @return string Default return is 'noform'.
    */
   function form( $instance ) {
     steel_deprecated_function( __CLASS__, '1.3.0', 'Steel_Widget_Random_Quote' );

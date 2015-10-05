@@ -1,28 +1,30 @@
 <?php
 /**
-Plugin Name: Steel
-Plugin URI: https://github.com/starverte/steel.git
-Description: Steel brings the power of Matchstix to a simple user interface, making any site’s impact spread like wildfire. No programming required.
-Version: 1.2.7
-Author: Star Verte LLC
-Author URI: http://starverte.com/
-License: GPLv3
-License URI: http://www.gnu.org/licenses/
-
-  Copyright 2013-2015 Star Verte LLC (email : dev@starverte.com)
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Plugin Name: Steel
+ * Plugin URI: https://github.com/starverte/steel.git
+ * Description: Steel brings the power of Matchstix to a simple user interface, making any site’s impact spread like wildfire. No programming required.
+ * Version: 1.2.7
+ * Author: Star Verte LLC
+ * Author URI: http://starverte.com/
+ * License: GPLv3
+ * License URI: http://www.gnu.org/licenses/
+ *
+ *   Copyright 2013-2015 Star Verte LLC (email : dev@starverte.com)
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @package Steel
  */
 
 include_once dirname( __FILE__ ) . '/bootstrap.php';
@@ -41,7 +43,7 @@ if ( steel_is_module_active( 'shortcodes' ) ) {
 }
 
 if ( steel_is_module_active( 'social_media' ) ) {
-  include_once dirname( __FILE__ ) . '/social_media.php';
+  include_once dirname( __FILE__ ) . '/social-media.php';
 }
 
 if ( steel_is_module_active( 'slides' ) ) {
@@ -131,10 +133,8 @@ function steel_enqueue_scripts() {
   $options = steel_get_options();
 
   if ( true === $options['load_bootstrap_js'] ) {
-    // Make sure there aren't other instances of Twitter Bootstrap
     wp_deregister_script( 'bootstrap' );
 
-    // Load Twitter Bootstrap
     wp_enqueue_script(
       'bootstrap',
       '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js',
@@ -145,10 +145,8 @@ function steel_enqueue_scripts() {
   }
 
   if ( true === $options['load_bootstrap_css'] ) {
-    // Make sure there aren't other instances of Twitter Bootstrap
     wp_deregister_style( 'bootstrap-css' );
 
-    // Load Twitter Bootstrap
     wp_enqueue_style(
       'bootstrap-css',
       '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css',
@@ -168,10 +166,8 @@ function steel_enqueue_scripts() {
     wp_enqueue_style( 'slides-mod-style', plugins_url( 'steel/css/slides.css' ), array(), '1.2.7' );
   }
 
-  // Load script for "Pin It" button
   wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js' );
 
-  // Load front-end scripts
   wp_enqueue_script(
     'steel-run',
     plugins_url( '/steel/js/run.js' ),
@@ -182,10 +178,9 @@ function steel_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'steel_enqueue_scripts' );
 
-/*
- * Add function steel_open
+/**
+ * Add Facebook code at top of body
  */
-add_action( 'flint_open','steel_open' );
 function steel_open() {
   $options = steel_get_options();
 
@@ -207,20 +202,25 @@ function steel_open() {
     return;
   }
 }
+add_action( 'flint_open','steel_open' );
 
-/*
+/**
  * Empty search fix
+ *
+ * @param array $query_vars The array of requested query variables.
  */
-add_filter( 'request', 'steel_request' );
 function steel_request( $query_vars ) {
   if ( ! empty( $_GET['s'] ) && empty( $_GET['s'] ) ) {
     $query_vars['s'] = ' ';
   }
   return $query_vars;
 }
+add_filter( 'request', 'steel_request' );
 
 /**
  * Check to see if a particular Steel module is active.
+ *
+ * @param string $module Module name to check.
  */
 function steel_is_module_active( $module ) {
   $options = steel_get_options();
@@ -249,7 +249,19 @@ function steel_is_flint_active() {
 }
 
 /**
- * Add function steel_get_image_url
+ * Retrieve an image to represent an attachment.
+ *
+ * A mime icon for files, thumbnail or intermediate size for images.
+ *
+ * @see WordPress 4.3.1 wp_get_attachment_image_src()
+ *
+ * @param int          $attachment_id Image attachment ID.
+ * @param string|array $size          Optional. Registered image size to retrieve the source for
+ *                                    or a flat array of height and width dimensions.
+ *                                    Default 'thumbnail'.
+ * @param bool         $icon          Optional. Whether the image should be treated as an icon.
+ *                                    Default false.
+ * @return false|array Returns an array (url, width, height), or false, if no image is available.
  */
 function steel_get_image_url( $attachment_id, $size = 'thumbnail', $icon = false ) {
   $image = wp_get_attachment_image_src( $attachment_id, $size, $icon );
@@ -257,16 +269,28 @@ function steel_get_image_url( $attachment_id, $size = 'thumbnail', $icon = false
 }
 
 /**
- * Display custom metadata
+ * Retrieve post meta field, based on post ID, module, and key.
+ *
+ * The post meta fields are retrieved from the cache where possible,
+ * so the function is optimized to be called more than once.
+ *
+ * @see WordPress 4.3.1 get_post_custom()
+ *
+ * @param string $module  The module (prefix) to use in key.
+ * @param string $key     The meta key minus the module prefix.
+ * @param int    $post_id Optional. Post ID. Default is ID of the global $post.
+ * @return string Value for post meta for the given post and given key.
  */
-function steel_meta( $mod_prefix, $key, $post_id = null ) {
+function steel_meta( $module, $key, $post_id = 0 ) {
   global $post;
-  $custom = null === $post_id ? get_post_custom( $post->ID ) : get_post_custom( $post_id );
-  $meta = ! empty( $custom[ $mod_prefix.'_'.$key ][0] ) ? $custom[ $mod_prefix.'_'.$key ][0] : '';
+  $custom = get_post_custom( $post_id );
+  $meta = ! empty( $custom[ $module.'_'.$key ][0] ) ? $custom[ $module.'_'.$key ][0] : '';
   return $meta;
 }
 
-add_action( 'wp_footer','steel_footer' );
+/**
+ * Add Google Analytics script to footer
+ */
 function steel_footer() {
   $options = steel_get_options();
 
@@ -290,71 +314,4 @@ function steel_footer() {
     }
   }
 }
-
-function steel_widgets_init() {
-  if ( steel_is_module_active( 'quotes' ) ) {
-    register_widget( 'Steel_Widget_Random_Quote' );
-  }
-  if ( steel_is_module_active( 'widgets' ) ) {
-    register_widget( 'Steel_Widget_Button' );
-    register_widget( 'Steel_Widget_Link' );
-    register_widget( 'Steel_Widget_List_Group' );
-  }
-}
-add_action( 'widgets_init', 'steel_widgets_init' );
-
-function steel_init() {
-  if ( steel_is_module_active( 'slides' ) ) {
-    $args = steel_get_slides_args();
-    register_post_type( 'steel_slides', $args );
-    add_image_size( 'steel-slide-thumb', 300, 185, true );
-  }
-  if ( steel_is_module_active( 'teams' ) ) {
-    $profile_args = steel_get_profile_args();
-    $team_args = steel_get_team_args();
-    register_post_type( 'steel_profile', $profile_args );
-    register_taxonomy( 'steel_team', 'steel_profile', $team_args );
-  }
-}
-add_action( 'init', 'steel_init', 0 );
-
-function steel_add_meta_boxes() {
-  if ( steel_is_module_active( 'slides' ) ) {
-    add_meta_box(
-      'steel_slides_slideshow',
-      'Add/Edit Slides',
-      'steel_slides_slideshow',
-      'steel_slides',
-      'advanced',
-      'high'
-    );
-
-    add_meta_box(
-      'steel_slides_info',
-      'Using this Slideshow',
-      'steel_slides_info',
-      'steel_slides',
-      'side'
-    );
-
-    add_meta_box(
-      'steel_slides_settings',
-      'Slideshow Settings',
-      'steel_slides_settings',
-      'steel_slides',
-      'side'
-    );
-  }
-
-  if ( steel_is_module_active( 'teams' ) ) {
-    add_meta_box(
-      'steel_teams_meta',
-      'Team Member Profile',
-      'steel_teams_meta',
-      'steel_profile',
-      'side',
-      'high'
-    );
-  }
-}
-add_action( 'add_meta_boxes', 'steel_add_meta_boxes' );
+add_action( 'wp_footer','steel_footer' );

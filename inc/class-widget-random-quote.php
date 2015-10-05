@@ -39,15 +39,17 @@ class Steel_Widget_Random_Quote extends WP_Widget {
   function widget( $args, $instance ) {
     $cat = ! empty( $instance['cat'] ) ? get_category( $instance['cat'] ) : false;
 
-    if ( ! $cat )
+    if ( ! $cat ) {
       return;
+    }
 
     $instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 
     echo $args['before_widget'];
 
-    if ( ! empty( $instance['title'] ) )
+    if ( ! empty( $instance['title'] ) ) {
       echo $args['before_title'] . $instance['title'] . $args['after_title'];
+    }
 
     $quotes = new WP_Query(
       array(
@@ -99,7 +101,6 @@ class Steel_Widget_Random_Quote extends WP_Widget {
    * Output the settings update form.
    *
    * @param array $instance Current settings.
-   * @return string Default return is 'noform'.
    */
   function form( $instance ) {
     $title = ! empty( $instance['title'] ) ? $instance['title'] : '';

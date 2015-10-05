@@ -13,7 +13,7 @@ include_once dirname( __FILE__ ) . '/inc/class-walker-nav-menu-list-group.php';
  * @uses Steel_Walker_Nav_Menu_List_Group
  * @uses wp_nav_menu()
  *
- * @param $args array Arguments for the list group
+ * @param array $args Arguments for the list group.
  */
 function steel_list_group( $args = array() ) {
   $defaults = array(

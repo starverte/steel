@@ -39,15 +39,17 @@ class Steel_Widget_List_Group extends WP_Widget {
   function widget( $args, $instance ) {
     $nav_menu = ! empty( $instance['list-group'] ) ? wp_get_nav_menu_object( $instance['list-group'] ) : false;
 
-    if ( ! $nav_menu )
+    if ( ! $nav_menu ) {
       return;
+    }
 
     $instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 
     echo '<div class="panel panel-default">';
 
-    if ( ! empty( $instance['title'] ) )
+    if ( ! empty( $instance['title'] ) ) {
       echo '<div class="panel-heading"><h3 class="panel-title">'.$instance['title'].'</h3></div>';
+    }
 
     Steel_Walker_Nav_Menu_List_Group( array( 'fallback_cb' => '', 'menu' => $nav_menu ) );
 
