@@ -134,6 +134,37 @@ function steel_slides_settings() {
   </p><?php
 }
 
+/**
+ * Add meta boxes to Edit screen
+ */
+function steel_slides_add_meta_boxes() {
+  add_meta_box(
+    'steel_slides_slideshow',
+    'Add/Edit Slides',
+    'steel_slides_slideshow',
+    'steel_slides',
+    'advanced',
+    'high'
+  );
+
+  add_meta_box(
+    'steel_slides_info',
+    'Using this Slideshow',
+    'steel_slides_info',
+    'steel_slides',
+    'side'
+  );
+
+  add_meta_box(
+    'steel_slides_settings',
+    'Slideshow Settings',
+    'steel_slides_settings',
+    'steel_slides',
+    'side'
+  );
+}
+add_action( 'add_meta_boxes', 'steel_slides_add_meta_boxes' );
+
 /*
  * Save data from meta boxes
  */

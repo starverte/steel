@@ -314,33 +314,6 @@ function steel_init() {
 add_action( 'init', 'steel_init', 0 );
 
 function steel_add_meta_boxes() {
-  if ( steel_is_module_active( 'slides' ) ) {
-    add_meta_box(
-      'steel_slides_slideshow',
-      'Add/Edit Slides',
-      'steel_slides_slideshow',
-      'steel_slides',
-      'advanced',
-      'high'
-    );
-
-    add_meta_box(
-      'steel_slides_info',
-      'Using this Slideshow',
-      'steel_slides_info',
-      'steel_slides',
-      'side'
-    );
-
-    add_meta_box(
-      'steel_slides_settings',
-      'Slideshow Settings',
-      'steel_slides_settings',
-      'steel_slides',
-      'side'
-    );
-  }
-
   if ( steel_is_module_active( 'teams' ) ) {
     add_meta_box(
       'steel_teams_meta',
