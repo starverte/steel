@@ -113,7 +113,7 @@ function steel_settings_field_ga_id() {
  * Display social section title
  */
 function steel_social_section() {
- echo 'Social media profile information';
+  echo 'Social media profile information';
 }
 
 /**
@@ -129,7 +129,7 @@ function steel_settings_field_fb_app_id() {
  * Display modules section title
  */
 function steel_mods_section() {
- echo 'Select which modules should be active.';
+  echo 'Select which modules should be active.';
 }
 
 /**
