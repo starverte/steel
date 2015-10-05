@@ -21,13 +21,17 @@ if ( shortcode_exists( 'progress' )    ) { remove_shortcode( 'progress' ); }
 if ( shortcode_exists( 'tooltip' )     ) { remove_shortcode( 'tooltip' ); }
 
 /**
- * [alert] shortcode
+ * Builds the Alert shortcode output.
  *
- * Add Bootstrap alert.
  * Provide contextual feedback messages for typical user actions
  * with the handful of available and flexible alert messages.
  *
- * @internal
+ * @see WordPress 4.3.1 add_shortcode()
+ * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @param array  $atts Attributes of the shortcode.
+ * @param string $content Shortcode content.
+ * @return string|void HTML content to display alert.
  */
 function steel_shortcode_alert( $atts, $content = '' ) {
   extract( shortcode_atts( array( 'color' => 'info' ), $atts ) );
@@ -41,12 +45,16 @@ function steel_shortcode_alert( $atts, $content = '' ) {
 add_shortcode( 'alert', 'steel_shortcode_alert' );
 
 /**
- * [badge] shortcode
+ * Builds the Badge shortcode output.
  *
- * Add Bootstrap badge.
  * Easily highlight new or unread items to links and more.
  *
- * @internal
+ * @see WordPress 4.3.1 add_shortcode()
+ * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @param array  $atts Attributes of the shortcode.
+ * @param string $content Shortcode content.
+ * @return string|void HTML content to display badge.
  */
 function steel_shortcode_badge( $atts, $content = '' ) {
   $new = strip_tags( $content, '<a>' );
@@ -55,12 +63,16 @@ function steel_shortcode_badge( $atts, $content = '' ) {
 add_shortcode( 'badge', 'steel_shortcode_badge' );
 
 /**
- * [btn] shortcode
+ * Builds the Button shortcode output.
  *
- * Add Bootstrap button.
  * Use Bootstrap’s custom button styles for actions in forms, dialogs, and more.
  *
- * @internal
+ * @see WordPress 4.3.1 add_shortcode()
+ * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @param array  $atts Attributes of the shortcode.
+ * @param string $content Shortcode content.
+ * @return string|void HTML content to display button.
  */
 function steel_shortcode_btn( $atts, $content = '' ) {
   extract( shortcode_atts( array(
@@ -112,12 +124,16 @@ function steel_shortcode_btn( $atts, $content = '' ) {
 add_shortcode( 'btn', 'steel_shortcode_btn' );
 
 /**
- * [btn_group] shortcode
+ * Builds the Button Group shortcode output.
  *
- * Add Bootstrap button group.
  * Group a series of buttons together on a single line with the button group.
  *
- * @internal
+ * @see WordPress 4.3.1 add_shortcode()
+ * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @param array  $atts Attributes of the shortcode.
+ * @param string $content Shortcode content.
+ * @return string|void HTML content to display button group.
  */
 function steel_shortcode_btn_group( $atts, $content = '' ) {
   $new = strip_tags( $content, '<a><strong><code>' );
@@ -130,11 +146,16 @@ function steel_shortcode_btn_group( $atts, $content = '' ) {
 add_shortcode( 'btn_group', 'steel_shortcode_btn_group' );
 
 /**
- * [column] shortcode
+ * Builds the Column shortcode output.
  *
  * Add columns to a post or page.
  *
- * @internal
+ * @see WordPress 4.3.1 add_shortcode()
+ * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @param array  $atts Attributes of the shortcode.
+ * @param string $content Shortcode content.
+ * @return string|void HTML content to display column.
  */
 function steel_shortcode_column( $atts, $content = '' ) {
   extract( shortcode_atts( array(
@@ -191,11 +212,16 @@ function steel_shortcode_column( $atts, $content = '' ) {
 add_shortcode( 'column', 'steel_shortcode_column' );
 
 /**
- * [glyph] shortcode
+ * Builds the Glyphicon shortcode output.
  *
- * Add Bootstrap glyphicon.
+ * Add a glyphicon to any post or page.
  *
- * @internal
+ * @see WordPress 4.3.1 add_shortcode()
+ * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @param array  $atts Attributes of the shortcode.
+ * @param string $content Shortcode content.
+ * @return string|void HTML content to display glyphicon.
  */
 function steel_shortcode_glyphicon( $atts, $content = '' ) {
   extract( shortcode_atts( array( 'icon' => '' ), $atts ) );
@@ -204,12 +230,16 @@ function steel_shortcode_glyphicon( $atts, $content = '' ) {
 add_shortcode( 'glyph', 'steel_shortcode_glyphicon' );
 
 /**
- * [label] shortcode
+ * Builds the Label shortcode output.
  *
- * Add Bootstrap label.
  * Small and adaptive tag for adding context to just about any content.
  *
- * @internal
+ * @see WordPress 4.3.1 add_shortcode()
+ * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @param array  $atts Attributes of the shortcode.
+ * @param string $content Shortcode content.
+ * @return string|void HTML content to display label.
  */
 function steel_shortcode_label( $atts, $content = '' ) {
   extract( shortcode_atts( array( 'color' => 'default' ), $atts ) );
@@ -223,13 +253,17 @@ function steel_shortcode_label( $atts, $content = '' ) {
 add_shortcode( 'label', 'steel_shortcode_label' );
 
 /**
- * [panel] shortcode
+ * Builds the Panel shortcode output.
  *
- * Add Bootstrap panel.
  * While not always necessary, sometimes you need to put your DOM in a box.
  * For those situations, try the panel component.
  *
- * @internal
+ * @see WordPress 4.3.1 add_shortcode()
+ * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @param array  $atts Attributes of the shortcode.
+ * @param string $content Shortcode content.
+ * @return string|void HTML content to display panel.
  */
 function steel_shortcode_panel( $atts, $content = '' ) {
   extract( shortcode_atts( array(
@@ -256,8 +290,8 @@ function steel_shortcode_panel( $atts, $content = '' ) {
     $output .= ! empty( $group_id ) ? '<a data-toggle="collapse" data-parent="#' . $group_id . '" href="#' . $group_id . '-' . $panel_int . '">' : '';
     $output .= $title;
     $output .= ! empty( $group_id ) ? '</a>' : '';
-    $output .= '</h4>'; //.panel-title
-    $output .= '</div>'; //.panel-heading
+    $output .= '</h4>'; // .panel-title
+    $output .= '</div>'; // .panel-heading
   } elseif ( ! empty( $heading ) ) { $output .= '<div class="panel-heading">' . $heading . '</div>'; }
 
   $collapse_class = 'panel-collapse collapse';
@@ -277,12 +311,16 @@ function steel_shortcode_panel( $atts, $content = '' ) {
 add_shortcode( 'panel', 'steel_shortcode_panel' );
 
 /**
- * [panel_group] shortcode
+ * Builds the Panel Group shortcode output.
  *
- * Add Bootstrap panel group.
  * Extend the default collapse behavior to create an accordion with the panel component.
  *
- * @internal
+ * @see WordPress 4.3.1 add_shortcode()
+ * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @param array  $atts Attributes of the shortcode.
+ * @param string $content Shortcode content.
+ * @return string|void HTML content to display panel group.
  */
 function steel_shortcode_panel_group( $atts, $content = '' ) {
   $new = strip_tags( $content, '<a><strong><em><code><ol><ul><li>' );
@@ -299,13 +337,17 @@ function steel_shortcode_panel_group( $atts, $content = '' ) {
 add_shortcode( 'panel_group', 'steel_shortcode_panel_group' );
 
 /**
- * [progress] shortcode
+ * Builds the Progress shortcode output.
  *
- * Add Bootstrap progress bar.
  * Stylize the HTML5 <progress> element with a few extra classes
  * and some crafty browser-specific CSS.
  *
- * @internal
+ * @see WordPress 4.3.1 add_shortcode()
+ * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @param array  $atts Attributes of the shortcode.
+ * @param string $content Shortcode content.
+ * @return string|void HTML content to display progress bar.
  */
 function steel_shortcode_progress( $atts, $content = '' ) {
   extract( shortcode_atts( array(
@@ -344,11 +386,16 @@ function steel_shortcode_progress( $atts, $content = '' ) {
 add_shortcode( 'progress', 'steel_shortcode_progress' );
 
 /**
- * [tooltip] shortcode
+ * Builds the Tooltip shortcode output.
  *
- * Add Bootstrap tooltip.
+ * Add a tooltip to any HTML element
  *
- * @internal
+ * @see WordPress 4.3.1 add_shortcode()
+ * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @param array  $atts Attributes of the shortcode.
+ * @param string $content Shortcode content.
+ * @return string|void HTML content to display tooltip.
  */
 function steel_shortcode_tooltip( $atts, $content = '' ) {
   extract( shortcode_atts( array(

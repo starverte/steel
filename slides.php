@@ -8,6 +8,9 @@
  * @since 1.2.5
  */
 
+/**
+ * Return arguments for registering steel_slides
+ */
 function steel_slides_post_type_args() {
   $labels = array(
     'name'                => _x( 'Slideshows', 'Post Type General Name', 'steel' ),
@@ -55,6 +58,9 @@ function steel_slides_init() {
 }
 add_action( 'init', 'steel_slides_init' );
 
+/**
+ * Display slides on Edit screen
+ */
 function steel_slides_slideshow() {
   $slides_media     = steel_slides_meta( 'media' );
   $slides_order     = steel_slides_meta( 'order' );
@@ -93,12 +99,20 @@ function steel_slides_slideshow() {
   <input type="hidden" name="slides_order" id="slides_order" value="<?php echo $slides_order; ?>">
   <div style="float:none; clear:both;"></div><?php
 }
+
+/**
+ * Display slideshow shortcode information on Edit screen
+ */
 function steel_slides_info() {
   global $post; ?>
 
   <p>To use this slider in your posts or pages use the following shortcode:</p>
   <p><code>[steel_slideshow id="<?php echo $post->ID; ?>"]</code> or</p><p><code>[steel_slideshow name="<?php echo strtolower( $post->post_title ); ?>"]</code></p><?php
 }
+
+/**
+ * Display slideshow settings on Edit screen
+ */
 function steel_slides_settings() {
   global $post;
   $skins = array( 'Default', 'Bar', 'Gallery', 'Simple', 'Tabs', 'Thumbnails' );
@@ -165,10 +179,9 @@ function steel_slides_add_meta_boxes() {
 }
 add_action( 'add_meta_boxes', 'steel_slides_add_meta_boxes' );
 
-/*
+/**
  * Save data from meta boxes
  */
-add_action( 'save_post', 'steel_save_slides' );
 function steel_save_slides() {
   global $post;
   if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset( $post_id )) ) { return $post_id; }
@@ -200,9 +213,19 @@ function steel_save_slides() {
     update_post_meta( $post->ID, 'slides_transition', 'Default' );
   }
 }
+add_action( 'save_post', 'steel_save_slides' );
 
 /**
- * Display Slides metadata
+ * Retrieve post meta field, based on post ID and key.
+ *
+ * The post meta fields are retrieved from the cache where possible,
+ * so the function is optimized to be called more than once.
+ *
+ * @see WordPress 4.3.1 get_post_custom()
+ *
+ * @param string $key     The meta key minus the module prefix.
+ * @param int    $post_id Optional. Post ID. Default is ID of the global $post.
+ * @return string Value for post meta for the given post and given key.
  */
 function steel_slides_meta( $key, $post_id = 0 ) {
   $meta = steel_meta( 'slides', $key, $post_id );
@@ -211,6 +234,11 @@ function steel_slides_meta( $key, $post_id = 0 ) {
 
 /**
  * Display Slideshow by id
+ *
+ * @param int          $post_id The post ID of the slideshow.
+ * @param string|array $size    Optional. Registered image size to retrieve the source for
+ *                              or a flat array of height and width dimensions. Default 'full'.
+ * @param string       $name    Name of slideshow to use as identifier. Default is $post_id.
  */
 function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
   if ( 0 === $post_id ) {
@@ -255,7 +283,6 @@ function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
   if ( 'Gallery' !== $slides_skin ) {
     $carousel_div = '<div id="carousel_'.$name.'" class="'.$slides_class.'" data-ride="carousel">';
 
-    //Wrapper for slides
     foreach ( $slides as $slide ) {
       if ( ! empty( $slide ) ) {
         $image   = wp_get_attachment_image_src( $slide, $size );
@@ -277,15 +304,14 @@ function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
           } else {
             if ( ! empty( $title ) ) { $items .= '<p id="slides_title_'.$slide.'">' .$title.'</p>'; }
           }
-          $items .= '</div>';//.carousel-caption
+          $items .= '</div>';// .carousel-caption
         }
-        $items .= '</div>';//.item
+        $items .= '</div>';// .item
       }
     }
   } else {
     $carousel_div = '<div id="carousel_'.$name.'" class="row carousel-gallery">';
 
-    //Wrapper for slides for Gallery skin
     foreach ( $slides as $slide ) {
       if ( ! empty( $slide ) ) {
         $count += 1;
@@ -302,7 +328,6 @@ function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
     }
   }
 
-  //Indicators
   if ( empty( $slides_skin ) || 'Default' === $slides_skin ) {
     $indicators .= '<ol class="carousel-indicators">';
     foreach ( $slides as $slide ) {
@@ -339,13 +364,11 @@ function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
     $indicators = '';
   }
 
-  //Controls
   $controls .= ( 'Simple' === $slides_skin ) ? '<div class="carousel-controls">' : '';
   $controls .= '<a class="left carousel-control" href="#carousel_'.$post_id.'" data-slide="prev"><span class="icon-prev"></span></a>';
   $controls .= '<a class="right carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="icon-next"></span></a>';
   $controls .= ( 'Simple' === $slides_skin ) ? '</div>' : '';
 
-  //Output
   $output .= 'Tabs' === $slides_skin ? $indicators : '';
   $output .= $carousel_div;
   $output .= empty( $slides_skin ) || 'Default' === $slides_skin ? $indicators : '';
@@ -359,11 +382,19 @@ function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
   return $output;
 }
 
-/*
- * Create [steel_slideshow] shortcode
+/**
+ * Builds the Slideshow shortcode output.
+ *
+ * This implements the functionality of the Slideshow Shortcode for displaying
+ * a slideshow in a post.
+ *
+ * @see WordPress 4.3.1 add_shortcode()
+ * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @param array  $attr Attributes of the shortcode.
+ * @param string $content Shortcode content.
+ * @return string|void HTML content to display slideshow.
  */
-if ( shortcode_exists( 'steel_slideshow' ) ) { remove_shortcode( 'steel_slideshow' ); }
-add_shortcode( 'steel_slideshow', 'steel_slideshow_shortcode' );
 function steel_slideshow_shortcode( $attr, $content = '' ) {
   extract( shortcode_atts( array( 'id' => 0, 'name' => '', 'size' => 'full' ), $attr ) );
 
@@ -376,7 +407,11 @@ function steel_slideshow_shortcode( $attr, $content = '' ) {
     return;
   }
 }
+add_shortcode( 'steel_slideshow', 'steel_slideshow_shortcode' );
 
+/**
+ * Return IDs for all slideshows
+ */
 function steel_get_slides() {
   $args = array( 'post_type' => 'steel_slides', 'posts_per_page' => -1 );
   $slideshows = get_posts( $args );
@@ -393,6 +428,11 @@ function steel_get_slides() {
   return $slides;
 }
 
+/**
+ * Sanitize options based on steel_get_slides
+ *
+ * @param mixed $input Unfiltered input.
+ */
 function steel_sanitize_get_slides( $input ) {
   $valid = steel_get_slides( 'options' );
 

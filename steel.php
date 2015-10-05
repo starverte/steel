@@ -23,6 +23,8 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @package Steel
  */
 
 include_once dirname( __FILE__ ) . '/bootstrap.php';
@@ -131,10 +133,8 @@ function steel_enqueue_scripts() {
   $options = steel_get_options();
 
   if ( true === $options['load_bootstrap_js'] ) {
-    // Make sure there aren't other instances of Twitter Bootstrap
     wp_deregister_script( 'bootstrap' );
 
-    // Load Twitter Bootstrap
     wp_enqueue_script(
       'bootstrap',
       '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js',
@@ -145,10 +145,8 @@ function steel_enqueue_scripts() {
   }
 
   if ( true === $options['load_bootstrap_css'] ) {
-    // Make sure there aren't other instances of Twitter Bootstrap
     wp_deregister_style( 'bootstrap-css' );
 
-    // Load Twitter Bootstrap
     wp_enqueue_style(
       'bootstrap-css',
       '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css',
@@ -168,10 +166,8 @@ function steel_enqueue_scripts() {
     wp_enqueue_style( 'slides-mod-style', plugins_url( 'steel/css/slides.css' ), array(), '1.2.7' );
   }
 
-  // Load script for "Pin It" button
   wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js' );
 
-  // Load front-end scripts
   wp_enqueue_script(
     'steel-run',
     plugins_url( '/steel/js/run.js' ),
@@ -182,10 +178,9 @@ function steel_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'steel_enqueue_scripts' );
 
-/*
- * Add function steel_open
+/**
+ * Add Facebook code at top of body
  */
-add_action( 'flint_open','steel_open' );
 function steel_open() {
   $options = steel_get_options();
 
@@ -207,20 +202,25 @@ function steel_open() {
     return;
   }
 }
+add_action( 'flint_open','steel_open' );
 
-/*
+/**
  * Empty search fix
+ *
+ * @param array $query_vars The array of requested query variables.
  */
-add_filter( 'request', 'steel_request' );
 function steel_request( $query_vars ) {
   if ( ! empty( $_GET['s'] ) && empty( $_GET['s'] ) ) {
     $query_vars['s'] = ' ';
   }
   return $query_vars;
 }
+add_filter( 'request', 'steel_request' );
 
 /**
  * Check to see if a particular Steel module is active.
+ *
+ * @param string $module Module name to check.
  */
 function steel_is_module_active( $module ) {
   $options = steel_get_options();
@@ -249,7 +249,19 @@ function steel_is_flint_active() {
 }
 
 /**
- * Add function steel_get_image_url
+ * Retrieve an image to represent an attachment.
+ *
+ * A mime icon for files, thumbnail or intermediate size for images.
+ *
+ * @see WordPress 4.3.1 wp_get_attachment_image_src()
+ *
+ * @param int          $attachment_id Image attachment ID.
+ * @param string|array $size          Optional. Registered image size to retrieve the source for
+ *                                    or a flat array of height and width dimensions.
+ *                                    Default 'thumbnail'.
+ * @param bool         $icon          Optional. Whether the image should be treated as an icon.
+ *                                    Default false.
+ * @return false|array Returns an array (url, width, height), or false, if no image is available.
  */
 function steel_get_image_url( $attachment_id, $size = 'thumbnail', $icon = false ) {
   $image = wp_get_attachment_image_src( $attachment_id, $size, $icon );
@@ -257,7 +269,17 @@ function steel_get_image_url( $attachment_id, $size = 'thumbnail', $icon = false
 }
 
 /**
- * Display custom metadata
+ * Retrieve post meta field, based on post ID, module, and key.
+ *
+ * The post meta fields are retrieved from the cache where possible,
+ * so the function is optimized to be called more than once.
+ *
+ * @see WordPress 4.3.1 get_post_custom()
+ *
+ * @param string $module  The module (prefix) to use in key.
+ * @param string $key     The meta key minus the module prefix.
+ * @param int    $post_id Optional. Post ID. Default is ID of the global $post.
+ * @return string Value for post meta for the given post and given key.
  */
 function steel_meta( $module, $key, $post_id = 0 ) {
   global $post;
@@ -266,7 +288,9 @@ function steel_meta( $module, $key, $post_id = 0 ) {
   return $meta;
 }
 
-add_action( 'wp_footer','steel_footer' );
+/**
+ * Add Google Analytics script to footer
+ */
 function steel_footer() {
   $options = steel_get_options();
 
@@ -290,3 +314,4 @@ function steel_footer() {
     }
   }
 }
+add_action( 'wp_footer','steel_footer' );

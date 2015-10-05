@@ -5,6 +5,9 @@
  * @package Steel\Teams
  */
 
+/**
+ * Return arguments for registering steel_profile
+ */
 function steel_profile_post_type_args() {
   $labels = array(
     'name'                => _x( 'Profiles', 'Post Type General Name', 'steel' ),
@@ -49,6 +52,9 @@ function steel_profile_post_type_args() {
   return $args;
 }
 
+/**
+ * Return arguments for registering steel_team
+ */
 function steel_team_taxonomy_args() {
   $labels = array(
     'name'                       => _x( 'Teams', 'Taxonomy General Name', 'steel' ),
@@ -98,6 +104,9 @@ function steel_teams_init() {
 }
 add_action( 'init', 'steel_teams_init' );
 
+/**
+ * Display profile meta on Edit Profile screen
+ */
 function steel_teams_meta() {
 ?>
 
@@ -123,10 +132,9 @@ function steel_teams_add_meta_boxes() {
 }
 add_action( 'add_meta_boxes', 'steel_teams_add_meta_boxes' );
 
-/*
+/**
  * Save data from meta boxes
  */
-add_action( 'save_post', 'steel_save_profile' );
 function steel_save_profile() {
   global $post;
   if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset( $post_id )) ) {
@@ -150,16 +158,33 @@ function steel_save_profile() {
   }
   do_action( 'steel_teams_save_meta' );
 }
+add_action( 'save_post', 'steel_save_profile' );
 
 /**
- * Return Team Profile metadata
+ * Retrieve post meta field, based on post ID and key.
+ *
+ * The post meta fields are retrieved from the cache where possible,
+ * so the function is optimized to be called more than once.
+ *
+ * @see WordPress 4.3.1 get_post_custom()
+ *
+ * @param string $key     The meta key minus the module prefix.
+ * @param int    $post_id Optional. Post ID. Default is ID of the global $post.
+ * @return string Value for post meta for the given post and given key.
  */
 function steel_profile_meta( $key, $post_id = 0 ) {
   return steel_meta( 'profile', $key, $post_id );
 }
 
 /**
- * Display profile phone number
+ * Retrieve profile phone number based on post ID.
+ *
+ * @see WordPress 4.3.1 get_post_custom()
+ *
+ * @param string $pattern The pattern to display the phone number.
+ *                        Default is '$1.$2.$3' which becomes '###.###.####'.
+ * @param int    $post_id Optional. Post ID. Default is ID of the global $post.
+ * @return string Formatted phone number for given profile ID.
  */
 function steel_profile_phone( $pattern = '$1.$2.$3', $post_id = 0 ) {
   $phone = steel_profile_meta( 'phone', $post_id );

@@ -8,7 +8,7 @@
 /**
  * Generate Like button
  *
- * @param array $args An array of arguments
+ * @param array $args An array of arguments.
  */
 function steel_btn_like( $args = array() ) {
   $url = get_permalink();
@@ -47,7 +47,7 @@ function steel_btn_like( $args = array() ) {
  *
  * @deprecated 1.3.0 Use steel_btn_pin_it()
  *
- * @param array $args An array of arguments
+ * @param array $args An array of arguments.
  */
 function steel_btn_pin_it( $args = array() ) {
   $url       = get_permalink();
@@ -77,10 +77,10 @@ function steel_btn_pin_it( $args = array() ) {
 /**
  * Generate Tweet button
  *
- * @param string $data_count The direction to display the Tweet count (horizontal, vertical, or none)
- * @param string $data_size  The size of the button (default or large)
+ * @param string $data_count The direction to display the Tweet count (horizontal, vertical, or none).
+ * @param string $data_size  The size of the button (default or large).
  * @param string $data_via   The attribution will appear in a Tweet as " via @username" translated into the language of the Tweet author.
- * @param array  $args       An array of additional arguments
+ * @param array  $args       An array of additional arguments.
  */
 function steel_btn_tweet( $data_count = 'horizontal', $data_size = '', $data_via = '', $args = array() ) {
   $url      = get_permalink();

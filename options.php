@@ -195,7 +195,7 @@ function steel_settings_field_teams() {
 /**
  * Validate settings for Steel Options page
  *
- * @param mixed $raw The raw, unfiltered, form data
+ * @param mixed $raw The raw, unfiltered, form data.
  */
 function steel_options_validate( $raw ) {
   $valid['ga_id'] = trim( $raw['ga_id'] );
@@ -253,7 +253,7 @@ function steel_get_option_defaults() {
     'load_widgets'       => true,
   );
 
-  //BEGIN - backwards compatibility
+  // BEGIN - backwards compatibility.
   $options = get_option( 'steel_options' );
 
   if ( ! empty( $options['mod_bootstrap'] ) ) {
@@ -313,8 +313,7 @@ function steel_get_option_defaults() {
       $defaults['load_widgets'] = false;
     }
   }
-  //END - backwards compatibility
-
+  // END - backwards compatibility.
   return apply_filters( 'steel_option_defaults', $defaults );
 }
 

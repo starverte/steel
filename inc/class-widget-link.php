@@ -69,7 +69,6 @@ class Steel_Widget_Link extends WP_Widget {
    * Output the settings update form.
    *
    * @param array $instance Current settings.
-   * @return string Default return is 'noform'.
    */
   function form( $instance ) {
     $defaults = array( 'title' => __( '', 'steel' ), 'show_info' => true );
