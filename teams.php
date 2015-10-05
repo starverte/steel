@@ -49,7 +49,7 @@ function steel_profile_post_type_args() {
   return $args;
 }
 
-function steel_get_team_args() {
+function steel_team_taxonomy_args() {
   $labels = array(
     'name'                       => _x( 'Teams', 'Taxonomy General Name', 'steel' ),
     'singular_name'              => _x( 'Team', 'Taxonomy Singular Name', 'steel' ),
