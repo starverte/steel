@@ -38,13 +38,13 @@ function steel_broadcast_post_type_args() {
     'public'              => true,
     'show_ui'             => true,
     'show_in_menu'        => true,
-    'show_in_nav_menus'   => false,
+    'show_in_nav_menus'   => true,
     'show_in_admin_bar'   => true,
     'menu_position'       => 5,
     'menu_icon'           => 'dashicons-megaphone',
     'can_export'          => false,
-    'has_archive'         => false,
-    'exclude_from_search' => true,
+    'has_archive'         => true,
+    'exclude_from_search' => false,
     'publicly_queryable'  => true,
     'rewrite'             => $rewrite,
     'capability_type'     => 'post',
@@ -71,7 +71,7 @@ function steel_broadcast_channel_taxonomy_args() {
     'choose_from_most_used'      => __( 'Choose from the most used channels', 'steel' ),
   );
   $rewrite = array(
-    'slug' => 'channels',
+    'slug' => 'channel',
   );
   $args = array(
     'labels'            => $labels,
@@ -545,3 +545,26 @@ function steel_broadcast_media( $post_id = 0 ) {
     return false;
   }
 }
+
+/**
+ * Load template for Broadcast Channel feeds
+ */
+function steel_broadcast_feed() {
+  load_template( dirname( __FILE__ ) . '/inc/broadcast-feed.php' );
+}
+add_action( 'do_feed_broadcast', 'steel_broadcast_feed', 10, 1 );
+
+/**
+ * Add rewrite rules for Broadcast Channel feeds
+ *
+ * Ensures example.com/feed/broadcast/podcast outputs feed for channel with slug 'podcast'
+ *
+ * @param object $wp_rewrite Current WP_Rewrite instance, passed by reference.
+ */
+function steel_broadcast_channel_feed_rewrite( $wp_rewrite ) {
+  $feed_rules = array(
+    'feed/broadcast/(.+)' => 'index.php?feed=broadcast&steel_broadcast_channel=' . $wp_rewrite->preg_index( 1 ),
+  );
+  $wp_rewrite->rules = $feed_rules + $wp_rewrite->rules;
+}
+add_filter( 'generate_rewrite_rules', 'steel_broadcast_channel_feed_rewrite' );
