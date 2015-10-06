@@ -2,12 +2,11 @@
   font-family: 'starverte';
   font-style: normal;
   font-weight: normal;
-
   src: url('../fonts/starverte.eot?in4k8i');
   src: url('../fonts/starverte.eot?in4k8i#iefix') format('embedded-opentype'),
-       url('../fonts/starverte.woff?in4k8i') format('woff'),
-       url('../fonts/starverte.ttf?in4k8i') format('truetype'),
-       url('../fonts/starverte.svg?in4k8i#starverte') format('svg');
+  url('../fonts/starverte.woff?in4k8i') format('woff'),
+  url('../fonts/starverte.ttf?in4k8i') format('truetype'),
+  url('../fonts/starverte.svg?in4k8i#starverte') format('svg');
 }
 
 [class^='icon-']:before,
