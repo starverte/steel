@@ -79,6 +79,7 @@
       "font-emphasize-position",
       "font-emphasize-style",
       "font-smooth",
+      "src",
       "-webkit-hyphens",
       "-moz-hyphens",
       "hyphens",
