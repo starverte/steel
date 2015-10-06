@@ -279,16 +279,6 @@ add_action( 'save_post', 'steel_broadcast_save' );
 function steel_broadcast_add_form_fields() {
   ?>
   <div class="form-field">
-    <label for="channel_meta[type]"><?php _e( 'Type', 'steel' ); ?></label>
-    <select name="channel_meta[type]">
-      <option value="html"><?php _e( 'Display', 'steel' ); ?></option>
-      <option value="rss"><?php _e( 'Podcast', 'steel' ); ?></option>
-    </select>
-    <p class="description">
-      <?php _e( 'Display outputs HTML, Podcast outputs RSS for iTunes', 'steel' ); ?>
-    </p>
-  </div>
-  <div class="form-field">
     <label for="channel_meta[cover_photo_id]"><?php _e( 'Cover Photo', 'steel' ); ?></label>
     <input type="hidden" name="channel_meta[cover_photo_id]" id="channel_cover_photo_id" value="" />
     <div id="channel_cover_photo"></div>
@@ -312,24 +302,6 @@ function steel_broadcast_edit_form_fields( $term ) {
   $the_term = $term->term_id;
   $term_meta = get_option( 'steel_broadcast_channel_' . $the_term );
   $itunes_cats = steel_broadcast_itunes_cats(); ?>
-  <tr class="form-field">
-    <th scope="row" valign="top">
-      <label for="channel_meta[type]"><?php _e( 'Type', 'steel' ); ?></label>
-    </th>
-    <td>
-      <select name="channel_meta[type]">
-        <option value="html" <?php selected( $term_meta['type'], 'html' ); ?>>
-          <?php _e( 'Display', 'steel' ); ?>
-        </option>
-        <option value="rss" <?php selected( $term_meta['type'], 'rss' ); ?>>
-          <?php _e( 'Podcast', 'steel' ); ?>
-        </option>
-      </select>
-      <p class="description">
-        <?php _e( 'Display outputs HTML, Podcast outputs RSS for iTunes', 'steel' ); ?>
-      </p>
-    </td>
-  </tr>
   <tr class="form-field">
     <th scope="row" valign="top">
       <label for="channel_meta[cover_photo_id]"><?php _e( 'Cover Photo', 'steel' ); ?></label>
