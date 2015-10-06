@@ -11,7 +11,7 @@
   "element-case": "lower",
   "eof-newline": true,
   "leading-zero": true,
-  "quotes": "double",
+  "quotes": "single",
   "remove-empty-rulesets": true,
   "sort-order-fallback": "abc",
   "space-after-colon": 1,
