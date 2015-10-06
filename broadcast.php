@@ -517,3 +517,59 @@ function steel_broadcast_itunes_cats() {
     'tv' => 'TV & Film',
   );
 }
+
+/**
+ * Retrieve list of media items for a series.
+ *
+ * @see get_posts()
+ *
+ * @param int $post_id The media series post ID.
+ * @return array List of posts.
+ */
+function steel_broadcast_media( $post_id = 0 ) {
+  if ( 0 == $post_id ) {
+    $post_id = get_the_ID();
+  } else {
+    $post_id = absint( $post_id );
+  }
+
+  $post_custom = get_post_custom( $post_id );
+
+  if ( ! empty( $post_custom['item_list'][0] ) && ',' != $post_custom['item_list'][0] ) {
+    $attachments = array();
+    $media = array();
+
+    $items = explode( ',', $post_custom['item_list'][0] );
+
+    foreach ( $items as $item_id ) {
+      array_push( $attachments, get_post( $item_id ) );
+    }
+
+    foreach ( $attachments as $attachment ) {
+      if ( 0 != $attachment->ID && $post->ID != $attachment->ID ) {
+        $medium = new stdClass();
+        $item_custom = get_post_custom( $attachment-> ID );
+        $item_meta = wp_get_attachment_metadata( $attachment-> ID );
+        $item_vars = get_object_vars( $attachment );
+
+        foreach ( $item_custom as $key => $value ) {
+          $medium->$key = $value[0];
+        }
+
+        foreach ( $item_meta as $key => $value ) {
+          $medium->$key = $value;
+        }
+
+        foreach ( $item_vars as $key => $value ) {
+          $medium->$key = $value;
+        }
+
+        array_push( $media, $medium );
+      }
+    }
+
+    return $media;
+  } else {
+    return false;
+  }
+}
