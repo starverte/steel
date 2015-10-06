@@ -16,23 +16,33 @@
 .item-content,
 .item-date,
 .item-artist {
+  width: 100%;
+  background: none !important;
   border: none !important;
   box-shadow: none !important;
-  background: none !important;
-  width: 100%;
+}
+.item-title {
+  font-weight: 600;
+  resize: vertical;
+}
+.item-content {
+  font-weight: 300;
+  resize: vertical;
 }
 .audio-file {
   float: left;
-  width: 85%;
+  width: 80%;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .item-date,
 .item-artist {
   float: left;
-  padding: 5px;
   width: 85%;
+  padding: 5px;
 }
 .item p {
   margin-top: 0;
@@ -42,9 +52,9 @@
   margin-bottom: 0;
 }
 .item-h2 {
-  background: #eee;
   padding-top: 5px;
   padding-bottom: 5px;
+  background: #eee;
 }
 .item-h2 p {
   padding-left: 5px;
@@ -54,8 +64,8 @@
   padding: 5px;
 }
 .item-header .dashicons {
-  padding: 0;
   float: right;
+  padding: 0;
 }
 #series p {
   position: relative;
@@ -68,13 +78,6 @@
 #series input:focus,
 #series textarea:focus {
   color: #222;
-}
-.item-title {
-  font-weight: 600;
-}
-#series p textarea {
-  font-weight: 300;
-  resize: none;
 }
 .item-header {
   height: 18px;
@@ -90,6 +93,15 @@
 .edit-toggle:hover {
   color: #fff;
   cursor: pointer;
+}
+.controls-title,
+.audio-file {
+  max-width: 175px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.controls-title {
+  max-height: 1.4em;
 }
 
 .item {
@@ -131,8 +143,6 @@
 }
 .item-header span {
   display: inline-block;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .admin-color-fresh .item-header {
   background: #00a0d2;
@@ -198,4 +208,3 @@
 .admin-color-sunrise .item:hover .item-header {
   background: #cc6c23;
 }
-

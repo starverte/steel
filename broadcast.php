@@ -26,13 +26,16 @@ function steel_broadcast_post_type_args() {
     'not_found'           => __( 'No media series found', 'steel' ),
     'not_found_in_trash'  => __( 'No media series found in Trash.', 'steel' ),
   );
+  $rewrite = array(
+    'slug' => 'broadcast',
+  );
   $args = array(
     'label'               => __( 'steel_broadcast', 'steel' ),
     'description'         => __( 'A group of related media items', 'steel' ),
     'labels'              => $labels,
     'supports'            => array( 'title', 'editor', 'thumbnail' ),
     'hierarchical'        => false,
-    'public'              => false,
+    'public'              => true,
     'show_ui'             => true,
     'show_in_menu'        => true,
     'show_in_nav_menus'   => false,
@@ -43,7 +46,7 @@ function steel_broadcast_post_type_args() {
     'has_archive'         => false,
     'exclude_from_search' => true,
     'publicly_queryable'  => true,
-    'rewrite'             => true,
+    'rewrite'             => $rewrite,
     'capability_type'     => 'post',
   );
   return $args;
@@ -136,19 +139,32 @@ function steel_broadcast_item_list() {
     foreach ( $media as $medium ) {
       if ( 0 != $medium->ID && $post->ID != $medium->ID ) {
         $medium_custom = get_post_custom( $medium->ID );
-        $medium_metadata = wp_get_attachment_metadata( $medium->ID ); ?>
+        $medium_metadata = wp_get_attachment_metadata( $medium->ID );
+
+        if ( 25 < strlen( $medium->post_title ) ) {
+          $medium_title = substr( $medium->post_title, 0, 25 ) . '...';
+        } else {
+          $medium_title = $medium->post_title;
+        }
+
+        if ( 25 < strlen( basename( $medium->guid ) ) ) {
+          $medium_audio_file = substr( basename( $medium->guid ), 0, 15 ) . '...' . substr( basename( $medium->guid ), -7 );
+        } else {
+          $medium_audio_file = basename( $medium->guid );
+        }
+        ?>
         <div class="item ui-sortable-handle" id="<?php echo $medium->ID; ?>">
           <header class="item-header">
-            <span id="controls_<?php echo $medium->ID; ?>">
-              <?php echo $medium->post_title; ?>
+            <span class="controls-title" id="controls_<?php echo $medium->ID; ?>">
+              <?php echo $medium_title; ?>
             </span>
             <a class="item-delete" href="#" onclick="item_delete('<?php echo $medium->ID; ?>' )" title="Delete item">
               <span class="dashicons dashicons-dismiss"></span>
             </a>
           </header>
           <p>
-            <input type="text" size="32" class="item-title" name="post_title_<?php echo $medium->ID; ?>" id="post_title_<?php echo $medium->ID; ?>" value="<?php echo $medium->post_title; ?>" placeholder="Title">
-            <textarea class="item-content" cols="32" name="post_content_<?php echo $medium->ID; ?>" id="post_content_<?php echo $medium->ID; ?>" placeholder="Summary"><?php echo $medium->post_content; ?></textarea>
+            <textarea class="item-title" name="post_title_<?php echo $medium->ID; ?>" id="post_title_<?php echo $medium->ID; ?>" placeholder="Title" rows="1"><?php echo $medium->post_title; ?></textarea>
+            <textarea class="item-content" name="post_content_<?php echo $medium->ID; ?>" id="post_content_<?php echo $medium->ID; ?>" placeholder="Summary" rows="3"><?php echo $medium->post_content; ?></textarea>
           </p>
 
           <div class="item-h2">
@@ -164,7 +180,7 @@ function steel_broadcast_item_list() {
           </div>
           <div>
             <span class="dashicons dashicons-media-audio"></span>
-            <span class="audio-file"><?php echo basename( $medium->guid ); ?></span>
+            <span class="audio-file"><?php echo $medium_audio_file; ?></span>
             <div class="clearfix"></div>
           </div>
         </div>
@@ -188,6 +204,7 @@ function steel_broadcast_item_list() {
  */
 function steel_broadcast_save() {
   global $post;
+
   if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset( $post_id )) ) {
     return $post_id;
   }
@@ -199,6 +216,9 @@ function steel_broadcast_save() {
   }
 
   $post_custom = get_post_custom();
+  $media = array();
+  $start_date = 0;
+  $end_date = 0;
 
   if ( isset( $_POST['item_list'] ) ) {
     update_post_meta( $post->ID, 'item_list', $_POST['item_list'] );
@@ -207,37 +227,48 @@ function steel_broadcast_save() {
     $items = explode( ',', $post_custom['item_list'][0] );
   }
 
-  $media = array();
-
-  foreach ( $items as $item_id ) {
-    array_push( $media, get_post( $item_id ) );
-  }
-
-  foreach ( $media as $medium ) {
-    $medium_array = array(
-      'ID' => $medium->ID,
-    );
-    $medium_metadata = wp_get_attachment_metadata( $medium->ID );
-
-    if ( isset( $_POST[ 'post_title_' . $medium->ID ] ) ) {
-      $medium_array['post_title'] = $_POST[ 'post_title_' . $medium->ID ];
+  if ( ! empty( $items ) ) {
+    foreach ( $items as $item_id ) {
+      array_push( $media, get_post( $item_id ) );
     }
 
-    if ( isset( $_POST[ 'post_content_' . $medium->ID ] ) ) {
-      $medium_array['post_content'] = $_POST[ 'post_content_' . $medium->ID ];
+    foreach ( $media as $medium ) {
+      if ( 0 != $medium->ID && $post->ID != $medium->ID ) {
+        $medium_array = array(
+          'ID' => $medium->ID,
+        );
+        $medium_metadata = wp_get_attachment_metadata( $medium->ID );
+
+        if ( isset( $_POST[ 'post_title_' . $medium->ID ] ) ) {
+          $medium_array['post_title'] = $_POST[ 'post_title_' . $medium->ID ];
+        }
+
+        if ( isset( $_POST[ 'post_content_' . $medium->ID ] ) ) {
+          $medium_array['post_content'] = $_POST[ 'post_content_' . $medium->ID ];
+        }
+
+        if ( isset( $_POST[ 'date_published_' . $medium->ID ] ) ) {
+          update_post_meta( $medium->ID, 'date_published', $_POST[ 'date_published_' . $medium->ID ] );
+          $start_date = min( strtotime( $_POST[ 'date_published_' . $medium->ID ] ), $start_date );
+          $end_date = max( strtotime( $_POST[ 'date_published_' . $medium->ID ] ), $end_date );
+        }
+
+        if ( isset( $_POST[ 'artist_' . $medium->ID ] ) ) {
+          $medium_metadata['artist'] = $_POST[ 'artist_' . $medium->ID ];
+        }
+
+        wp_update_post( $medium_array );
+        wp_update_attachment_metadata( $medium->ID, $medium_metadata );
+      }
     }
 
-    if ( isset( $_POST[ 'date_published_' . $medium->ID ] ) ) {
-      update_post_meta( $medium->ID, 'date_published', $_POST[ 'date_published_' . $medium->ID ] );
+    if ( 0 != $start_date ) {
+      update_post_meta( $post->ID, 'start_date', $start_date );
     }
 
-    if ( isset( $_POST[ 'artist_' . $medium->ID ] ) ) {
-      $medium_metadata['artist'] = $_POST[ 'artist_' . $medium->ID ];
+    if ( 0 != $end_date ) {
+      update_post_meta( $post->ID, 'end_date', $start_date );
     }
-
-    wp_update_post( $medium_array );
-    update_post_meta( $post->ID, 'medium_' . $medium->ID, $medium_array );
-    wp_update_attachment_metadata( $medium->ID, $medium_metadata );
   }
 }
 add_action( 'save_post', 'steel_broadcast_save' );
