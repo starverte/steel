@@ -97,6 +97,8 @@ function steel_broadcast_init() {
     'steel_broadcast',
     steel_broadcast_channel_taxonomy_args()
   );
+
+  add_image_size( 'steel-broadcast', 1400, 1400 );
 }
 add_action( 'init', 'steel_broadcast_init' );
 
