@@ -217,12 +217,12 @@ function steel_options_validate( $raw ) {
     );
   }
 
-  $valid['load_bootstrap_css'] = 'true' == $raw['load_bootstrap_css'] ? true : false;
-  $valid['load_bootstrap_js'] = 'true' == $raw['load_bootstrap_js'] ? true : false;
+  $valid['load_bootstrap_css'] = ! empty( $raw['load_bootstrap_css'] ) ? true : false;
+  $valid['load_bootstrap_js'] = ! empty( $raw['load_bootstrap_js'] ) ? true : false;
 
-  $valid['load_broadcast'] = 'true' == $raw['load_broadcast'] ? true : false;
-  $valid['load_slides'] = 'true' == $raw['load_slides'] ? true : false;
-  $valid['load_teams'] = 'true' == $raw['load_teams'] ? true : false;
+  $valid['load_broadcast'] = ! empty( $raw['load_broadcast'] ) ? true : false;
+  $valid['load_slides'] = ! empty( $raw['load_slides'] ) ? true : false;
+  $valid['load_teams'] = ! empty( $raw['load_teams'] ) ? true : false;
 
   return apply_filters( 'steel_save_options', $valid, $raw );
 }
