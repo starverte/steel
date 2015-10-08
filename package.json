@@ -1,0 +1,37 @@
+{
+  "name": "steel",
+  "version": "1.2.7",
+  "description": "Steel brings the power of Matchstix to a simple user interface, making any site’s impact spread like wildfire. No programming required.",
+  "main": "steel.php",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/starverte/steel.git"
+  },
+  "keywords": [
+    "wordpress",
+    "bootstrap",
+    "plugin",
+    "podcast",
+    "broadcast",
+    "shortcodes",
+    "slides",
+    "teams",
+    "widgets"
+  ],
+  "author": "Star Verte LLC",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/starverte/steel/issues"
+  },
+  "homepage": "https://github.com/starverte/steel#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-csscomb": "^3.1.0",
+    "grunt-phpdoc": "^0.1.1",
+    "grunt-phpdocumentor": "^0.4.1",
+    "grunt-shell": "^1.1.2"
+  }
+}

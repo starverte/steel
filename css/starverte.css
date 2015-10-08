@@ -1,61 +1,40 @@
 @font-face {
-  font-family: "Star Verte";
+  font-family: 'starverte';
   font-style: normal;
   font-weight: normal;
-
-  src: url("../fonts/starverte.eot");
-  src: url("../fonts/starverte.eot?#iefix") format("embedded-opentype"),
-  url("../fonts/starverte.woff") format("woff"),
-  url("../fonts/starverte.ttf") format("truetype"),
-  url("../fonts/starverte.svg#starverte") format("svg");
+  src: url('../fonts/starverte.eot?in4k8i');
+  src: url('../fonts/starverte.eot?in4k8i#iefix') format('embedded-opentype'),
+  url('../fonts/starverte.woff?in4k8i') format('woff'),
+  url('../fonts/starverte.ttf?in4k8i') format('truetype'),
+  url('../fonts/starverte.svg?in4k8i#starverte') format('svg');
 }
 
-[data-icon]:before {
-  font-family: "Star Verte" !important;
-  font-style: normal !important;
-  font-weight: normal !important;
-  font-variant: normal !important;
-  line-height: 1;
-  text-transform: none !important;
-  content: attr(data-icon);
-
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  speak: none;
-}
-
-[class^="icon-"]:before,
-[class*=" icon-"]:before {
-  font-family: "Star Verte" !important;
-  font-style: normal !important;
-  font-weight: normal !important;
-  font-variant: normal !important;
-  line-height: 1;
-  text-transform: none !important;
+[class^='icon-']:before,
+[class*=' icon-']:before {
+  display: inline-block;
+  width: 1em;
+  margin-right: 0.2em;
+  margin-left: 0.2em;
+  font-family: 'starverte';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1em;
+  text-align: center;
+  text-decoration: inherit;
+  text-transform: none;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   speak: none;
 }
 
-.icon-sparks:before {
-  content: "b";
+.icon-star:before {
+  content: '\e801';
 }
-.icon-clouds:before {
-  content: "f";
+.icon-msx:before {
+  content: '\e802';
 }
-.icon-clouds-alt:before {
-  content: "g";
-}
-.icon-creative:before {
-  content: "d";
-}
-.icon-creative-alt:before {
-  content: "e";
-}
-.icon-sparks-alt:before {
-  content: "c";
-}
-.icon-starverte:before {
-  content: "a";
+.icon-fcc:before {
+  content: '\e800';
 }

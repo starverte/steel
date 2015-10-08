@@ -1,15 +1,14 @@
 <?php
-/*
+/**
  * Allows creation and management of profiles that can belong to one or many "teams" for use with staff, elders, board members, and more
  *
  * @package Steel\Teams
  */
 
-/*
- * Create custom post type
+/**
+ * Return arguments for registering steel_profile
  */
-add_action( 'init', 'steel_teams_init', 0 );
-function steel_teams_init() {
+function steel_profile_post_type_args() {
   $labels = array(
     'name'                => _x( 'Profiles', 'Post Type General Name', 'steel' ),
     'singular_name'       => _x( 'Profile', 'Post Type Singular Name', 'steel' ),
@@ -24,19 +23,17 @@ function steel_teams_init() {
     'not_found'           => __( 'No profiles found', 'steel' ),
     'not_found_in_trash'  => __( 'No profiles found in trash. Did you check recycling?', 'steel' ),
   );
-
   $rewrite = array(
     'slug'                => 'profiles',
     'with_front'          => true,
     'pages'               => false,
     'feeds'               => false,
   );
-
   $args = array(
     'label'               => __( 'steel_profile', 'steel' ),
     'description'         => __( 'Member(s) of "Teams"', 'steel' ),
     'labels'              => $labels,
-    'supports'            => array( 'title', 'editor', 'thumbnail', ),
+    'supports'            => array( 'title', 'editor', 'thumbnail' ),
     'hierarchical'        => false,
     'public'              => true,
     'show_ui'             => true,
@@ -52,10 +49,14 @@ function steel_teams_init() {
     'rewrite'             => $rewrite,
     'capability_type'     => 'page',
   );
+  return $args;
+}
 
-  register_post_type( 'steel_profile', $args );
-
-  $labels2 = array(
+/**
+ * Return arguments for registering steel_team
+ */
+function steel_team_taxonomy_args() {
+  $labels = array(
     'name'                       => _x( 'Teams', 'Taxonomy General Name', 'steel' ),
     'singular_name'              => _x( 'Team', 'Taxonomy Singular Name', 'steel' ),
     'menu_name'                  => __( 'Teams', 'steel' ),
@@ -71,98 +72,121 @@ function steel_teams_init() {
     'add_or_remove_items'        => __( 'Add or remove teams', 'steel' ),
     'choose_from_most_used'      => __( 'Choose from the most used teams', 'steel' ),
   );
-
-  $rewrite2 = array(
+  $rewrite = array(
     'slug'                       => 'teams',
     'with_front'                 => true,
     'hierarchical'               => true,
   );
-
-  $args2 = array(
-    'labels'                     => $labels2,
+  $args = array(
+    'labels'                     => $labels,
     'hierarchical'               => false,
     'public'                     => true,
     'show_ui'                    => true,
     'show_admin_column'          => true,
     'show_in_nav_menus'          => true,
     'show_tagcloud'              => false,
-    'rewrite'                    => $rewrite2,
+    'rewrite'                    => $rewrite,
   );
-
-  register_taxonomy( 'steel_team', 'steel_profile', $args2 );
+  return $args;
 }
 
-/*
- * Create custom meta boxes
+/**
+ * Register custom post type and custom taxonomy
  */
-add_action( 'add_meta_boxes', 'steel_teams_meta_boxes' );
-function steel_teams_meta_boxes() { add_meta_box('steel_teams_meta', 'Team Member Profile', 'steel_teams_meta', 'steel_profile', 'side', 'high'); }
-function steel_teams_meta() { ?>
+function steel_teams_init() {
+  register_post_type( 'steel_profile', steel_profile_post_type_args() );
 
-  <p><label>Title</label><br /><input type="text"  size="25" name="profile_title" value="<?php echo steel_profile_meta ('title'); ?>" /></p>
-  <p><label>Email</label><br /><input type="email" size="25" name="profile_email" value="<?php echo steel_profile_meta ('email'); ?>" /></p>
+  register_taxonomy(
+    'steel_team',
+    'steel_profile',
+    steel_team_taxonomy_args()
+  );
+}
+add_action( 'init', 'steel_teams_init' );
+
+/**
+ * Display profile meta on Edit Profile screen
+ */
+function steel_teams_meta() {
+?>
+
+  <p><label>Title</label><br /><input type="text"  size="25" name="profile_title" value="<?php echo steel_profile_meta( 'title' ); ?>" /></p>
+  <p><label>Email</label><br /><input type="email" size="25" name="profile_email" value="<?php echo steel_profile_meta( 'email' ); ?>" /></p>
   <p><label>Phone</label><br /><input type="tel"   size="25" name="profile_phone" value="<?php echo steel_profile_phone();        ?>" /></p><?php
 
-  do_action('steel_teams_add_meta');
+  do_action( 'steel_teams_add_meta' );
 }
 
-/*
+/**
+ * Add meta boxes to Edit Profile screen
+ */
+function steel_teams_add_meta_boxes() {
+  add_meta_box(
+    'steel_teams_meta',
+    'Team Member Profile',
+    'steel_teams_meta',
+    'steel_profile',
+    'side',
+    'high'
+  );
+}
+add_action( 'add_meta_boxes', 'steel_teams_add_meta_boxes' );
+
+/**
  * Save data from meta boxes
  */
-add_action('save_post', 'save_steel_profile');
-function save_steel_profile() {
+function steel_save_profile() {
   global $post;
-  if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE && (isset($post_id))) { return $post_id; }
-  if(defined('DOING_AJAX') && DOING_AJAX && (isset($post_id))) { return $post_id; } //Prevents the metaboxes from being overwritten while quick editing.
-  if(preg_match('/\edit\.php/', $_SERVER['REQUEST_URI']) && (isset($post_id))) { return $post_id; } //Detects if the save action is coming from a quick edit/batch edit.
-  if (isset($_POST['profile_email'])) { update_post_meta($post->ID, "profile_email", $_POST["profile_email"]); }
-  if (isset($_POST['profile_title'])) { update_post_meta($post->ID, "profile_title", $_POST["profile_title"]); }
-  if (isset($_POST['profile_phone'])) {
-    $new = preg_replace('/[^a-z0-9]+/i', '', $_POST["profile_phone"]);
-    update_post_meta($post->ID, "profile_phone", $new);
+  if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset( $post_id )) ) {
+    return $post_id;
   }
-  do_action('steel_teams_save_meta');
+  if ( defined( 'DOING_AJAX' ) && DOING_AJAX && (isset( $post_id )) ) {
+    return $post_id;
+  } //Prevents the metaboxes from being overwritten while quick editing.
+  if ( preg_match( '/\edit\.php/', $_SERVER['REQUEST_URI'] ) && (isset( $post_id )) ) {
+    return $post_id;
+  } //Detects if the save action is coming from a quick edit/batch edit.
+  if ( isset( $_POST['profile_email'] ) ) {
+    update_post_meta( $post->ID, 'profile_email', $_POST['profile_email'] );
+  }
+  if ( isset( $_POST['profile_title'] ) ) {
+    update_post_meta( $post->ID, 'profile_title', $_POST['profile_title'] );
+  }
+  if ( isset( $_POST['profile_phone'] ) ) {
+    $new = preg_replace( '/[^a-z0-9]+/i', '', $_POST['profile_phone'] );
+    update_post_meta( $post->ID, 'profile_phone', $new );
+  }
+  do_action( 'steel_teams_save_meta' );
 }
+add_action( 'save_post', 'steel_save_profile' );
 
-/*
- * Display Team Profile metadata
- * Deprecated, use steel_profile_meta() instead
+/**
+ * Retrieve post meta field, based on post ID and key.
  *
- * TODO: Remove in Steel 1.2.x
- */
-function profile_title() {
-  $meta = steel_profile_meta( 'title' );
-  echo $meta;
-}
-function profile_email() {
-  $meta = steel_profile_meta( 'email' );
-  echo $meta;
-}
-
-/*
- * Display profile phone number
- * Deprecated, use steel_profile_phone() instead
+ * The post meta fields are retrieved from the cache where possible,
+ * so the function is optimized to be called more than once.
  *
- * TODO: Remove in Steel 1.2.x
+ * @see WordPress 4.3.1 get_post_custom()
+ *
+ * @param string $key     The meta key minus the module prefix.
+ * @param int    $post_id Optional. Post ID. Default is ID of the global $post.
+ * @return string Value for post meta for the given post and given key.
  */
-function profile_phone( $pattern = "$1.$2.$3" ) {
-  $meta = steel_profile_phone( $pattern );
-  echo $meta;
+function steel_profile_meta( $key, $post_id = 0 ) {
+  return steel_meta( 'profile', $key, $post_id );
 }
 
-/*
- * Display Team Profile metadata
+/**
+ * Retrieve profile phone number based on post ID.
+ *
+ * @see WordPress 4.3.1 get_post_custom()
+ *
+ * @param string $pattern The pattern to display the phone number.
+ *                        Default is '$1.$2.$3' which becomes '###.###.####'.
+ * @param int    $post_id Optional. Post ID. Default is ID of the global $post.
+ * @return string Formatted phone number for given profile ID.
  */
-function steel_profile_meta( $key, $post_id = NULL ) {
-  $meta = steel_meta( 'profile', $key, $post_id );
-  return $meta;
-}
-
-/*
- * Display profile phone number
- */
-function steel_profile_phone( $pattern = "$1.$2.$3", $post_id = NULL ) {
+function steel_profile_phone( $pattern = '$1.$2.$3', $post_id = 0 ) {
   $phone = steel_profile_meta( 'phone', $post_id );
-  return preg_replace("/([0-9]{3})([0-9]{3})([0-9]{4})/", $pattern, $phone);
+  return preg_replace( '/([0-9]{3})([0-9]{3})([0-9]{4})/', $pattern, $phone );
 }
-?>
