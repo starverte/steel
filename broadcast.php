@@ -368,7 +368,7 @@ function steel_broadcast_edit_form_fields( $term ) {
       <select name="channel_meta[category]">
         <?php foreach ( $itunes_cats as $key => $value ) : ?>
         <option value="<?php echo esc_attr( $key ); ?>" <?php selected( $term_meta['category'], $key ); ?>>
-          <?php echo esc_attr( $value[0] ); ?>
+          <?php echo esc_attr( $value ); ?>
         </option>
         <?php endforeach; ?>
       </select>
@@ -422,341 +422,73 @@ add_action( 'create_steel_broadcast_channel', 'steel_broadcast_channel_save', 10
  */
 function steel_broadcast_itunes_cats() {
   return array(
-    'arts' => array(
-      'Arts',
-      'Arts',
-      false,
-    ),
-    'art.design' => array(
-      '— Design',
-      'Design',
-      'Arts',
-    ),
-    'art.fashion' => array(
-      '— Fashion & Beauty',
-      'Fashion &amp; Beauty',
-      'Arts',
-    ),
-    'art.food' => array(
-      '— Food',
-      'Food',
-      'Arts',
-    ),
-    'art.lit' => array(
-      '— Literature',
-      'Literature',
-      'Arts',
-    ),
-    'art.performing' => array(
-      '— Performing Arts',
-      'Performing Arts',
-      'Arts',
-    ),
-    'art.visual' => array(
-      '— Visual Arts',
-      'Visual Arts',
-      'Arts',
-    ),
-    'business' => array(
-      'Business',
-      'Business',
-      false,
-    ),
-    'bus.news' => array(
-      '— Business News',
-      'Business News',
-      'Business',
-    ),
-    'bus.career' => array(
-      '— Careers',
-      'Careers',
-      'Business',
-    ),
-    'bus.invest' => array(
-      '— Investing',
-      'Investing',
-      'Business',
-    ),
-    'bus.management' => array(
-      '— Management & Marketing',
-      'Management &amp; Marketing',
-      'Business',
-    ),
-    'bus.shop' => array(
-      '— Shopping',
-      'Shopping',
-      'Business',
-    ),
-    'comedy' => array(
-      'Comedy',
-      'Comedy',
-      false,
-    ),
-    'education' => array(
-      'Education',
-      'Education',
-      false,
-    ),
-    'edu.tech' => array(
-      '— Education Technology',
-      'Education Technology',
-      'Education',
-    ),
-    'edu.higher' => array(
-      '— Higher Education',
-      'Higher Education',
-      'Education',
-    ),
-    'edu.k12' => array(
-      '— K-12',
-      'K-12',
-      'Education',
-    ),
-    'edu.lang' => array(
-      '— Language Courses',
-      'Language Courses',
-      'Education',
-    ),
-    'edu.training' => array(
-      '— Training',
-      'Training',
-      'Education',
-    ),
-    'games' => array(
-      'Games & Hobbies',
-      'Games &amp; Hobbies',
-      false,
-    ),
-    'gam.auto' => array(
-      '— Automotive',
-      'Automotive',
-      'Games &amp; Hobbies',
-    ),
-    'gam.aviation' => array(
-      '— Aviation',
-      'Aviation',
-      'Games &amp; Hobbies',
-    ),
-    'gam.hobbies' => array(
-      '— Hobbies',
-      'Hobbies',
-      'Games &amp; Hobbies',
-    ),
-    'gam.video' => array(
-      '— Video Games',
-      'Video Games',
-      'Games &amp; Hobbies',
-    ),
-    'gam.other' => array(
-      '— Other Games',
-      'Other Games',
-      'Games &amp; Hobbies',
-    ),
-    'government' => array(
-      'Government & Organizations',
-      'Government &amp; Organizations',
-      false,
-    ),
-    'gov.local' => array(
-      '— Local',
-      'Local',
-      'Government &amp; Organizations',
-    ),
-    'gov.national' => array(
-      '— National',
-      'National',
-      'Government &amp; Organizations',
-    ),
-    'gov.nonprofit' => array(
-      '— Non-Profit',
-      'Non-Profit',
-      'Government &amp; Organizations',
-    ),
-    'gov.regional' => array(
-      '— Regional',
-      'Regional',
-      'Government &amp; Organizations',
-    ),
-    'health' => array(
-      'Health',
-      'Health',
-      false,
-    ),
-    'health.alt' => array(
-      '— Alternative Health',
-      'Alternative Health',
-      'Health',
-    ),
-    'health.fitness' => array(
-      '— Fitness & Nutrition',
-      'Fitness &amp; Nutrition',
-      'Health',
-    ),
-    'health.self' => array(
-      '— Self-Help',
-      'Self-Help',
-      'Health',
-    ),
-    'health.sex' => array(
-      '— Sexuality',
-      'Sexuality',
-      'Health',
-    ),
-    'kids' => array(
-      'Kids & Family',
-      'Kids &amp; Family',
-      false,
-    ),
-    'music' => array(
-      'Music',
-      'Music',
-      false,
-    ),
-    'news' => array(
-      'News & Politics',
-      'News &amp; Politics',
-      false,
-    ),
-    'religion' => array(
-      'Religion & Spirituality',
-      'Religion &amp; Spirituality',
-      false,
-    ),
-    'rel.buddhism' => array(
-      '— Buddhism',
-      'Buddhism',
-      'Religion &amp; Spirituality',
-    ),
-    'rel.christianity' => array(
-      '— Christianity',
-      'Christianity',
-      'Religion &amp; Spirituality',
-    ),
-    'rel.hinduism' => array(
-      '— Hinduism',
-      'Hinduism',
-      'Religion &amp; Spirituality',
-    ),
-    'rel.islam' => array(
-      '— Islam',
-      'Islam',
-      'Religion &amp; Spirituality',
-    ),
-    'rel.judaism' => array(
-      '— Judaism',
-      'Judaism',
-      'Religion &amp; Spirituality',
-    ),
-    'rel.spirituality' => array(
-      '— Spirituality',
-      'Spirituality',
-      'Religion &amp; Spirituality',
-    ),
-    'rel.other' => array(
-      '— Other',
-      'Other',
-      'Religion &amp; Spirituality',
-    ),
-    'science' => array(
-      'Science & Medicine',
-      'Science &amp; Medicine',
-      false,
-    ),
-    'sci.medicine' => array(
-      '— Medicine',
-      'Medicine',
-      'Science &amp; Medicine',
-    ),
-    'sci.natural' => array(
-      '— Natural Sciences',
-      'Natural Sciences',
-      'Science &amp; Medicine',
-    ),
-    'sci.social' => array(
-      '— Social Sciences',
-      'Social Sciences',
-      'Science &amp; Medicine',
-    ),
-    'society' => array(
-      'Society & Culture',
-      'Society &amp; Culture',
-      false,
-    ),
-    'soc.hist' => array(
-      '— History',
-      'History',
-      'Society &amp; Culture',
-    ),
-    'soc.journal' => array(
-      '— Personal Journals',
-      'Personal Journals',
-      'Society &amp; Culture',
-    ),
-    'soc.philosophy' => array(
-      '— Philosophy',
-      'Philosophy',
-      'Society &amp; Culture',
-    ),
-    'soc.travel' => array(
-      '— Places & Travel',
-      'Places &amp; Travel',
-      'Society &amp; Culture',
-    ),
-    'sports' => array(
-      'Sports & Recreation',
-      'Sports &amp; Recreation',
-      false,
-    ),
-    'sports.amateur' => array(
-      '— Amateur',
-      'Amateur',
-      'Sports &amp; Recreation',
-    ),
-    'sports.college' => array(
-      '— College & High School',
-      'College &amp; High School',
-      'Sports &amp; Recreation',
-    ),
-    'sports.outdoor' => array(
-      '— Outdoor',
-      'Outdoor',
-      'Sports &amp; Recreation',
-    ),
-    'sports.pro' => array(
-      '— Professional',
-      'Professional',
-      'Sports &amp; Recreation',
-    ),
-    'technology' => array(
-      'Technology',
-      'Technology',
-      false,
-    ),
-    'tech.gadgets' => array(
-      '— Gadgets',
-      'Gadgets',
-      'Technology',
-    ),
-    'tech.news' => array(
-      '— Tech News',
-      'Tech News',
-      'Technology',
-    ),
-    'tech.podcast' => array(
-      '— Podcasting',
-      'Podcasting',
-      'Technology',
-    ),
-    'tech.software' => array(
-      '— Software How-To',
-      'Software How-To',
-      'Technology',
-    ),
-    'tv' => array(
-      'TV & Film',
-      'TV &amp; Film',
-      false,
-    ),
+    'arts' => 'Arts',
+    'art.design' => '— Design',
+    'art.fashion' => '— Fashion & Beauty',
+    'art.food' => '— Food',
+    'art.lit' => '— Literature',
+    'art.performing' => '— Performing Arts',
+    'art.visual' => '— Visual Arts',
+    'business' => 'Business',
+    'bus.news' => '— Business News',
+    'bus.career' => '— Careers',
+    'bus.invest' => '— Investing',
+    'bus.management' => '— Management & Marketing',
+    'bus.shop' => '— Shopping',
+    'comedy' => 'Comedy',
+    'education' => 'Education',
+    'edu.tech' => '— Education Technology',
+    'edu.higher' => '— Higher Education',
+    'edu.k12' => '— K-12',
+    'edu.lang' => '— Language Courses',
+    'edu.training' => '— Training',
+    'games' => 'Games & Hobbies',
+    'gam.auto' => '— Automotive',
+    'gam.aviation' => '— Aviation',
+    'gam.hobbies' => '— Hobbies',
+    'gam.video' => '— Video Games',
+    'gam.other' => '— Other Games',
+    'government' => 'Government & Organizations',
+    'gov.local' => '— Local',
+    'gov.national' => '— National',
+    'gov.nonprofit' => '— Non-Profit',
+    'gov.regional' => '— Regional',
+    'health' => 'Health',
+    'health.alt' => '— Alternative Health',
+    'health.fitness' => '— Fitness & Nutrition',
+    'health.self' => '— Self-Help',
+    'health.sex' => '— Sexuality',
+    'kids' => 'Kids & Family',
+    'music' => 'Music',
+    'news' => 'News & Politics',
+    'religion' => 'Religion & Spirituality',
+    'rel.buddhism' => '— Buddhism',
+    'rel.christianity' => '— Christianity',
+    'rel.hinduism' => '— Hinduism',
+    'rel.islam' => '— Islam',
+    'rel.judaism' => '— Judaism',
+    'rel.spirituality' => '— Spirituality',
+    'rel.other' => '— Other',
+    'science' => 'Science & Medicine',
+    'sci.medicine' => '— Medicine',
+    'sci.natural' => '— Natural Sciences',
+    'sci.social' => '— Social Sciences',
+    'society' => 'Society & Culture',
+    'soc.hist' => '— History',
+    'soc.journal' => '— Personal Journals',
+    'soc.philosophy' => '— Philosophy',
+    'soc.travel' => '— Places & Travel',
+    'sports' => 'Sports & Recreation',
+    'sports.amateur' => '— Amateur',
+    'sports.college' => '— College & High School',
+    'sports.outdoor' => '— Outdoor',
+    'sports.pro' => '— Professional',
+    'technology' => 'Technology',
+    'tech.gadgets' => '— Gadgets',
+    'tech.news' => '— Tech News',
+    'tech.podcast' => '— Podcasting',
+    'tech.software' => '— Software How-To',
+    'tv' => 'TV & Film',
   );
 }
 
