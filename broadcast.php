@@ -97,6 +97,8 @@ function steel_broadcast_init() {
     'steel_broadcast',
     steel_broadcast_channel_taxonomy_args()
   );
+
+  add_image_size( 'steel-broadcast', 1400, 1400 );
 }
 add_action( 'init', 'steel_broadcast_init' );
 
@@ -423,337 +425,337 @@ function steel_broadcast_itunes_cats() {
     'arts' => array(
       'Arts',
       'Arts',
-      false
+      false,
     ),
     'art.design' => array(
       '— Design',
       'Design',
-      'Arts'
+      'Arts',
     ),
     'art.fashion' => array(
       '— Fashion & Beauty',
       'Fashion &amp; Beauty',
-      'Arts'
+      'Arts',
     ),
     'art.food' => array(
       '— Food',
       'Food',
-      'Arts'
+      'Arts',
     ),
     'art.lit' => array(
       '— Literature',
       'Literature',
-      'Arts'
+      'Arts',
     ),
     'art.performing' => array(
       '— Performing Arts',
       'Performing Arts',
-      'Arts'
+      'Arts',
     ),
     'art.visual' => array(
       '— Visual Arts',
       'Visual Arts',
-      'Arts'
+      'Arts',
     ),
     'business' => array(
       'Business',
       'Business',
-      false
+      false,
     ),
     'bus.news' => array(
       '— Business News',
       'Business News',
-      'Business'
+      'Business',
     ),
     'bus.career' => array(
       '— Careers',
       'Careers',
-      'Business'
+      'Business',
     ),
     'bus.invest' => array(
       '— Investing',
       'Investing',
-      'Business'
+      'Business',
     ),
     'bus.management' => array(
       '— Management & Marketing',
       'Management &amp; Marketing',
-      'Business'
+      'Business',
     ),
     'bus.shop' => array(
       '— Shopping',
       'Shopping',
-      'Business'
+      'Business',
     ),
     'comedy' => array(
       'Comedy',
       'Comedy',
-      false
+      false,
     ),
     'education' => array(
       'Education',
       'Education',
-      false
+      false,
     ),
     'edu.tech' => array(
       '— Education Technology',
       'Education Technology',
-      'Education'
+      'Education',
     ),
     'edu.higher' => array(
       '— Higher Education',
       'Higher Education',
-      'Education'
+      'Education',
     ),
     'edu.k12' => array(
       '— K-12',
       'K-12',
-      'Education'
+      'Education',
     ),
     'edu.lang' => array(
       '— Language Courses',
       'Language Courses',
-      'Education'
+      'Education',
     ),
     'edu.training' => array(
       '— Training',
       'Training',
-      'Education'
+      'Education',
     ),
     'games' => array(
       'Games & Hobbies',
       'Games &amp; Hobbies',
-      false
+      false,
     ),
     'gam.auto' => array(
       '— Automotive',
       'Automotive',
-      'Games &amp; Hobbies'
+      'Games &amp; Hobbies',
     ),
     'gam.aviation' => array(
       '— Aviation',
       'Aviation',
-      'Games &amp; Hobbies'
+      'Games &amp; Hobbies',
     ),
     'gam.hobbies' => array(
       '— Hobbies',
       'Hobbies',
-      'Games &amp; Hobbies'
+      'Games &amp; Hobbies',
     ),
     'gam.video' => array(
       '— Video Games',
       'Video Games',
-      'Games &amp; Hobbies'
+      'Games &amp; Hobbies',
     ),
     'gam.other' => array(
       '— Other Games',
       'Other Games',
-      'Games &amp; Hobbies'
+      'Games &amp; Hobbies',
     ),
     'government' => array(
       'Government & Organizations',
       'Government &amp; Organizations',
-      false
+      false,
     ),
     'gov.local' => array(
       '— Local',
       'Local',
-      'Government &amp; Organizations'
+      'Government &amp; Organizations',
     ),
     'gov.national' => array(
       '— National',
       'National',
-      'Government &amp; Organizations'
+      'Government &amp; Organizations',
     ),
     'gov.nonprofit' => array(
       '— Non-Profit',
       'Non-Profit',
-      'Government &amp; Organizations'
+      'Government &amp; Organizations',
     ),
     'gov.regional' => array(
       '— Regional',
       'Regional',
-      'Government &amp; Organizations'
+      'Government &amp; Organizations',
     ),
     'health' => array(
       'Health',
       'Health',
-      false
+      false,
     ),
     'health.alt' => array(
       '— Alternative Health',
       'Alternative Health',
-      'Health'
+      'Health',
     ),
     'health.fitness' => array(
       '— Fitness & Nutrition',
       'Fitness &amp; Nutrition',
-      'Health'
+      'Health',
     ),
     'health.self' => array(
       '— Self-Help',
       'Self-Help',
-      'Health'
+      'Health',
     ),
     'health.sex' => array(
       '— Sexuality',
       'Sexuality',
-      'Health'
+      'Health',
     ),
     'kids' => array(
       'Kids & Family',
       'Kids &amp; Family',
-      false
+      false,
     ),
     'music' => array(
       'Music',
       'Music',
-      false
+      false,
     ),
     'news' => array(
       'News & Politics',
       'News &amp; Politics',
-      false
+      false,
     ),
     'religion' => array(
       'Religion & Spirituality',
       'Religion &amp; Spirituality',
-      false
+      false,
     ),
     'rel.buddhism' => array(
       '— Buddhism',
       'Buddhism',
-      'Religion &amp; Spirituality'
+      'Religion &amp; Spirituality',
     ),
     'rel.christianity' => array(
       '— Christianity',
       'Christianity',
-      'Religion &amp; Spirituality'
+      'Religion &amp; Spirituality',
     ),
     'rel.hinduism' => array(
       '— Hinduism',
       'Hinduism',
-      'Religion &amp; Spirituality'
+      'Religion &amp; Spirituality',
     ),
     'rel.islam' => array(
       '— Islam',
       'Islam',
-      'Religion &amp; Spirituality'
+      'Religion &amp; Spirituality',
     ),
     'rel.judaism' => array(
       '— Judaism',
       'Judaism',
-      'Religion &amp; Spirituality'
+      'Religion &amp; Spirituality',
     ),
     'rel.spirituality' => array(
       '— Spirituality',
       'Spirituality',
-      'Religion &amp; Spirituality'
+      'Religion &amp; Spirituality',
     ),
     'rel.other' => array(
       '— Other',
       'Other',
-      'Religion &amp; Spirituality'
+      'Religion &amp; Spirituality',
     ),
     'science' => array(
       'Science & Medicine',
       'Science &amp; Medicine',
-      false
+      false,
     ),
     'sci.medicine' => array(
       '— Medicine',
       'Medicine',
-      'Science &amp; Medicine'
+      'Science &amp; Medicine',
     ),
     'sci.natural' => array(
       '— Natural Sciences',
       'Natural Sciences',
-      'Science &amp; Medicine'
+      'Science &amp; Medicine',
     ),
     'sci.social' => array(
       '— Social Sciences',
       'Social Sciences',
-      'Science &amp; Medicine'
+      'Science &amp; Medicine',
     ),
     'society' => array(
       'Society & Culture',
       'Society &amp; Culture',
-      false
+      false,
     ),
     'soc.hist' => array(
       '— History',
       'History',
-      'Society &amp; Culture'
+      'Society &amp; Culture',
     ),
     'soc.journal' => array(
       '— Personal Journals',
       'Personal Journals',
-      'Society &amp; Culture'
+      'Society &amp; Culture',
     ),
     'soc.philosophy' => array(
       '— Philosophy',
       'Philosophy',
-      'Society &amp; Culture'
+      'Society &amp; Culture',
     ),
     'soc.travel' => array(
       '— Places & Travel',
       'Places &amp; Travel',
-      'Society &amp; Culture'
+      'Society &amp; Culture',
     ),
     'sports' => array(
       'Sports & Recreation',
       'Sports &amp; Recreation',
-      false
+      false,
     ),
     'sports.amateur' => array(
       '— Amateur',
       'Amateur',
-      'Sports &amp; Recreation'
+      'Sports &amp; Recreation',
     ),
     'sports.college' => array(
       '— College & High School',
       'College &amp; High School',
-      'Sports &amp; Recreation'
+      'Sports &amp; Recreation',
     ),
     'sports.outdoor' => array(
       '— Outdoor',
       'Outdoor',
-      'Sports &amp; Recreation'
+      'Sports &amp; Recreation',
     ),
     'sports.pro' => array(
       '— Professional',
       'Professional',
-      'Sports &amp; Recreation'
+      'Sports &amp; Recreation',
     ),
     'technology' => array(
       'Technology',
       'Technology',
-      false
+      false,
     ),
     'tech.gadgets' => array(
       '— Gadgets',
       'Gadgets',
-      'Technology'
+      'Technology',
     ),
     'tech.news' => array(
       '— Tech News',
       'Tech News',
-      'Technology'
+      'Technology',
     ),
     'tech.podcast' => array(
       '— Podcasting',
       'Podcasting',
-      'Technology'
+      'Technology',
     ),
     'tech.software' => array(
       '— Software How-To',
       'Software How-To',
-      'Technology'
+      'Technology',
     ),
     'tv' => array(
       'TV & Film',
       'TV &amp; Film',
-      false
+      false,
     ),
   );
 }
@@ -837,6 +839,13 @@ function steel_broadcast_channel_feed_rewrite( $wp_rewrite ) {
 }
 add_filter( 'generate_rewrite_rules', 'steel_broadcast_channel_feed_rewrite' );
 
+/**
+ * Retrieve data for broadcast channel.
+ *
+ * @param int $term_id The term ID for the broadcast channel.
+ *
+ * @return object The broadcast channel object.
+ */
 function steel_broadcast_channel_data( $term_id ) {
   $channel = new stdClass();
 
@@ -854,413 +863,353 @@ function steel_broadcast_channel_data( $term_id ) {
   return $channel;
 }
 
+/**
+ * Retrieve data for broadcast channel.
+ *
+ * @param object $channel The broadcast channel object.
+ *
+ * @return array|bool The broadcast channel categories or false if none.
+ */
 function steel_broadcast_channel_itunes_cat( $channel ) {
   if ( ! empty( $channel->category ) ) {
     $itunes_cat = array();
-    switch ( $channel->category ) {
-      case 'arts' {
-        $itunes_cat = array(
-          'Arts',
-          false
-        )
-      };
-      case 'art.design' {
-        $itunes_cat = array(
-          'Design',
-          'Arts'
-        )
-      };
-      case 'art.fashion' {
-        $itunes_cat = array(
-          'Fashion &amp; Beauty',
-          'Arts'
-        )
-      };
-      case 'art.food' {
-        $itunes_cat = array(
-          'Food',
-          'Arts'
-        )
-      };
-      case 'art.lit' {
-        $itunes_cat = array(
-          'Literature',
-          'Arts'
-        )
-      };
-      case 'art.performing' {
-        $itunes_cat = array(
-          'Performing Arts',
-          'Arts'
-        )
-      };
-      case 'art.visual' {
-        $itunes_cat = array(
-          'Visual Arts',
-          'Arts'
-        )
-      };
-      case 'business' {
-        $itunes_cat = array(
-          'Business',
-          false
-        )
-      };
-      case 'bus.news' {
-        $itunes_cat = array(
-          'Business News',
-          'Business'
-        )
-      };
-      case 'bus.career' {
-        $itunes_cat = array(
-          'Careers',
-          'Business'
-        )
-      };
-      case 'bus.invest' {
-        $itunes_cat = array(
-          'Investing',
-          'Business'
-        )
-      };
-      case 'bus.management' {
-        $itunes_cat = array(
-          'Management &amp; Marketing',
-          'Business'
-        )
-      };
-      case 'bus.shop' {
-        $itunes_cat = array(
-          'Shopping',
-          'Business'
-        )
-      };
-      case 'comedy' {
-        $itunes_cat = array(
-          'Comedy',
-          false
-        )
-      };
-      case 'education' {
-        $itunes_cat = array(
-          'Education',
-          false
-        )
-      };
-      case 'edu.tech' {
-        $itunes_cat = array(
-          'Education Technology',
-          'Education'
-        )
-      };
-      case 'edu.higher' {
-        $itunes_cat = array(
-          'Higher Education',
-          'Education'
-        )
-      };
-      case 'edu.k12' {
-        $itunes_cat = array(
-          'K-12',
-          'Education'
-        )
-      };
-      case 'edu.lang' {
-        $itunes_cat = array(
-          'Language Courses',
-          'Education'
-        )
-      };
-      case 'edu.training' {
-        $itunes_cat = array(
-          'Training',
-          'Education'
-        )
-      };
-      case 'games' {
-        $itunes_cat = array(
-          'Games &amp; Hobbies',
-          false
-        )
-      };
-      case 'gam.auto' {
-        $itunes_cat = array(
-          'Automotive',
-          'Games &amp; Hobbies'
-        )
-      };
-      case 'gam.aviation' {
-        $itunes_cat = array(
-          'Aviation',
-          'Games &amp; Hobbies'
-        )
-      };
-      case 'gam.hobbies' {
-        $itunes_cat = array(
-          'Hobbies',
-          'Games &amp; Hobbies'
-        )
-      };
-      case 'gam.video' {
-        $itunes_cat = array(
-          'Video Games',
-          'Games &amp; Hobbies'
-        )
-      };
-      case 'gam.other' {
-        $itunes_cat = array(
-          'Other Games',
-          'Games &amp; Hobbies'
-        )
-      };
-      case 'government' {
-        $itunes_cat = array(
-          'Government & Organizations',
-          false
-        )
-      };
-      case 'gov.local' {
-        $itunes_cat = array(
-          'Local',
-          'Government &amp; Organizations'
-        )
-      };
-      case 'gov.national' {
-        $itunes_cat = array(
-          'National',
-          'Government &amp; Organizations'
-        )
-      };
-      case 'gov.nonprofit' {
-        $itunes_cat = array(
-          'Non-Profit',
-          'Government &amp; Organizations'
-        )
-      };
-      case 'gov.regional' {
-        $itunes_cat = array(
-          'Regional',
-          'Government &amp; Organizations'
-        )
-      };
-      case 'health' {
-        $itunes_cat = array(
-          'Health',
-          false
-        )
-      };
-      case 'health.alt' {
-        $itunes_cat = array(
-          'Alternative Health',
-          'Health'
-        )
-      };
-      case 'health.fitness' {
-        $itunes_cat = array(
-          'Fitness &amp; Nutrition',
-          'Health'
-        )
-      };
-      case 'health.self' {
-        $itunes_cat = array(
-          'Self-Help',
-          'Health'
-        )
-      };
-      case 'health.sex' {
-        $itunes_cat = array(
-          'Sexuality',
-          'Health'
-        )
-      };
-      case 'kids' {
-        $itunes_cat = array(
-          'Kids &amp; Family',
-          false
-        )
-      };
-      case 'music' {
-        $itunes_cat = array(
-          'Music',
-          false
-        )
-      };
-      case 'news' {
-        $itunes_cat = array(
-          'News &amp; Politics',
-          false
-        )
-      };
-      case 'religion' {
-        $itunes_cat = array(
-          'Religion &amp; Spirituality',
-          false
-        )
-      };
-      case 'rel.buddhism' {
-        $itunes_cat = array(
-          'Buddhism',
-          'Religion &amp; Spirituality'
-        )
-      };
-      case 'rel.christianity' {
-        $itunes_cat = array(
-          'Christianity',
-          'Religion &amp; Spirituality'
-        )
-      };
-      case 'rel.hinduism' {
-        $itunes_cat = array(
-          'Hinduism',
-          'Religion &amp; Spirituality'
-        )
-      };
-      case 'rel.islam' {
-        $itunes_cat = array(
-          'Islam',
-          'Religion &amp; Spirituality'
-        )
-      };
-      case 'rel.judaism' {
-        $itunes_cat = array(
-          'Judaism',
-          'Religion &amp; Spirituality'
-        )
-      };
-      case 'rel.spirituality' {
-        $itunes_cat = array(
-          'Spirituality',
-          'Religion &amp; Spirituality'
-        )
-      };
-      case 'rel.other' {
-        $itunes_cat = array(
-          'Other',
-          'Religion &amp; Spirituality'
-        )
-      };
-      case 'science' {
-        $itunes_cat = array(
-          'Science &amp; Medicine',
-          false
-        )
-      };
-      case 'sci.medicine' {
-        $itunes_cat = array(
-          'Medicine',
-          'Science &amp; Medicine'
-        )
-      };
-      case 'sci.natural' {
-        $itunes_cat = array(
-          'Natural Sciences',
-          'Science &amp; Medicine'
-        )
-      };
-      case 'sci.social' {
-        $itunes_cat = array(
-          'Social Sciences',
-          'Science &amp; Medicine'
-        )
-      };
-      case 'society' {
-        $itunes_cat = array(
-          'Society &amp; Culture',
-          false
-        )
-      };
-      case 'soc.hist' {
-        $itunes_cat = array(
-          'History',
-          'Society &amp; Culture'
-        )
-      };
-      case 'soc.journal' {
-        $itunes_cat = array(
-          'Personal Journals',
-          'Society &amp; Culture'
-        )
-      };
-      case 'soc.philosophy' {
-        $itunes_cat = array(
-          'Philosophy',
-          'Society &amp; Culture'
-        )
-      };
-      case 'soc.travel' {
-        $itunes_cat = array(
-          'Places &amp; Travel',
-          'Society &amp; Culture'
-        )
-      };
-      case 'sports' {
-        $itunes_cat = array(
-          'Sports &amp; Recreation',
-          false
-        )
-      };
-      case 'sports.amateur' {
-        $itunes_cat = array(
-          'Amateur',
-          'Sports &amp; Recreation'
-        )
-      };
-      case 'sports.college' {
-        $itunes_cat = array(
-          'College &amp; High School',
-          'Sports &amp; Recreation'
-        )
-      };
-      case 'sports.outdoor' {
-        $itunes_cat = array(
-          'Outdoor',
-          'Sports &amp; Recreation'
-        )
-      };
-      case 'sports.pro' {
-        $itunes_cat = array(
-          'Professional',
-          'Sports &amp; Recreation'
-        )
-      };
-      case 'technology' {
-        $itunes_cat = array(
-          'Technology',
-          false
-        )
-      };
-      case 'tech.gadgets' {
-        $itunes_cat = array(
-          'Gadgets',
-          'Technology'
-        )
-      };
-      case 'tech.news' {
-        $itunes_cat = array(
-          'Tech News',
-          'Technology'
-        )
-      };
-      case 'tech.podcast' {
-        $itunes_cat = array(
-          'Podcasting',
-          'Technology'
-        )
-      };
-      case 'tech.software' {
-        $itunes_cat = array(
-          'Software How-To',
-          'Technology'
-        )
-      };
-      case 'tv' {
-        $itunes_cat = array(
-          'TV &amp; Film',
-          false
-        )
-      };
-    }
+if ( 'arts' == $channel->category ) {
+  $itunes_cat = array(
+    'Arts',
+    false,
+  );
+} elseif ( 'art.design' == $channel->category ) {
+  $itunes_cat = array(
+    'Design',
+    'Arts',
+  );
+} elseif ( 'art.fashion' == $channel->category ) {
+  $itunes_cat = array(
+    'Fashion &amp; Beauty',
+    'Arts',
+  );
+} elseif ( 'art.food' == $channel->category ) {
+  $itunes_cat = array(
+    'Food',
+    'Arts',
+  );
+} elseif ( 'art.lit' == $channel->category ) {
+  $itunes_cat = array(
+    'Literature',
+    'Arts',
+  );
+} elseif ( 'art.performing' == $channel->category ) {
+  $itunes_cat = array(
+    'Performing Arts',
+    'Arts',
+  );
+} elseif ( 'art.visual' == $channel->category ) {
+  $itunes_cat = array(
+    'Visual Arts',
+    'Arts',
+  );
+} elseif ( 'business' == $channel->category ) {
+  $itunes_cat = array(
+    'Business',
+    false,
+  );
+} elseif ( 'bus.news' == $channel->category ) {
+  $itunes_cat = array(
+    'Business News',
+    'Business',
+  );
+} elseif ( 'bus.career' == $channel->category ) {
+  $itunes_cat = array(
+    'Careers',
+    'Business',
+  );
+} elseif ( 'bus.invest' == $channel->category ) {
+  $itunes_cat = array(
+    'Investing',
+    'Business',
+  );
+} elseif ( 'bus.management' == $channel->category ) {
+  $itunes_cat = array(
+    'Management &amp; Marketing',
+    'Business',
+  );
+} elseif ( 'bus.shop' == $channel->category ) {
+  $itunes_cat = array(
+    'Shopping',
+    'Business',
+  );
+} elseif ( 'comedy' == $channel->category ) {
+  $itunes_cat = array(
+    'Comedy',
+    false,
+  );
+} elseif ( 'education' == $channel->category ) {
+  $itunes_cat = array(
+    'Education',
+    false,
+  );
+} elseif ( 'edu.tech' == $channel->category ) {
+  $itunes_cat = array(
+    'Education Technology',
+    'Education',
+  );
+} elseif ( 'edu.higher' == $channel->category ) {
+  $itunes_cat = array(
+    'Higher Education',
+    'Education',
+  );
+} elseif ( 'edu.k12' == $channel->category ) {
+  $itunes_cat = array(
+    'K-12',
+    'Education',
+  );
+} elseif ( 'edu.lang' == $channel->category ) {
+  $itunes_cat = array(
+    'Language Courses',
+    'Education',
+  );
+} elseif ( 'edu.training' == $channel->category ) {
+  $itunes_cat = array(
+    'Training',
+    'Education',
+  );
+} elseif ( 'games' == $channel->category ) {
+  $itunes_cat = array(
+    'Games &amp; Hobbies',
+    false,
+  );
+} elseif ( 'gam.auto' == $channel->category ) {
+  $itunes_cat = array(
+    'Automotive',
+    'Games &amp; Hobbies',
+  );
+} elseif ( 'gam.aviation' == $channel->category ) {
+  $itunes_cat = array(
+    'Aviation',
+    'Games &amp; Hobbies',
+  );
+} elseif ( 'gam.hobbies' == $channel->category ) {
+  $itunes_cat = array(
+    'Hobbies',
+    'Games &amp; Hobbies',
+  );
+} elseif ( 'gam.video' == $channel->category ) {
+  $itunes_cat = array(
+    'Video Games',
+    'Games &amp; Hobbies',
+  );
+} elseif ( 'gam.other' == $channel->category ) {
+  $itunes_cat = array(
+    'Other Games',
+    'Games &amp; Hobbies',
+  );
+} elseif ( 'government' == $channel->category ) {
+  $itunes_cat = array(
+    'Government & Organizations',
+    false,
+  );
+} elseif ( 'gov.local' == $channel->category ) {
+  $itunes_cat = array(
+    'Local',
+    'Government &amp; Organizations',
+  );
+} elseif ( 'gov.national' == $channel->category ) {
+  $itunes_cat = array(
+    'National',
+    'Government &amp; Organizations',
+  );
+} elseif ( 'gov.nonprofit' == $channel->category ) {
+  $itunes_cat = array(
+    'Non-Profit',
+    'Government &amp; Organizations',
+  );
+} elseif ( 'gov.regional' == $channel->category ) {
+  $itunes_cat = array(
+    'Regional',
+    'Government &amp; Organizations',
+  );
+} elseif ( 'health' == $channel->category ) {
+  $itunes_cat = array(
+    'Health',
+    false,
+  );
+} elseif ( 'health.alt' == $channel->category ) {
+  $itunes_cat = array(
+    'Alternative Health',
+    'Health',
+  );
+} elseif ( 'health.fitness' == $channel->category ) {
+  $itunes_cat = array(
+    'Fitness &amp; Nutrition',
+    'Health',
+  );
+} elseif ( 'health.self' == $channel->category ) {
+  $itunes_cat = array(
+    'Self-Help',
+    'Health',
+  );
+} elseif ( 'health.sex' == $channel->category ) {
+  $itunes_cat = array(
+    'Sexuality',
+    'Health',
+  );
+} elseif ( 'kids' == $channel->category ) {
+  $itunes_cat = array(
+    'Kids &amp; Family',
+    false,
+  );
+} elseif ( 'music' == $channel->category ) {
+  $itunes_cat = array(
+    'Music',
+    false,
+  );
+} elseif ( 'news' == $channel->category ) {
+  $itunes_cat = array(
+    'News &amp; Politics',
+    false,
+  );
+} elseif ( 'religion' == $channel->category ) {
+  $itunes_cat = array(
+    'Religion &amp; Spirituality',
+    false,
+  );
+} elseif ( 'rel.buddhism' == $channel->category ) {
+  $itunes_cat = array(
+    'Buddhism',
+    'Religion &amp; Spirituality',
+  );
+} elseif ( 'rel.christianity' == $channel->category ) {
+  $itunes_cat = array(
+    'Christianity',
+    'Religion &amp; Spirituality',
+  );
+} elseif ( 'rel.hinduism' == $channel->category ) {
+  $itunes_cat = array(
+    'Hinduism',
+    'Religion &amp; Spirituality',
+  );
+} elseif ( 'rel.islam' == $channel->category ) {
+  $itunes_cat = array(
+    'Islam',
+    'Religion &amp; Spirituality',
+  );
+} elseif ( 'rel.judaism' == $channel->category ) {
+  $itunes_cat = array(
+    'Judaism',
+    'Religion &amp; Spirituality',
+  );
+} elseif ( 'rel.spirituality' == $channel->category ) {
+  $itunes_cat = array(
+    'Spirituality',
+    'Religion &amp; Spirituality',
+  );
+} elseif ( 'rel.other' == $channel->category ) {
+  $itunes_cat = array(
+    'Other',
+    'Religion &amp; Spirituality',
+  );
+} elseif ( 'science' == $channel->category ) {
+  $itunes_cat = array(
+    'Science &amp; Medicine',
+    false,
+  );
+} elseif ( 'sci.medicine' == $channel->category ) {
+  $itunes_cat = array(
+    'Medicine',
+    'Science &amp; Medicine',
+  );
+} elseif ( 'sci.natural' == $channel->category ) {
+  $itunes_cat = array(
+    'Natural Sciences',
+    'Science &amp; Medicine',
+  );
+} elseif ( 'sci.social' == $channel->category ) {
+  $itunes_cat = array(
+    'Social Sciences',
+    'Science &amp; Medicine',
+  );
+} elseif ( 'society' == $channel->category ) {
+  $itunes_cat = array(
+    'Society &amp; Culture',
+    false,
+  );
+} elseif ( 'soc.hist' == $channel->category ) {
+  $itunes_cat = array(
+    'History',
+    'Society &amp; Culture',
+  );
+} elseif ( 'soc.journal' == $channel->category ) {
+  $itunes_cat = array(
+    'Personal Journals',
+    'Society &amp; Culture',
+  );
+} elseif ( 'soc.philosophy' == $channel->category ) {
+  $itunes_cat = array(
+    'Philosophy',
+    'Society &amp; Culture',
+  );
+} elseif ( 'soc.travel' == $channel->category ) {
+  $itunes_cat = array(
+    'Places &amp; Travel',
+    'Society &amp; Culture',
+  );
+} elseif ( 'sports' == $channel->category ) {
+  $itunes_cat = array(
+    'Sports &amp; Recreation',
+    false,
+  );
+} elseif ( 'sports.amateur' == $channel->category ) {
+  $itunes_cat = array(
+    'Amateur',
+    'Sports &amp; Recreation',
+  );
+} elseif ( 'sports.college' == $channel->category ) {
+  $itunes_cat = array(
+    'College &amp; High School',
+    'Sports &amp; Recreation',
+  );
+} elseif ( 'sports.outdoor' == $channel->category ) {
+  $itunes_cat = array(
+    'Outdoor',
+    'Sports &amp; Recreation',
+  );
+} elseif ( 'sports.pro' == $channel->category ) {
+  $itunes_cat = array(
+    'Professional',
+    'Sports &amp; Recreation',
+  );
+} elseif ( 'technology' == $channel->category ) {
+  $itunes_cat = array(
+    'Technology',
+    false,
+  );
+} elseif ( 'tech.gadgets' == $channel->category ) {
+  $itunes_cat = array(
+    'Gadgets',
+    'Technology',
+  );
+} elseif ( 'tech.news' == $channel->category ) {
+  $itunes_cat = array(
+    'Tech News',
+    'Technology',
+  );
+} elseif ( 'tech.podcast' == $channel->category ) {
+  $itunes_cat = array(
+    'Podcasting',
+    'Technology',
+  );
+} elseif ( 'tech.software' == $channel->category ) {
+  $itunes_cat = array(
+    'Software How-To',
+    'Technology',
+  );
+} elseif ( 'tv' == $channel->category ) {
+  $itunes_cat = array(
+    'TV &amp; Film',
+    false,
+  );
+}
+
     return $itunes_cat;
   } else {
     return false;

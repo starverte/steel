@@ -1,6 +1,6 @@
 <?php
 /**
- * iTunes RSS Feed Template for displaying Podcast feed.
+ * The iTunes RSS Feed Template for displaying Podcast feed.
  *
  * @package Steel\Broadcast
  */
@@ -11,9 +11,9 @@ $more = 1;
 echo '<?xml version="1.0" encoding="'.get_option( 'blog_charset' ).'"?'.'>';
 
 $term = get_queried_object();
-print_r( steel_broadcast_channel_data( $term->term_id ) );
 $channel = steel_broadcast_channel_data( $term->term_id );
 $channel_cats = steel_broadcast_channel_itunes_cat( $channel );
+$channel_cover = wp_get_attachment_image_src( $channel->cover_photo_id, 'steel-broadcast' );
 ?>
 
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
@@ -31,7 +31,9 @@ $channel_cats = steel_broadcast_channel_itunes_cat( $channel );
   <itunes:owner>
     <itunes:name><?php esc_html_e( $channel->owner_name ); ?></itunes:name>
     <itunes:email><?php esc_html_e( $channel->owner_email ); ?></itunes:email>
-  </itunes:owner><?php
+  </itunes:owner>
+
+  <itunes:image href="<?php echo $channel_cover[0]; ?>" /><?php
   if ( $channel_cats ) {
     if ( $channel_cats[1] ) { ?>
 
@@ -46,38 +48,32 @@ $channel_cats = steel_broadcast_channel_itunes_cat( $channel );
   <itunes:category text="<?php echo $channel_cats[0]; ?>" /><?php
     }
   }
-  while ( have_posts() ) : the_post(); ?>
+  while ( have_posts() ) : the_post();
 
+  $media = steel_broadcast_media();
+  $img_id = get_post_thumbnail_id();
+  $img = wp_get_attachment_image_src( $img_id, 'steel-broadcast' );
 
-  <item>
-      <title><?php the_title_rss(); ?></title>
-      <link><?php the_permalink_rss(); ?></link>
-      <pubDate><?php echo mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ); ?></pubDate>
-      <dc:creator><![CDATA[<?php the_author() ?>]]></dc:creator>
-      <?php the_category_rss( 'rss2' ) ?>
-
-      <guid isPermaLink="false"><?php the_guid(); ?></guid>
-      <?php if ( get_option( 'rss_use_excerpt' ) ) : ?>
-      <description><![CDATA[<?php the_excerpt_rss(); ?>]]></description>
-      <?php else : ?>
-      <description><![CDATA[<?php the_excerpt_rss(); ?>]]></description>
-      <?php $content = get_the_content_feed( 'rss2' ); ?>
-      <?php if ( strlen( $content ) > 0 ) : ?>
-      <content:encoded><![CDATA[<?php echo $content; ?>]]></content:encoded>
-      <?php else : ?>
-      <content:encoded><![CDATA[<?php the_excerpt_rss(); ?>]]></content:encoded>
-  <?php endif; ?>
-  <?php endif; ?>
-  <?php rss_enclosure(); ?>
-  <?php
-  /**
-  * Fires at the end of each RSS2 feed item.
-  *
-  * @since 2.0.0
-  */
-  do_action( 'rss2_item' );
+  foreach ( $media as $medium ) {
   ?>
+
+    <item>
+      <title><?php echo $medium->post_title; ?></title>
+      <itunes:author><?php echo $medium->artist; ?></itunes:author>
+      <itunes:subtitle><?php the_title_rss(); ?></itunes:subtitle>
+<?php if ( strlen( $medium->post_content ) > 0 ) : ?>
+      <itunes:summary><![CDATA[<?php echo $medium->post_content; ?>]]></itunes:summary>
+<?php endif; ?>
+<?php if ( has_post_thumbnail() ) : ?>
+      <itunes:image href="<?php echo $img[0]; ?>" />
+<?php endif; ?>
+      <enclosure url="<?php echo $medium->guid; ?>" length="<?php echo $medium->filesize; ?>" type="<?php echo $medium->mime_type; ?>" />
+      <guid><?php echo $medium->guid; ?></guid>
+      <pubDate><?php echo mysql2date( 'D, d M Y H:i:s +0000', $medium->date_published, false ); ?></pubDate>
+      <itunes:duration><?php echo $medium->length_formatted; ?></itunes:duration>
     </item>
-<?php endwhile; ?>
+  <?php
+  }
+    endwhile; ?>
 </channel>
 </rss>
