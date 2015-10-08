@@ -594,3 +594,357 @@ function steel_broadcast_channel_data( $term_id ) {
 
   return $channel;
 }
+
+/**
+ * Retrieve data for broadcast channel.
+ *
+ * @param object $channel The broadcast channel object.
+ *
+ * @return array|bool The broadcast channel categories or false if none.
+ */
+function steel_broadcast_channel_itunes_cat( $channel ) {
+  if ( ! empty( $channel->category ) ) {
+    $itunes_cat = array();
+
+    if ( 'arts' == $channel->category ) {
+      $itunes_cat = array(
+        'Arts',
+        false,
+      );
+    } elseif ( 'art.design' == $channel->category ) {
+      $itunes_cat = array(
+        'Design',
+        'Arts',
+      );
+    } elseif ( 'art.fashion' == $channel->category ) {
+      $itunes_cat = array(
+        'Fashion &amp; Beauty',
+        'Arts',
+      );
+    } elseif ( 'art.food' == $channel->category ) {
+      $itunes_cat = array(
+        'Food',
+        'Arts',
+      );
+    } elseif ( 'art.lit' == $channel->category ) {
+      $itunes_cat = array(
+        'Literature',
+        'Arts',
+      );
+    } elseif ( 'art.performing' == $channel->category ) {
+      $itunes_cat = array(
+        'Performing Arts',
+        'Arts',
+      );
+    } elseif ( 'art.visual' == $channel->category ) {
+      $itunes_cat = array(
+        'Visual Arts',
+        'Arts',
+      );
+    } elseif ( 'business' == $channel->category ) {
+      $itunes_cat = array(
+        'Business',
+        false,
+      );
+    } elseif ( 'bus.news' == $channel->category ) {
+      $itunes_cat = array(
+        'Business News',
+        'Business',
+      );
+    } elseif ( 'bus.career' == $channel->category ) {
+      $itunes_cat = array(
+        'Careers',
+        'Business',
+      );
+    } elseif ( 'bus.invest' == $channel->category ) {
+      $itunes_cat = array(
+        'Investing',
+        'Business',
+      );
+    } elseif ( 'bus.management' == $channel->category ) {
+      $itunes_cat = array(
+        'Management &amp; Marketing',
+        'Business',
+      );
+    } elseif ( 'bus.shop' == $channel->category ) {
+      $itunes_cat = array(
+        'Shopping',
+        'Business',
+      );
+    } elseif ( 'comedy' == $channel->category ) {
+      $itunes_cat = array(
+        'Comedy',
+        false,
+      );
+    } elseif ( 'education' == $channel->category ) {
+      $itunes_cat = array(
+        'Education',
+        false,
+      );
+    } elseif ( 'edu.tech' == $channel->category ) {
+      $itunes_cat = array(
+        'Education Technology',
+        'Education',
+      );
+    } elseif ( 'edu.higher' == $channel->category ) {
+      $itunes_cat = array(
+        'Higher Education',
+        'Education',
+      );
+    } elseif ( 'edu.k12' == $channel->category ) {
+      $itunes_cat = array(
+        'K-12',
+        'Education',
+      );
+    } elseif ( 'edu.lang' == $channel->category ) {
+      $itunes_cat = array(
+        'Language Courses',
+        'Education',
+      );
+    } elseif ( 'edu.training' == $channel->category ) {
+      $itunes_cat = array(
+        'Training',
+        'Education',
+      );
+    } elseif ( 'games' == $channel->category ) {
+      $itunes_cat = array(
+        'Games &amp; Hobbies',
+        false,
+      );
+    } elseif ( 'gam.auto' == $channel->category ) {
+      $itunes_cat = array(
+        'Automotive',
+        'Games &amp; Hobbies',
+      );
+    } elseif ( 'gam.aviation' == $channel->category ) {
+      $itunes_cat = array(
+        'Aviation',
+        'Games &amp; Hobbies',
+      );
+    } elseif ( 'gam.hobbies' == $channel->category ) {
+      $itunes_cat = array(
+        'Hobbies',
+        'Games &amp; Hobbies',
+      );
+    } elseif ( 'gam.video' == $channel->category ) {
+      $itunes_cat = array(
+        'Video Games',
+        'Games &amp; Hobbies',
+      );
+    } elseif ( 'gam.other' == $channel->category ) {
+      $itunes_cat = array(
+        'Other Games',
+        'Games &amp; Hobbies',
+      );
+    } elseif ( 'government' == $channel->category ) {
+      $itunes_cat = array(
+        'Government & Organizations',
+        false,
+      );
+    } elseif ( 'gov.local' == $channel->category ) {
+      $itunes_cat = array(
+        'Local',
+        'Government &amp; Organizations',
+      );
+    } elseif ( 'gov.national' == $channel->category ) {
+      $itunes_cat = array(
+        'National',
+        'Government &amp; Organizations',
+      );
+    } elseif ( 'gov.nonprofit' == $channel->category ) {
+      $itunes_cat = array(
+        'Non-Profit',
+        'Government &amp; Organizations',
+      );
+    } elseif ( 'gov.regional' == $channel->category ) {
+      $itunes_cat = array(
+        'Regional',
+        'Government &amp; Organizations',
+      );
+    } elseif ( 'health' == $channel->category ) {
+      $itunes_cat = array(
+        'Health',
+        false,
+      );
+    } elseif ( 'health.alt' == $channel->category ) {
+      $itunes_cat = array(
+        'Alternative Health',
+        'Health',
+      );
+    } elseif ( 'health.fitness' == $channel->category ) {
+      $itunes_cat = array(
+        'Fitness &amp; Nutrition',
+        'Health',
+      );
+    } elseif ( 'health.self' == $channel->category ) {
+      $itunes_cat = array(
+        'Self-Help',
+        'Health',
+      );
+    } elseif ( 'health.sex' == $channel->category ) {
+      $itunes_cat = array(
+        'Sexuality',
+        'Health',
+      );
+    } elseif ( 'kids' == $channel->category ) {
+      $itunes_cat = array(
+        'Kids &amp; Family',
+        false,
+      );
+    } elseif ( 'music' == $channel->category ) {
+      $itunes_cat = array(
+        'Music',
+        false,
+      );
+    } elseif ( 'news' == $channel->category ) {
+      $itunes_cat = array(
+        'News &amp; Politics',
+        false,
+      );
+    } elseif ( 'religion' == $channel->category ) {
+      $itunes_cat = array(
+        'Religion &amp; Spirituality',
+        false,
+      );
+    } elseif ( 'rel.buddhism' == $channel->category ) {
+      $itunes_cat = array(
+        'Buddhism',
+        'Religion &amp; Spirituality',
+      );
+    } elseif ( 'rel.christianity' == $channel->category ) {
+      $itunes_cat = array(
+        'Christianity',
+        'Religion &amp; Spirituality',
+      );
+    } elseif ( 'rel.hinduism' == $channel->category ) {
+      $itunes_cat = array(
+        'Hinduism',
+        'Religion &amp; Spirituality',
+      );
+    } elseif ( 'rel.islam' == $channel->category ) {
+      $itunes_cat = array(
+        'Islam',
+        'Religion &amp; Spirituality',
+      );
+    } elseif ( 'rel.judaism' == $channel->category ) {
+      $itunes_cat = array(
+        'Judaism',
+        'Religion &amp; Spirituality',
+      );
+    } elseif ( 'rel.spirituality' == $channel->category ) {
+      $itunes_cat = array(
+        'Spirituality',
+        'Religion &amp; Spirituality',
+      );
+    } elseif ( 'rel.other' == $channel->category ) {
+      $itunes_cat = array(
+        'Other',
+        'Religion &amp; Spirituality',
+      );
+    } elseif ( 'science' == $channel->category ) {
+      $itunes_cat = array(
+        'Science &amp; Medicine',
+        false,
+      );
+    } elseif ( 'sci.medicine' == $channel->category ) {
+      $itunes_cat = array(
+        'Medicine',
+        'Science &amp; Medicine',
+      );
+    } elseif ( 'sci.natural' == $channel->category ) {
+      $itunes_cat = array(
+        'Natural Sciences',
+        'Science &amp; Medicine',
+      );
+    } elseif ( 'sci.social' == $channel->category ) {
+      $itunes_cat = array(
+        'Social Sciences',
+        'Science &amp; Medicine',
+      );
+    } elseif ( 'society' == $channel->category ) {
+      $itunes_cat = array(
+        'Society &amp; Culture',
+        false,
+      );
+    } elseif ( 'soc.hist' == $channel->category ) {
+      $itunes_cat = array(
+        'History',
+        'Society &amp; Culture',
+      );
+    } elseif ( 'soc.journal' == $channel->category ) {
+      $itunes_cat = array(
+        'Personal Journals',
+        'Society &amp; Culture',
+      );
+    } elseif ( 'soc.philosophy' == $channel->category ) {
+      $itunes_cat = array(
+        'Philosophy',
+        'Society &amp; Culture',
+      );
+    } elseif ( 'soc.travel' == $channel->category ) {
+      $itunes_cat = array(
+        'Places &amp; Travel',
+        'Society &amp; Culture',
+      );
+    } elseif ( 'sports' == $channel->category ) {
+      $itunes_cat = array(
+        'Sports &amp; Recreation',
+        false,
+      );
+    } elseif ( 'sports.amateur' == $channel->category ) {
+      $itunes_cat = array(
+        'Amateur',
+        'Sports &amp; Recreation',
+      );
+    } elseif ( 'sports.college' == $channel->category ) {
+      $itunes_cat = array(
+        'College &amp; High School',
+        'Sports &amp; Recreation',
+      );
+    } elseif ( 'sports.outdoor' == $channel->category ) {
+      $itunes_cat = array(
+        'Outdoor',
+        'Sports &amp; Recreation',
+      );
+    } elseif ( 'sports.pro' == $channel->category ) {
+      $itunes_cat = array(
+        'Professional',
+        'Sports &amp; Recreation',
+      );
+    } elseif ( 'technology' == $channel->category ) {
+      $itunes_cat = array(
+        'Technology',
+        false,
+      );
+    } elseif ( 'tech.gadgets' == $channel->category ) {
+      $itunes_cat = array(
+        'Gadgets',
+        'Technology',
+      );
+    } elseif ( 'tech.news' == $channel->category ) {
+      $itunes_cat = array(
+        'Tech News',
+        'Technology',
+      );
+    } elseif ( 'tech.podcast' == $channel->category ) {
+      $itunes_cat = array(
+        'Podcasting',
+        'Technology',
+      );
+    } elseif ( 'tech.software' == $channel->category ) {
+      $itunes_cat = array(
+        'Software How-To',
+        'Technology',
+      );
+    } elseif ( 'tv' == $channel->category ) {
+      $itunes_cat = array(
+        'TV &amp; Film',
+        false,
+      );
+    }
+
+    return $itunes_cat;
+  } else {
+    return false;
+  }
+}
