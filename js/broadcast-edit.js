@@ -16,6 +16,9 @@ jQuery(function($) {
     var item_title = $(this).val();
     $('#controls_'+item_id).text(item_title);
   });
+  $( '.item-date' ).datepicker({
+    dateFormat: "MM d, yy"
+  });
 
 });
 
@@ -45,21 +48,23 @@ jQuery('.btn-media-add').click( function( event ){
 
 });
 
+
+
 //Function Definitions
 function item_new(attachment) {
   artist = '';
   if ( typeof attachment.artist != 'undefined' )
     artist = attachment.artist;
-  date = jQuery.datepicker.formatDate( "MM dd, yy", new Date( Date.parse( attachment.date ) ) );
+
   jQuery("#series").append(
     '<div class="item ui-sortable-handle" id="' + attachment.id + '">' +
       '<div class="item-header">' +
-        '<span id="controls_' + attachment.id + '">' + attachment.title + '</span><a class="item-delete" href="#" onclick="item_delete( ' + attachment.id + ' )" title="Delete item"><span class="dashicons dashicons-dismiss"></span></a>' +
+        '<span class="controls-title" id="controls_' + attachment.id + '">' + attachment.title + '</span><a class="item-delete" href="#" onclick="item_delete( ' + attachment.id + ' )" title="Delete item"><span class="dashicons dashicons-dismiss"></span></a>' +
       '</div>' +
 
       '<p>' +
-        '<input type="text" size="32" class="item-title" name="post_title_' + attachment.id + '" id="post_title_' + attachment.id + '" value="' + attachment.title + '" placeholder="Title">' +
-        '<textarea class="item-content" cols="32" name="post_content_' + attachment.id + '" id="post_content_' + attachment.id + '" placeholder="Summary">' + attachment.description + '</textarea>' +
+        '<textarea class="item-title" name="post_title_' + attachment.id + '" id="post_title_' + attachment.id + '" placeholder="Title" rows="1">' + attachment.title + '</textarea>' +
+        '<textarea class="item-content" name="post_content_' + attachment.id + '" id="post_content_' + attachment.id + '" placeholder="Summary" rows="3">' + attachment.description + '</textarea>' +
       '</p>' +
 
       '<div class="item-h2">' +
@@ -68,7 +73,7 @@ function item_new(attachment) {
 
       '<span class="dashicons dashicons-calendar"></span>' +
 
-      '<input class="item-date" type="text" size="28" name="date_published_' + attachment.id + '" id="date_published_' + attachment.id + '" value="' + date + '" placeholder="Date published">' +
+      '<input class="item-date" type="text" size="28" name="date_published_' + attachment.id + '" id="date_published_' + attachment.id + '" value="' + attachment.date + '" placeholder="Date published">' +
 
       '<span class="dashicons dashicons-businessman"></span>' +
 
@@ -87,16 +92,16 @@ function item_new(attachment) {
       '</div>' +
     '</div>'
   );
-  newOrder = jQuery("#items").val();
+  newOrder = jQuery("#item_list").val();
   newOrder = newOrder + ',' + attachment.id;
   newOrder = newOrder.replace(",,",",");
-  jQuery("#items").val(newOrder);
+  jQuery("#item_list").val(newOrder);
 };
 function item_delete(id) {
   jQuery("#"+id).remove();
-  deleteOrder = jQuery("#items").val();
+  deleteOrder = jQuery("#item_list").val();
   deleteOrder = deleteOrder.replace(","+id,"");
   deleteOrder = deleteOrder.replace(id,"");
   deleteOrder = deleteOrder.replace(",,",",");
-  jQuery("#items").val(deleteOrder);
+  jQuery("#item_list").val(deleteOrder);
 }

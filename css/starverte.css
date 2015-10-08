@@ -1,22 +1,21 @@
 @font-face {
-  font-family: "starverte";
+  font-family: 'starverte';
   font-style: normal;
   font-weight: normal;
-
-  src: url("../fonts/starverte.eot?in4k8i");
-  src: url("../fonts/starverte.eot?in4k8i#iefix") format("embedded-opentype"),
-       url("../fonts/starverte.woff?in4k8i") format("woff"),
-       url("../fonts/starverte.ttf?in4k8i") format("truetype"),
-       url("../fonts/starverte.svg?in4k8i#starverte") format("svg");
+  src: url('../fonts/starverte.eot?in4k8i');
+  src: url('../fonts/starverte.eot?in4k8i#iefix') format('embedded-opentype'),
+  url('../fonts/starverte.woff?in4k8i') format('woff'),
+  url('../fonts/starverte.ttf?in4k8i') format('truetype'),
+  url('../fonts/starverte.svg?in4k8i#starverte') format('svg');
 }
 
-[class^="icon-"]:before,
-[class*=" icon-"]:before {
+[class^='icon-']:before,
+[class*=' icon-']:before {
   display: inline-block;
   width: 1em;
   margin-right: 0.2em;
   margin-left: 0.2em;
-  font-family: "starverte";
+  font-family: 'starverte';
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -31,11 +30,11 @@
 }
 
 .icon-star:before {
-  content: "\e801";
+  content: '\e801';
 }
 .icon-msx:before {
-  content: "\e802";
+  content: '\e802';
 }
 .icon-fcc:before {
-  content: "\e800";
+  content: '\e800';
 }

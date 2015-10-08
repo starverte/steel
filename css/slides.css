@@ -110,14 +110,14 @@
   font-family: serif;
 }
 .carousel-control .icon-prev:before {
-  content: "\e079";
+  content: '\e079';
 }
 .carousel-control .icon-next:before {
-  content: "\e080";
+  content: '\e080';
 }
 .carousel-control .icon-prev:before,
 .carousel-control .icon-next:before {
-  font-family: "Glyphicons Halflings";
+  font-family: 'Glyphicons Halflings';
 }
 .carousel-indicators {
   position: absolute;
@@ -214,10 +214,10 @@
   width: 10%;
 }
 .carousel-bar .carousel-control .icon-prev:before {
-  content: "\e132";
+  content: '\e132';
 }
 .carousel-bar .carousel-control .icon-next:before {
-  content: "\e131";
+  content: '\e131';
 }
 .carousel-bar .carousel-indicators {
   display: none;

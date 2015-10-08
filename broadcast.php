@@ -26,24 +26,27 @@ function steel_broadcast_post_type_args() {
     'not_found'           => __( 'No media series found', 'steel' ),
     'not_found_in_trash'  => __( 'No media series found in Trash.', 'steel' ),
   );
+  $rewrite = array(
+    'slug' => 'broadcast',
+  );
   $args = array(
     'label'               => __( 'steel_broadcast', 'steel' ),
     'description'         => __( 'A group of related media items', 'steel' ),
     'labels'              => $labels,
     'supports'            => array( 'title', 'editor', 'thumbnail' ),
     'hierarchical'        => false,
-    'public'              => false,
+    'public'              => true,
     'show_ui'             => true,
     'show_in_menu'        => true,
-    'show_in_nav_menus'   => false,
+    'show_in_nav_menus'   => true,
     'show_in_admin_bar'   => true,
     'menu_position'       => 5,
     'menu_icon'           => 'dashicons-megaphone',
     'can_export'          => false,
-    'has_archive'         => false,
-    'exclude_from_search' => true,
+    'has_archive'         => true,
+    'exclude_from_search' => false,
     'publicly_queryable'  => true,
-    'rewrite'             => true,
+    'rewrite'             => $rewrite,
     'capability_type'     => 'post',
   );
   return $args;
@@ -68,7 +71,7 @@ function steel_broadcast_channel_taxonomy_args() {
     'choose_from_most_used'      => __( 'Choose from the most used channels', 'steel' ),
   );
   $rewrite = array(
-    'slug' => 'channels',
+    'slug' => 'channel',
   );
   $args = array(
     'labels'            => $labels,
@@ -94,6 +97,8 @@ function steel_broadcast_init() {
     'steel_broadcast',
     steel_broadcast_channel_taxonomy_args()
   );
+
+  add_image_size( 'steel-broadcast', 1400, 1400 );
 }
 add_action( 'init', 'steel_broadcast_init' );
 
@@ -136,19 +141,32 @@ function steel_broadcast_item_list() {
     foreach ( $media as $medium ) {
       if ( 0 != $medium->ID && $post->ID != $medium->ID ) {
         $medium_custom = get_post_custom( $medium->ID );
-        $medium_metadata = wp_get_attachment_metadata( $medium->ID ); ?>
+        $medium_metadata = wp_get_attachment_metadata( $medium->ID );
+
+        if ( 25 < strlen( $medium->post_title ) ) {
+          $medium_title = substr( $medium->post_title, 0, 25 ) . '...';
+        } else {
+          $medium_title = $medium->post_title;
+        }
+
+        if ( 25 < strlen( basename( $medium->guid ) ) ) {
+          $medium_audio_file = substr( basename( $medium->guid ), 0, 15 ) . '...' . substr( basename( $medium->guid ), -7 );
+        } else {
+          $medium_audio_file = basename( $medium->guid );
+        }
+        ?>
         <div class="item ui-sortable-handle" id="<?php echo $medium->ID; ?>">
           <header class="item-header">
-            <span id="controls_<?php echo $medium->ID; ?>">
-              <?php echo $medium->post_title; ?>
+            <span class="controls-title" id="controls_<?php echo $medium->ID; ?>">
+              <?php echo $medium_title; ?>
             </span>
             <a class="item-delete" href="#" onclick="item_delete('<?php echo $medium->ID; ?>' )" title="Delete item">
               <span class="dashicons dashicons-dismiss"></span>
             </a>
           </header>
           <p>
-            <input type="text" size="32" class="item-title" name="post_title_<?php echo $medium->ID; ?>" id="post_title_<?php echo $medium->ID; ?>" value="<?php echo $medium->post_title; ?>" placeholder="Title">
-            <textarea class="item-content" cols="32" name="post_content_<?php echo $medium->ID; ?>" id="post_content_<?php echo $medium->ID; ?>" placeholder="Summary"><?php echo $medium->post_content; ?></textarea>
+            <textarea class="item-title" name="post_title_<?php echo $medium->ID; ?>" id="post_title_<?php echo $medium->ID; ?>" placeholder="Title" rows="1"><?php echo $medium->post_title; ?></textarea>
+            <textarea class="item-content" name="post_content_<?php echo $medium->ID; ?>" id="post_content_<?php echo $medium->ID; ?>" placeholder="Summary" rows="3"><?php echo $medium->post_content; ?></textarea>
           </p>
 
           <div class="item-h2">
@@ -164,7 +182,7 @@ function steel_broadcast_item_list() {
           </div>
           <div>
             <span class="dashicons dashicons-media-audio"></span>
-            <span class="audio-file"><?php echo basename( $medium->guid ); ?></span>
+            <span class="audio-file"><?php echo $medium_audio_file; ?></span>
             <div class="clearfix"></div>
           </div>
         </div>
@@ -188,6 +206,7 @@ function steel_broadcast_item_list() {
  */
 function steel_broadcast_save() {
   global $post;
+
   if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset( $post_id )) ) {
     return $post_id;
   }
@@ -199,6 +218,9 @@ function steel_broadcast_save() {
   }
 
   $post_custom = get_post_custom();
+  $media = array();
+  $start_date = 0;
+  $end_date = 0;
 
   if ( isset( $_POST['item_list'] ) ) {
     update_post_meta( $post->ID, 'item_list', $_POST['item_list'] );
@@ -207,37 +229,48 @@ function steel_broadcast_save() {
     $items = explode( ',', $post_custom['item_list'][0] );
   }
 
-  $media = array();
-
-  foreach ( $items as $item_id ) {
-    array_push( $media, get_post( $item_id ) );
-  }
-
-  foreach ( $media as $medium ) {
-    $medium_array = array(
-      'ID' => $medium->ID,
-    );
-    $medium_metadata = wp_get_attachment_metadata( $medium->ID );
-
-    if ( isset( $_POST[ 'post_title_' . $medium->ID ] ) ) {
-      $medium_array['post_title'] = $_POST[ 'post_title_' . $medium->ID ];
+  if ( ! empty( $items ) ) {
+    foreach ( $items as $item_id ) {
+      array_push( $media, get_post( $item_id ) );
     }
 
-    if ( isset( $_POST[ 'post_content_' . $medium->ID ] ) ) {
-      $medium_array['post_content'] = $_POST[ 'post_content_' . $medium->ID ];
+    foreach ( $media as $medium ) {
+      if ( 0 != $medium->ID && $post->ID != $medium->ID ) {
+        $medium_array = array(
+          'ID' => $medium->ID,
+        );
+        $medium_metadata = wp_get_attachment_metadata( $medium->ID );
+
+        if ( isset( $_POST[ 'post_title_' . $medium->ID ] ) ) {
+          $medium_array['post_title'] = $_POST[ 'post_title_' . $medium->ID ];
+        }
+
+        if ( isset( $_POST[ 'post_content_' . $medium->ID ] ) ) {
+          $medium_array['post_content'] = $_POST[ 'post_content_' . $medium->ID ];
+        }
+
+        if ( isset( $_POST[ 'date_published_' . $medium->ID ] ) ) {
+          update_post_meta( $medium->ID, 'date_published', $_POST[ 'date_published_' . $medium->ID ] );
+          $start_date = min( strtotime( $_POST[ 'date_published_' . $medium->ID ] ), $start_date );
+          $end_date = max( strtotime( $_POST[ 'date_published_' . $medium->ID ] ), $end_date );
+        }
+
+        if ( isset( $_POST[ 'artist_' . $medium->ID ] ) ) {
+          $medium_metadata['artist'] = $_POST[ 'artist_' . $medium->ID ];
+        }
+
+        wp_update_post( $medium_array );
+        wp_update_attachment_metadata( $medium->ID, $medium_metadata );
+      }
     }
 
-    if ( isset( $_POST[ 'date_published_' . $medium->ID ] ) ) {
-      update_post_meta( $medium->ID, 'date_published', $_POST[ 'date_published_' . $medium->ID ] );
+    if ( 0 != $start_date ) {
+      update_post_meta( $post->ID, 'start_date', $start_date );
     }
 
-    if ( isset( $_POST[ 'artist_' . $medium->ID ] ) ) {
-      $medium_metadata['artist'] = $_POST[ 'artist_' . $medium->ID ];
+    if ( 0 != $end_date ) {
+      update_post_meta( $post->ID, 'end_date', $start_date );
     }
-
-    wp_update_post( $medium_array );
-    update_post_meta( $post->ID, 'medium_' . $medium->ID, $medium_array );
-    wp_update_attachment_metadata( $medium->ID, $medium_metadata );
   }
 }
 add_action( 'save_post', 'steel_broadcast_save' );
@@ -247,16 +280,6 @@ add_action( 'save_post', 'steel_broadcast_save' );
  */
 function steel_broadcast_add_form_fields() {
   ?>
-  <div class="form-field">
-    <label for="channel_meta[type]"><?php _e( 'Type', 'steel' ); ?></label>
-    <select name="channel_meta[type]">
-      <option value="html"><?php _e( 'Display', 'steel' ); ?></option>
-      <option value="rss"><?php _e( 'Podcast', 'steel' ); ?></option>
-    </select>
-    <p class="description">
-      <?php _e( 'Display outputs HTML, Podcast outputs RSS for iTunes', 'steel' ); ?>
-    </p>
-  </div>
   <div class="form-field">
     <label for="channel_meta[cover_photo_id]"><?php _e( 'Cover Photo', 'steel' ); ?></label>
     <input type="hidden" name="channel_meta[cover_photo_id]" id="channel_cover_photo_id" value="" />
@@ -281,24 +304,6 @@ function steel_broadcast_edit_form_fields( $term ) {
   $the_term = $term->term_id;
   $term_meta = get_option( 'steel_broadcast_channel_' . $the_term );
   $itunes_cats = steel_broadcast_itunes_cats(); ?>
-  <tr class="form-field">
-    <th scope="row" valign="top">
-      <label for="channel_meta[type]"><?php _e( 'Type', 'steel' ); ?></label>
-    </th>
-    <td>
-      <select name="channel_meta[type]">
-        <option value="html" <?php selected( $term_meta['type'], 'html' ); ?>>
-          <?php _e( 'Display', 'steel' ); ?>
-        </option>
-        <option value="rss" <?php selected( $term_meta['type'], 'rss' ); ?>>
-          <?php _e( 'Podcast', 'steel' ); ?>
-        </option>
-      </select>
-      <p class="description">
-        <?php _e( 'Display outputs HTML, Podcast outputs RSS for iTunes', 'steel' ); ?>
-      </p>
-    </td>
-  </tr>
   <tr class="form-field">
     <th scope="row" valign="top">
       <label for="channel_meta[cover_photo_id]"><?php _e( 'Cover Photo', 'steel' ); ?></label>
@@ -485,4 +490,461 @@ function steel_broadcast_itunes_cats() {
     'tech.software' => '— Software How-To',
     'tv' => 'TV & Film',
   );
+}
+
+/**
+ * Retrieve list of media items for a series.
+ *
+ * @see get_posts()
+ *
+ * @param int $post_id The media series post ID.
+ * @return array List of posts.
+ */
+function steel_broadcast_media( $post_id = 0 ) {
+  if ( 0 == $post_id ) {
+    $post_id = get_the_ID();
+  } else {
+    $post_id = absint( $post_id );
+  }
+
+  $post_custom = get_post_custom( $post_id );
+
+  if ( ! empty( $post_custom['item_list'][0] ) && ',' != $post_custom['item_list'][0] ) {
+    $attachments = array();
+    $media = array();
+
+    $items = explode( ',', $post_custom['item_list'][0] );
+
+    foreach ( $items as $item_id ) {
+      array_push( $attachments, get_post( $item_id ) );
+    }
+
+    foreach ( $attachments as $attachment ) {
+      if ( 0 != $attachment->ID && $post->ID != $attachment->ID ) {
+        $medium = new stdClass();
+        $item_custom = get_post_custom( $attachment-> ID );
+        $item_meta = wp_get_attachment_metadata( $attachment-> ID );
+        $item_vars = get_object_vars( $attachment );
+
+        foreach ( $item_custom as $key => $value ) {
+          $medium->$key = $value[0];
+        }
+
+        foreach ( $item_meta as $key => $value ) {
+          $medium->$key = $value;
+        }
+
+        foreach ( $item_vars as $key => $value ) {
+          $medium->$key = $value;
+        }
+
+        array_push( $media, $medium );
+      }
+    }
+
+    return $media;
+  } else {
+    return false;
+  }
+}
+
+/**
+ * Load template for Broadcast Channel feeds
+ */
+function steel_broadcast_feed() {
+  load_template( dirname( __FILE__ ) . '/inc/broadcast-feed.php' );
+}
+add_action( 'do_feed_broadcast', 'steel_broadcast_feed', 10, 1 );
+
+/**
+ * Add rewrite rules for Broadcast Channel feeds
+ *
+ * Ensures example.com/feed/broadcast/podcast outputs feed for channel with slug 'podcast'
+ *
+ * @param object $wp_rewrite Current WP_Rewrite instance, passed by reference.
+ */
+function steel_broadcast_channel_feed_rewrite( $wp_rewrite ) {
+  $feed_rules = array(
+    'feed/broadcast/(.+)' => 'index.php?feed=broadcast&steel_broadcast_channel=' . $wp_rewrite->preg_index( 1 ),
+  );
+  $wp_rewrite->rules = $feed_rules + $wp_rewrite->rules;
+}
+add_filter( 'generate_rewrite_rules', 'steel_broadcast_channel_feed_rewrite' );
+
+/**
+ * Retrieve data for broadcast channel.
+ *
+ * @param int $term_id The term ID for the broadcast channel.
+ *
+ * @return object The broadcast channel object.
+ */
+function steel_broadcast_channel_data( $term_id ) {
+  $channel = new stdClass();
+
+  $term_data = get_term_by( 'id', $term_id, 'steel_broadcast_channel', 'ARRAY_A' );
+  $term_meta = get_option( 'steel_broadcast_channel_' . $term_id );
+
+  foreach ( $term_data as $key => $value ) {
+    $channel->$key = $value;
+  }
+
+  foreach ( $term_meta as $key => $value ) {
+    $channel->$key = $value;
+  }
+
+  return $channel;
+}
+
+/**
+ * Retrieve data for broadcast channel.
+ *
+ * @param object $channel The broadcast channel object.
+ *
+ * @return array|bool The broadcast channel categories or false if none.
+ */
+function steel_broadcast_channel_itunes_cat( $channel ) {
+  if ( ! empty( $channel->category ) ) {
+    $itunes_cat = array();
+
+    if ( 'arts' == $channel->category ) {
+      $itunes_cat = array(
+        'Arts',
+        false,
+      );
+    } elseif ( 'art.design' == $channel->category ) {
+      $itunes_cat = array(
+        'Design',
+        'Arts',
+      );
+    } elseif ( 'art.fashion' == $channel->category ) {
+      $itunes_cat = array(
+        'Fashion &amp; Beauty',
+        'Arts',
+      );
+    } elseif ( 'art.food' == $channel->category ) {
+      $itunes_cat = array(
+        'Food',
+        'Arts',
+      );
+    } elseif ( 'art.lit' == $channel->category ) {
+      $itunes_cat = array(
+        'Literature',
+        'Arts',
+      );
+    } elseif ( 'art.performing' == $channel->category ) {
+      $itunes_cat = array(
+        'Performing Arts',
+        'Arts',
+      );
+    } elseif ( 'art.visual' == $channel->category ) {
+      $itunes_cat = array(
+        'Visual Arts',
+        'Arts',
+      );
+    } elseif ( 'business' == $channel->category ) {
+      $itunes_cat = array(
+        'Business',
+        false,
+      );
+    } elseif ( 'bus.news' == $channel->category ) {
+      $itunes_cat = array(
+        'Business News',
+        'Business',
+      );
+    } elseif ( 'bus.career' == $channel->category ) {
+      $itunes_cat = array(
+        'Careers',
+        'Business',
+      );
+    } elseif ( 'bus.invest' == $channel->category ) {
+      $itunes_cat = array(
+        'Investing',
+        'Business',
+      );
+    } elseif ( 'bus.management' == $channel->category ) {
+      $itunes_cat = array(
+        'Management &amp; Marketing',
+        'Business',
+      );
+    } elseif ( 'bus.shop' == $channel->category ) {
+      $itunes_cat = array(
+        'Shopping',
+        'Business',
+      );
+    } elseif ( 'comedy' == $channel->category ) {
+      $itunes_cat = array(
+        'Comedy',
+        false,
+      );
+    } elseif ( 'education' == $channel->category ) {
+      $itunes_cat = array(
+        'Education',
+        false,
+      );
+    } elseif ( 'edu.tech' == $channel->category ) {
+      $itunes_cat = array(
+        'Education Technology',
+        'Education',
+      );
+    } elseif ( 'edu.higher' == $channel->category ) {
+      $itunes_cat = array(
+        'Higher Education',
+        'Education',
+      );
+    } elseif ( 'edu.k12' == $channel->category ) {
+      $itunes_cat = array(
+        'K-12',
+        'Education',
+      );
+    } elseif ( 'edu.lang' == $channel->category ) {
+      $itunes_cat = array(
+        'Language Courses',
+        'Education',
+      );
+    } elseif ( 'edu.training' == $channel->category ) {
+      $itunes_cat = array(
+        'Training',
+        'Education',
+      );
+    } elseif ( 'games' == $channel->category ) {
+      $itunes_cat = array(
+        'Games &amp; Hobbies',
+        false,
+      );
+    } elseif ( 'gam.auto' == $channel->category ) {
+      $itunes_cat = array(
+        'Automotive',
+        'Games &amp; Hobbies',
+      );
+    } elseif ( 'gam.aviation' == $channel->category ) {
+      $itunes_cat = array(
+        'Aviation',
+        'Games &amp; Hobbies',
+      );
+    } elseif ( 'gam.hobbies' == $channel->category ) {
+      $itunes_cat = array(
+        'Hobbies',
+        'Games &amp; Hobbies',
+      );
+    } elseif ( 'gam.video' == $channel->category ) {
+      $itunes_cat = array(
+        'Video Games',
+        'Games &amp; Hobbies',
+      );
+    } elseif ( 'gam.other' == $channel->category ) {
+      $itunes_cat = array(
+        'Other Games',
+        'Games &amp; Hobbies',
+      );
+    } elseif ( 'government' == $channel->category ) {
+      $itunes_cat = array(
+        'Government & Organizations',
+        false,
+      );
+    } elseif ( 'gov.local' == $channel->category ) {
+      $itunes_cat = array(
+        'Local',
+        'Government &amp; Organizations',
+      );
+    } elseif ( 'gov.national' == $channel->category ) {
+      $itunes_cat = array(
+        'National',
+        'Government &amp; Organizations',
+      );
+    } elseif ( 'gov.nonprofit' == $channel->category ) {
+      $itunes_cat = array(
+        'Non-Profit',
+        'Government &amp; Organizations',
+      );
+    } elseif ( 'gov.regional' == $channel->category ) {
+      $itunes_cat = array(
+        'Regional',
+        'Government &amp; Organizations',
+      );
+    } elseif ( 'health' == $channel->category ) {
+      $itunes_cat = array(
+        'Health',
+        false,
+      );
+    } elseif ( 'health.alt' == $channel->category ) {
+      $itunes_cat = array(
+        'Alternative Health',
+        'Health',
+      );
+    } elseif ( 'health.fitness' == $channel->category ) {
+      $itunes_cat = array(
+        'Fitness &amp; Nutrition',
+        'Health',
+      );
+    } elseif ( 'health.self' == $channel->category ) {
+      $itunes_cat = array(
+        'Self-Help',
+        'Health',
+      );
+    } elseif ( 'health.sex' == $channel->category ) {
+      $itunes_cat = array(
+        'Sexuality',
+        'Health',
+      );
+    } elseif ( 'kids' == $channel->category ) {
+      $itunes_cat = array(
+        'Kids &amp; Family',
+        false,
+      );
+    } elseif ( 'music' == $channel->category ) {
+      $itunes_cat = array(
+        'Music',
+        false,
+      );
+    } elseif ( 'news' == $channel->category ) {
+      $itunes_cat = array(
+        'News &amp; Politics',
+        false,
+      );
+    } elseif ( 'religion' == $channel->category ) {
+      $itunes_cat = array(
+        'Religion &amp; Spirituality',
+        false,
+      );
+    } elseif ( 'rel.buddhism' == $channel->category ) {
+      $itunes_cat = array(
+        'Buddhism',
+        'Religion &amp; Spirituality',
+      );
+    } elseif ( 'rel.christianity' == $channel->category ) {
+      $itunes_cat = array(
+        'Christianity',
+        'Religion &amp; Spirituality',
+      );
+    } elseif ( 'rel.hinduism' == $channel->category ) {
+      $itunes_cat = array(
+        'Hinduism',
+        'Religion &amp; Spirituality',
+      );
+    } elseif ( 'rel.islam' == $channel->category ) {
+      $itunes_cat = array(
+        'Islam',
+        'Religion &amp; Spirituality',
+      );
+    } elseif ( 'rel.judaism' == $channel->category ) {
+      $itunes_cat = array(
+        'Judaism',
+        'Religion &amp; Spirituality',
+      );
+    } elseif ( 'rel.spirituality' == $channel->category ) {
+      $itunes_cat = array(
+        'Spirituality',
+        'Religion &amp; Spirituality',
+      );
+    } elseif ( 'rel.other' == $channel->category ) {
+      $itunes_cat = array(
+        'Other',
+        'Religion &amp; Spirituality',
+      );
+    } elseif ( 'science' == $channel->category ) {
+      $itunes_cat = array(
+        'Science &amp; Medicine',
+        false,
+      );
+    } elseif ( 'sci.medicine' == $channel->category ) {
+      $itunes_cat = array(
+        'Medicine',
+        'Science &amp; Medicine',
+      );
+    } elseif ( 'sci.natural' == $channel->category ) {
+      $itunes_cat = array(
+        'Natural Sciences',
+        'Science &amp; Medicine',
+      );
+    } elseif ( 'sci.social' == $channel->category ) {
+      $itunes_cat = array(
+        'Social Sciences',
+        'Science &amp; Medicine',
+      );
+    } elseif ( 'society' == $channel->category ) {
+      $itunes_cat = array(
+        'Society &amp; Culture',
+        false,
+      );
+    } elseif ( 'soc.hist' == $channel->category ) {
+      $itunes_cat = array(
+        'History',
+        'Society &amp; Culture',
+      );
+    } elseif ( 'soc.journal' == $channel->category ) {
+      $itunes_cat = array(
+        'Personal Journals',
+        'Society &amp; Culture',
+      );
+    } elseif ( 'soc.philosophy' == $channel->category ) {
+      $itunes_cat = array(
+        'Philosophy',
+        'Society &amp; Culture',
+      );
+    } elseif ( 'soc.travel' == $channel->category ) {
+      $itunes_cat = array(
+        'Places &amp; Travel',
+        'Society &amp; Culture',
+      );
+    } elseif ( 'sports' == $channel->category ) {
+      $itunes_cat = array(
+        'Sports &amp; Recreation',
+        false,
+      );
+    } elseif ( 'sports.amateur' == $channel->category ) {
+      $itunes_cat = array(
+        'Amateur',
+        'Sports &amp; Recreation',
+      );
+    } elseif ( 'sports.college' == $channel->category ) {
+      $itunes_cat = array(
+        'College &amp; High School',
+        'Sports &amp; Recreation',
+      );
+    } elseif ( 'sports.outdoor' == $channel->category ) {
+      $itunes_cat = array(
+        'Outdoor',
+        'Sports &amp; Recreation',
+      );
+    } elseif ( 'sports.pro' == $channel->category ) {
+      $itunes_cat = array(
+        'Professional',
+        'Sports &amp; Recreation',
+      );
+    } elseif ( 'technology' == $channel->category ) {
+      $itunes_cat = array(
+        'Technology',
+        false,
+      );
+    } elseif ( 'tech.gadgets' == $channel->category ) {
+      $itunes_cat = array(
+        'Gadgets',
+        'Technology',
+      );
+    } elseif ( 'tech.news' == $channel->category ) {
+      $itunes_cat = array(
+        'Tech News',
+        'Technology',
+      );
+    } elseif ( 'tech.podcast' == $channel->category ) {
+      $itunes_cat = array(
+        'Podcasting',
+        'Technology',
+      );
+    } elseif ( 'tech.software' == $channel->category ) {
+      $itunes_cat = array(
+        'Software How-To',
+        'Technology',
+      );
+    } elseif ( 'tv' == $channel->category ) {
+      $itunes_cat = array(
+        'TV &amp; Film',
+        false,
+      );
+    }
+
+    return $itunes_cat;
+  } else {
+    return false;
+  }
 }

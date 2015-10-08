@@ -72,7 +72,7 @@ function steel_slides_slideshow() {
   $output .= '<a href="#" class="button add_slide_media" id="btn_above" title="Add slide to slideshow"><span class="dashicons dashicons-images-alt"></span> Add Slide</a>';
   $output .= '<div id="slides_wrap"><div id="slides">';
   foreach ( $slides as $slide ) {
-    if ( ! empty( $slide ) ) {
+    if ( ! empty( $slide ) && false !== get_post_status( $slide ) ) {
       $image = wp_get_attachment_image_src( $slide, 'steel-slide-thumb' );
       $output .= '<div class="slide" id="';
       $output .= $slide;
@@ -191,9 +191,11 @@ function steel_save_slides() {
     update_post_meta( $post->ID, 'slides_order', $_POST['slides_order'] );
     $slides = explode( ',', get_post_meta( $post->ID, 'slides_order', true ) );
     foreach ( $slides as $slide ) {
-      if ( isset( $_POST[ 'slides_title_'   . $slide ] ) ) { update_post_meta( $post->ID, 'slides_title_'  . $slide, $_POST[ 'slides_title_'   . $slide ] ); }
-      if ( isset( $_POST[ 'slides_content_' . $slide ] ) ) { update_post_meta( $post->ID, 'slides_content_'. $slide, $_POST[ 'slides_content_' . $slide ] ); }
-      if ( isset( $_POST[ 'slides_link_'    . $slide ] ) ) { update_post_meta( $post->ID, 'slides_link_'   . $slide, $_POST[ 'slides_link_'    . $slide ] ); }
+      if ( ! empty( $slide ) && false !== get_post_status( $slide ) ) {
+        if ( isset( $_POST[ 'slides_title_'   . $slide ] ) ) { update_post_meta( $post->ID, 'slides_title_'  . $slide, $_POST[ 'slides_title_'   . $slide ] ); }
+        if ( isset( $_POST[ 'slides_content_' . $slide ] ) ) { update_post_meta( $post->ID, 'slides_content_'. $slide, $_POST[ 'slides_content_' . $slide ] ); }
+        if ( isset( $_POST[ 'slides_link_'    . $slide ] ) ) { update_post_meta( $post->ID, 'slides_link_'   . $slide, $_POST[ 'slides_link_'    . $slide ] ); }
+      }
     }
   }
 
@@ -271,7 +273,7 @@ function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
   $total      = -1;
 
   foreach ( $slides as $slide ) {
-    if ( ! empty( $slide ) ) {
+    if ( ! empty( $slide ) && false !== get_post_status( $slide ) ) {
       $total += 1;
     }
   }
@@ -284,7 +286,7 @@ function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
     $carousel_div = '<div id="carousel_'.$name.'" class="'.$slides_class.'" data-ride="carousel">';
 
     foreach ( $slides as $slide ) {
-      if ( ! empty( $slide ) ) {
+      if ( ! empty( $slide ) && false !== get_post_status( $slide ) ) {
         $image   = wp_get_attachment_image_src( $slide, $size );
         $title   = steel_slides_meta( 'title_'   . $slide, $post_id );
         $content = steel_slides_meta( 'content_' . $slide, $post_id );
@@ -313,7 +315,7 @@ function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
     $carousel_div = '<div id="carousel_'.$name.'" class="row carousel-gallery">';
 
     foreach ( $slides as $slide ) {
-      if ( ! empty( $slide ) ) {
+      if ( ! empty( $slide ) && false !== get_post_status( $slide ) ) {
         $count += 1;
         $image  = wp_get_attachment_image_src( $slide, 'full' );
         $title  = steel_slides_meta( 'title_' . $slide, $post_id );
@@ -331,7 +333,7 @@ function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
   if ( empty( $slides_skin ) || 'Default' === $slides_skin ) {
     $indicators .= '<ol class="carousel-indicators">';
     foreach ( $slides as $slide ) {
-      if ( ! empty( $slide ) ) {
+      if ( ! empty( $slide ) && false !== get_post_status( $slide ) ) {
         $count += 1;
         $indicators .= $count >= 1 ? '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"></li>' : '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'" class="active"></li>';
       }
@@ -340,7 +342,7 @@ function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
   } elseif ( 'Tabs' === $slides_skin ) {
     $indicators .= '<ol class="nav nav-tabs carousel-indicators">';
     foreach ( $slides as $slide ) {
-      if ( ! empty( $slide ) ) {
+      if ( ! empty( $slide ) && false !== get_post_status( $slide ) ) {
         $count += 1;
         $title   = steel_slides_meta( 'title_'  .$slide, $post_id );
         $indicators .= $count >= 1 ? '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><a href="#carousel_'.$post_id.'">' . $title . '</a></li>' : '<li class="active" data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><a href="#carousel_'.$post_id.'">' . $title . '</a></li>';
@@ -351,7 +353,7 @@ function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
     $indicators .= '<div class="carousel-thumbs hidden-sm hidden-xs">';
     $indicators .= '<span class="col-lg-'.$spc_lg.' col-md-'.$spc_lg.'"></span>';
     foreach ( $slides as $slide ) {
-      if ( ! empty( $slide ) ) {
+      if ( ! empty( $slide ) && false !== get_post_status( $slide ) ) {
         $count += 1;
         $image   = wp_get_attachment_image_src( $slide, 'steel-slide-thumb' );
         $title   = steel_slides_meta( 'title_'  .$slide, $post_id );
