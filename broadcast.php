@@ -570,3 +570,27 @@ function steel_broadcast_channel_feed_rewrite( $wp_rewrite ) {
   $wp_rewrite->rules = $feed_rules + $wp_rewrite->rules;
 }
 add_filter( 'generate_rewrite_rules', 'steel_broadcast_channel_feed_rewrite' );
+
+/**
+ * Retrieve data for broadcast channel.
+ *
+ * @param int $term_id The term ID for the broadcast channel.
+ *
+ * @return object The broadcast channel object.
+ */
+function steel_broadcast_channel_data( $term_id ) {
+  $channel = new stdClass();
+
+  $term_data = get_term_by( 'id', $term_id, 'steel_broadcast_channel', 'ARRAY_A' );
+  $term_meta = get_option( 'steel_broadcast_channel_' . $term_id );
+
+  foreach ( $term_data as $key => $value ) {
+    $channel->$key = $value;
+  }
+
+  foreach ( $term_meta as $key => $value ) {
+    $channel->$key = $value;
+  }
+
+  return $channel;
+}
