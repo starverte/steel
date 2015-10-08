@@ -126,11 +126,15 @@ function steel_broadcast_item_list() {
   $media = array();
 
   if ( ! empty( $post_custom['item_list'][0] ) ) {
+    $item_list = $post_custom['item_list'][0];
     $items = explode( ',', $post_custom['item_list'][0] );
     foreach ( $items as $item_id ) {
       array_push( $media, get_post( $item_id ) );
     }
-  } ?>
+  } else {
+    $item_list = 0;
+  }
+  ?>
 
   <a href="#" class="button btn-media-add" id="btn_above" title="Add item to series">
     <span class="dashicons dashicons-images-alt"></span> Add item
@@ -197,7 +201,7 @@ function steel_broadcast_item_list() {
       </div>
     </a>
   </div>
-  <input type="hidden" name="item_list" id="item_list" value="<?php echo $post_custom['item_list'][0]; ?>">
+  <input type="hidden" name="item_list" id="item_list" value="<?php echo $item_list; ?>">
   <div class="clearfix"></div><?php
 }
 
@@ -224,9 +228,13 @@ function steel_broadcast_save() {
 
   if ( isset( $_POST['item_list'] ) ) {
     update_post_meta( $post->ID, 'item_list', $_POST['item_list'] );
-    $items = explode( ',', $_POST['item_list'] );
+    if ( ! empty( $_POST['item_list'] ) ) {
+      $items = explode( ',', $_POST['item_list'] );
+    }
   } else {
-    $items = explode( ',', $post_custom['item_list'][0] );
+    if ( ! empty( $post_custom['item_list'][0] ) ) {
+      $items = explode( ',', $post_custom['item_list'][0] );
+    }
   }
 
   if ( ! empty( $items ) ) {
@@ -235,7 +243,7 @@ function steel_broadcast_save() {
     }
 
     foreach ( $media as $medium ) {
-      if ( 0 != $medium->ID && $post->ID != $medium->ID ) {
+      if ( ! empty( $medium ) && 0 != $medium->ID && $post->ID != $medium->ID ) {
         $medium_array = array(
           'ID' => $medium->ID,
         );
