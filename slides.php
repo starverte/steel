@@ -278,7 +278,7 @@ function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
     }
   }
 
-  $col_lg = floor( 12 / ( $total + 1 ) );
+  $col_lg = floor( 12 / max( ( $total + 1 ), 1 ) );
   $rem_lg = 12 - ( $col_lg * ( $total + 1 ) );
   $spc_lg = floor( $rem_lg / 2 );
 
@@ -404,7 +404,9 @@ function steel_slideshow_shortcode( $attr, $content = '' ) {
     return steel_slideshow( $id, $size );
   } elseif ( ! empty( $name ) ) {
     $show = get_page_by_title( $name, OBJECT, 'steel_slides' );
-    return steel_slideshow( $show->ID, $size, $name );
+    if ( ! empty( $show ) ) {
+      return steel_slideshow( $show->ID, $size, $name );
+    }
   } else {
     return;
   }

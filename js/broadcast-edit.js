@@ -53,8 +53,9 @@ jQuery('.btn-media-add').click( function( event ){
 //Function Definitions
 function item_new(attachment) {
   artist = '';
-  if ( typeof attachment.artist != 'undefined' )
-    artist = attachment.artist;
+  if ( typeof attachment.meta.artist !== 'undefined' ) {
+    artist = attachment.meta.artist;
+  }
 
   jQuery("#series").append(
     '<div class="item ui-sortable-handle" id="' + attachment.id + '">' +

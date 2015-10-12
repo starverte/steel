@@ -20,13 +20,12 @@ $channel_cover = wp_get_attachment_image_src( $channel->cover_photo_id, 'steel-b
 
 <channel>
   <title><?php esc_html_e( $channel->name ); ?></title>
-  <link><?php bloginfo_rss( 'url' ) ?></link>
+  <link><![CDATA[<?php echo $channel->link; ?>]]></link>
   <language><?php bloginfo_rss( 'language' ); ?></language>
   <copyright>&#x2117; <?php echo $channel->copyright; ?></copyright>
-  <itunes:subtitle><?php esc_html_e( $channel->name ); ?></itunes:subtitle>
   <itunes:author><?php esc_html_e( $channel->author ); ?></itunes:author>
-  <itunes:summary><?php echo $channel->description; ?></itunes:summary>
-  <description><?php echo $channel->description; ?></description>
+  <itunes:summary><![CDATA[<?php echo $channel->description; ?>]]></itunes:summary>
+  <description><![CDATA[<?php echo $channel->description; ?>]]></description>
 
   <itunes:owner>
     <itunes:name><?php esc_html_e( $channel->owner_name ); ?></itunes:name>
