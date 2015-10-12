@@ -1,4 +1,21 @@
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.log
+*.orig
+*.rej
+*.swo
+*.swp
+*.vi
+*.zip
+*~
 
+# OS or Editor folders
+._*
 .DS_Store
-error_log
-dev-*
+
+# Folders to ignore
+docs
+node_modules
+tests
+
