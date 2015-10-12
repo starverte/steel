@@ -182,7 +182,7 @@ add_action( 'add_meta_boxes', 'steel_slides_add_meta_boxes' );
 /**
  * Save data from meta boxes
  */
-function steel_save_slides() {
+function steel_slides_save() {
   global $post;
   if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset( $post_id )) ) { return $post_id; }
   if ( defined( 'DOING_AJAX' ) && DOING_AJAX && (isset( $post_id )) ) { return $post_id; }
@@ -215,7 +215,7 @@ function steel_save_slides() {
     update_post_meta( $post->ID, 'slides_transition', 'Default' );
   }
 }
-add_action( 'save_post', 'steel_save_slides' );
+add_action( 'save_post', 'steel_slides_save' );
 
 /**
  * Retrieve post meta field, based on post ID and key.

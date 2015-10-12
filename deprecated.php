@@ -85,10 +85,10 @@ function profile_phone( $pattern = '$1.$2.$3' ) {
 /**
  * Check to see if theme Flint is active.
  *
- * @deprecated 1.3.0 Use steel_is_flint_active()
+ * @deprecated 1.3.0
  */
 function is_flint_active() {
-  steel_deprecated_function( __FUNCTION__, '1.3.0', 'steel_is_flint_active()' );
+  steel_deprecated_function( __FUNCTION__, '1.3.0' );
   return steel_is_flint_active();
 }
 
@@ -119,13 +119,13 @@ function pin_it( $args = array() ) {
 /**
  * Check to see if a particular Steel module is active.
  *
- * @deprecated 1.3.0 Use steel_is_module_active()
+ * @deprecated 1.3.0 Use steel_module_status()
  *
  * @param string $module The name of the module to check status for.
  */
 function is_module_active( $module ) {
-  steel_deprecated_function( __FUNCTION__, '1.3.0', 'steel_is_module_active()' );
-  return steel_is_module_active( $module );
+  steel_deprecated_function( __FUNCTION__, '1.3.0', 'steel_module_status()' );
+  return steel_module_status( $module );
 }
 
 /**
