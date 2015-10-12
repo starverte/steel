@@ -30,35 +30,35 @@
 include_once dirname( __FILE__ ) . '/bootstrap.php';
 include_once dirname( __FILE__ ) . '/options.php';
 
-if ( steel_is_module_active( 'broadcast' ) ) {
+if ( steel_module_status( 'broadcast' ) ) {
   include_once dirname( __FILE__ ) . '/broadcast.php';
 }
 
-if ( steel_is_module_active( 'quotes' ) ) {
+if ( steel_module_status( 'quotes' ) ) {
   include_once dirname( __FILE__ ) . '/quotes.php';
 }
 
-if ( steel_is_module_active( 'shortcodes' ) ) {
+if ( steel_module_status( 'shortcodes' ) ) {
   include_once dirname( __FILE__ ) . '/shortcodes.php';
 }
 
-if ( steel_is_module_active( 'social_media' ) ) {
+if ( steel_module_status( 'social_media' ) ) {
   include_once dirname( __FILE__ ) . '/social-media.php';
 }
 
-if ( steel_is_module_active( 'slides' ) ) {
+if ( steel_module_status( 'slides' ) ) {
   include_once dirname( __FILE__ ) . '/slides.php';
 }
 
-if ( steel_is_module_active( 'teams' ) ) {
+if ( steel_module_status( 'teams' ) ) {
   include_once dirname( __FILE__ ) . '/teams.php';
 }
 
-if ( steel_is_module_active( 'widgets' ) ) {
+if ( steel_module_status( 'widgets' ) ) {
   include_once dirname( __FILE__ ) . '/widgets.php';
 }
 
-if ( steel_is_flint_active() ) { include_once dirname( __FILE__ ) . '/templates.php'; }
+if ( function_exists( 'flint_the_content' ) ) { include_once dirname( __FILE__ ) . '/templates.php'; }
 
 /**
  * Register and load admin scripts and styles
@@ -162,7 +162,7 @@ function steel_enqueue_scripts() {
     );
   }
 
-  if ( steel_is_module_active( 'slides' ) ) {
+  if ( steel_module_status( 'slides' ) ) {
     wp_enqueue_style( 'slides-mod-style', plugins_url( 'steel/css/slides.css' ), array(), '1.2.7' );
   }
 
@@ -222,26 +222,10 @@ add_filter( 'request', 'steel_request' );
  *
  * @param string $module Module name to check.
  */
-function steel_is_module_active( $module ) {
+function steel_module_status( $module ) {
   $options = steel_get_options();
 
   if ( true === $options[ 'load_'.$module ] ) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-/**
- * Check to see if theme Flint is active.
- */
-function steel_is_flint_active() {
-  $theme = wp_get_theme();
-  $name = $theme->get( 'Name' );
-  $template = $theme->get( 'Template' );
-  $template = ! empty( $template ) ? $template : strtolower( $name );
-
-  if ( 'flint' === $template ) {
     return true;
   } else {
     return false;

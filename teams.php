@@ -8,7 +8,7 @@
 /**
  * Return arguments for registering steel_profile
  */
-function steel_profile_post_type_args() {
+function steel_teams_profile_post_type_args() {
   $labels = array(
     'name'                => _x( 'Profiles', 'Post Type General Name', 'steel' ),
     'singular_name'       => _x( 'Profile', 'Post Type Singular Name', 'steel' ),
@@ -55,7 +55,7 @@ function steel_profile_post_type_args() {
 /**
  * Return arguments for registering steel_team
  */
-function steel_team_taxonomy_args() {
+function steel_teams_team_taxonomy_args() {
   $labels = array(
     'name'                       => _x( 'Teams', 'Taxonomy General Name', 'steel' ),
     'singular_name'              => _x( 'Team', 'Taxonomy Singular Name', 'steel' ),
@@ -94,12 +94,12 @@ function steel_team_taxonomy_args() {
  * Register custom post type and custom taxonomy
  */
 function steel_teams_init() {
-  register_post_type( 'steel_profile', steel_profile_post_type_args() );
+  register_post_type( 'steel_profile', steel_teams_profile_post_type_args() );
 
   register_taxonomy(
     'steel_team',
     'steel_profile',
-    steel_team_taxonomy_args()
+    steel_teams_team_taxonomy_args()
   );
 }
 add_action( 'init', 'steel_teams_init' );
@@ -135,7 +135,7 @@ add_action( 'add_meta_boxes', 'steel_teams_add_meta_boxes' );
 /**
  * Save data from meta boxes
  */
-function steel_save_profile() {
+function steel_teams_profile_save() {
   global $post;
   if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset( $post_id )) ) {
     return $post_id;
@@ -158,7 +158,7 @@ function steel_save_profile() {
   }
   do_action( 'steel_teams_save_meta' );
 }
-add_action( 'save_post', 'steel_save_profile' );
+add_action( 'save_post', 'steel_teams_profile_save' );
 
 /**
  * Retrieve post meta field, based on post ID and key.
