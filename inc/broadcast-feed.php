@@ -3,6 +3,7 @@
  * The iTunes RSS Feed Template for displaying Podcast feed.
  *
  * @package Steel\Broadcast
+ * @since 1.3.0
  */
 
 header( 'Content-Type: ' . feed_content_type( 'rss2' ) . '; charset=' . get_option( 'blog_charset' ), true );
