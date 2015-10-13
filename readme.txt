@@ -49,6 +49,17 @@ Like our plugin? Write us a review!
 Submit your questions to http://matchstix.io/steel and we will try to answer them.
 
 == Changelog ==
+= 1.3.0 =
+- Fixed: Team profiles can once again be given a "menu order" value for sorting
+- Fixed: Delete item icon is now visible in all browsers, including Chrome
+- Fixed: If an attachment is deleted, it no longer appears in Slides
+- Prepared Steel for [Matchstix] (http://matchstix.io/the-future-of-sparks/)
+- New Broadcast Module: Create audio or video series to display on website or publish on podcast feed
+- Improved inline code documentation
+- Improved code quality
+
+For more details, check out https://github.com/starverte/steel/pull/156
+
 = 1.2.7 =
 - Changed `$this->WP_Widget` to `$this->__construct` (deprecated with WordPress 4.3)
 
