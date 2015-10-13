@@ -3,6 +3,7 @@
  * Create audio or video series to display on website or publish on podcast feed
  *
  * @package Steel\Broadcast
+ * @since 1.3.0
  *
  * @todo Use term meta in WordPress 4.4
  *       (https://make.wordpress.org/core/2015/09/04/taxonomy-term-metadata-proposal)

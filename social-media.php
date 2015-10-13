@@ -3,6 +3,7 @@
  * Includes social media buttons for Facebook, Twitter, and Pinterest
  *
  * @package Steel\Social Media
+ * @since 1.3.0
  */
 
 /**
