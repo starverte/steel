@@ -46,7 +46,7 @@ Like our plugin? Write us a review!
 
 == Frequently Asked Questions ==
 
-Submit your questions to http://matchstix.io/steel and we will try to answer them.
+Submit your questions to https://matchstix.io/steel and we will try to answer them.
 
 == Changelog ==
 = 1.3.0 =
