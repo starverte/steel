@@ -67,7 +67,7 @@ function steel_btn_pin_it( $args = array() ) {
   $args = (object) $args;
 
   printf(
-    '<a href="https://pinterest.com/pin/create/button/?url=%s&media=%s&description=%s" class="pin-it-button" count-layout="%s"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>',
+    '<a href="//pinterest.com/pin/create/button/?url=%s&media=%s&description=%s" class="pin-it-button" count-layout="%s"><img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>',
     $args->data_url,
     $args->data_thumb,
     $args->data_text,
