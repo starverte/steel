@@ -166,7 +166,7 @@ function steel_enqueue_scripts() {
     wp_enqueue_style( 'slides-mod-style', plugins_url( 'steel/css/slides.css' ), array(), '1.2.7' );
   }
 
-  wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js' );
+  wp_enqueue_script( 'pin-it-button', '//assets.pinterest.com/js/pinit.js' );
 
   wp_enqueue_script(
     'steel-run',
