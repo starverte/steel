@@ -88,7 +88,7 @@ function steel_admin_enqueue_scripts() {
     'functions',
     plugins_url( 'steel/js/functions.js' ),
     array( 'jquery' ),
-    '1.2.7',
+    '1.3.0',
     true
   );
 
@@ -97,7 +97,7 @@ function steel_admin_enqueue_scripts() {
       'broadcast-edit',
       plugins_url( 'steel/js/broadcast-edit.js' ),
       array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ),
-      '1.2.7',
+      '1.3.0',
       true
     );
     wp_enqueue_style( 'broadcast-style-admin', plugins_url( 'steel/css/broadcast-admin.css' ) );
@@ -108,7 +108,7 @@ function steel_admin_enqueue_scripts() {
       'broadcast-channel-edit',
       plugins_url( 'steel/js/broadcast-channel-edit.js' ),
       array( 'jquery' ),
-      '1.2.7',
+      '1.3.0',
       true
     );
   }
@@ -118,7 +118,7 @@ function steel_admin_enqueue_scripts() {
       'slides-script',
       plugins_url( 'steel/js/slides.js' ),
       array( 'jquery' ),
-      '1.2.7',
+      '1.3.0',
       true
     );
     wp_enqueue_style( 'slides-style-admin', plugins_url( 'steel/css/slides-admin.css' ) );
@@ -163,16 +163,16 @@ function steel_enqueue_scripts() {
   }
 
   if ( steel_module_status( 'slides' ) ) {
-    wp_enqueue_style( 'slides-mod-style', plugins_url( 'steel/css/slides.css' ), array(), '1.2.7' );
+    wp_enqueue_style( 'slides-mod-style', plugins_url( 'steel/css/slides.css' ), array(), '1.3.0' );
   }
 
-  wp_enqueue_script( 'pin-it-button', 'http://assets.pinterest.com/js/pinit.js' );
+  wp_enqueue_script( 'pin-it-button', '//assets.pinterest.com/js/pinit.js' );
 
   wp_enqueue_script(
     'steel-run',
     plugins_url( '/steel/js/run.js' ),
     array( 'jquery' ),
-    '1.2.7',
+    '1.3.0',
     true
   );
 }
@@ -275,7 +275,7 @@ function steel_meta( $module, $key, $post_id = 0 ) {
 /**
  * Add Google Analytics script to footer
  */
-function steel_footer() {
+function steel_ga_load() {
   $options = steel_get_options();
 
   $ga_id = $options['ga_id'];
@@ -285,17 +285,17 @@ function steel_footer() {
       <!-- Google Analytics code disabled because user is logged in. -->
       <?php
     } else { ?>
-      <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '<?php echo $ga_id; ?>']);
-        _gaq.push(['_trackPageview']);
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', <?php echo $ga_id; ?>, 'auto');
+        ga('send', 'pageview');
+
       </script><?php
     }
   }
 }
-add_action( 'wp_footer','steel_footer' );
+add_action( 'wp_head','steel_ga_load' );
