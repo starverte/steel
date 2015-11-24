@@ -137,9 +137,9 @@ function steel_enqueue_scripts() {
 
     wp_enqueue_script(
       'bootstrap',
-      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js',
+      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js',
       array( 'jquery' ),
-      '3.3.5',
+      '3.3.6',
       true
     );
   }
@@ -149,16 +149,16 @@ function steel_enqueue_scripts() {
 
     wp_enqueue_style(
       'bootstrap-css',
-      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css',
+      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
       array(),
-      '3.3.5'
+      '3.3.6'
     );
   } else {
     wp_enqueue_style(
       'glyphicons',
       plugins_url( 'steel/css/glyphicons.css' ),
       array(),
-      '3.3.5'
+      '3.3.6'
     );
   }
 
