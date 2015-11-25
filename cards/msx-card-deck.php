@@ -7,8 +7,6 @@
  * @since 0.1.0
  */
 
-
-
 /**
  * Return arguments for registering msx_deck
  */
