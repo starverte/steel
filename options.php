@@ -78,9 +78,9 @@ function steel_admin_init() {
   );
 
   add_settings_field(
-    'load_slides',
-    'Slides',
-    'steel_settings_field_slides',
+    'load_cards',
+    'Cards',
+    'steel_settings_field_cards',
     'steel',
     'steel_mods'
   );
@@ -167,12 +167,12 @@ function steel_settings_field_broadcast() {
 /**
  * Display Slides module field
  */
-function steel_settings_field_slides() {
+function steel_settings_field_cards() {
   $options = steel_get_options(); ?>
 
   <div class="radio-group">
-    <label for="steel_options[load_slides]">
-      <input name="steel_options[load_slides]" type="checkbox" value="true"  <?php checked( $options['load_slides'], true ); ?>>Active
+    <label for="steel_options[load_cards]">
+      <input name="steel_options[load_cards]" type="checkbox" value="true"  <?php checked( $options['load_cards'], true ); ?>>Active
     </label>
   </div>
   <?php
@@ -221,7 +221,7 @@ function steel_options_validate( $raw ) {
   $valid['load_bootstrap_js'] = ! empty( $raw['load_bootstrap_js'] ) ? true : false;
 
   $valid['load_broadcast'] = ! empty( $raw['load_broadcast'] ) ? true : false;
-  $valid['load_slides'] = ! empty( $raw['load_slides'] ) ? true : false;
+  $valid['load_cards'] = ! empty( $raw['load_cards'] ) ? true : false;
   $valid['load_teams'] = ! empty( $raw['load_teams'] ) ? true : false;
 
   return apply_filters( 'steel_save_options', $valid, $raw );
@@ -245,10 +245,10 @@ function steel_get_option_defaults() {
     'fb_app_id'          => '',
 
     'load_broadcast'     => false,
+    'load_cards'         => false,
     'load_quotes'        => true,
     'load_shortcodes'    => true,
     'load_social_media'  => true,
-    'load_slides'        => false,
     'load_teams'         => false,
     'load_widgets'       => true,
   );
@@ -257,63 +257,71 @@ function steel_get_option_defaults() {
   $options = get_option( 'steel_options' );
 
   if ( ! empty( $options['mod_bootstrap'] ) ) {
-    if ( 'css' === $options['mod_bootstrap'] || 'both' === $options['mod_bootstrap'] ) {
+    if ( 'css' == $options['mod_bootstrap'] || 'both' == $options['mod_bootstrap'] ) {
       $defaults['load_bootstrap_css'] = true;
     }
 
-    if ( 'js' === $options['mod_bootstrap'] || 'both' === $options['mod_bootstrap'] ) {
+    if ( 'js' == $options['mod_bootstrap'] || 'both' == $options['mod_bootstrap'] ) {
       $defaults['load_bootstrap_js'] = true;
     }
   }
 
   if ( ! empty( $options['mod_podcast'] ) ) {
-    if ( 'true' === $options['mod_podcast'] ) {
+    if ( 'true' == $options['mod_podcast'] ) {
       $defaults['load_broadcast'] = true;
-    } elseif ( 'false' === $options['mod_podcast'] ) {
+    } elseif ( 'false' == $options['mod_podcast'] ) {
       $defaults['load_broadcast'] = false;
     }
   }
 
   if ( ! empty( $options['mod_quotes'] ) ) {
-    if ( 'true' === $options['mod_quotes'] ) {
+    if ( 'true' == $options['mod_quotes'] ) {
       $defaults['load_quotes'] = true;
-    } elseif ( 'false' === $options['mod_quotes'] ) {
+    } elseif ( 'false' == $options['mod_quotes'] ) {
       $defaults['load_quotes'] = false;
     }
   }
 
   if ( ! empty( $options['mod_shortcodes'] ) ) {
-    if ( 'true' === $options['mod_shortcodes'] ) {
+    if ( 'true' == $options['mod_shortcodes'] ) {
       $defaults['load_shortcodes'] = true;
-    } elseif ( 'false' === $options['mod_shortcodes'] ) {
+    } elseif ( 'false' == $options['mod_shortcodes'] ) {
       $defaults['load_shortcodes'] = false;
     }
   }
 
   if ( ! empty( $options['mod_slides'] ) ) {
-    if ( 'true' === $options['mod_slides'] ) {
-      $defaults['load_slides'] = true;
-    } elseif ( 'false' === $options['mod_slides'] ) {
-      $defaults['load_slides'] = false;
+    if ( 'true' == $options['mod_slides'] ) {
+      $defaults['load_cards'] = true;
+    } elseif ( 'false' == $options['mod_slides'] ) {
+      $defaults['load_cards'] = false;
     }
   }
 
   if ( ! empty( $options['mod_teams'] ) ) {
-    if ( 'true' === $options['mod_teams'] ) {
+    if ( 'true' == $options['mod_teams'] ) {
       $defaults['load_teams'] = true;
-    } elseif ( 'false' === $options['mod_teams'] ) {
+    } elseif ( 'false' == $options['mod_teams'] ) {
       $defaults['load_teams'] = false;
     }
   }
 
   if ( ! empty( $options['mod_widgets'] ) ) {
-    if ( 'true' === $options['mod_widgets'] ) {
+    if ( 'true' == $options['mod_widgets'] ) {
       $defaults['load_widgets'] = true;
-    } elseif ( 'false' === $options['mod_widgets'] ) {
+    } elseif ( 'false' == $options['mod_widgets'] ) {
       $defaults['load_widgets'] = false;
     }
   }
   // END - backwards compatibility.
+
+  if ( ! empty( $options['load_slides'] ) ) {
+    if ( 'true' == $options['load_slides'] ) {
+      $defaults['load_cards'] = true;
+    } elseif ( 'false' == $options['load_slides'] ) {
+      $defaults['load_cards'] = false;
+    }
+  }
   return apply_filters( 'steel_option_defaults', $defaults );
 }
 
