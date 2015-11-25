@@ -27,11 +27,18 @@
  * @package Steel
  */
 
+global $msx_text_domain;
+$msx_text_domain = 'steel';
+
 include_once dirname( __FILE__ ) . '/bootstrap.php';
 include_once dirname( __FILE__ ) . '/options.php';
 
 if ( steel_module_status( 'broadcast' ) ) {
   include_once dirname( __FILE__ ) . '/broadcast.php';
+}
+
+if ( steel_module_status( 'cards' ) ) {
+  include_once dirname( __FILE__ ) . '/cards/cards.php';
 }
 
 if ( steel_module_status( 'quotes' ) ) {
@@ -299,3 +306,46 @@ function steel_ga_load() {
   }
 }
 add_action( 'wp_head','steel_ga_load' );
+
+/**
+ * Add action to check if plugin has been updated
+ */
+function steel_plugins_loaded() {
+  $steel_db = 151124;
+  if ( get_site_option( 'steel_db_version' ) != $steel_db ) {
+    do_action( 'steel_register_update_hook' );
+  }
+}
+add_action( 'plugins_loaded', 'steel_plugins_loaded' );
+
+/**
+ * On update, convert steel_slides to msx_card/msx_card_deck
+ */
+function steel_slides_x_cards() {
+  $steel_slides = get_posts( array( 'post_type' => 'steel_slides', 'posts_per_page' => -1 ) );
+  foreach ( $steel_slides as $slideshow ) {
+    $cards = explode( ',', get_post_meta( $slideshow->ID, 'slides_order', true ) );
+    $custom = get_post_custom( $slideshow->ID );
+    foreach ( $cards as $card ) {
+      if ( ! empty( $card ) ) {
+        $new_card = wp_insert_post(
+          array(
+            'post_title' => $custom[ 'slides_title_' . $card ][0],
+            'post_content' => $custom[ 'slides_content_' . $card ][0],
+            'post_parent' => $slideshow->ID,
+            'post_type' => 'msx_card',
+            'post_status' => 'publish',
+          )
+        );
+        update_post_meta( $new_card, 'target', $custom[ 'slides_link_' . $card ][0] );
+        update_post_meta( $new_card, get_post_mime_type( $card ), $card );
+        delete_post_meta( $slideshow->ID, 'slides_title_' . $card );
+        delete_post_meta( $slideshow->ID, 'slides_content_' . $card );
+        delete_post_meta( $slideshow->ID, 'slides_link_' . $card );
+      }
+    }
+    delete_post_meta( $slideshow->ID, 'slides_order' );
+    set_post_type( $slideshow->ID, 'msx_card_deck' );
+  }
+}
+add_action( 'steel_register_update_hook', 'steel_slides_x_cards' );
