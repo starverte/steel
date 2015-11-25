@@ -349,3 +349,4 @@ function steel_slides_x_cards() {
   }
 }
 add_action( 'steel_register_update_hook', 'steel_slides_x_cards' );
+
