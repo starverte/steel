@@ -54,55 +54,64 @@ function msx_card_deck_post_type_args() {
  */
 function msx_card_deck_edit() {
   global $post;
-  $cards = get_posts( array( 'post_type' => 'msx_card' ) ); ?>
+  $deck_custom = get_post_custom( $post->ID );
+  $cards_list = explode( ',', $deck_custom['cards_order'][0] );
 
-<a href="#" class="button add_card_media" id="btn_above" title="Add card to deck">
+  $args = array(
+    'post_type' => 'msx_card',
+    'post__in' => $cards_list,
+    'orderby' => 'post__in',
+    'order' => ASC,
+  );
+  $cards = get_posts( $args ); ?>
+
+<a href="#" class="button btn-card-new" id="btn_above" title="Add card to deck">
   <span class="dashicons dashicons-images-alt"></span> Add Card
 </a>
 <div id="cards_wrap">
   <div id="cards"><?php
     foreach ( $cards as $card ) {
       if ( ! empty( $card ) && false !== get_post_status( $card->ID ) ) {
-        $custom = get_post_custom( $card->ID );
+        $card_custom = get_post_custom( $card->ID );
 
-        if ( ! empty( $custom['image/jpeg'] ) ) {
-          $image = wp_get_attachment_image_src( $custom['image/jpeg'][0], 'msx-card-thumb' );
-        } elseif ( ! empty( $custom['image/png'] ) ) {
-          $image = wp_get_attachment_image_src( $custom['image/png'][0], 'msx-card-thumb' );
-        } elseif ( ! empty( $custom['image/gif'] ) ) {
-          $image = wp_get_attachment_image_src( $custom['image/gif'][0], 'msx-card-thumb' );
+        if ( ! empty( $card_custom['image/jpeg'] ) ) {
+          $image = wp_get_attachment_image_src( $card_custom['image/jpeg'][0], 'msx-card-thumb' );
+        } elseif ( ! empty( $card_custom['image/png'] ) ) {
+          $image = wp_get_attachment_image_src( $card_custom['image/png'][0], 'msx-card-thumb' );
+        } elseif ( ! empty( $card_custom['image/gif'] ) ) {
+          $image = wp_get_attachment_image_src( $card_custom['image/gif'][0], 'msx-card-thumb' );
         }
 ?>
-    <div class="card" id="<?php echo $card->ID; ?>">
+    <div class="msx-card" id="<?php echo $card->ID; ?>">
       <div class="card-controls">
         <span id="controls_<?php echo $card->ID; ?>"><?php echo $card->post_title; ?></span>
 
-        <a class="card-delete" href="#" onclick="cardDelete(\'<?php echo $card->ID; ?>\' )" title="Delete card">
+        <a class="card-delete" href="#" onclick="msx_card_delete( '<?php echo $card->ID; ?>' )" title="Delete card">
           <span class="dashicons dashicons-dismiss" style="float:right"></span>
         </a>
       </div>
 
       <img id="card_img_<?php echo $card->ID; ?>" src="<?php echo $image[0]; ?>" width="<?php echo $image[1]; ?>" height="<?php echo $image[2]; ?>">
-      <pre><?php print_r( $custom['media'][0] ); ?></pre>
 
       <p>
-        <input type="text" size="32" class="card-title" name="cards_title_<?php echo $card->ID; ?>" id="cards_title_<?php echo $card->ID; ?>" value="<?php echo $card->post_title; ?>" placeholder="Title" /><br>
-        <textarea cols="32" name="cards_content_<?php echo $card->ID; ?>" id="cards_content_<?php echo $card->ID; ?>" placeholder="Caption"><?php echo $card->post_content; ?></textarea>
+        <input type="text" size="32" class="card-title" name="card_<?php echo $card->ID; ?>_title" id="card_<?php echo $card->ID; ?>_title" value="<?php echo $card->post_title; ?>" placeholder="Title" /><br>
+        <textarea cols="32" name="card_<?php echo $card->ID; ?>_content" id="card_<?php echo $card->ID; ?>_content" placeholder="Caption"><?php echo $card->post_content; ?></textarea>
       </p>
 
       <span class="dashicons dashicons-admin-links" style="float:left;padding:5px;"></span>
-      <input type="text" size="28" name="cards_link_<?php echo $card->ID; ?>" id="cards_link_<?php echo $card->ID; ?>" value="<?php echo $custom['target'][0]; ?>" placeholder="Link" />
+      <input type="text" size="28" name="cards_link_<?php echo $card->ID; ?>" id="cards_link_<?php echo $card->ID; ?>" value="<?php echo $card_custom['target'][0]; ?>" placeholder="Link" />
     </div><?php
     }
   } ?>
   </div>
 
-  <a href="#" class="add_card_media add_new_card" title="Add card to deck">
+  <a href="#" class="btn-card-new btn-tile" title="Add card to deck">
     <div class="card-new">
       <p><span class="glyphicon glyphicon-plus-sign"></span><br>Add Slide</p>
     </div>
   </a>
 </div>
 
+<input type="text" name="cards_order" id="cards_order" value="<?php echo $deck_custom['cards_order'][0]; ?>">
 <div style="float:none; clear:both;"></div><?php
 }
