@@ -115,3 +115,62 @@ function msx_card_deck_edit() {
 <input type="text" name="cards_order" id="cards_order" value="<?php echo $deck_custom['cards_order'][0]; ?>">
 <div style="float:none; clear:both;"></div><?php
 }
+
+/**
+ * Save deck and card data
+ */
+function msx_card_deck_save() {
+  global $post;
+  if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE && (isset( $post_id )) ) { return $post_id; }
+  if ( defined( 'DOING_AJAX' ) && DOING_AJAX && (isset( $post_id )) ) { return $post_id; }
+  if ( preg_match( '/\edit\.php/', $_SERVER['REQUEST_URI'] ) && (isset( $post_id )) ) { return $post_id; }
+
+  if ( isset( $_POST['cards_order'] ) ) {
+    $cards_list = '';
+    update_post_meta( $post->ID, 'cards_order', $_POST['cards_order'] );
+    $cards = explode( ',', $_POST['cards_order'] );
+    foreach ( $cards as $card ) {
+      if ( ! empty( $card ) ) {
+        if ( 'attachment' == get_post_type( $card ) ) {
+          // Prevent infinite loop.
+          remove_action( 'save_post', 'msx_card_deck_save' );
+
+          $new_card = wp_insert_post(
+            array(
+              'post_title' => $_POST[ 'card_' . $card . '_title' ],
+              'post_content' => $_POST[ 'card_' . $card . '_content' ],
+              'post_parent' => $post->ID,
+              'post_type' => 'msx_card',
+              'post_status' => 'publish',
+            )
+          );
+
+          add_action( 'save_post', 'msx_card_deck_save' );
+
+          update_post_meta( $new_card, 'target', $_POST[ 'card_' . $card . '_link' ] );
+          update_post_meta( $new_card, get_post_mime_type( $card ), $card );
+          $cards_list = $cards_list . $new_card . ',';
+        } else if ( 'msx_card' == get_post_type( $card ) ) {
+          // Prevent infinite loop.
+          remove_action( 'save_post', 'msx_card_deck_save' );
+
+          wp_update_post(
+            array(
+              'ID' => $card,
+              'post_title' => $_POST[ 'card_' . $card . '_title' ],
+              'post_content' => $_POST[ 'card_' . $card . '_content' ],
+            )
+          );
+
+          add_action( 'save_post', 'msx_card_deck_save' );
+
+          update_post_meta( $new_card, 'target', $_POST[ 'card_' . $card . '_link' ] );
+          $cards_list = $cards_list . $card . ',';
+        }
+      }
+    }
+
+    update_post_meta( $post->ID, 'cards_order', $cards_list );
+  }
+}
+add_action( 'save_post_msx_card_deck', 'msx_card_deck_save' );
