@@ -130,6 +130,17 @@ function steel_admin_enqueue_scripts() {
     );
     wp_enqueue_style( 'slides-style-admin', plugins_url( 'steel/css/slides-admin.css' ) );
   }
+
+  if ( 'msx_card_deck' == $post_type ) {
+    wp_enqueue_script(
+      'cards-admin-script',
+      plugins_url( 'steel/cards/admin.js' ),
+      array( 'jquery' ),
+      '0.2.0',
+      true
+    );
+    wp_enqueue_style( 'cards-admin-style', plugins_url( 'steel/cards/admin.css' ) );
+  }
 }
 add_action( 'admin_enqueue_scripts', 'steel_admin_enqueue_scripts' );
 
