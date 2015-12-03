@@ -58,7 +58,7 @@ if ( steel_module_status( 'slides' ) ) {
 }
 
 if ( steel_module_status( 'teams' ) ) {
-  include_once dirname( __FILE__ ) . '/teams.php';
+  include_once dirname( __FILE__ ) . '/teams/teams.php';
 }
 
 if ( steel_module_status( 'widgets' ) ) {
