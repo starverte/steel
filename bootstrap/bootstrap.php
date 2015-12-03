@@ -5,7 +5,7 @@
  * @package Steel\Bootstrap
  */
 
-include_once dirname( __FILE__ ) . '/inc/class-walker-nav-menu-list-group.php';
+include_once dirname( __FILE__ ) . '/bootstrap/class-walker-nav-menu-list-group.php';
 
 /**
  * Display Bootstrap list group

@@ -53,7 +53,7 @@ module.exports = function(grunt) {
         'bootstrap/bootstrap.php',
         'broadcast/broadcast.php',
         'deprecated.php',
-        'inc/class-walker-nav-menu-list-group.php',
+        'bootstrap/class-walker-nav-menu-list-group.php',
         'inc/class-widget-button.php',
         'inc/class-widget-link.php',
         'inc/class-widget-list-group.php',
