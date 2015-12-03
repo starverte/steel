@@ -99,7 +99,7 @@ function msx_card_deck_edit() {
       </p>
 
       <span class="dashicons dashicons-admin-links" style="float:left;padding:5px;"></span>
-      <input type="text" size="28" name="cards_link_<?php echo $card->ID; ?>" id="cards_link_<?php echo $card->ID; ?>" value="<?php echo $card_custom['target'][0]; ?>" placeholder="Link" />
+      <input type="text" size="28" name="card_<?php echo $card->ID; ?>_link" id="card_<?php echo $card->ID; ?>_link" value="<?php echo $card_custom['target'][0]; ?>" placeholder="Link" />
     </div><?php
     }
   } ?>
@@ -112,7 +112,7 @@ function msx_card_deck_edit() {
   </a>
 </div>
 
-<input type="text" name="cards_order" id="cards_order" value="<?php echo $deck_custom['cards_order'][0]; ?>">
+<input type="hidden" name="cards_order" id="cards_order" value="<?php echo $deck_custom['cards_order'][0]; ?>">
 <div style="float:none; clear:both;"></div><?php
 }
 
@@ -164,7 +164,7 @@ function msx_card_deck_save() {
 
           add_action( 'save_post', 'msx_card_deck_save' );
 
-          update_post_meta( $new_card, 'target', $_POST[ 'card_' . $card . '_link' ] );
+          update_post_meta( $card, 'target', $_POST[ 'card_' . $card . '_link' ] );
           $cards_list = $cards_list . $card . ',';
         }
       }
