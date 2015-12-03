@@ -54,9 +54,9 @@ module.exports = function(grunt) {
         'broadcast/broadcast.php',
         'deprecated.php',
         'bootstrap/class-walker-nav-menu-list-group.php',
-        'inc/class-widget-button.php',
-        'inc/class-widget-link.php',
-        'inc/class-widget-list-group.php',
+        'widgets/class-widget-button.php',
+        'widgets/class-widget-link.php',
+        'widgets/class-widget-list-group.php',
         'inc/class-widget-random-quote.php',
         'options.php',
         'quotes.php',
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
         'steel.php',
         'teams.php',
         'templates/steel-profile.php',
-        'widgets.php'
+        'widgets/widgets.php'
       ]
     }
   });

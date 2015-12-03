@@ -62,7 +62,7 @@ if ( steel_module_status( 'teams' ) ) {
 }
 
 if ( steel_module_status( 'widgets' ) ) {
-  include_once dirname( __FILE__ ) . '/widgets.php';
+  include_once dirname( __FILE__ ) . '/widgets/widgets.php';
 }
 
 if ( function_exists( 'flint_the_content' ) ) { include_once dirname( __FILE__ ) . '/templates/steel-profile.php'; }
