@@ -139,7 +139,7 @@ function msx_card_deck_save() {
             array(
               'post_title' => $_POST[ 'card_' . $card . '_title' ],
               'post_content' => $_POST[ 'card_' . $card . '_content' ],
-              'post_parent' => $post->ID,
+              'post_parent' => $card,
               'post_type' => 'msx_card',
               'post_status' => 'publish',
             )

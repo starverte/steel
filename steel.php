@@ -343,7 +343,7 @@ function steel_slides_x_cards() {
           array(
             'post_title' => $custom[ 'slides_title_' . $card ][0],
             'post_content' => $custom[ 'slides_content_' . $card ][0],
-            'post_parent' => $slideshow->ID,
+            'post_parent' => $card,
             'post_type' => 'msx_card',
             'post_status' => 'publish',
           )
