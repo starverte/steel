@@ -65,7 +65,7 @@ module.exports = function(grunt) {
         'social-media.php',
         'steel.php',
         'teams.php',
-        'templates.php',
+        'templates/steel-profile.php',
         'widgets.php'
       ]
     }

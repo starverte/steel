@@ -24,4 +24,4 @@ function steel_profile_entry_meta_above() {
   $output .= ! empty( $email ) | ! empty( $phone ) ? '</p>' : '';
   echo $output;
 }
-add_action( 'flint_entry_meta_above_steel_profile','steel_profile_entry_meta_above', 10 );
+add_action( 'flint_entry_meta_above_steel_profile', 'steel_profile_entry_meta_above', 10 );

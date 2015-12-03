@@ -65,7 +65,7 @@ if ( steel_module_status( 'widgets' ) ) {
   include_once dirname( __FILE__ ) . '/widgets.php';
 }
 
-if ( function_exists( 'flint_the_content' ) ) { include_once dirname( __FILE__ ) . '/templates.php'; }
+if ( function_exists( 'flint_the_content' ) ) { include_once dirname( __FILE__ ) . '/templates/steel-profile.php'; }
 
 /**
  * Register and load admin scripts and styles
