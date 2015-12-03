@@ -41,6 +41,7 @@ if ( steel_module_status( 'broadcast' ) ) {
 
 if ( steel_module_status( 'cards' ) ) {
   include_once dirname( __FILE__ ) . '/cards/cards.php';
+  include_once dirname( __FILE__ ) . '/deprecated/slides.php';
 }
 
 if ( steel_module_status( 'quotes' ) ) {
@@ -52,7 +53,7 @@ if ( steel_module_status( 'social_media' ) ) {
 }
 
 if ( steel_module_status( 'slides' ) ) {
-  include_once dirname( __FILE__ ) . '/slides.php';
+  include_once dirname( __FILE__ ) . '/deprecated/slides.php';
 }
 
 if ( steel_module_status( 'teams' ) ) {

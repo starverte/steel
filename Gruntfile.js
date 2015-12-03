@@ -61,7 +61,7 @@ module.exports = function(grunt) {
         'options.php',
         'quotes/quotes.php',
         'bootstrap/shortcodes.php',
-        'slides.php',
+        'deprecated/slides.php',
         'social-media.php',
         'steel.php',
         'teams/teams.php',
