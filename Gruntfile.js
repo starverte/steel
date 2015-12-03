@@ -60,7 +60,7 @@ module.exports = function(grunt) {
         'quotes/class-widget-random-quote.php',
         'options.php',
         'quotes/quotes.php',
-        'shortcodes.php',
+        'bootstrap/shortcodes.php',
         'slides.php',
         'social-media.php',
         'steel.php',

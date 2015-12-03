@@ -247,7 +247,6 @@ function steel_get_option_defaults() {
     'load_broadcast'     => false,
     'load_cards'         => false,
     'load_quotes'        => true,
-    'load_shortcodes'    => true,
     'load_social_media'  => true,
     'load_teams'         => false,
     'load_widgets'       => true,
@@ -279,14 +278,6 @@ function steel_get_option_defaults() {
       $defaults['load_quotes'] = true;
     } elseif ( 'false' == $options['mod_quotes'] ) {
       $defaults['load_quotes'] = false;
-    }
-  }
-
-  if ( ! empty( $options['mod_shortcodes'] ) ) {
-    if ( 'true' == $options['mod_shortcodes'] ) {
-      $defaults['load_shortcodes'] = true;
-    } elseif ( 'false' == $options['mod_shortcodes'] ) {
-      $defaults['load_shortcodes'] = false;
     }
   }
 

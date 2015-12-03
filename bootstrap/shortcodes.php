@@ -2,7 +2,7 @@
 /**
  * Various shortcodes for easily adding customized content
  *
- * @package Steel\Shortcodes
+ * @package Steel\Bootstrap
  */
 
 /**

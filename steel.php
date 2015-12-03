@@ -31,6 +31,7 @@ global $msx_text_domain;
 $msx_text_domain = 'steel';
 
 include_once dirname( __FILE__ ) . '/bootstrap/bootstrap.php';
+include_once dirname( __FILE__ ) . '/bootstrap/shortcodes.php';
 include_once dirname( __FILE__ ) . '/options.php';
 
 if ( steel_module_status( 'broadcast' ) ) {
@@ -43,10 +44,6 @@ if ( steel_module_status( 'cards' ) ) {
 
 if ( steel_module_status( 'quotes' ) ) {
   include_once dirname( __FILE__ ) . '/quotes/quotes.php';
-}
-
-if ( steel_module_status( 'shortcodes' ) ) {
-  include_once dirname( __FILE__ ) . '/shortcodes.php';
 }
 
 if ( steel_module_status( 'social_media' ) ) {
