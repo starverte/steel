@@ -49,7 +49,7 @@ if ( steel_module_status( 'quotes' ) ) {
 }
 
 if ( steel_module_status( 'social_media' ) ) {
-  include_once dirname( __FILE__ ) . '/social-media.php';
+  include_once dirname( __FILE__ ) . '/social-media/social-media.php';
 }
 
 if ( steel_module_status( 'slides' ) ) {
