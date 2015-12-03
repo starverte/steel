@@ -33,7 +33,7 @@ function steel_slides_post_type_args() {
     'supports'            => array( 'title' ),
     'hierarchical'        => false,
     'public'              => false,
-    'show_ui'             => true,
+    'show_ui'             => false,
     'show_in_menu'        => true,
     'show_in_nav_menus'   => false,
     'show_in_admin_bar'   => true,
