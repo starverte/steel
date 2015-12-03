@@ -5,7 +5,7 @@
  * @package Steel\Quotes
  */
 
-include_once dirname( __FILE__ ) . '/inc/class-widget-random-quote.php';
+include_once dirname( __FILE__ ) . '/quotes/class-widget-random-quote.php';
 
 /**
  * Register widget for displaying random quote

@@ -42,7 +42,7 @@ if ( steel_module_status( 'cards' ) ) {
 }
 
 if ( steel_module_status( 'quotes' ) ) {
-  include_once dirname( __FILE__ ) . '/quotes.php';
+  include_once dirname( __FILE__ ) . '/quotes/quotes.php';
 }
 
 if ( steel_module_status( 'shortcodes' ) ) {
