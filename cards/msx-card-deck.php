@@ -61,7 +61,7 @@ function msx_card_deck_edit() {
     'post_type' => 'msx_card',
     'post__in' => $cards_list,
     'orderby' => 'post__in',
-    'order' => ASC,
+    'order' => 'ASC',
   );
   $cards = get_posts( $args ); ?>
 
@@ -84,7 +84,7 @@ function msx_card_deck_edit() {
 ?>
     <div class="msx-card" id="<?php echo $card->ID; ?>">
       <div class="card-controls">
-        <span id="controls_<?php echo $card->ID; ?>"><?php echo $card->post_title; ?></span>
+        <span id="controls_<?php echo $card->ID; ?>"><span class="dashicons dashicons-format-image"></span> <?php echo $card->post_title; ?></span>
 
         <a class="card-delete" href="#" onclick="msx_card_delete( '<?php echo $card->ID; ?>' )" title="Delete card">
           <span class="dashicons dashicons-dismiss" style="float:right"></span>
@@ -107,7 +107,7 @@ function msx_card_deck_edit() {
 
   <a href="#" class="btn-card-new btn-tile" title="Add card to deck">
     <div class="card-new">
-      <p><span class="glyphicon glyphicon-plus-sign"></span><br>Add Slide</p>
+      <p><span class="glyphicon glyphicon-plus-sign"></span><br>Add Card</p>
     </div>
   </a>
 </div>
