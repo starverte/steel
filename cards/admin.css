@@ -29,8 +29,8 @@
   margin: 0;
   background: none;
   border: 0;
-  box-shadow: none;
   border-bottom: 1px solid #eee;
+  box-shadow: none;
 }
 #cards p {
   position: relative;
