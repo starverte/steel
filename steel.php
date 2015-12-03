@@ -30,7 +30,7 @@
 global $msx_text_domain;
 $msx_text_domain = 'steel';
 
-include_once dirname( __FILE__ ) . '/bootstrap.php';
+include_once dirname( __FILE__ ) . '/bootstrap/bootstrap.php';
 include_once dirname( __FILE__ ) . '/options.php';
 
 if ( steel_module_status( 'broadcast' ) ) {

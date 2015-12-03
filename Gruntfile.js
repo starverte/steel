@@ -52,7 +52,7 @@ module.exports = function(grunt) {
         // Task-specific options go here.
       },
       docs: [
-        'bootstrap.php',
+        'bootstrap/bootstrap.php',
         'broadcast.php',
         'deprecated.php',
         'inc/class-walker-nav-menu-list-group.php',
