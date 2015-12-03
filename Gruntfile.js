@@ -8,12 +8,10 @@ module.exports = function(grunt) {
         },
         files: {
           'css/admin.css': ['css/admin.css'],
-          'css/broadcast-admin.css': ['css/broadcast-admin.css'],
+          'broadcast/admin.css': ['broadcast/admin.css'],
           'css/event-style.css': ['css/event-style.css'],
           'css/glyphicons.css': ['css/glyphicons.css'],
           'css/grid.css': ['css/grid.css'],
-          'css/slides-admin.css': ['css/slides-admin.css'],
-          'css/slides.css': ['css/slides.css'],
           'css/starverte.css': ['css/starverte.css']
         }
       }
@@ -52,23 +50,23 @@ module.exports = function(grunt) {
         // Task-specific options go here.
       },
       docs: [
-        'bootstrap.php',
-        'broadcast.php',
-        'deprecated.php',
-        'inc/class-walker-nav-menu-list-group.php',
-        'inc/class-widget-button.php',
-        'inc/class-widget-link.php',
-        'inc/class-widget-list-group.php',
-        'inc/class-widget-random-quote.php',
+        'bootstrap/bootstrap.php',
+        'broadcast/broadcast.php',
+        'deprecated/deprecated.php',
+        'bootstrap/class-walker-nav-menu-list-group.php',
+        'widgets/class-widget-button.php',
+        'widgets/class-widget-link.php',
+        'widgets/class-widget-list-group.php',
+        'quotes/class-widget-random-quote.php',
         'options.php',
-        'quotes.php',
-        'shortcodes.php',
-        'slides.php',
-        'social-media.php',
+        'quotes/quotes.php',
+        'bootstrap/shortcodes.php',
+        'deprecated/slides.php',
+        'social-media/social-media.php',
         'steel.php',
-        'teams.php',
-        'templates.php',
-        'widgets.php'
+        'teams/teams.php',
+        'templates/steel-profile.php',
+        'widgets/widgets.php'
       ]
     }
   });

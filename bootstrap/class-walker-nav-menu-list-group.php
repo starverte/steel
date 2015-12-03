@@ -2,7 +2,7 @@
 /**
  * Widgets: Steel_Walker_Nav_Menu_List_Group class
  *
- * @package Steel\Widgets
+ * @package Steel\Bootstrap
  * @since 1.3.0
  */
 

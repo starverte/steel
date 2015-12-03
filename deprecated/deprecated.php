@@ -359,7 +359,7 @@ class Steel_Link_Widget_Legacy extends WP_Widget {
  *
  * @deprecated 1.3.0 Use Steel_Widget_List_Group
  */
-class Steel_Widget_List_Group extends WP_Widget {
+class Steel_Nav_Menu_Widget extends WP_Widget {
 
   /**
    * PHP5 constructor

@@ -561,7 +561,7 @@ function steel_broadcast_media( $post_id = 0 ) {
  * Load template for Broadcast Channel feeds
  */
 function steel_broadcast_feed() {
-  load_template( dirname( __FILE__ ) . '/inc/broadcast-feed.php' );
+  load_template( dirname( __FILE__ ) . '/broadcast/feed.php' );
 }
 add_action( 'do_feed_broadcast', 'steel_broadcast_feed', 10, 1 );
 

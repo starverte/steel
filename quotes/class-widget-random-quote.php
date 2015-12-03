@@ -2,7 +2,7 @@
 /**
  * Widgets: Steel_Widget_Random_Quote class
  *
- * @package Steel\Widgets
+ * @package Steel\Quotes
  * @since 1.3.0
  */
 
