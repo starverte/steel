@@ -52,7 +52,7 @@ module.exports = function(grunt) {
       docs: [
         'bootstrap/bootstrap.php',
         'broadcast/broadcast.php',
-        'deprecated.php',
+        'deprecated/deprecated.php',
         'bootstrap/class-walker-nav-menu-list-group.php',
         'widgets/class-widget-button.php',
         'widgets/class-widget-link.php',

@@ -32,6 +32,7 @@ $msx_text_domain = 'steel';
 
 include_once dirname( __FILE__ ) . '/bootstrap/bootstrap.php';
 include_once dirname( __FILE__ ) . '/bootstrap/shortcodes.php';
+include_once dirname( __FILE__ ) . '/deprecated/deprecated.php';
 include_once dirname( __FILE__ ) . '/options.php';
 
 if ( steel_module_status( 'broadcast' ) ) {
