@@ -12,8 +12,6 @@ module.exports = function(grunt) {
           'css/event-style.css': ['css/event-style.css'],
           'css/glyphicons.css': ['css/glyphicons.css'],
           'css/grid.css': ['css/grid.css'],
-          'css/slides-admin.css': ['css/slides-admin.css'],
-          'css/slides.css': ['css/slides.css'],
           'css/starverte.css': ['css/starverte.css']
         }
       }

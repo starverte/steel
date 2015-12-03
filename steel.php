@@ -120,17 +120,6 @@ function steel_admin_enqueue_scripts() {
     );
   }
 
-  if ( 'steel_slides' == $post_type ) {
-    wp_enqueue_script(
-      'slides-script',
-      plugins_url( 'steel/js/slides.js' ),
-      array( 'jquery' ),
-      '1.3.0',
-      true
-    );
-    wp_enqueue_style( 'slides-style-admin', plugins_url( 'steel/css/slides-admin.css' ) );
-  }
-
   if ( 'msx_card_deck' == $post_type ) {
     wp_enqueue_script(
       'cards-admin-script',
@@ -178,10 +167,6 @@ function steel_enqueue_scripts() {
       array(),
       '3.3.6'
     );
-  }
-
-  if ( steel_module_status( 'slides' ) ) {
-    wp_enqueue_style( 'slides-mod-style', plugins_url( 'steel/css/slides.css' ), array(), '1.3.0' );
   }
 
   wp_enqueue_script( 'pin-it-button', '//assets.pinterest.com/js/pinit.js' );
