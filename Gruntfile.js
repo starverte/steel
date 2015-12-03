@@ -8,7 +8,7 @@ module.exports = function(grunt) {
         },
         files: {
           'css/admin.css': ['css/admin.css'],
-          'css/broadcast-admin.css': ['css/broadcast-admin.css'],
+          'broadcast/admin.css': ['broadcast/admin.css'],
           'css/event-style.css': ['css/event-style.css'],
           'css/glyphicons.css': ['css/glyphicons.css'],
           'css/grid.css': ['css/grid.css'],
@@ -53,7 +53,7 @@ module.exports = function(grunt) {
       },
       docs: [
         'bootstrap/bootstrap.php',
-        'broadcast.php',
+        'broadcast/broadcast.php',
         'deprecated.php',
         'inc/class-walker-nav-menu-list-group.php',
         'inc/class-widget-button.php',

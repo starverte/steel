@@ -34,7 +34,7 @@ include_once dirname( __FILE__ ) . '/bootstrap/bootstrap.php';
 include_once dirname( __FILE__ ) . '/options.php';
 
 if ( steel_module_status( 'broadcast' ) ) {
-  include_once dirname( __FILE__ ) . '/broadcast.php';
+  include_once dirname( __FILE__ ) . '/broadcast/broadcast.php';
 }
 
 if ( steel_module_status( 'cards' ) ) {
@@ -102,18 +102,18 @@ function steel_admin_enqueue_scripts() {
   if ( 'steel_broadcast' == $post_type ) {
     wp_enqueue_script(
       'broadcast-edit',
-      plugins_url( 'steel/js/broadcast-edit.js' ),
+      plugins_url( 'steel/broadcast/edit.js' ),
       array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ),
       '1.3.0',
       true
     );
-    wp_enqueue_style( 'broadcast-style-admin', plugins_url( 'steel/css/broadcast-admin.css' ) );
+    wp_enqueue_style( 'broadcast-style-admin', plugins_url( 'steel/broadcast/admin.css' ) );
   };
 
   if ( 'steel_broadcast_channel' == $taxonomy ) {
     wp_enqueue_script(
       'broadcast-channel-edit',
-      plugins_url( 'steel/js/broadcast-channel-edit.js' ),
+      plugins_url( 'steel/broadcast/channel-edit.js' ),
       array( 'jquery' ),
       '1.3.0',
       true
