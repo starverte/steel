@@ -332,8 +332,9 @@ function steel_slides_x_cards() {
             'post_status' => 'publish',
           )
         );
+        set_post_format( $new_card, 'image' );
         update_post_meta( $new_card, 'target', $custom[ 'slides_link_' . $card ][0] );
-        update_post_meta( $new_card, get_post_mime_type( $card ), $card );
+        update_post_meta( $new_card, 'image', $card );
         delete_post_meta( $slideshow->ID, 'slides_title_' . $card );
         delete_post_meta( $slideshow->ID, 'slides_content_' . $card );
         delete_post_meta( $slideshow->ID, 'slides_link_' . $card );

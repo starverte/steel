@@ -14,6 +14,30 @@ include_once dirname( __FILE__ ) . '/msx-card-deck.php';
 include_once dirname( __FILE__ ) . '/msx-card-set.php';
 
 /**
+ * Add theme support for post formats used by Cards
+ *
+ * @todo Add support for 'gallery' format.
+ * @todo Add support for 'link' format.
+ * @todo Add support for 'quote' format.
+ * @todo Add support for 'status' format.
+ * @todo Add support for 'audio' format.
+ * @todo Add support for 'chat' format.
+ */
+function steel_cards_after_setup_theme() {
+  global $_wp_theme_features;
+
+  if ( empty( $_wp_theme_features['post-formats'] ) ) {
+    $_wp_theme_features['post-formats'] = array( array( 'image', 'video' ) );
+  } elseif ( true === $_wp_theme_features['post-formats'] ) {
+    return;
+  } else {
+    $_wp_theme_features['post-formats'][0][] = 'image';
+    $_wp_theme_features['post-formats'][0][] = 'video';
+  }
+}
+add_action( 'after_setup_theme', 'steel_cards_after_setup_theme', 100 );
+
+/**
  * Register custom post type and image size
  */
 function steel_cards_init() {
@@ -30,7 +54,7 @@ add_action( 'init', 'steel_cards_init' );
 function steel_card_deck_add_meta_boxes() {
   add_meta_box(
     'msx_card_deck_edit',
-    'Add/Edit Cards',
+    'Cards',
     'msx_card_deck_edit',
     'msx_card_deck',
     'advanced',

@@ -74,12 +74,8 @@ function msx_card_deck_edit() {
       if ( ! empty( $card ) && false !== get_post_status( $card->ID ) ) {
         $card_custom = get_post_custom( $card->ID );
 
-        if ( ! empty( $card_custom['image/jpeg'] ) ) {
-          $image = wp_get_attachment_image_src( $card_custom['image/jpeg'][0], 'msx-card-thumb' );
-        } elseif ( ! empty( $card_custom['image/png'] ) ) {
-          $image = wp_get_attachment_image_src( $card_custom['image/png'][0], 'msx-card-thumb' );
-        } elseif ( ! empty( $card_custom['image/gif'] ) ) {
-          $image = wp_get_attachment_image_src( $card_custom['image/gif'][0], 'msx-card-thumb' );
+        if ( ! empty( $card_custom['image'] ) ) {
+          $image = wp_get_attachment_image_src( $card_custom['image'][0], 'msx-card-thumb' );
         }
 ?>
     <div class="msx-card" id="<?php echo $card->ID; ?>">
