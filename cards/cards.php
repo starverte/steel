@@ -11,6 +11,7 @@
 
 include_once dirname( __FILE__ ) . '/msx-card.php';
 include_once dirname( __FILE__ ) . '/msx-card-deck.php';
+include_once dirname( __FILE__ ) . '/msx-card-set.php';
 
 /**
  * Register custom post type and image size
@@ -18,6 +19,7 @@ include_once dirname( __FILE__ ) . '/msx-card-deck.php';
 function steel_cards_init() {
   register_post_type( 'msx_card', msx_card_post_type_args() );
   register_post_type( 'msx_card_deck', msx_card_deck_post_type_args() );
+  register_taxonomy( 'msx_card_set', array( 'msx_card', 'msx_card_deck' ), msx_card_set_taxonomy_args() );
   add_image_size( 'msx-card-thumb', 300, 185, true );
 }
 add_action( 'init', 'steel_cards_init' );
