@@ -7,8 +7,10 @@ module.exports = function(grunt) {
           config: '.csscomb.json'
         },
         files: {
+          'cards/admin.css': ['cards/admin.css'],
           'css/admin.css': ['css/admin.css'],
           'broadcast/admin.css': ['broadcast/admin.css'],
+          'cards/admin.css': ['cards/admin.css'],
           'css/event-style.css': ['css/event-style.css'],
           'css/glyphicons.css': ['css/glyphicons.css'],
           'css/grid.css': ['css/grid.css'],
