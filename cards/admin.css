@@ -6,6 +6,13 @@
  * @since 0.2.0
  */
 
+.post-type-msx_card_deck .button .dashicons {
+  margin-top: 3px;
+}
+.card-controls .dashicons {
+  margin-bottom: -2px;
+}
+
 .post-php.post-type-msx_card_deck #misc-publishing-actions,
 .post-php.post-type-msx_card_deck #minor-publishing-actions,
 .post-new-php.post-type-msx_card_deck #misc-publishing-actions,
@@ -27,10 +34,22 @@
 #cards textarea {
   padding: 5px 10px;
   margin: 0;
+  margin-bottom: 5px;
   background: none;
   border: 0;
   border-bottom: 1px solid #eee;
   box-shadow: none;
+}
+.card-set-thumbnail {
+  display: block;
+  padding: 5px 10px;
+  text-align: center;
+}
+#cards .card-set-thumbnail img {
+  margin-top: -10px;
+  margin-right: -10px;
+  margin-left: -10px;
+  text-align: left;
 }
 #cards p {
   position: relative;
@@ -40,6 +59,7 @@
 #cards p input,
 #cards p textarea {
   width: 100%;
+  margin-bottom: 0;
 }
 .card-title {
   font-weight: 600;
@@ -73,13 +93,21 @@
   border: 1px solid #f1f1f1;
   border-top: 0;
 }
-.card-new {
+.btn-card {
   float: left;
   width: 300px;
   height: 335px;
   margin: 5px 5px 5px 0;
   overflow: hidden;
   text-align: center;
+}
+.card-new {
+  display: block;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  font-size: 34px;
+  text-decoration: none;
   background: #f1f1f1;
   border: 1px solid #f7f7f7;
 }
@@ -87,9 +115,11 @@
   background: #f7f7f7;
   border: 1px solid #f1f1f1;
 }
-.card-new p {
-  margin-top: 125px;
-  font-size: 34px;
+.card-new .dashicons {
+  width: 40px;
+  height: 40px;
+  margin: 0 4px;
+  font-size: 40px;
 }
 .card:hover {
   border: 1px solid #ccc;

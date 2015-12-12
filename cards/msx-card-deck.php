@@ -8,20 +8,20 @@
  */
 
 /**
- * Return arguments for registering msx_deck
+ * Return arguments for registering msx_card_deck
  */
 function msx_card_deck_post_type_args() {
   global $msx_text_domain;
   $labels = array(
-    'name'                => _x( 'Decks', 'Post Type General Name', $msx_text_domain ),
-    'singular_name'       => _x( 'Deck', 'Post Type Singular Name', $msx_text_domain ),
+    'name'                => _x( 'Card Decks', 'Post Type General Name', $msx_text_domain ),
+    'singular_name'       => _x( 'Card Deck', 'Post Type Singular Name', $msx_text_domain ),
     'menu_name'           => __( 'Cards', $msx_text_domain ),
     'all_items'           => __( 'All decks', $msx_text_domain ),
-    'view_item'           => __( 'View', $msx_text_domain ),
-    'add_new_item'        => __( 'Add New', $msx_text_domain ),
-    'add_new'             => __( 'New', $msx_text_domain ),
-    'edit_item'           => __( 'Edit', $msx_text_domain ),
-    'update_item'         => __( 'Update', $msx_text_domain ),
+    'view_item'           => __( 'View Deck', $msx_text_domain ),
+    'add_new_item'        => __( 'Add New Deck', $msx_text_domain ),
+    'add_new'             => __( 'New Deck', $msx_text_domain ),
+    'edit_item'           => __( 'Edit Deck', $msx_text_domain ),
+    'update_item'         => __( 'Update Deck', $msx_text_domain ),
     'search_items'        => __( 'Search decks', $msx_text_domain ),
     'not_found'           => __( 'No decks found', $msx_text_domain ),
     'not_found_in_trash'  => __( 'No decks found in Trash. Did you check recycling?', $msx_text_domain ),
@@ -65,8 +65,12 @@ function msx_card_deck_edit() {
   );
   $cards = get_posts( $args ); ?>
 
-<a href="#" class="button btn-card-new" id="btn_above" title="Add card to deck">
-  <span class="dashicons dashicons-images-alt"></span> Add Card
+<a href="#" class="button card-insert-image" title="Add image card to deck">
+  <span class="dashicons dashicons-format-image"></span> Add image
+</a>
+
+<a href="#" class="button card-insert-video" title="Add video card to deck">
+  <span class="dashicons dashicons-format-video"></span> Add video
 </a>
 <div id="cards_wrap">
   <div id="cards"><?php
@@ -76,18 +80,31 @@ function msx_card_deck_edit() {
 
         if ( ! empty( $card_custom['image'] ) ) {
           $image = wp_get_attachment_image_src( $card_custom['image'][0], 'msx-card-thumb' );
+        } elseif ( ! empty( $card_custom['video'] ) ) {
+          $image = wp_get_attachment_image_src( get_post_thumbnail_id( $card->ID ), 'msx-card-thumb' );
         }
 ?>
     <div class="msx-card" id="<?php echo $card->ID; ?>">
       <div class="card-controls">
-        <span id="controls_<?php echo $card->ID; ?>"><span class="dashicons dashicons-format-image"></span> <?php echo $card->post_title; ?></span>
+        <span id="controls_<?php echo $card->ID; ?>"><span class="dashicons dashicons-format-<?php echo get_post_format( $card->ID ); ?>"></span> <?php echo $card->post_title; ?></span>
 
         <a class="card-delete" href="#" onclick="msx_card_delete( '<?php echo $card->ID; ?>' )" title="Delete card">
           <span class="dashicons dashicons-dismiss" style="float:right"></span>
         </a>
-      </div>
+      </div><?php
 
-      <img id="card_img_<?php echo $card->ID; ?>" src="<?php echo $image[0]; ?>" width="<?php echo $image[1]; ?>" height="<?php echo $image[2]; ?>">
+        if ( ! empty( $image ) ) {
+          if ( 'video' == get_post_format( $card->ID ) ) { ?>
+      <a class="card-set-thumbnail" id="set_<?php echo $card->ID; ?>_thumbnail" href="#" data-target="#card_<?php echo $card->ID; ?>_thumbnail" data-image="#card_img_<?php echo $card->ID; ?>">
+        <img id="card_img_<?php echo $card->ID; ?>" src="<?php echo $image[0]; ?>" width="<?php echo $image[1]; ?>" height="<?php echo $image[2]; ?>">
+      </a><?php
+          } else { ?>
+      <img id="card_img_<?php echo $card->ID; ?>" src="<?php echo $image[0]; ?>" width="<?php echo $image[1]; ?>" height="<?php echo $image[2]; ?>"><?php
+          }
+        } else { ?>
+      <a class="card-set-thumbnail" id="set_<?php echo $card->ID; ?>_thumbnail" href="#" data-target="#card_<?php echo $card->ID; ?>_thumbnail" data-image="#card_img_<?php echo $card->ID; ?>">Add video thumbnail</a>
+      <img id="card_img_<?php echo $card->ID; ?>" src="" width="300" height="185" style="display:none">
+<?php } ?>
 
       <p>
         <input type="text" size="32" class="card-title" name="card_<?php echo $card->ID; ?>_title" id="card_<?php echo $card->ID; ?>_title" value="<?php echo $card->post_title; ?>" placeholder="Title" /><br>
@@ -96,16 +113,27 @@ function msx_card_deck_edit() {
 
       <span class="dashicons dashicons-admin-links" style="float:left;padding:5px;"></span>
       <input type="text" size="28" name="card_<?php echo $card->ID; ?>_link" id="card_<?php echo $card->ID; ?>_link" value="<?php echo $card_custom['target'][0]; ?>" placeholder="Link" />
+
+<?php if ( 'video' == get_post_format( $card->ID ) ) : ?>
+      <input type="hidden" name="card_<?php echo $card->ID; ?>_thumbnail" id="card_<?php echo $card->ID; ?>_thumbnail" value="<?php echo get_post_thumbnail_id( $card->ID ); ?>" />
+<?php endif; ?>
+
+      <input type="hidden" name="card_<?php echo $card->ID; ?>_format" id="card_<?php echo $card->ID; ?>_format" value="<?php echo get_post_format( $card->ID ); ?>" />
     </div><?php
     }
+
+    $image = null;
   } ?>
   </div>
 
-  <a href="#" class="btn-card-new btn-tile" title="Add card to deck">
-    <div class="card-new">
-      <p><span class="glyphicon glyphicon-plus-sign"></span><br>Add Card</p>
-    </div>
-  </a>
+  <div class="btn-card" title="Add card to deck">
+    <a class="card-insert-image card-new" href="#">
+      <span class="dashicons dashicons-format-image"></span> Add Image
+    </a>
+    <a class="card-insert-video card-new" href="#">
+      <span class="dashicons dashicons-format-video"></span> Add Video
+    </a>
+  </div>
 </div>
 
 <input type="hidden" name="cards_order" id="cards_order" value="<?php echo $deck_custom['cards_order'][0]; ?>">
@@ -144,7 +172,11 @@ function msx_card_deck_save() {
           add_action( 'save_post', 'msx_card_deck_save' );
 
           update_post_meta( $new_card, 'target', $_POST[ 'card_' . $card . '_link' ] );
-          update_post_meta( $new_card, get_post_mime_type( $card ), $card );
+          update_post_meta( $new_card, $_POST[ 'card_' . $card . '_format' ], $card );
+          set_post_format( $new_card, $_POST[ 'card_' . $card . '_format' ] );
+          if ( isset( $_POST[ 'card_' . $card . '_thumbnail' ] ) ) {
+            set_post_thumbnail( $new_card, $_POST[ 'card_' . $card . '_thumbnail' ] );
+          }
           $cards_list = $cards_list . $new_card . ',';
         } else if ( 'msx_card' == get_post_type( $card ) ) {
           // Prevent infinite loop.
@@ -161,6 +193,10 @@ function msx_card_deck_save() {
           add_action( 'save_post', 'msx_card_deck_save' );
 
           update_post_meta( $card, 'target', $_POST[ 'card_' . $card . '_link' ] );
+          set_post_format( $card, $_POST[ 'card_' . $card . '_format' ] );
+          if ( isset( $_POST[ 'card_' . $card . '_thumbnail' ] ) ) {
+            set_post_thumbnail( $card, $_POST[ 'card_' . $card . '_thumbnail' ] );
+          }
           $cards_list = $cards_list . $card . ',';
         }
       }
