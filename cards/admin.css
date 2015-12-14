@@ -27,6 +27,10 @@
 .post-new-php.post-type-msx_card_deck #minor-publishing-actions {
   display: none;
 }
+.card-insert-image .dashicons,
+.card-insert-video .dashicons {
+  vertical-align: top;
+}
 #cards {
   padding: 0;
   margin: 0;
