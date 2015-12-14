@@ -346,3 +346,19 @@ function steel_slides_x_cards() {
 }
 add_action( 'steel_register_update_hook', 'steel_slides_x_cards' );
 
+/**
+ * Load editor on posts page if option selected
+ *
+ * @param WP_Post $post Post object.
+ */
+function steel_load_editor_posts_page( $post ) {
+  if ( $post->ID != get_option( 'page_for_posts' ) ) {
+    return;
+  }
+  remove_action( 'edit_form_after_title', '_wp_posts_page_notice' );
+  add_post_type_support( 'page', 'editor' );
+}
+
+if ( steel_module_status( 'editor_posts_page' ) ) {
+  add_action( 'edit_form_after_title', 'steel_load_editor_posts_page', 0 );
+}
