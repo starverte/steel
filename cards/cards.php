@@ -17,7 +17,6 @@ include_once dirname( __FILE__ ) . '/msx-card-set.php';
  * Add theme support for post formats used by Cards
  *
  * @todo Add support for 'gallery' format.
- * @todo Add support for 'link' format.
  * @todo Add support for 'quote' format.
  * @todo Add support for 'status' format.
  * @todo Add support for 'audio' format.
@@ -27,12 +26,13 @@ function steel_cards_after_setup_theme() {
   global $_wp_theme_features;
 
   if ( empty( $_wp_theme_features['post-formats'] ) ) {
-    $_wp_theme_features['post-formats'] = array( array( 'image', 'video' ) );
+    $_wp_theme_features['post-formats'] = array( array( 'image', 'video', 'link' ) );
   } elseif ( true === $_wp_theme_features['post-formats'] ) {
     return;
   } else {
     $_wp_theme_features['post-formats'][0][] = 'image';
     $_wp_theme_features['post-formats'][0][] = 'video';
+    $_wp_theme_features['post-formats'][0][] = 'link';
   }
 }
 add_action( 'after_setup_theme', 'steel_cards_after_setup_theme', 100 );
