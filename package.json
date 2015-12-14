@@ -4,7 +4,7 @@
   "description": "Steel brings the power of Matchstix to a simple user interface, making any site’s impact spread like wildfire. No programming required.",
   "main": "steel.php",
   "scripts": {
-    "test": "grunt test"
+    "test": "snyk test && grunt test"
   },
   "repository": {
     "type": "git",
@@ -33,5 +33,8 @@
     "grunt-phpdoc": "^0.1.1",
     "grunt-phpdocumentor": "^0.4.1",
     "grunt-shell": "^1.1.2"
+  },
+  "dependencies": {
+    "snyk": "^1.6.1"
   }
 }
