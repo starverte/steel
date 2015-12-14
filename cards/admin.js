@@ -152,7 +152,6 @@ function msx_card_insert_image(attachment) {
   jQuery("#cards_order").val($order_new);
 }
 function msx_card_insert_video(attachment) {
-  console.log( JSON.stringify( attachment ) );
   if ( 'undefined' == typeof attachment.img )
     $image = attachment.icon;
   else
