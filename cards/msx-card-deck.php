@@ -30,7 +30,7 @@ function msx_card_deck_post_type_args() {
     'label'               => __( 'msx_card_deck', $msx_text_domain ),
     'description'         => __( 'A grouping of cards', $msx_text_domain ),
     'labels'              => $labels,
-    'supports'            => array( 'title' ),
+    'supports'            => array( 'title', 'editor' ),
     'hierarchical'        => false,
     'public'              => false,
     'show_ui'             => true,
@@ -65,13 +65,6 @@ function msx_card_deck_edit() {
   );
   $cards = get_posts( $args ); ?>
 
-<a href="#" class="button card-insert-image" title="Add image card to deck">
-  <span class="dashicons dashicons-format-image"></span> Add image
-</a>
-
-<a href="#" class="button card-insert-video" title="Add video card to deck">
-  <span class="dashicons dashicons-format-video"></span> Add video
-</a>
 <div id="cards_wrap">
   <div id="cards"><?php
     foreach ( $cards as $card ) {
@@ -95,14 +88,14 @@ function msx_card_deck_edit() {
 
         if ( ! empty( $image ) ) {
           if ( 'video' == get_post_format( $card->ID ) ) { ?>
-      <a class="card-set-thumbnail" id="set_<?php echo $card->ID; ?>_thumbnail" href="#" data-target="#card_<?php echo $card->ID; ?>_thumbnail" data-image="#card_img_<?php echo $card->ID; ?>">
-        <img id="card_img_<?php echo $card->ID; ?>" src="<?php echo $image[0]; ?>" width="<?php echo $image[1]; ?>" height="<?php echo $image[2]; ?>">
+      <a class="card-set-thumbnail" id="set_<?php echo $card->ID; ?>_thumbnail" href="#">
+        <img id="card_img_<?php echo $card->ID; ?>" src="<?php echo $image[0]; ?>" width="<?php echo $image[1]; ?>" height="<?php echo $image[2]; ?>" data-target="#card_<?php echo $card->ID; ?>_thumbnail" data-image="#card_img_<?php echo $card->ID; ?>">
       </a><?php
           } else { ?>
       <img id="card_img_<?php echo $card->ID; ?>" src="<?php echo $image[0]; ?>" width="<?php echo $image[1]; ?>" height="<?php echo $image[2]; ?>"><?php
           }
         } else { ?>
-      <a class="card-set-thumbnail" id="set_<?php echo $card->ID; ?>_thumbnail" href="#" data-target="#card_<?php echo $card->ID; ?>_thumbnail" data-image="#card_img_<?php echo $card->ID; ?>">Add video thumbnail</a>
+      <a class="card-add-thumbnail" id="set_<?php echo $card->ID; ?>_thumbnail" href="#" data-target="#card_<?php echo $card->ID; ?>_thumbnail" data-image="#card_img_<?php echo $card->ID; ?>">Add video thumbnail</a>
       <img id="card_img_<?php echo $card->ID; ?>" src="" width="300" height="185" style="display:none">
 <?php } ?>
 
@@ -124,15 +117,6 @@ function msx_card_deck_edit() {
 
     $image = null;
   } ?>
-  </div>
-
-  <div class="btn-card" title="Add card to deck">
-    <a class="card-insert-image card-new" href="#">
-      <span class="dashicons dashicons-format-image"></span> Add Image
-    </a>
-    <a class="card-insert-video card-new" href="#">
-      <span class="dashicons dashicons-format-video"></span> Add Video
-    </a>
   </div>
 </div>
 
@@ -206,3 +190,24 @@ function msx_card_deck_save() {
   }
 }
 add_action( 'save_post_msx_card_deck', 'msx_card_deck_save' );
+
+function msx_card_deck_button_image() { ?>
+  <button type="button" class="button card-insert-image" data-editor="content"><span class="dashicons dashicons-format-image"></span> Add Image</button>
+  <button type="button" class="button card-insert-video" data-editor="content"><span class="dashicons dashicons-format-video"></span> Add Video</button><?php
+}
+add_action( 'media_buttons', 'msx_card_deck_button_image' );
+
+function msx_card_deck_editor_hide() {
+  global $current_screen;
+
+  if( 'msx_card_deck' == $current_screen->post_type ) { ?>
+<style type="text/css">
+  #wp-content-editor-container,
+  #post-status-info,
+  .wp-switch-editor {
+    display: none;
+  }
+</style><?php
+  }
+}
+add_action( 'admin_footer', 'msx_card_deck_editor_hide' );

@@ -83,6 +83,34 @@ jQuery('.card-insert-video').click( function( event ){
   file_frame.open();
 
 });
+jQuery('.card-add-thumbnail').click( function( event ){
+
+  event.preventDefault();
+
+  if ( file_frame ) {
+    file_frame.open();
+    return;
+  }
+
+  file_frame = wp.media.frames.file_frame = wp.media({
+    title: "Select Slide Media",
+    button: {
+      text: "Select",
+    },
+    library: {
+      type: 'image',
+    },
+    multiple: false,
+  });
+
+  file_frame.on( 'select', function() {
+    attachment = file_frame.state().get('selection').first().toJSON();
+    msx_card_add_thumbnail( event.target.id, attachment );
+  });
+
+  file_frame.open();
+
+});
 jQuery('.card-set-thumbnail').click( function( event ){
 
   event.preventDefault();
@@ -135,15 +163,24 @@ function msx_card_delete(id) {
   $order_new = $order_new.replace(",,",",");
   jQuery("#cards_order").val($order_new);
 }
-function msx_card_set_thumbnail( $event, $attachment ) {
+function msx_card_add_thumbnail( $event, $attachment ) {
   $target = jQuery('#' + $event).data('target');
   $image = jQuery('#' + $event).data('image');
-  console.log('$target is ' + $target);
-  console.log('$attachment is ' + $attachment.id);
   jQuery($target).val($attachment.id);
   jQuery($image).attr( 'src', $attachment.url );
   jQuery($image).attr( 'style', '' );
   jQuery('#' + $event).attr( 'style', 'display:none' );
+}
+function msx_card_set_thumbnail( $event, $attachment ) {
+  $target = jQuery('#' + $event).data('target');
+  $image = jQuery('#' + $event).data('image');
+
+  console.log( JSON.stringify( jQuery('#' + $event).data() ) );
+  console.log( JSON.stringify( $attachment ) );
+  console.log( $target );
+  console.log( $image );
+  jQuery($target).val($attachment.id);
+  jQuery($image).attr( 'src', $attachment.url );
 }
 function msx_card_toggle(id) {
   jQuery("#slide_img_"+id).toggle("blind");

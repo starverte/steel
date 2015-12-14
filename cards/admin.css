@@ -6,21 +6,26 @@
  * @since 0.2.0
  */
 
+.post-type-msx_card_deck #post-body-content {
+  margin-bottom: 0;
+}
+.post-type-msx_card_deck #wp-content-editor-tools {
+  border-bottom: 0;
+}
 .post-type-msx_card_deck .button .dashicons {
   margin-top: 3px;
+}
+.post-type-msx_card_deck #insert-media-button {
+  display: none;
 }
 .card-controls .dashicons {
   margin-bottom: -2px;
 }
-
 .post-php.post-type-msx_card_deck #misc-publishing-actions,
 .post-php.post-type-msx_card_deck #minor-publishing-actions,
 .post-new-php.post-type-msx_card_deck #misc-publishing-actions,
 .post-new-php.post-type-msx_card_deck #minor-publishing-actions {
   display: none;
-}
-.btn-tile {
-  margin: 5px 0 !important;
 }
 #cards {
   padding: 0;
@@ -83,7 +88,6 @@
   color: #fff;
   cursor: pointer;
 }
-
 .msx-card {
   float: left;
   width: 300px;
@@ -92,34 +96,6 @@
   background: #fff;
   border: 1px solid #f1f1f1;
   border-top: 0;
-}
-.btn-card {
-  float: left;
-  width: 300px;
-  height: 335px;
-  margin: 5px 5px 5px 0;
-  overflow: hidden;
-  text-align: center;
-}
-.card-new {
-  display: block;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-  font-size: 34px;
-  text-decoration: none;
-  background: #f1f1f1;
-  border: 1px solid #f7f7f7;
-}
-.card-new:hover {
-  background: #f7f7f7;
-  border: 1px solid #f1f1f1;
-}
-.card-new .dashicons {
-  width: 40px;
-  height: 40px;
-  margin: 0 4px;
-  font-size: 40px;
 }
 .card:hover {
   border: 1px solid #ccc;
