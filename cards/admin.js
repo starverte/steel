@@ -83,6 +83,9 @@ jQuery('.card-insert-video').click( function( event ){
   file_frame.open();
 
 });
+jQuery('.card-insert-link').click( function( event ){
+  msx_card_insert_link();
+});
 jQuery('.card-add-thumbnail').click( function( event ){
 
   event.preventDefault();
@@ -142,18 +145,32 @@ jQuery('.card-set-thumbnail').click( function( event ){
 
 //Function Definitions
 function msx_card_insert_image(attachment) {
-  jQuery("#cards").append('<div class="msx-card" id="' + attachment.id + '"><div class="card-controls"><span id="controls_' + attachment.id + '">' + attachment.title + '</span><a class="card-delete" href="#" onclick="msx_card_delete( ' + attachment.id + ' )" title="Delete card"><span class="dashicons dashicons-dismiss" style="float:right"></span></a></div><img id="card_img_' + attachment.id + '" src="' + attachment.url + '" width="300" height="185"><p><input type="text" size="32" class="card-title" name="card_' + attachment.id + '_title" id="card_' + attachment.id + '_title" value="' + attachment.title + '" placeholder="Title" /><br><textarea cols="32" name="card_' + attachment.id + '_content" id="card_' + attachment.id + '_content" placeholder="Caption">' + attachment.caption + '</textarea></p><span class="dashicons dashicons-admin-links" style="float:left;padding:5px;"></span><input type="text" size="28" name="cards_' + attachment.id + '_link" id="cards_' + attachment.id + '_link" value="" placeholder="Link" /><input type="hidden" name="card_' + attachment.id + '_format" id="card_' + attachment.id + '_format" value="image" /></div>');
+  jQuery("#cards").append('<div class="msx-card" id="' + attachment.id + '"><div class="card-controls"><span id="controls_' + attachment.id + '"><span class="dashicons dashicons-format-image"></span> ' + attachment.title + '</span><a class="card-delete" href="#" onclick="msx_card_delete( ' + attachment.id + ' )" title="Delete card"><span class="dashicons dashicons-dismiss" style="float:right"></span></a></div><img id="card_img_' + attachment.id + '" src="' + attachment.url + '" style="max-width:300;max-height:185;margin:0 auto;"><p><input type="text" size="32" class="card-title" name="card_' + attachment.id + '_title" id="card_' + attachment.id + '_title" value="' + attachment.title + '" placeholder="Title" /><br><textarea cols="32" name="card_' + attachment.id + '_content" id="card_' + attachment.id + '_content" placeholder="Caption">' + attachment.caption + '</textarea></p><span class="dashicons dashicons-admin-links" style="float:left;padding:5px;"></span><input type="text" size="28" name="cards_' + attachment.id + '_link" id="cards_' + attachment.id + '_link" value="" placeholder="Link" /><input type="hidden" name="card_' + attachment.id + '_format" id="card_' + attachment.id + '_format" value="image" /></div>');
   $order_new = jQuery("#cards_order").val();
   $order_new = $order_new + ',' + attachment.id;
   $order_new = $order_new.replace(",,",",");
   jQuery("#cards_order").val($order_new);
 }
 function msx_card_insert_video(attachment) {
-  jQuery("#cards").append('<div class="msx-card" id="' + attachment.id + '"><div class="card-controls"><span id="controls_' + attachment.id + '">' + attachment.title + '</span><a class="card-delete" href="#" onclick="msx_card_delete( ' + attachment.id + ' )" title="Delete card"><span class="dashicons dashicons-dismiss" style="float:right"></span></a></div><img id="card_img_' + attachment.id + '" src="' + attachment.url + '" width="300" height="185"><p><input type="text" size="32" class="card-title" name="card_' + attachment.id + '_title" id="card_' + attachment.id + '_title" value="' + attachment.title + '" placeholder="Title" /><br><textarea cols="32" name="card_' + attachment.id + '_content" id="card_' + attachment.id + '_content" placeholder="Caption">' + attachment.caption + '</textarea></p><span class="dashicons dashicons-admin-links" style="float:left;padding:5px;"></span><input type="text" size="28" name="cards_' + attachment.id + '_link" id="cards_' + attachment.id + '_link" value="" placeholder="Link" /><input type="hidden" name="card_' + attachment.id + '_format" id="card_' + attachment.id + '_format" value="video" /></div>');
+  console.log( JSON.stringify( attachment ) );
+  if ( 'undefined' == typeof attachment.img )
+    $image = attachment.icon;
+  else
+    $image = attachment.image.src;
+  jQuery("#cards").append('<div class="msx-card" id="' + attachment.id + '"><div class="card-controls"><span id="controls_' + attachment.id + '"><span class="dashicons dashicons-format-video"></span> ' + attachment.title + '</span><a class="card-delete" href="#" onclick="msx_card_delete( ' + attachment.id + ' )" title="Delete card"><span class="dashicons dashicons-dismiss" style="float:right"></span></a></div><img id="card_img_' + attachment.id + '" src="' + $image + '" style="max-width:300;max-height:185;margin:0 auto;"><p><input type="text" size="32" class="card-title" name="card_' + attachment.id + '_title" id="card_' + attachment.id + '_title" value="' + attachment.title + '" placeholder="Title" /><br><textarea cols="32" name="card_' + attachment.id + '_content" id="card_' + attachment.id + '_content" placeholder="Caption">' + attachment.caption + '</textarea></p><span class="dashicons dashicons-admin-links" style="float:left;padding:5px;"></span><input type="text" size="28" name="cards_' + attachment.id + '_link" id="cards_' + attachment.id + '_link" value="" placeholder="Link" /><input type="hidden" name="card_' + attachment.id + '_format" id="card_' + attachment.id + '_format" value="video" /></div>');
   $order_new = jQuery("#cards_order").val();
   $order_new = $order_new + ',' + attachment.id;
   $order_new = $order_new.replace(",,",",");
   jQuery("#cards_order").val($order_new);
+}
+function msx_card_insert_link() {
+  jQuery("#cards").append('<div class="msx-card" id="new_link"><div class="card-controls"><span id="controls_new_link"><span class="dashicons dashicons-format-link"></span> New Link</span><a class="card-delete" href="#" onclick="msx_card_delete( new_link )" title="Delete card"><span class="dashicons dashicons-dismiss" style="float:right"></span></a></div><p><input type="text" size="32" class="card-title" name="card_new_link_title" id="card_new_link_title" value="" placeholder="Title" /><br><textarea cols="32" name="card_new_link_content" id="card_new_link_content" placeholder="Caption"></textarea></p><span class="dashicons dashicons-admin-links" style="float:left;padding:5px;"></span><input type="text" size="28" name="cards_new_link_target" id="cards_new_link_target" value="" placeholder="Target URL" /><span class="dashicons dashicons-format-image" style="float:left;padding:5px;"></span><input type="text" size="28" name="cards_new_link_image" id="cards_new_link_image" value="" placeholder="Image URL" /><span class="dashicons dashicons-format-video" style="float:left;padding:5px;"></span><input type="text" size="28" name="cards_new_link_video" id="cards_new_link_video" value="" placeholder="Video URL" /><input type="hidden" name="card_new_link_format" id="card_new_link_format" value="link" /></div>');
+  $order_new = jQuery("#cards_order").val();
+  $order_new = $order_new + ',new_link';
+  $order_new = $order_new.replace(",,",",");
+  jQuery("#cards_order").val($order_new);
+  jQuery(".card-insert-link").remove();
+  jQuery("#card_new_link_title").focus();
 }
 function msx_card_delete(id) {
   jQuery("#"+id).remove();
@@ -174,11 +191,6 @@ function msx_card_add_thumbnail( $event, $attachment ) {
 function msx_card_set_thumbnail( $event, $attachment ) {
   $target = jQuery('#' + $event).data('target');
   $image = jQuery('#' + $event).data('image');
-
-  console.log( JSON.stringify( jQuery('#' + $event).data() ) );
-  console.log( JSON.stringify( $attachment ) );
-  console.log( $target );
-  console.log( $image );
   jQuery($target).val($attachment.id);
   jQuery($image).attr( 'src', $attachment.url );
 }

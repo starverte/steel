@@ -28,8 +28,12 @@
   display: none;
 }
 .card-insert-image .dashicons,
-.card-insert-video .dashicons {
+.card-insert-video .dashicons,
+.card-insert-link .dashicons {
   vertical-align: top;
+}
+.dashicons-format-link:before {
+  content: '\f103';
 }
 #cards {
   padding: 0;

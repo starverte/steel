@@ -94,7 +94,7 @@ function msx_card_deck_edit() {
           } else { ?>
       <img id="card_img_<?php echo $card->ID; ?>" src="<?php echo $image[0]; ?>" width="<?php echo $image[1]; ?>" height="<?php echo $image[2]; ?>"><?php
           }
-        } else { ?>
+        } elseif ( 'video' == get_post_format( $card->ID ) ) { ?>
       <a class="card-add-thumbnail" id="set_<?php echo $card->ID; ?>_thumbnail" href="#" data-target="#card_<?php echo $card->ID; ?>_thumbnail" data-image="#card_img_<?php echo $card->ID; ?>">Add video thumbnail</a>
       <img id="card_img_<?php echo $card->ID; ?>" src="" width="300" height="185" style="display:none">
 <?php } ?>
@@ -102,10 +102,18 @@ function msx_card_deck_edit() {
       <p>
         <input type="text" size="32" class="card-title" name="card_<?php echo $card->ID; ?>_title" id="card_<?php echo $card->ID; ?>_title" value="<?php echo $card->post_title; ?>" placeholder="Title" /><br>
         <textarea cols="32" name="card_<?php echo $card->ID; ?>_content" id="card_<?php echo $card->ID; ?>_content" placeholder="Caption"><?php echo $card->post_content; ?></textarea>
-      </p>
-
+      </p><?php
+        if ( 'link' != get_post_format( $card->ID ) ) { ?>
       <span class="dashicons dashicons-admin-links" style="float:left;padding:5px;"></span>
-      <input type="text" size="28" name="card_<?php echo $card->ID; ?>_link" id="card_<?php echo $card->ID; ?>_link" value="<?php echo $card_custom['target'][0]; ?>" placeholder="Link" />
+      <input type="text" size="28" name="card_<?php echo $card->ID; ?>_link" id="card_<?php echo $card->ID; ?>_link" value="<?php echo $card_custom['target'][0]; ?>" placeholder="Link" /><?php
+        } else { ?>
+      <span class="dashicons dashicons-admin-links" style="float:left;padding:5px;"></span>
+      <input type="text" size="28" name="card_<?php echo $card->ID; ?>_link_target" id="card_<?php echo $card->ID; ?>_link_target" value="<?php echo $card_custom['target'][0]; ?>" placeholder="Target URL" />
+      <span class="dashicons dashicons-format-image" style="float:left;padding:5px;"></span>
+      <input type="text" size="28" name="card_<?php echo $card->ID; ?>_link_image" id="card_<?php echo $card->ID; ?>_link_image" value="<?php echo $card_custom['image'][0]; ?>" placeholder="Image URL" />
+      <span class="dashicons dashicons-format-video" style="float:left;padding:5px;"></span>
+      <input type="text" size="28" name="card_<?php echo $card->ID; ?>_link_video" id="card_<?php echo $card->ID; ?>_link_video" value="<?php echo $card_custom['video'][0]; ?>" placeholder="Video URL" /><?php
+        } ?>
 
 <?php if ( 'video' == get_post_format( $card->ID ) ) : ?>
       <input type="hidden" name="card_<?php echo $card->ID; ?>_thumbnail" id="card_<?php echo $card->ID; ?>_thumbnail" value="<?php echo get_post_thumbnail_id( $card->ID ); ?>" />
@@ -139,7 +147,28 @@ function msx_card_deck_save() {
     $cards = explode( ',', $_POST['cards_order'] );
     foreach ( $cards as $card ) {
       if ( ! empty( $card ) ) {
-        if ( 'attachment' == get_post_type( $card ) ) {
+        if ( 'new_link' == $card ) {
+          // Prevent infinite loop.
+          remove_action( 'save_post', 'msx_card_deck_save' );
+
+          $new_card = wp_insert_post(
+            array(
+              'post_title' => $_POST['card_new_link_title'],
+              'post_content' => $_POST['card_new_link_content'],
+              'post_parent' => $card,
+              'post_type' => 'msx_card',
+              'post_status' => 'publish',
+            )
+          );
+
+          add_action( 'save_post', 'msx_card_deck_save' );
+
+          update_post_meta( $new_card, 'target', $_POST['card_new_link_target'] );
+          update_post_meta( $new_card, 'image', $_POST['card_new_link_image'] );
+          update_post_meta( $new_card, 'video', $_POST['card_new_link_video'] );
+          set_post_format( $new_card, 'link' );
+          $cards_list = $cards_list . $new_card . ',';
+        } else if ( 'attachment' == get_post_type( $card ) ) {
           // Prevent infinite loop.
           remove_action( 'save_post', 'msx_card_deck_save' );
 
@@ -176,7 +205,14 @@ function msx_card_deck_save() {
 
           add_action( 'save_post', 'msx_card_deck_save' );
 
-          update_post_meta( $card, 'target', $_POST[ 'card_' . $card . '_link' ] );
+          if ( 'link' != $_POST[ 'card_' . $card . '_format' ] ) {
+            update_post_meta( $card, 'target', $_POST[ 'card_' . $card . '_link' ] );
+          } else {
+            update_post_meta( $card, 'target', $_POST[ 'card_' . $card . '_link_target' ] );
+            update_post_meta( $card, 'image', $_POST[ 'card_' . $card . '_link_image' ] );
+            update_post_meta( $card, 'video', $_POST[ 'card_' . $card . '_link_video' ] );
+          }
+
           set_post_format( $card, $_POST[ 'card_' . $card . '_format' ] );
           if ( isset( $_POST[ 'card_' . $card . '_thumbnail' ] ) ) {
             set_post_thumbnail( $card, $_POST[ 'card_' . $card . '_thumbnail' ] );
@@ -191,16 +227,24 @@ function msx_card_deck_save() {
 }
 add_action( 'save_post_msx_card_deck', 'msx_card_deck_save' );
 
-function msx_card_deck_button_image() { ?>
-  <button type="button" class="button card-insert-image" data-editor="content"><span class="dashicons dashicons-format-image"></span> Add Image</button>
-  <button type="button" class="button card-insert-video" data-editor="content"><span class="dashicons dashicons-format-video"></span> Add Video</button><?php
+/**
+ * Display insert media buttons on MSX Card Deck Edit screen
+ */
+function msx_card_deck_button_image() {
+ ?>
+  <button type="button" class="button card-insert-image"><span class="dashicons dashicons-format-image"></span> Add Image</button>
+  <button type="button" class="button card-insert-video"><span class="dashicons dashicons-format-video"></span> Add Video</button>
+  <button type="button" class="button card-insert-link"><span class="dashicons dashicons-admin-links"></span> Add Link</button><?php
 }
 add_action( 'media_buttons', 'msx_card_deck_button_image' );
 
+/**
+ * Hide WP_Editor on MSX Card Deck Edit screen
+ */
 function msx_card_deck_editor_hide() {
   global $current_screen;
 
-  if( 'msx_card_deck' == $current_screen->post_type ) { ?>
+  if ( 'msx_card_deck' == $current_screen->post_type ) { ?>
 <style type="text/css">
   #wp-content-editor-container,
   #post-status-info,
