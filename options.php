@@ -59,6 +59,16 @@ function steel_admin_init() {
     'steel_social'
   );
 
+  add_settings_section( 'steel_misc', 'Miscellaneous', 'steel_misc_section', 'steel' );
+
+  add_settings_field(
+    'load_editor_posts_page',
+    'Posts Page Editor',
+    'steel_settings_field_editor_posts_page',
+    'steel',
+    'steel_misc'
+  );
+
   add_settings_section( 'steel_mods', 'Modules', 'steel_mods_section', 'steel' );
 
   add_settings_field(
@@ -123,6 +133,29 @@ function steel_settings_field_fb_app_id() {
   $options = steel_get_options(); ?>
 
   <input id="fb_app_id" name="steel_options[fb_app_id]" size="40" type="text" value="<?php echo $options['fb_app_id']; ?>"><?php
+}
+
+/**
+ * Display miscellaneous section title
+ */
+function steel_misc_section() {
+  echo 'Miscellaneous fixes';
+}
+
+/**
+ * Display Bootstrap module field
+ */
+function steel_settings_field_editor_posts_page() {
+  $options = steel_get_options(); ?>
+
+  <div class="radio-group">
+    <label for="steel_options[load_editor_posts_page]">
+      <input name="steel_options[load_editor_posts_page]" type="checkbox" value="true" <?php checked( $options['load_editor_posts_page'] ); ?>>Load Editor&nbsp;&nbsp;
+    </label>
+    <p class="description">WordPress 4.4 hides the editor on the Posts Page. This displays it again.</p>
+  </div>
+
+  <?php
 }
 
 /**
@@ -232,24 +265,25 @@ function steel_options_validate( $raw ) {
  */
 function steel_get_option_defaults() {
   $defaults = array(
+    'ga_id'     => '',
+    'fb_app_id' => '',
+
+    'load_facebook'  => true,
+    'load_twitter'   => false,
+    'load_pinterest' => false,
+    'load_linkedin'  => false,
+
+    'load_editor_posts_page' => false,
+
     'load_bootstrap_css' => true,
     'load_bootstrap_js'  => true,
 
-    'load_facebook'      => true,
-    'load_twitter'       => false,
-    'load_pinterest'     => false,
-    'load_linkedin'      => false,
-
-    'ga_id'              => '',
-
-    'fb_app_id'          => '',
-
-    'load_broadcast'     => false,
-    'load_cards'         => false,
-    'load_quotes'        => true,
-    'load_social_media'  => true,
-    'load_teams'         => false,
-    'load_widgets'       => true,
+    'load_broadcast'    => false,
+    'load_cards'        => false,
+    'load_quotes'       => true,
+    'load_social_media' => true,
+    'load_teams'        => false,
+    'load_widgets'      => true,
   );
 
   // BEGIN - backwards compatibility.

@@ -30,7 +30,7 @@ function msx_card_post_type_args() {
     'label'               => __( 'msx_card', $msx_text_domain ),
     'description'         => __( 'A card', $msx_text_domain ),
     'labels'              => $labels,
-    'supports'            => array( 'title' ),
+    'supports'            => array( 'title', 'author', 'thumbnail', 'post-formats' ),
     'hierarchical'        => false,
     'public'              => false,
     'show_ui'             => true,
