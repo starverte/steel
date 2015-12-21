@@ -47,30 +47,6 @@ module.exports = function(grunt) {
         command: 'tests/php-codesniffer/scripts/phpcbf -p -s -v -n . --standard=./.phpcs.rules.xml --extensions=php --ignore=tests/*,node_modules/*'
       }
     },
-    phpdoc: {
-      options: {
-        // Task-specific options go here.
-      },
-      docs: [
-        'bootstrap/bootstrap.php',
-        'broadcast/broadcast.php',
-        'deprecated/deprecated.php',
-        'bootstrap/class-walker-nav-menu-list-group.php',
-        'widgets/class-widget-button.php',
-        'widgets/class-widget-link.php',
-        'widgets/class-widget-list-group.php',
-        'quotes/class-widget-random-quote.php',
-        'options.php',
-        'quotes/quotes.php',
-        'bootstrap/shortcodes.php',
-        'deprecated/slides.php',
-        'social-media/social-media.php',
-        'steel.php',
-        'teams/teams.php',
-        'templates/steel-profile.php',
-        'widgets/widgets.php'
-      ]
-    }
   });
 
   grunt.loadNpmTasks( 'grunt-csscomb' );
