@@ -70,18 +70,24 @@ function steel_broadcast_post_type_args() {
  */
 function steel_broadcast_channel_taxonomy_args() {
   $labels = array(
-    'name'                       => _x( 'Channels', 'Taxonomy General Name', 'steel' ),
-    'singular_name'              => _x( 'Channel', 'Taxonomy Singular Name', 'steel' ),
+    'name'                       => _x( 'Channels', 'taxonomy general name', 'steel' ),
+    'singular_name'              => _x( 'Channel', 'taxonomy singular name', 'steel' ),
     'menu_name'                  => __( 'Channels', 'steel' ),
+    'search_items'               => __( 'Search Channels', 'steel' ),
+    'popular_items'              => __( 'Popular Channels', 'steel' ),
     'all_items'                  => __( 'All Channels', 'steel' ),
-    'new_item_name'              => __( 'New Channel', 'steel' ),
-    'add_new_item'               => __( 'Add New Channel', 'steel' ),
     'edit_item'                  => __( 'Edit Channel', 'steel' ),
-    'update_item'                => __( 'Update', 'steel' ),
-    'separate_items_with_commas' => __( 'Separate channels with commas', 'steel' ),
-    'search_items'               => __( 'Search channels', 'steel' ),
-    'add_or_remove_items'        => __( 'Add or remove channels', 'steel' ),
-    'choose_from_most_used'      => __( 'Choose from the most used channels', 'steel' ),
+    'view_item'                  => __( 'View Channel', 'steel' ),
+    'update_item'                => __( 'Update Channel', 'steel' ),
+    'add_new_item'               => __( 'Add New Channel', 'steel' ),
+    'new_item_name'              => __( 'New Channel Name', 'steel' ),
+    'separate_items_with_commas' => __( 'Separate channels with commas' ),
+    'add_or_remove_items'        => __( 'Add or remove channels' ),
+    'choose_from_most_used'      => __( 'Choose from the most used channels' ),
+    'not_found'                  => __( 'No channels found.', 'steel' ),
+    'no_terms'                   => __( 'No channels', 'steel' ),
+    'items_list_navigation'      => __( 'Channels list navigation', 'steel' ),
+    'items_list'                 => __( 'Channels list', 'steel' ),
   );
   $rewrite = array(
     'slug' => 'channel',
