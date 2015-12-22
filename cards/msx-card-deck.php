@@ -84,9 +84,13 @@ function msx_card_deck_edit() {
         $card_custom = get_post_custom( $card->ID );
 
         if ( ! empty( $card_custom['image'] ) ) {
-          $image = wp_get_attachment_image_src( $card_custom['image'][0], 'msx-card-thumb' );
+          $img_src = wp_get_attachment_image_url( $card_custom['image'][0], 'msx-card-thumb' );
+          $img_src_set = wp_get_attachment_image_srcset( $card_custom['image'][0], 'msx-card-thumb' );
+          $img_sizes = wp_get_attachment_image_sizes( $card_custom['image'][0], 'msx-card-thumb' );
         } elseif ( ! empty( $card_custom['video'] ) ) {
-          $image = wp_get_attachment_image_src( get_post_thumbnail_id( $card->ID ), 'msx-card-thumb' );
+          $img_src = wp_get_attachment_image_url( get_post_thumbnail_id( $card->ID ), 'msx-card-thumb' );
+          $img_src_set = wp_get_attachment_image_srcset( get_post_thumbnail_id( $card->ID ), 'msx-card-thumb' );
+          $img_sizes = wp_get_attachment_image_sizes( get_post_thumbnail_id( $card->ID ), 'msx-card-thumb' );
         }
 ?>
     <div class="msx-card" id="<?php echo $card->ID; ?>">
@@ -98,13 +102,13 @@ function msx_card_deck_edit() {
         </a>
       </div><?php
 
-        if ( ! empty( $image ) ) {
+        if ( ! empty( $img_src ) ) {
           if ( 'video' == get_post_format( $card->ID ) ) { ?>
       <a class="card-set-thumbnail" id="set_<?php echo $card->ID; ?>_thumbnail" href="#">
-        <img id="card_img_<?php echo $card->ID; ?>" src="<?php echo $image[0]; ?>" width="<?php echo $image[1]; ?>" height="<?php echo $image[2]; ?>" data-target="#card_<?php echo $card->ID; ?>_thumbnail" data-image="#card_img_<?php echo $card->ID; ?>">
+        <img id="card_img_<?php echo $card->ID; ?>" src="<?php echo $img_src; ?>" srcset="<?php echo $img_src_set; ?>" sizes="<?php echo $img_sizes; ?>" data-target="#card_<?php echo $card->ID; ?>_thumbnail" data-image="#card_img_<?php echo $card->ID; ?>">
       </a><?php
           } else { ?>
-      <img id="card_img_<?php echo $card->ID; ?>" src="<?php echo $image[0]; ?>" width="<?php echo $image[1]; ?>" height="<?php echo $image[2]; ?>"><?php
+      <img id="card_img_<?php echo $card->ID; ?>" src="<?php echo $img_src; ?>" srcset="<?php echo $img_src_set; ?>" sizes="<?php echo $img_sizes; ?>"><?php
           }
         } elseif ( 'video' == get_post_format( $card->ID ) ) { ?>
       <a class="card-add-thumbnail" id="set_<?php echo $card->ID; ?>_thumbnail" href="#" data-target="#card_<?php echo $card->ID; ?>_thumbnail" data-image="#card_img_<?php echo $card->ID; ?>">Add video thumbnail</a>

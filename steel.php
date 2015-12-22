@@ -235,26 +235,6 @@ function steel_module_status( $module ) {
 }
 
 /**
- * Retrieve an image to represent an attachment.
- *
- * A mime icon for files, thumbnail or intermediate size for images.
- *
- * @see WordPress 4.3.1 wp_get_attachment_image_src()
- *
- * @param int          $attachment_id Image attachment ID.
- * @param string|array $size          Optional. Registered image size to retrieve the source for
- *                                    or a flat array of height and width dimensions.
- *                                    Default 'thumbnail'.
- * @param bool         $icon          Optional. Whether the image should be treated as an icon.
- *                                    Default false.
- * @return false|array Returns an array (url, width, height), or false, if no image is available.
- */
-function steel_get_image_url( $attachment_id, $size = 'thumbnail', $icon = false ) {
-  $image = wp_get_attachment_image_src( $attachment_id, $size, $icon );
-  return $image[0];
-}
-
-/**
  * Retrieve post meta field, based on post ID, module, and key.
  *
  * The post meta fields are retrieved from the cache where possible,

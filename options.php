@@ -39,24 +39,22 @@ function steel_admin_init() {
 
   register_setting( 'steel_options', 'steel_options', 'steel_options_validate' );
 
-  add_settings_section( 'steel_analytics', 'Website Analytics', 'steel_analytics_section', 'steel' );
-
-  add_settings_field(
-    'ga_id',
-    'Google Analytics Property ID',
-    'steel_settings_field_ga_id',
-    'steel',
-    'steel_analytics'
-  );
-
-  add_settings_section( 'steel_social', 'Social Media', 'steel_social_section', 'steel' );
+  add_settings_section( 'steel_integrations', 'Integrations', 'steel_integrations_section', 'steel' );
 
   add_settings_field(
     'fb_app_id',
     'Facebook App ID',
     'steel_settings_field_fb_app_id',
     'steel',
-    'steel_social'
+    'steel_integrations'
+  );
+
+  add_settings_field(
+    'ga_id',
+    'Google Analytics Property ID',
+    'steel_settings_field_ga_id',
+    'steel',
+    'steel_integrations'
   );
 
   add_settings_section( 'steel_misc', 'Miscellaneous', 'steel_misc_section', 'steel' );
@@ -108,22 +106,7 @@ add_action( 'admin_init', 'steel_admin_init' );
 /**
  * Display analytics section title
  */
-function steel_analytics_section() {}
-
-/**
- * Display Google Analytics ID field
- */
-function steel_settings_field_ga_id() {
-  $options = steel_get_options(); ?>
-
-  <input id="ga_id" name="steel_options[ga_id]" size="40" type="text" value="<?php echo $options['ga_id']; ?>" placeholder="UA-XXXXX-X"><?php
-}
-
-/**
- * Display social section title
- */
-function steel_social_section() {
-  echo 'Social media profile information';
+function steel_integrations_section() {
 }
 
 /**
@@ -133,6 +116,15 @@ function steel_settings_field_fb_app_id() {
   $options = steel_get_options(); ?>
 
   <input id="fb_app_id" name="steel_options[fb_app_id]" size="40" type="text" value="<?php echo $options['fb_app_id']; ?>"><?php
+}
+
+/**
+ * Display Google Analytics ID field
+ */
+function steel_settings_field_ga_id() {
+  $options = steel_get_options(); ?>
+
+  <input id="ga_id" name="steel_options[ga_id]" size="40" type="text" value="<?php echo $options['ga_id']; ?>" placeholder="UA-XXXXX-X"><?php
 }
 
 /**
@@ -252,6 +244,7 @@ function steel_options_validate( $raw ) {
 
   $valid['load_bootstrap_css'] = ! empty( $raw['load_bootstrap_css'] ) ? true : false;
   $valid['load_bootstrap_js'] = ! empty( $raw['load_bootstrap_js'] ) ? true : false;
+  $valid['load_editor_posts_page'] = ! empty( $raw['load_editor_posts_page'] ) ? true : false;
 
   $valid['load_broadcast'] = ! empty( $raw['load_broadcast'] ) ? true : false;
   $valid['load_cards'] = ! empty( $raw['load_cards'] ) ? true : false;
@@ -281,6 +274,7 @@ function steel_get_option_defaults() {
     'load_broadcast'    => false,
     'load_cards'        => false,
     'load_quotes'       => true,
+    'load_slides'       => false,
     'load_social_media' => true,
     'load_teams'        => false,
     'load_widgets'      => true,
