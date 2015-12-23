@@ -9,6 +9,8 @@
 
 /**
  * Display team profile information
+ *
+ * @internal
  */
 function steel_profile_entry_meta_above() {
   $title = steel_profile_meta( 'title' );

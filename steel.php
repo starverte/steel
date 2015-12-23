@@ -68,6 +68,8 @@ if ( function_exists( 'flint_the_content' ) ) { include_once dirname( __FILE__ )
 
 /**
  * Register and load admin scripts and styles
+ *
+ * @internal
  */
 function steel_admin_enqueue_scripts() {
   global $post_type;
@@ -134,6 +136,8 @@ add_action( 'admin_enqueue_scripts', 'steel_admin_enqueue_scripts' );
 
 /**
  * Register and load display scripts and styles
+ *
+ * @internal
  */
 function steel_enqueue_scripts() {
   $options = steel_get_options();
@@ -182,6 +186,8 @@ add_action( 'wp_enqueue_scripts', 'steel_enqueue_scripts' );
 
 /**
  * Add Facebook code at top of body
+ *
+ * @internal
  */
 function steel_open() {
   $options = steel_get_options();
@@ -208,6 +214,8 @@ add_action( 'flint_open','steel_open' );
 
 /**
  * Empty search fix
+ *
+ * @internal
  *
  * @param array $query_vars The array of requested query variables.
  */
@@ -256,6 +264,8 @@ function steel_meta( $module, $key, $post_id = 0 ) {
 
 /**
  * Add Google Analytics script to footer
+ *
+ * @internal
  */
 function steel_ga_load() {
   $options = steel_get_options();
@@ -284,6 +294,8 @@ add_action( 'wp_head','steel_ga_load' );
 
 /**
  * Add action to check if plugin has been updated
+ *
+ * @internal
  */
 function steel_plugins_loaded() {
   $steel_db = 151124;
@@ -295,6 +307,8 @@ add_action( 'plugins_loaded', 'steel_plugins_loaded' );
 
 /**
  * On update, convert steel_slides to msx_card/msx_card_deck
+ *
+ * @internal
  */
 function steel_slides_x_cards() {
   $steel_slides = get_posts( array( 'post_type' => 'steel_slides', 'posts_per_page' => -1 ) );
@@ -328,6 +342,8 @@ add_action( 'steel_register_update_hook', 'steel_slides_x_cards' );
 
 /**
  * Load editor on posts page if option selected
+ *
+ * @internal
  *
  * @param WP_Post $post Post object.
  */

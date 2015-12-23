@@ -271,3 +271,250 @@ function msx_card_deck_editor_hide() {
   }
 }
 add_action( 'admin_footer', 'msx_card_deck_editor_hide' );
+
+/**
+ * Display deck of cards as unordered list
+ *
+ * @param int   $deck The ID of the card deck.
+ * @param array $args Array of arguments to affect output.
+ */
+function msx_card_deck_display( $deck, $args = array() ) {
+  $defaults = array(
+    'container'       => 'div',
+    'container_class' => '',
+    'container_id'    => '',
+    'deck_class'      => 'msx-card-deck',
+    'deck_id'         => '',
+    'card_class'      => '',
+    'image_size'      => 'full',
+  );
+
+  $args = wp_parse_args( $args, $defaults );
+
+  $deck = (int) $deck;
+  $card_deck = get_post( $deck );
+  if ( ! empty( $card_deck ) ) {
+    $output = '';
+    $deck_custom = get_post_custom( $card_deck->ID );
+
+    $cards_list = explode( ',', $deck_custom['cards_order'][0] );
+
+    $cards = get_posts(
+      array(
+        'post_type' => 'msx_card',
+        'post__in' => $cards_list,
+        'orderby' => 'post__in',
+        'order' => 'ASC',
+      )
+    );
+
+    // Start the deck of cards.
+    $output .= '<' . $args['container'] . ' class="' . $args['container_class'] . '" id="' . $args['container_id'] . '">';
+    $output .= '<ul class="' . $args['deck_class'] . '" id="' . $args['deck_id'] . '">';
+
+    // Display the cards.
+    $i = 0;
+    foreach ( $cards as $card ) {
+      if ( ! empty( $card ) ) {
+        $custom = get_post_custom( $card->ID );
+        $format = get_post_format( $card->ID );
+
+        $output .= sprintf(
+          '<li class="msx-card msx-card-%1$s %2$s" id="msx-card-%3$s">',
+          $format,
+          $args['card_class'],
+          $card->ID
+        );
+
+        switch ( $format ) {
+          case 'image' :
+            $img_src = wp_get_attachment_image_url( $custom['image'][0], $args['image_size'] );
+            $img_src_set = wp_get_attachment_image_srcset( $custom['image'][0], $args['image_size'] );
+            $img_sizes = wp_get_attachment_image_sizes( $custom['image'][0], $args['image_size'] );
+            $output .= ! empty( $custom['target'][0] ) ? '<a href="' . $custom['target'][0] . '" title="' . $card->post_title . '">' : '';
+
+            $output .= sprintf(
+              '<img src="%1$s" srcset="%2$s" sizes="%3$s" alt="%4$s">',
+              $img_src,
+              $img_src_set,
+              $img_sizes,
+              $card->post_title
+            );
+
+            $output .= ! empty( $custom['target'][0] ) ? '</a>' : '';
+            break;
+          case 'video' :
+            $video_meta = wp_get_attachment_metadata( $custom['video'][0] );
+            $video_url = wp_get_attachment_url( $custom['video'][0] );
+            $video_source = sprintf( '<source src="%1$s" type="%2$s">', $video_url, get_post_mime_type( $custom['video'][0] ) );
+            $image = wp_get_attachment_image_src( get_post_thumbnail_id( $card->ID ), $args['image_size'] );
+            $output .= sprintf(
+              '<video width="%1$s" height="%2$s" poster="%3$s" controls>%4$s</video>',
+              $video_meta['width'],
+              $video_meta['height'],
+              $image[0],
+              $video_source
+            );
+            break;
+          case 'link' :
+            if ( ! empty( $custom['video'][0] ) ) {
+              $output .= '<div class="embed-responsive embed-responsive-16by9">';
+              $output .= '<iframe src="' . $custom['video'][0] . '" autoload></iframe>';
+              $output .= '</div>';
+            }
+            break;
+        }
+
+        $output .= '<div class="caption">';
+        $output .= ! empty( $custom['target'][0] ) ? '<a href="' . $custom['target'][0] . '" title="' . $card->post_title . '">' : '';
+        $output .= '<h4 class="msx-card-title">' . $card->post_title . '</h4>';
+        $output .= ! empty( $custom['target'][0] ) ? '</a>' : '';
+        $output .= '<p class="msx-card-content">' . $card->post_content . '</p>';
+        $output .= '</div>';
+
+        $output .= '</li>';
+      }
+    }
+
+    // End the deck of cards.
+    $output .= '</ul>';
+    $output .= '</' . $args['container'] . '>';
+
+    echo $output;
+  }
+}
+
+/**
+ * Display deck of cards using Bootstrap's carousel
+ *
+ * @param int   $deck The ID of the card deck.
+ * @param array $args Array of arguments to affect output.
+ */
+function msx_card_deck_carousel( $deck, $args = array() ) {
+  $defaults = array(
+    'container_class' => 'carousel slide',
+    'container_id'    => 'carousel_' . $deck,
+    'deck_class'      => 'msx-card-deck carousel-inner',
+    'deck_id'         => 'msx-card-deck-' . $deck,
+    'card_class'      => 'item',
+    'image_size'      => 'full',
+    'indicators'      => true,
+    'controls'        => false, // Currently unused. See http://getbootstrap.com/javascript/#carousel.
+  );
+
+  $args = wp_parse_args( $args, $defaults );
+
+  $deck = (int) $deck;
+  $card_deck = get_post( $deck );
+  if ( ! empty( $card_deck ) ) {
+    $output = '';
+    $deck_custom = get_post_custom( $card_deck->ID );
+
+    $cards_list = explode( ',', $deck_custom['cards_order'][0] );
+
+    $cards = get_posts(
+      array(
+        'post_type' => 'msx_card',
+        'post__in' => $cards_list,
+        'orderby' => 'post__in',
+        'order' => 'ASC',
+      )
+    );
+
+    // Add the carousel wrapper.
+    $output .= '<div class="' . $args['container_class'] . '" id="' . $args['container_id'] . '" data-ride="carousel">';
+
+    // Display indicators.
+    if ( ! false == $args['indicators'] ) {
+      $i = 0;
+      $output .= '<ol class="carousel-indicators">';
+
+      foreach ( $cards as $card ) {
+        if ( ! empty( $card ) ) {
+          if ( 0 == $i ) {
+            $output .= '<li data-target="' . $args['container_id'] . '" data-slide-to="0" class="active"></li>';
+          } else {
+            $output .= '<li data-target="' . $args['container_id'] . '" data-slide-to="' . $i . '"></li>';
+          }
+
+          $i++;
+        }
+      }
+
+      $output .= '</ol>';
+    }
+
+    // Start the decks of cards.
+    $output .= '<div class="' . $args['deck_class'] . '" id="' . $args['deck_id'] . '">';
+
+    // Display the cards.
+    $c = 0;
+    foreach ( $cards as $card ) {
+      if ( ! empty( $card ) ) {
+        $c++;
+        $custom = get_post_custom( $card->ID );
+        $format = get_post_format( $card->ID );
+        $card_class = 1 == $c ? $args['card_class'] . ' active' : $args['card_class'];
+
+        $output .= sprintf(
+          '<div class="msx-card msx-card-%1$s %2$s" id="msx-card-%3$s">',
+          $format,
+          $card_class,
+          $card->ID
+        );
+
+        switch ( $format ) {
+          case 'image' :
+            $img_src = wp_get_attachment_image_url( $custom['image'][0], $args['image_size'] );
+            $img_src_set = wp_get_attachment_image_srcset( $custom['image'][0], $args['image_size'] );
+            $img_sizes = wp_get_attachment_image_sizes( $custom['image'][0], $args['image_size'] );
+            $output .= ! empty( $custom['target'][0] ) ? '<a href="' . $custom['target'][0] . '" title="' . $card->post_title . '">' : '';
+
+            $output .= sprintf(
+              '<img src="%1$s" srcset="%2$s" sizes="%3$s" alt="%4$s">',
+              $img_src,
+              $img_src_set,
+              $img_sizes,
+              $card->post_title
+            );
+
+            $output .= ! empty( $custom['target'][0] ) ? '</a>' : '';
+            break;
+          case 'video' :
+            $video_meta = wp_get_attachment_metadata( $custom['video'][0] );
+            $video_url = wp_get_attachment_url( $custom['video'][0] );
+            $video_source = sprintf( '<source src="%1$s" type="%2$s">', $video_url, get_post_mime_type( $custom['video'][0] ) );
+            $image = wp_get_attachment_image_src( get_post_thumbnail_id( $card->ID ), $args['image_size'] );
+            $output .= sprintf(
+              '<video width="%1$s" height="%2$s" poster="%3$s" controls>%4$s</video>',
+              $video_meta['width'],
+              $video_meta['height'],
+              $image[0],
+              $video_source
+            );
+            break;
+          case 'link' :
+            if ( ! empty( $custom['video'][0] ) ) {
+              $output .= '<div class="embed-responsive embed-responsive-16by9">';
+              $output .= '<iframe src="' . $custom['video'][0] . '" autoload noborder></iframe>';
+              $output .= '</div>';
+            }
+            break;
+        }
+
+        $output .= '<div class="carousel-caption">';
+        $output .= '<h4 class="msx-card-title">' . $card->post_title . '</h4>';
+        $output .= '<p class="msx-card-content">' . $card->post_content . '</p>';
+        $output .= '</div>';
+
+        $output .= '</div>';
+      }
+    }
+
+    // End the deck of cards.
+    $output .= '</div>';
+    $output .= '</div>';
+
+    echo $output;
+  }
+}

@@ -11,6 +11,8 @@
 
 /**
  * Return arguments for registering steel_broadcast
+ *
+ * @internal
  */
 function steel_broadcast_post_type_args() {
   $labels = array(
@@ -67,6 +69,8 @@ function steel_broadcast_post_type_args() {
 
 /**
  * Return arguments for registering steel_broadcast_channel
+ *
+ * @internal
  */
 function steel_broadcast_channel_taxonomy_args() {
   $labels = array(
@@ -107,6 +111,8 @@ function steel_broadcast_channel_taxonomy_args() {
 
 /**
  * Register custom post type and custom taxonomy
+ *
+ * @internal
  */
 function steel_broadcast_init() {
   register_post_type( 'steel_broadcast', steel_broadcast_post_type_args() );
@@ -123,6 +129,8 @@ add_action( 'init', 'steel_broadcast_init' );
 
 /**
  * Add meta boxes to Edit Series screen
+ *
+ * @internal
  */
 function steel_broadcast_add_meta_boxes() {
   add_meta_box(
@@ -138,6 +146,8 @@ add_action( 'add_meta_boxes', 'steel_broadcast_add_meta_boxes' );
 
 /**
  * Display media series items on Edit Series screen
+ *
+ * @internal
  */
 function steel_broadcast_item_list() {
   global $post;
@@ -226,6 +236,8 @@ function steel_broadcast_item_list() {
 
 /**
  * Save steel_broadcast
+ *
+ * @internal
  */
 function steel_broadcast_save() {
   global $post;
@@ -304,6 +316,8 @@ add_action( 'save_post', 'steel_broadcast_save' );
 
 /**
  * Display custom form fields on Channels/New Channel screen
+ *
+ * @internal
  */
 function steel_broadcast_add_form_fields() {
   ?>
@@ -324,6 +338,8 @@ add_action( 'steel_broadcast_channel_add_form_fields', 'steel_broadcast_add_form
 
 /**
  * Display custom form fields on Edit Channel screen
+ *
+ * @internal
  *
  * @param object $term Current taxonomy term object.
  */
@@ -424,6 +440,8 @@ add_action( 'steel_broadcast_channel_edit_form_fields', 'steel_broadcast_edit_fo
 
 /**
  * Save custom form fields on New Channel and Edit Channel screens
+ *
+ * @internal
  *
  * @param int $term_id Term ID.
  */
@@ -574,6 +592,8 @@ function steel_broadcast_media( $post_id = 0 ) {
 
 /**
  * Load template for Broadcast Channel feeds
+ *
+ * @internal
  */
 function steel_broadcast_feed() {
   load_template( dirname( __FILE__ ) . '/broadcast/feed.php' );
@@ -584,6 +604,8 @@ add_action( 'do_feed_broadcast', 'steel_broadcast_feed', 10, 1 );
  * Add rewrite rules for Broadcast Channel feeds
  *
  * Ensures example.com/feed/broadcast/podcast outputs feed for channel with slug 'podcast'
+ *
+ * @internal
  *
  * @param object $wp_rewrite Current WP_Rewrite instance, passed by reference.
  */
