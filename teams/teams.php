@@ -7,6 +7,8 @@
 
 /**
  * Return arguments for registering steel_profile
+ *
+ * @internal
  */
 function steel_teams_profile_post_type_args() {
   $labels = array(
@@ -66,6 +68,8 @@ function steel_teams_profile_post_type_args() {
 
 /**
  * Return arguments for registering steel_team
+ *
+ * @internal
  */
 function steel_teams_team_taxonomy_args() {
   $labels = array(
@@ -108,6 +112,8 @@ function steel_teams_team_taxonomy_args() {
 
 /**
  * Register custom post type and custom taxonomy
+ *
+ * @internal
  */
 function steel_teams_init() {
   register_post_type( 'steel_profile', steel_teams_profile_post_type_args() );
@@ -135,6 +141,8 @@ function steel_teams_meta() {
 
 /**
  * Add meta boxes to Edit Profile screen
+ *
+ * @internal
  */
 function steel_teams_add_meta_boxes() {
   add_meta_box(
@@ -150,6 +158,8 @@ add_action( 'add_meta_boxes', 'steel_teams_add_meta_boxes' );
 
 /**
  * Save data from meta boxes
+ *
+ * @internal
  */
 function steel_teams_profile_save() {
   global $post;

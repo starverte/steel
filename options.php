@@ -7,6 +7,8 @@
 
 /**
  * Add Steel options menu page
+ *
+ * @internal
  */
 function steel_admin_menu() {
   add_menu_page( 'Steel', 'Steel', 'manage_options', 'steel', 'steel_menu_page', 'none' );
@@ -15,6 +17,8 @@ add_action( 'admin_menu', 'steel_admin_menu' );
 
 /**
  * Display the content for the Steel options menu page
+ *
+ * @internal
  */
 function steel_menu_page() {
   ?>
@@ -34,6 +38,8 @@ function steel_menu_page() {
 
 /**
  * Register settings for Steel options menu page
+ *
+ * @internal
  */
 function steel_admin_init() {
 
@@ -105,12 +111,16 @@ add_action( 'admin_init', 'steel_admin_init' );
 
 /**
  * Display analytics section title
+ *
+ * @internal
  */
 function steel_integrations_section() {
 }
 
 /**
  * Display Facebook App ID field
+ *
+ * @internal
  */
 function steel_settings_field_fb_app_id() {
   $options = steel_get_options(); ?>
@@ -120,6 +130,8 @@ function steel_settings_field_fb_app_id() {
 
 /**
  * Display Google Analytics ID field
+ *
+ * @internal
  */
 function steel_settings_field_ga_id() {
   $options = steel_get_options(); ?>
@@ -129,6 +141,8 @@ function steel_settings_field_ga_id() {
 
 /**
  * Display miscellaneous section title
+ *
+ * @internal
  */
 function steel_misc_section() {
   echo 'Miscellaneous fixes';
@@ -136,6 +150,8 @@ function steel_misc_section() {
 
 /**
  * Display Bootstrap module field
+ *
+ * @internal
  */
 function steel_settings_field_editor_posts_page() {
   $options = steel_get_options(); ?>
@@ -152,6 +168,8 @@ function steel_settings_field_editor_posts_page() {
 
 /**
  * Display modules section title
+ *
+ * @internal
  */
 function steel_mods_section() {
   echo 'Select which modules should be active.';
@@ -159,6 +177,8 @@ function steel_mods_section() {
 
 /**
  * Display Bootstrap module field
+ *
+ * @internal
  */
 function steel_settings_field_bootstrap() {
   $options = steel_get_options(); ?>
@@ -177,6 +197,8 @@ function steel_settings_field_bootstrap() {
 
 /**
  * Display Broadcast module field
+ *
+ * @internal
  */
 function steel_settings_field_broadcast() {
   $options = steel_get_options(); ?>
@@ -191,6 +213,8 @@ function steel_settings_field_broadcast() {
 
 /**
  * Display Slides module field
+ *
+ * @internal
  */
 function steel_settings_field_cards() {
   $options = steel_get_options(); ?>
@@ -205,6 +229,8 @@ function steel_settings_field_cards() {
 
 /**
  * Display Teams module field
+ *
+ * @internal
  */
 function steel_settings_field_teams() {
   $options = steel_get_options(); ?>
@@ -219,6 +245,8 @@ function steel_settings_field_teams() {
 
 /**
  * Validate settings for Steel Options page
+ *
+ * @internal
  *
  * @param mixed $raw The raw, unfiltered, form data.
  */
@@ -333,6 +361,8 @@ function steel_get_option_defaults() {
     }
   }
   // END - backwards compatibility.
+
+  // Begin backwards compatability. Remove in Steel 1.6.
   if ( ! empty( $options['load_slides'] ) ) {
     if ( 'true' == $options['load_slides'] ) {
       $defaults['load_cards'] = true;
@@ -340,6 +370,8 @@ function steel_get_option_defaults() {
       $defaults['load_cards'] = false;
     }
   }
+  // End backwards compatability.
+
   return apply_filters( 'steel_option_defaults', $defaults );
 }
 

@@ -29,6 +29,8 @@ if ( shortcode_exists( 'tooltip' )     ) { remove_shortcode( 'tooltip' ); }
  * @see WordPress 4.3.1 add_shortcode()
  * @see WordPress 4.3.1 wp_video_shortcode()
  *
+ * @internal
+ *
  * @param array  $atts Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display alert.
@@ -52,6 +54,8 @@ add_shortcode( 'alert', 'steel_shortcode_alert' );
  * @see WordPress 4.3.1 add_shortcode()
  * @see WordPress 4.3.1 wp_video_shortcode()
  *
+ * @internal
+ *
  * @param array  $atts Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display badge.
@@ -69,6 +73,8 @@ add_shortcode( 'badge', 'steel_shortcode_badge' );
  *
  * @see WordPress 4.3.1 add_shortcode()
  * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @internal
  *
  * @param array  $atts Attributes of the shortcode.
  * @param string $content Shortcode content.
@@ -131,6 +137,8 @@ add_shortcode( 'btn', 'steel_shortcode_btn' );
  * @see WordPress 4.3.1 add_shortcode()
  * @see WordPress 4.3.1 wp_video_shortcode()
  *
+ * @internal
+ *
  * @param array  $atts Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display button group.
@@ -152,6 +160,8 @@ add_shortcode( 'btn_group', 'steel_shortcode_btn_group' );
  *
  * @see WordPress 4.3.1 add_shortcode()
  * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @internal
  *
  * @param array  $atts Attributes of the shortcode.
  * @param string $content Shortcode content.
@@ -219,6 +229,8 @@ add_shortcode( 'column', 'steel_shortcode_column' );
  * @see WordPress 4.3.1 add_shortcode()
  * @see WordPress 4.3.1 wp_video_shortcode()
  *
+ * @internal
+ *
  * @param array  $atts Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display glyphicon.
@@ -236,6 +248,8 @@ add_shortcode( 'glyph', 'steel_shortcode_glyphicon' );
  *
  * @see WordPress 4.3.1 add_shortcode()
  * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @internal
  *
  * @param array  $atts Attributes of the shortcode.
  * @param string $content Shortcode content.
@@ -260,6 +274,8 @@ add_shortcode( 'label', 'steel_shortcode_label' );
  *
  * @see WordPress 4.3.1 add_shortcode()
  * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @internal
  *
  * @param array  $atts Attributes of the shortcode.
  * @param string $content Shortcode content.
@@ -318,6 +334,8 @@ add_shortcode( 'panel', 'steel_shortcode_panel' );
  * @see WordPress 4.3.1 add_shortcode()
  * @see WordPress 4.3.1 wp_video_shortcode()
  *
+ * @internal
+ *
  * @param array  $atts Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display panel group.
@@ -344,6 +362,8 @@ add_shortcode( 'panel_group', 'steel_shortcode_panel_group' );
  *
  * @see WordPress 4.3.1 add_shortcode()
  * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @internal
  *
  * @param array  $atts Attributes of the shortcode.
  * @param string $content Shortcode content.
@@ -392,6 +412,8 @@ add_shortcode( 'progress', 'steel_shortcode_progress' );
  *
  * @see WordPress 4.3.1 add_shortcode()
  * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @internal
  *
  * @param array  $atts Attributes of the shortcode.
  * @param string $content Shortcode content.

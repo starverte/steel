@@ -16,6 +16,8 @@ include_once dirname( __FILE__ ) . '/msx-card-set.php';
 /**
  * Add theme support for post formats used by Cards
  *
+ * @internal
+ *
  * @todo Add support for 'gallery' format.
  * @todo Add support for 'quote' format.
  * @todo Add support for 'status' format.
@@ -39,6 +41,8 @@ add_action( 'after_setup_theme', 'steel_cards_after_setup_theme', 100 );
 
 /**
  * Register custom post type and image size
+ *
+ * @internal
  */
 function steel_cards_init() {
   register_post_type( 'msx_card', msx_card_post_type_args() );
@@ -50,6 +54,8 @@ add_action( 'init', 'steel_cards_init' );
 
 /**
  * Add meta boxes to Edit screen
+ *
+ * @internal
  */
 function steel_card_deck_add_meta_boxes() {
   add_meta_box(
