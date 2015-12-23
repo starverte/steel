@@ -328,8 +328,7 @@ add_action( 'steel_broadcast_channel_add_form_fields', 'steel_broadcast_add_form
  * @param object $term Current taxonomy term object.
  */
 function steel_broadcast_edit_form_fields( $term ) {
-  $the_term = $term->term_id;
-  $term_meta = get_option( 'steel_broadcast_channel_' . $the_term );
+  $term_meta = steel_get_broadcast_channel_meta( $term->term_id );
   $itunes_cats = steel_broadcast_itunes_cats(); ?>
   <tr class="form-field">
     <th scope="row" valign="top">
@@ -340,7 +339,7 @@ function steel_broadcast_edit_form_fields( $term ) {
       <div id="channel_cover_photo">
         <?php
           if ( ! empty( $term_meta['cover_photo_id'] ) ) { ?>
-            <img class="cover-photo" src="<?php echo wp_get_attachment_url( $term_meta['cover_photo_id'] ); ?>" width="140" height="140" /><?php
+            <img class="cover-photo" src="<?php echo wp_get_attachment_url( $term_meta['cover_photo_id'][0] ); ?>" width="140" height="140" /><?php
           }
         ?>
       </div>
@@ -361,7 +360,7 @@ function steel_broadcast_edit_form_fields( $term ) {
       <label for="channel_meta[link]"><?php _e( 'Link', 'steel' ); ?></label>
     </th>
     <td>
-      <input type="text" name="channel_meta[link]" value="<?php echo $term_meta['link']; ?>" />
+      <input type="text" name="channel_meta[link]" value="<?php echo $term_meta['link'][0]; ?>" />
       <p class="description"><?php _e( 'The podcast feed URL.', 'steel' ); ?></p>
     </td>
   </tr>
@@ -370,7 +369,7 @@ function steel_broadcast_edit_form_fields( $term ) {
       <label for="channel_meta[copyright]"><?php _e( 'Copyright Notice', 'steel' ); ?></label>
     </th>
     <td>
-      <input type="text" name="channel_meta[copyright]" value="<?php echo $term_meta['copyright']; ?>" />
+      <input type="text" name="channel_meta[copyright]" value="<?php echo $term_meta['copyright'][0]; ?>" />
       <p class="description">
         <?php _e( 'i.e. "2015 Star Verte LLC. All Rights Reserved."', 'steel' ); ?>
       </p>
@@ -381,7 +380,7 @@ function steel_broadcast_edit_form_fields( $term ) {
       <label for="channel_meta[author]"><?php _e( 'Author', 'steel' ); ?></label>
     </th>
     <td>
-      <input type="text" name="channel_meta[author]" value="<?php echo $term_meta['author']; ?>" />
+      <input type="text" name="channel_meta[author]" value="<?php echo $term_meta['author'][0]; ?>" />
       <p class="description">
         <?php _e( 'The individual or corporate author of the podcast.', 'steel' ); ?>
       </p>
@@ -394,7 +393,7 @@ function steel_broadcast_edit_form_fields( $term ) {
     <td>
       <select name="channel_meta[category]">
         <?php foreach ( $itunes_cats as $key => $value ) : ?>
-        <option value="<?php echo esc_attr( $key ); ?>" <?php selected( $term_meta['category'], $key ); ?>>
+        <option value="<?php echo esc_attr( $key ); ?>" <?php selected( $term_meta['category'][0], $key ); ?>>
           <?php echo esc_attr( $value ); ?>
         </option>
         <?php endforeach; ?>
@@ -409,7 +408,7 @@ function steel_broadcast_edit_form_fields( $term ) {
       <label for="channel_meta[owner_name]"><?php _e( 'Name', 'steel' ); ?></label>
     </th>
     <td>
-      <input type="text" name="channel_meta[owner_name]" value="<?php echo $term_meta['owner_name']; ?>" />
+      <input type="text" name="channel_meta[owner_name]" value="<?php echo $term_meta['owner_name'][0]; ?>" />
     </td>
   </tr>
   <tr class="form-field">
@@ -417,7 +416,7 @@ function steel_broadcast_edit_form_fields( $term ) {
       <label for="channel_meta[owner_email]"><?php _e( 'Email', 'steel' ); ?></label>
     </th>
     <td>
-      <input type="email" name="channel_meta[owner_email]" value="<?php echo $term_meta['owner_email']; ?>" />
+      <input type="email" name="channel_meta[owner_email]" value="<?php echo $term_meta['owner_email'][0]; ?>" />
     </td>
   </tr><?php
 }
@@ -429,16 +428,14 @@ add_action( 'steel_broadcast_channel_edit_form_fields', 'steel_broadcast_edit_fo
  * @param int $term_id Term ID.
  */
 function steel_broadcast_channel_save( $term_id ) {
-  $the_term = $term_id;
   if ( isset( $_POST['channel_meta'] ) ) {
-    $term_meta = get_option( 'steel_broadcast_channel_' . $the_term );
+    $term_meta = steel_get_broadcast_channel_meta( $term_id );
     $term_keys = array_keys( $_POST['channel_meta'] );
     foreach ( $term_keys as $key ) {
       if ( isset( $_POST['channel_meta'][ $key ] ) ) {
-        $term_meta[ $key ] = $_POST['channel_meta'][ $key ];
+        update_term_meta( $term_id, $key, $_POST['channel_meta'][ $key ] );
       }
     }
-    update_option( 'steel_broadcast_channel_' . $the_term, $term_meta );
   }
 }
 add_action( 'edited_steel_broadcast_channel', 'steel_broadcast_channel_save', 10, 2 );
@@ -609,7 +606,7 @@ function steel_broadcast_channel_data( $term_id ) {
   $channel = new stdClass();
 
   $term_data = get_term_by( 'id', $term_id, 'steel_broadcast_channel', 'ARRAY_A' );
-  $term_meta = get_option( 'steel_broadcast_channel_' . $term_id );
+  $term_meta = steel_get_broadcast_channel_meta( $term_id );
 
   foreach ( $term_data as $key => $value ) {
     $channel->$key = $value;
@@ -974,4 +971,36 @@ function steel_broadcast_channel_itunes_cat( $channel ) {
   } else {
     return false;
   }
+}
+
+/**
+ * Get Broadcast Channel term meta
+ *
+ * @param int $term_id The ID of the term to retrieve meta for.
+ * @return array The term meta, as an array.
+ */
+function steel_get_broadcast_channel_meta( $term_id ) {
+  $defaults = array(
+    'cover_photo_id' => 0,
+    'link'           => '',
+    'copyright'      => '',
+    'author'         => '',
+    'category'       => '',
+    'owner_name'     => '',
+    'owner_email'    => '',
+  );
+
+  /**
+   * Begin backwards compatability.
+   *
+   * Remove after WordPress 4.6 release and after at least Steel 1.6.
+   */
+  $options = get_option( 'steel_broadcast_channel_' . $term_id );
+
+  foreach ( $options as $key => $value ) {
+    $defaults[ $key ] = $value;
+  }
+  // End backwards compatability.
+  $term_meta = get_term_meta( $term_id );
+  return wp_parse_args( $term_meta, $defaults );
 }

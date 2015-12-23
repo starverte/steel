@@ -19,7 +19,7 @@ add_action( 'admin_menu', 'steel_admin_menu' );
 function steel_menu_page() {
   ?>
   <div class="wrap">
-    <h2>Steel Options</h2>
+    <h1>Steel Options</h1>
     <form action="options.php" method="post">
     <?php
       settings_fields( 'steel_options' );
