@@ -603,3 +603,243 @@ function steel_get_image_url( $attachment_id, $size = 'thumbnail', $icon = false
   $image = wp_get_attachment_image_src( $attachment_id, $size, $icon );
   return $image[0];
 }
+
+/**
+ * Retrieve post meta field, based on post ID and key.
+ *
+ * The post meta fields are retrieved from the cache where possible,
+ * so the function is optimized to be called more than once.
+ *
+ * @see WordPress 4.3.1 get_post_custom()
+ *
+ * @param string $key     The meta key minus the module prefix.
+ * @param int    $post_id Optional. Post ID. Default is ID of the global $post.
+ * @return string Value for post meta for the given post and given key.
+ */
+function steel_slides_meta( $key, $post_id = 0 ) {
+  steel_deprecated_function( __FUNCTION__, '1.4.0', 'UNDEFINED' );
+  $meta = steel_meta( 'slides', $key, $post_id );
+  return $meta;
+}
+
+/**
+ * Display Slideshow by id
+ *
+ * @param int          $post_id The post ID of the slideshow.
+ * @param string|array $size    Optional. Registered image size to retrieve the source for
+ *                              or a flat array of height and width dimensions. Default 'full'.
+ * @param string       $name    Name of slideshow to use as identifier. Default is $post_id.
+ */
+function steel_slideshow( $post_id, $size = 'full', $name = '' ) {
+  steel_deprecated_function( __FUNCTION__, '1.4.0', 'UNDEFINED' );
+
+  if ( 0 === $post_id ) {
+    return;
+  }
+
+  $name = empty( $name ) ? $post_id : $name;
+
+  $slides_media      = steel_slides_meta( 'media'     , $post_id );
+  $slides_order      = steel_slides_meta( 'order'     , $post_id );
+  $slides_media_url  = steel_slides_meta( 'media_url' , $post_id );
+  $slides_skin       = steel_slides_meta( 'skin'      , $post_id );
+  $slides_transition = steel_slides_meta( 'transition', $post_id );
+
+  $slides_skin       = empty( $slides_skin )       ? 'Default' : $slides_skin;
+  $slides_transition = empty( $slides_transition ) ? 'Default' : $slides_transition;
+
+  $slides_class  = 'carousel slide';
+  $slides_class .= ' carousel-' . strtolower( $slides_skin );
+  $slides_class .= 'Default' !== $slides_transition ? ' carousel-' . strtolower( $slides_transition ) : '' ;
+
+  $slides = explode( ',', $slides_order );
+
+  $output     = '';
+  $indicators = '';
+  $items      = '';
+  $controls   = '';
+  $count      = -1;
+  $i          = -1;
+  $total      = -1;
+
+  foreach ( $slides as $slide ) {
+    if ( ! empty( $slide ) && false !== get_post_status( $slide ) ) {
+      $total += 1;
+    }
+  }
+
+  $col_lg = floor( 12 / max( ( $total + 1 ), 1 ) );
+  $rem_lg = 12 - ( $col_lg * ( $total + 1 ) );
+  $spc_lg = floor( $rem_lg / 2 );
+
+  if ( 'Gallery' !== $slides_skin ) {
+    $carousel_div = '<div id="carousel_'.$name.'" class="'.$slides_class.'" data-ride="carousel">';
+
+    foreach ( $slides as $slide ) {
+      if ( ! empty( $slide ) && false !== get_post_status( $slide ) ) {
+        $image   = wp_get_attachment_image_src( $slide, $size );
+        $title   = steel_slides_meta( 'title_'   . $slide, $post_id );
+        $content = steel_slides_meta( 'content_' . $slide, $post_id );
+        $link    = steel_slides_meta( 'link_'    . $slide, $post_id );
+        $i += 1;
+
+        $items .= $i >= 1 ? '<div class="item">' : '<div class="item active">';
+        $items .= ! empty( $link ) ? '<a href="'.$link.'">' : '';
+        $items .= '<img id="slide_img_'.$slide.'" src="'.$image[0].'" alt="'.$title.'">';
+        $items .= ! empty( $link ) ? '</a>' : '';
+
+        if ( ! empty( $title ) || ! empty( $content ) ) {
+          $items .= '<div class="carousel-caption">';
+          if ( 'Bar' !== $slides_skin ) {
+            if ( ! empty( $title ) ) { $items .= '<h3 id="slides_title_'.$slide.'">' .$title  .'</h3>'; }
+            if ( ! empty( $content ) ) { $items .= '<p class="hidden-xs" id="slides_content_'.$slide.'">'.$content.'</p>' ; }
+          } else {
+            if ( ! empty( $title ) ) { $items .= '<p id="slides_title_'.$slide.'">' .$title.'</p>'; }
+          }
+          $items .= '</div>';// .carousel-caption
+        }
+        $items .= '</div>';// .item
+      }
+    }
+  } else {
+    $carousel_div = '<div id="carousel_'.$name.'" class="row carousel-gallery">';
+
+    foreach ( $slides as $slide ) {
+      if ( ! empty( $slide ) && false !== get_post_status( $slide ) ) {
+        $count += 1;
+        $image  = wp_get_attachment_image_src( $slide, 'full' );
+        $title  = steel_slides_meta( 'title_' . $slide, $post_id );
+        $link   = steel_slides_meta( 'link_'  . $slide, $post_id );
+
+        $items .= '<span class="col-lg-' . $col_lg . ' col-md-' . $col_lg . '">';
+        $items .= ! empty( $link ) ? '<a href="'.$link.'">' : '';
+        $items .= '<img id="slide_thumb_' . $slide . '" src="' . $image[0] . '" alt="' . $title . '">';
+        $items .= ! empty( $link ) ? '</a>' : '';
+        $items .= '</span>';
+      }
+    }
+  }
+
+  if ( empty( $slides_skin ) || 'Default' === $slides_skin ) {
+    $indicators .= '<ol class="carousel-indicators">';
+    foreach ( $slides as $slide ) {
+      if ( ! empty( $slide ) && false !== get_post_status( $slide ) ) {
+        $count += 1;
+        $indicators .= $count >= 1 ? '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"></li>' : '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'" class="active"></li>';
+      }
+    }
+    $indicators .= '</ol>';
+  } elseif ( 'Tabs' === $slides_skin ) {
+    $indicators .= '<ol class="nav nav-tabs carousel-indicators">';
+    foreach ( $slides as $slide ) {
+      if ( ! empty( $slide ) && false !== get_post_status( $slide ) ) {
+        $count += 1;
+        $title   = steel_slides_meta( 'title_'  .$slide, $post_id );
+        $indicators .= $count >= 1 ? '<li data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><a href="#carousel_'.$post_id.'">' . $title . '</a></li>' : '<li class="active" data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><a href="#carousel_'.$post_id.'">' . $title . '</a></li>';
+      }
+    }
+    $indicators .= '</ol>';
+  } elseif ( 'Thumbnails' === $slides_skin ) {
+    $indicators .= '<div class="carousel-thumbs hidden-sm hidden-xs">';
+    $indicators .= '<span class="col-lg-'.$spc_lg.' col-md-'.$spc_lg.'"></span>';
+    foreach ( $slides as $slide ) {
+      if ( ! empty( $slide ) && false !== get_post_status( $slide ) ) {
+        $count += 1;
+        $image   = wp_get_attachment_image_src( $slide, 'steel-slide-thumb' );
+        $title   = steel_slides_meta( 'title_'  .$slide, $post_id );
+        $indicators .= $count >= 1 ? '<span class="col-lg-'.$col_lg.' col-md-'.$col_lg.'" data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><img id="slide_thumb_'.$slide.'" src="'.$image[0].'" alt="'.$title.'"></span>' : '<span class="col-lg-'.$col_lg.' col-md-'.$col_lg.'" data-target="#carousel_'.$post_id.'" data-slide-to="'.$count.'"><img id="slide_thumb_'.$slide.'" src="'.$image[0].'" alt="'.$title.'"></span>';
+      }
+    }
+    $indicators .= '<span class="col-lg-'.$spc_lg.' col-md-'.$spc_lg.'"></span>';
+    $indicators .= '</div>';
+  } elseif ( 'Gallery' === $slides_skin ) {
+    $indicators = '';
+  }
+
+  $controls .= ( 'Simple' === $slides_skin ) ? '<div class="carousel-controls">' : '';
+  $controls .= '<a class="left carousel-control" href="#carousel_'.$post_id.'" data-slide="prev"><span class="icon-prev"></span></a>';
+  $controls .= '<a class="right carousel-control" href="#carousel_'.$post_id.'" data-slide="next"><span class="icon-next"></span></a>';
+  $controls .= ( 'Simple' === $slides_skin ) ? '</div>' : '';
+
+  $output .= 'Tabs' === $slides_skin ? $indicators : '';
+  $output .= $carousel_div;
+  $output .= empty( $slides_skin ) || 'Default' === $slides_skin ? $indicators : '';
+  $output .= 'Gallery' === $slides_skin ? '' : '<div class="carousel-inner">';
+  $output .= $items;
+  $output .= 'Gallery' === $slides_skin ? '' : '</div>';
+  $output .= 'Gallery' === $slides_skin ? '' : $controls;
+  $output .= '</div>';
+  $output .= 'Thumbnails' === $slides_skin ? $indicators : '';
+
+  return $output;
+}
+
+/**
+ * Builds the Slideshow shortcode output.
+ *
+ * This implements the functionality of the Slideshow Shortcode for displaying
+ * a slideshow in a post.
+ *
+ * @see WordPress 4.3.1 add_shortcode()
+ * @see WordPress 4.3.1 wp_video_shortcode()
+ *
+ * @internal
+ *
+ * @param array  $attr Attributes of the shortcode.
+ * @param string $content Shortcode content.
+ * @return string|void HTML content to display slideshow.
+ */
+function steel_slideshow_shortcode( $attr, $content = '' ) {
+  steel_deprecated_function( __FUNCTION__, '1.4.0', 'UNDEFINED' );
+
+  extract( shortcode_atts( array( 'id' => 0, 'name' => '', 'size' => 'full' ), $attr ) );
+
+  if ( ! empty( $id ) ) {
+    return steel_slideshow( $id, $size );
+  } elseif ( ! empty( $name ) ) {
+    $show = get_page_by_title( $name, OBJECT, 'steel_slides' );
+    if ( ! empty( $show ) ) {
+      return steel_slideshow( $show->ID, $size, $name );
+    }
+  } else {
+    return;
+  }
+}
+add_shortcode( 'steel_slideshow', 'steel_slideshow_shortcode' );
+
+/**
+ * Return IDs for all slideshows
+ */
+function steel_get_slides() {
+  steel_deprecated_function( __FUNCTION__, '1.4.0', 'UNDEFINED' );
+  $args = array( 'post_type' => 'steel_slides', 'posts_per_page' => -1 );
+  $slideshows = get_posts( $args );
+  $slides = array();
+  $slides[0] = 'None';
+  if ( $slideshows ) {
+    foreach ( $slideshows as $slideshow ) {
+      $post_id = $slideshow->ID;
+      $title = $slideshow->post_title;
+      $slides[ $post_id ] = $title;
+    }
+    wp_reset_postdata();
+  }
+  return $slides;
+}
+
+/**
+ * Sanitize options based on steel_get_slides
+ *
+ * @param mixed $input Unfiltered input.
+ */
+function steel_sanitize_get_slides( $input ) {
+  steel_deprecated_function( __FUNCTION__, '1.4.0', 'UNDEFINED' );
+
+  $valid = steel_get_slides( 'options' );
+
+  if ( array_key_exists( $input, $valid ) ) {
+    return $input;
+  } else {
+    return;
+  }
+}
