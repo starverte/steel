@@ -361,7 +361,6 @@ function steel_get_option_defaults() {
     }
   }
   // END - backwards compatibility.
-
   // Begin backwards compatability. Remove in Steel 1.6.
   if ( ! empty( $options['load_slides'] ) ) {
     if ( 'true' == $options['load_slides'] ) {
@@ -371,7 +370,6 @@ function steel_get_option_defaults() {
     }
   }
   // End backwards compatability.
-
   return apply_filters( 'steel_option_defaults', $defaults );
 }
 
