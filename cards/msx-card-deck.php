@@ -284,7 +284,7 @@ function msx_card_deck_display( $deck, $args = array() ) {
     'container_class' => '',
     'container_id'    => '',
     'deck_class'      => 'msx-card-deck',
-    'deck_id'         => '',
+    'deck_id'         => 'msx-card-deck-' . $deck,
     'card_class'      => '',
     'image_size'      => 'full',
   );
@@ -365,12 +365,12 @@ function msx_card_deck_display( $deck, $args = array() ) {
             break;
         }
 
-        $output .= '<div class="caption">';
+        $output .= ! empty( $card->post_title ) || ! empty( $card->post_content ) ? '<div class="caption">' : '';
         $output .= ! empty( $custom['target'][0] ) ? '<a href="' . $custom['target'][0] . '" title="' . $card->post_title . '">' : '';
-        $output .= '<h4 class="msx-card-title">' . $card->post_title . '</h4>';
+        $output .= ! empty( $card->post_title ) ? '<h4 class="msx-card-title">' . $card->post_title . '</h4>' : '';
         $output .= ! empty( $custom['target'][0] ) ? '</a>' : '';
-        $output .= '<p class="msx-card-content">' . $card->post_content . '</p>';
-        $output .= '</div>';
+        $output .= ! empty( $card->post_content ) ? '<p class="msx-card-content">' . $card->post_content . '</p>' : '';
+        $output .= ! empty( $card->post_title ) || ! empty( $card->post_content ) ? '</div>' : '';
 
         $output .= '</li>';
       }
