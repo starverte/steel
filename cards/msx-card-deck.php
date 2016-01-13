@@ -284,7 +284,7 @@ function msx_card_deck_display( $deck, $args = array() ) {
     'container_class' => '',
     'container_id'    => '',
     'deck_class'      => 'msx-card-deck',
-    'deck_id'         => '',
+    'deck_id'         => 'msx-card-deck-' . $deck,
     'card_class'      => '',
     'image_size'      => 'full',
   );
@@ -365,12 +365,12 @@ function msx_card_deck_display( $deck, $args = array() ) {
             break;
         }
 
-        $output .= '<div class="caption">';
+        $output .= ! empty( $card->post_title ) || ! empty( $card->post_content ) ? '<div class="caption">' : '';
         $output .= ! empty( $custom['target'][0] ) ? '<a href="' . $custom['target'][0] . '" title="' . $card->post_title . '">' : '';
-        $output .= '<h4 class="msx-card-title">' . $card->post_title . '</h4>';
+        $output .= ! empty( $card->post_title ) ? '<h4 class="msx-card-title">' . $card->post_title . '</h4>' : '';
         $output .= ! empty( $custom['target'][0] ) ? '</a>' : '';
-        $output .= '<p class="msx-card-content">' . $card->post_content . '</p>';
-        $output .= '</div>';
+        $output .= ! empty( $card->post_content ) ? '<p class="msx-card-content">' . $card->post_content . '</p>' : '';
+        $output .= ! empty( $card->post_title ) || ! empty( $card->post_content ) ? '</div>' : '';
 
         $output .= '</li>';
       }
@@ -516,5 +516,39 @@ function msx_card_deck_carousel( $deck, $args = array() ) {
     $output .= '</div>';
 
     echo $output;
+  }
+}
+
+/**
+ * Return IDs for all card decks
+ */
+function msx_card_deck_list() {
+  $args = array( 'post_type' => 'msx_card_deck', 'posts_per_page' => -1 );
+  $msx_card_decks = get_posts( $args );
+  $card_decks = array();
+  $card_decks[0] = 'None';
+  if ( $msx_card_decks ) {
+    foreach ( $msx_card_decks as $msx_card_deck ) {
+      $post_id = $msx_card_deck->ID;
+      $title = $msx_card_deck->post_title;
+      $card_decks[ $post_id ] = $title;
+    }
+    wp_reset_postdata();
+  }
+  return $card_decks;
+}
+
+/**
+ * Sanitize options based on msx_sanitize_card_deck_list
+ *
+ * @param mixed $input Unfiltered input.
+ */
+function msx_sanitize_card_deck_list( $input ) {
+  $valid = msx_card_deck_list();
+
+  if ( array_key_exists( $input, $valid ) ) {
+    return $input;
+  } else {
+    return;
   }
 }
