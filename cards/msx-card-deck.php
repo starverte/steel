@@ -518,3 +518,22 @@ function msx_card_deck_carousel( $deck, $args = array() ) {
     echo $output;
   }
 }
+
+/**
+ * Return IDs for all card decks
+ */
+function msx_card_deck_list() {
+  $args = array( 'post_type' => 'msx_card_deck', 'posts_per_page' => -1 );
+  $msx_card_decks = get_posts( $args );
+  $card_decks = array();
+  $card_decks[0] = 'None';
+  if ( $msx_card_decks ) {
+    foreach ( $msx_card_decks as $msx_card_deck ) {
+      $post_id = $msx_card_deck->ID;
+      $title = $msx_card_deck->post_title;
+      $card_decks[ $post_id ] = $title;
+    }
+    wp_reset_postdata();
+  }
+  return $card_decks;
+}
