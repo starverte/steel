@@ -537,3 +537,18 @@ function msx_card_deck_list() {
   }
   return $card_decks;
 }
+
+/**
+ * Sanitize options based on msx_sanitize_card_deck_list
+ *
+ * @param mixed $input Unfiltered input.
+ */
+function msx_sanitize_card_deck_list( $input ) {
+  $valid = msx_card_deck_list();
+
+  if ( array_key_exists( $input, $valid ) ) {
+    return $input;
+  } else {
+    return;
+  }
+}
