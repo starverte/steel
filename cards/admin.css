@@ -41,6 +41,7 @@
   list-style-type: none;
 }
 #cards img {
+  max-width: 300px;
   margin: -5px 0 0;
 }
 #cards input,
