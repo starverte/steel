@@ -358,3 +358,33 @@ function steel_load_editor_posts_page( $post ) {
 if ( steel_module_status( 'editor_posts_page' ) ) {
   add_action( 'edit_form_after_title', 'steel_load_editor_posts_page', 0 );
 }
+/**
+ * A function which adds a shortlinks button for 'product' post type
+ */
+function steel_product_get_shortlink( $shortlink, $id, $context ) {
+ 
+  // Context can be post/blog/meta ID or query
+  $post_id = 0;
+ 
+  if ( 'query' == $context && is_singular( 'product' ) ) { 
+ 
+    // If context is query use current queried object for ID
+    $post_id = get_queried_object_id();
+ 
+  } 
+  elseif ( 'post' == $context ) { 
+ 
+    // If context is post use the passed $id 
+    $post_id = $id;
+ 
+  } 
+ 
+  // Only do something if of product post type
+  if ( 'product' == get_post_type( $post_id ) ) { 
+    $shortlink = home_url( '?p=' . $post_id );
+  } 
+ 
+  return $shortlink;
+}
+add_filter( 'pre_get_shortlink', 'steel_product_get_shortlink', 10, 3 );
+
