@@ -5,8 +5,19 @@
  * @package Steel\Widgets
  */
 
+/**
+ * Include Steel_Widget_Button class
+ */
 include_once dirname( __FILE__ ) . '/class-widget-button.php';
+
+/**
+ * Include Steel_Widget_Link class
+ */
 include_once dirname( __FILE__ ) . '/class-widget-link.php';
+
+/**
+ * Include Steel_Widget_List_Group class
+ */
 include_once dirname( __FILE__ ) . '/class-widget-list-group.php';
 
 /**

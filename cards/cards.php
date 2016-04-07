@@ -9,8 +9,19 @@
  * @since 1.4.0
  */
 
+/**
+ * Include Matchstix Card (custom post type)
+ */
 include_once dirname( __FILE__ ) . '/msx-card.php';
+
+/**
+ * Include Matchstix Deck of Cards (custom post type)
+ */
 include_once dirname( __FILE__ ) . '/msx-card-deck.php';
+
+/**
+ * Include Matchstix Set of Cards (custom taxonomy)
+ */
 include_once dirname( __FILE__ ) . '/msx-card-set.php';
 
 /**
