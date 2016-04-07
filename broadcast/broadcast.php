@@ -351,7 +351,7 @@ function steel_broadcast_edit_form_fields( $term ) {
       <label for="channel_meta[cover_photo_id]"><?php _e( 'Cover Photo', 'steel' ); ?></label>
     </th>
     <td>
-      <input type="hidden" name="channel_meta[cover_photo_id]" id="channel_cover_photo_id" value="<?php esc_attr_e( $term_meta['cover_photo_id'] ); ?>" />
+      <input type="hidden" name="channel_meta[cover_photo_id]" id="channel_cover_photo_id" value="<?php echo esc_attr( $term_meta['cover_photo_id'] ); ?>" />
       <div id="channel_cover_photo">
         <?php
           if ( ! empty( $term_meta['cover_photo_id'] ) ) { ?>

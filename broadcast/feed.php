@@ -20,17 +20,17 @@ $channel_cover = wp_get_attachment_image_src( $channel->cover_photo_id, 'steel-b
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
 
 <channel>
-  <title><?php esc_html_e( $channel->name ); ?></title>
+  <title><?php echo esc_html( $channel->name ); ?></title>
   <link><![CDATA[<?php echo $channel->link; ?>]]></link>
   <language><?php bloginfo_rss( 'language' ); ?></language>
   <copyright>&#x2117; <?php echo $channel->copyright; ?></copyright>
-  <itunes:author><?php esc_html_e( $channel->author ); ?></itunes:author>
+  <itunes:author><?php echo esc_html( $channel->author ); ?></itunes:author>
   <itunes:summary><![CDATA[<?php echo $channel->description; ?>]]></itunes:summary>
   <description><![CDATA[<?php echo $channel->description; ?>]]></description>
 
   <itunes:owner>
-    <itunes:name><?php esc_html_e( $channel->owner_name ); ?></itunes:name>
-    <itunes:email><?php esc_html_e( $channel->owner_email ); ?></itunes:email>
+    <itunes:name><?php echo esc_html( $channel->owner_name ); ?></itunes:name>
+    <itunes:email><?php echo esc_html( $channel->owner_email ); ?></itunes:email>
   </itunes:owner>
 
   <itunes:image href="<?php echo $channel_cover[0]; ?>" /><?php
