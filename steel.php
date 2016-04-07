@@ -101,35 +101,35 @@ function steel_admin_enqueue_scripts() {
   );
 
   if ( 'steel_broadcast' == $post_type ) {
-    wp_enqueue_script(
-      'broadcast-edit',
-      plugins_url( 'steel/broadcast/edit.js' ),
-      array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ),
-      '1.3.0',
-      true
-    );
-    wp_enqueue_style( 'broadcast-style-admin', plugins_url( 'steel/broadcast/admin.css' ) );
+		wp_enqueue_script(
+		'broadcast-edit',
+		plugins_url( 'steel/broadcast/edit.js' ),
+		array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ),
+		'1.3.0',
+		true
+		);
+		wp_enqueue_style( 'broadcast-style-admin', plugins_url( 'steel/broadcast/admin.css' ) );
   };
 
   if ( 'steel_broadcast_channel' == $taxonomy ) {
-    wp_enqueue_script(
-      'broadcast-channel-edit',
-      plugins_url( 'steel/broadcast/channel-edit.js' ),
-      array( 'jquery' ),
-      '1.3.0',
-      true
-    );
+		wp_enqueue_script(
+		'broadcast-channel-edit',
+		plugins_url( 'steel/broadcast/channel-edit.js' ),
+		array( 'jquery' ),
+		'1.3.0',
+		true
+		);
   }
 
   if ( 'msx_card_deck' == $post_type ) {
-    wp_enqueue_script(
-      'cards-admin-script',
-      plugins_url( 'steel/cards/admin.js' ),
-      array( 'jquery' ),
-      '0.2.0',
-      true
-    );
-    wp_enqueue_style( 'cards-admin-style', plugins_url( 'steel/cards/admin.css' ) );
+		wp_enqueue_script(
+		'cards-admin-script',
+		plugins_url( 'steel/cards/admin.js' ),
+		array( 'jquery' ),
+		'0.2.0',
+		true
+		);
+		wp_enqueue_style( 'cards-admin-style', plugins_url( 'steel/cards/admin.css' ) );
   }
 }
 add_action( 'admin_enqueue_scripts', 'steel_admin_enqueue_scripts' );
@@ -143,33 +143,33 @@ function steel_enqueue_scripts() {
   $options = steel_get_options();
 
   if ( true === $options['load_bootstrap_js'] ) {
-    wp_deregister_script( 'bootstrap' );
+		wp_deregister_script( 'bootstrap' );
 
-    wp_enqueue_script(
-      'bootstrap',
-      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js',
-      array( 'jquery' ),
-      '3.3.6',
-      true
-    );
+		wp_enqueue_script(
+		'bootstrap',
+		'//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js',
+		array( 'jquery' ),
+		'3.3.6',
+		true
+		);
   }
 
   if ( true === $options['load_bootstrap_css'] ) {
-    wp_deregister_style( 'bootstrap-css' );
+		wp_deregister_style( 'bootstrap-css' );
 
-    wp_enqueue_style(
-      'bootstrap-css',
-      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
-      array(),
-      '3.3.6'
-    );
+		wp_enqueue_style(
+		'bootstrap-css',
+		'//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
+		array(),
+		'3.3.6'
+		);
   } else {
-    wp_enqueue_style(
-      'glyphicons',
-      plugins_url( 'steel/css/glyphicons.css' ),
-      array(),
-      '3.3.6'
-    );
+		wp_enqueue_style(
+		'glyphicons',
+		plugins_url( 'steel/css/glyphicons.css' ),
+		array(),
+		'3.3.6'
+		);
   }
 
   wp_enqueue_script( 'pin-it-button', '//assets.pinterest.com/js/pinit.js' );
@@ -193,21 +193,21 @@ function steel_open() {
   $options = steel_get_options();
 
   if ( true === $options['load_facebook']  && ! empty( $options['fb_app_id'] ) ) { ?>
-    <div id="fb-root"></div>
-    <script>
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {
-          return;
-        }
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?php echo $options['fb_app_id']; ?>";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    </script><?php
+																					<div id="fb-root"></div>
+																					<script>
+																					(function(d, s, id) {
+																					var js, fjs = d.getElementsByTagName(s)[0];
+																					if (d.getElementById(id)) {
+																					return;
+																					}
+																					js = d.createElement(s);
+																					js.id = id;
+																					js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?php echo $options['fb_app_id']; ?>";
+																					fjs.parentNode.insertBefore(js, fjs);
+																					}(document, 'script', 'facebook-jssdk'));
+																					</script><?php
   } else {
-    return;
+		return;
   }
 }
 add_action( 'flint_open','steel_open' );
@@ -221,7 +221,7 @@ add_action( 'flint_open','steel_open' );
  */
 function steel_request( $query_vars ) {
   if ( ! empty( $_GET['s'] ) && empty( $_GET['s'] ) ) {
-    $query_vars['s'] = ' ';
+		$query_vars['s'] = ' ';
   }
   return $query_vars;
 }
@@ -235,10 +235,10 @@ add_filter( 'request', 'steel_request' );
 function steel_module_status( $module ) {
   $options = steel_get_options();
 
-  if ( true === $options[ 'load_'.$module ] ) {
-    return true;
+  if ( true === $options[ 'load_' . $module ] ) {
+		return true;
   } else {
-    return false;
+		return false;
   }
 }
 
@@ -258,7 +258,7 @@ function steel_module_status( $module ) {
 function steel_meta( $module, $key, $post_id = 0 ) {
   global $post;
   $custom = get_post_custom( $post_id );
-  $meta = ! empty( $custom[ $module.'_'.$key ][0] ) ? $custom[ $module.'_'.$key ][0] : '';
+  $meta = ! empty( $custom[ $module . '_' . $key ][0] ) ? $custom[ $module . '_' . $key ][0] : '';
   return $meta;
 }
 
@@ -273,21 +273,21 @@ function steel_ga_load() {
   $ga_id = $options['ga_id'];
 
   if ( ! empty( $ga_id ) ) {
-    if ( is_user_logged_in() ) { ?>
-      <!-- Google Analytics code disabled because user is logged in. -->
-      <?php
-    } else { ?>
-      <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		if ( is_user_logged_in() ) { ?>
+			<!-- Google Analytics code disabled because user is logged in. -->
+			<?php
+			} else { ?>
+			  <script>
+				(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+				})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-        ga('create', <?php echo $ga_id; ?>, 'auto');
-        ga('send', 'pageview');
+				ga('create', <?php echo $ga_id; ?>, 'auto');
+				ga('send', 'pageview');
 
-      </script><?php
-    }
+			  </script><?php
+				}
   }
 }
 add_action( 'wp_head','steel_ga_load' );
@@ -300,7 +300,7 @@ add_action( 'wp_head','steel_ga_load' );
 function steel_plugins_loaded() {
   $steel_db = 151124;
   if ( get_site_option( 'steel_db_version' ) != $steel_db ) {
-    do_action( 'steel_register_update_hook' );
+		do_action( 'steel_register_update_hook' );
   }
 }
 add_action( 'plugins_loaded', 'steel_plugins_loaded' );
@@ -313,29 +313,29 @@ add_action( 'plugins_loaded', 'steel_plugins_loaded' );
 function steel_slides_x_cards() {
   $steel_slides = get_posts( array( 'post_type' => 'steel_slides', 'posts_per_page' => -1 ) );
   foreach ( $steel_slides as $slideshow ) {
-    $cards = explode( ',', get_post_meta( $slideshow->ID, 'slides_order', true ) );
-    $custom = get_post_custom( $slideshow->ID );
-    foreach ( $cards as $card ) {
-      if ( ! empty( $card ) ) {
-        $new_card = wp_insert_post(
-          array(
-            'post_title' => $custom[ 'slides_title_' . $card ][0],
-            'post_content' => $custom[ 'slides_content_' . $card ][0],
-            'post_parent' => $card,
-            'post_type' => 'msx_card',
-            'post_status' => 'publish',
-          )
-        );
-        set_post_format( $new_card, 'image' );
-        update_post_meta( $new_card, 'target', $custom[ 'slides_link_' . $card ][0] );
-        update_post_meta( $new_card, 'image', $card );
-        delete_post_meta( $slideshow->ID, 'slides_title_' . $card );
-        delete_post_meta( $slideshow->ID, 'slides_content_' . $card );
-        delete_post_meta( $slideshow->ID, 'slides_link_' . $card );
-      }
-    }
-    delete_post_meta( $slideshow->ID, 'slides_order' );
-    set_post_type( $slideshow->ID, 'msx_card_deck' );
+		$cards = explode( ',', get_post_meta( $slideshow->ID, 'slides_order', true ) );
+		$custom = get_post_custom( $slideshow->ID );
+		foreach ( $cards as $card ) {
+			if ( ! empty( $card ) ) {
+				$new_card = wp_insert_post(
+				array(
+				  'post_title' => $custom[ 'slides_title_' . $card ][0],
+				  'post_content' => $custom[ 'slides_content_' . $card ][0],
+				  'post_parent' => $card,
+				  'post_type' => 'msx_card',
+				  'post_status' => 'publish',
+				)
+				);
+				set_post_format( $new_card, 'image' );
+				update_post_meta( $new_card, 'target', $custom[ 'slides_link_' . $card ][0] );
+				update_post_meta( $new_card, 'image', $card );
+				delete_post_meta( $slideshow->ID, 'slides_title_' . $card );
+				delete_post_meta( $slideshow->ID, 'slides_content_' . $card );
+				delete_post_meta( $slideshow->ID, 'slides_link_' . $card );
+			}
+			}
+		delete_post_meta( $slideshow->ID, 'slides_order' );
+		set_post_type( $slideshow->ID, 'msx_card_deck' );
   }
 }
 add_action( 'steel_register_update_hook', 'steel_slides_x_cards' );
@@ -349,7 +349,7 @@ add_action( 'steel_register_update_hook', 'steel_slides_x_cards' );
  */
 function steel_load_editor_posts_page( $post ) {
   if ( $post->ID != get_option( 'page_for_posts' ) ) {
-    return;
+		return;
   }
   remove_action( 'edit_form_after_title', '_wp_posts_page_notice' );
   add_post_type_support( 'page', 'editor' );
@@ -372,19 +372,19 @@ function steel_product_get_shortlink( $shortlink, $id, $context ) {
 
   if ( 'query' == $context && is_singular( 'product' ) ) {
 
-    // If context is query use current queried object for ID.
-    $post_id = get_queried_object_id();
+		// If context is query use current queried object for ID.
+		$post_id = get_queried_object_id();
 
   } elseif ( 'post' == $context ) {
 
-    // If context is post use the passed $id.
-    $post_id = $id;
+		// If context is post use the passed $id.
+		$post_id = $id;
 
   }
 
   // Only do something if of product post type.
   if ( 'product' == get_post_type( $post_id ) ) {
-    $shortlink = home_url( '?p=' . $post_id );
+		$shortlink = home_url( '?p=' . $post_id );
   }
 
   return $shortlink;
