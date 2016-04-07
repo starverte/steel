@@ -348,7 +348,7 @@ add_action( 'steel_register_update_hook', 'steel_slides_x_cards' );
  * @param WP_Post $post Post object.
  */
 function steel_load_editor_posts_page( $post ) {
-  if ( $post->ID != get_option( 'page_for_posts' ) ) {
+  if ( get_option( 'page_for_posts' ) != $post->ID ) {
 		return;
   }
   remove_action( 'edit_form_after_title', '_wp_posts_page_notice' );
