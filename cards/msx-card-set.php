@@ -1,6 +1,6 @@
 <?php
 /**
- * Matchstix Deck of Cards (custom post type)
+ * Matchstix Set of Cards (custom taxonomy)
  *
  * @package MSX\Cards
  *

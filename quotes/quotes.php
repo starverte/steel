@@ -5,6 +5,9 @@
  * @package Steel\Quotes
  */
 
+/**
+ * Include Steel_Widget_Random_Quote class
+ */
 include_once dirname( __FILE__ ) . '/class-widget-random-quote.php';
 
 /**
