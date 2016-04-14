@@ -247,10 +247,14 @@ add_action( 'save_post_msx_card_deck', 'msx_card_deck_save' );
  * Display insert media buttons on MSX Card Deck Edit screen
  */
 function msx_card_deck_button_image() {
+  global $current_screen;
+
+  if ( 'msx_card_deck' == $current_screen->post_type ) {
  ?>
-  <button type="button" class="button card-insert-image"><span class="dashicons dashicons-format-image"></span> Add Image</button>
-  <button type="button" class="button card-insert-video"><span class="dashicons dashicons-format-video"></span> Add Video</button>
-  <button type="button" class="button card-insert-link"><span class="dashicons dashicons-admin-links"></span> Add Link</button><?php
+    <button type="button" class="button card-insert-image"><span class="dashicons dashicons-format-image"></span> Add Image</button>
+    <button type="button" class="button card-insert-video"><span class="dashicons dashicons-format-video"></span> Add Video</button>
+    <button type="button" class="button card-insert-link"><span class="dashicons dashicons-admin-links"></span> Add Link</button><?php
+  }
 }
 add_action( 'media_buttons', 'msx_card_deck_button_image' );
 
