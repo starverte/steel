@@ -11,6 +11,11 @@
 include_once dirname( __FILE__ ) . '/class-walker-nav-menu-list-group.php';
 
 /**
+ * Include Bootstrap shortcodes
+ */
+include_once dirname( __FILE__ ) . '/shortcodes.php';
+
+/**
  * Display Bootstrap list group
  *
  * @uses Steel_Walker_Nav_Menu_List_Group
