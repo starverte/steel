@@ -1,23 +1,6 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    csscomb: {
-      css: {
-        options: {
-          config: '.csscomb.json'
-        },
-        files: {
-          'cards/admin.css': ['cards/admin.css'],
-          'css/admin.css': ['css/admin.css'],
-          'broadcast/admin.css': ['broadcast/admin.css'],
-          'cards/admin.css': ['cards/admin.css'],
-          'css/event-style.css': ['css/event-style.css'],
-          'css/glyphicons.css': ['css/glyphicons.css'],
-          'css/grid.css': ['css/grid.css'],
-          'css/starverte.css': ['css/starverte.css']
-        }
-      }
-    },
     shell: {
       empty_tests: {
         command: 'rm -rfv tests'
@@ -45,15 +28,17 @@ module.exports = function(grunt) {
       },
       phpcbf: {
         command: 'tests/php-codesniffer/scripts/phpcbf -p -s -v -n . --standard=./.phpcs.rules.xml --extensions=php --ignore=tests/*,node_modules/*'
+      },
+      csscomb: {
+        command: 'csscomb broadcast/*.css cards/*.css css/*.css'
       }
     },
   });
 
-  grunt.loadNpmTasks( 'grunt-csscomb' );
   grunt.loadNpmTasks( 'grunt-phpdoc' );
   grunt.loadNpmTasks( 'grunt-shell' );
 
-  grunt.registerTask( 'build', ['csscomb:css', 'shell:phpcbf'] );
+  grunt.registerTask( 'build', ['shell:csscomb', 'shell:phpcbf'] );
   grunt.registerTask( 'init', ['shell:empty_tests', 'shell:syntax_clone', 'shell:phpcs_clone', 'shell:wpcs_clone', 'shell:phpcs_config'] );
   grunt.registerTask( 'test', ['shell:reset_tests', 'shell:syntax_tests',  'shell:phpcs_tests'] );
 }

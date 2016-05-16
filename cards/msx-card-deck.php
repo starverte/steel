@@ -11,36 +11,35 @@
  * Return arguments for registering msx_card_deck
  */
 function msx_card_deck_post_type_args() {
-  global $msx_text_domain;
   $labels = array(
-    'name'                  => _x( 'Card Decks', 'post type general name', $msx_text_domain ),
-    'singular_name'         => _x( 'Card Deck', 'post type singular name', $msx_text_domain ),
-    'menu_name'             => __( 'Cards', $msx_text_domain ),
-    'name_admin_bar'        => __( 'Card Decks', $msx_text_domain ),
-    'add_new'               => __( 'Add New', $msx_text_domain ),
-    'add_new_item'          => __( 'Add New Card Deck', $msx_text_domain ),
-    'edit_item'             => __( 'Edit Card Deck', $msx_text_domain ),
-    'new_item'              => __( 'New Card Deck', $msx_text_domain ),
-    'view_item'             => __( 'View Card Deck', $msx_text_domain ),
-    'update_item'           => __( 'Update', $msx_text_domain ),
-    'search_items'          => __( 'Search Card Decks', $msx_text_domain ),
-    'not_found'             => __( 'No decks found.', $msx_text_domain ),
-    'not_found_in_trash'    => __( 'No decks found in Trash.', $msx_text_domain ),
-    'all_items'             => __( 'All Card Decks', $msx_text_domain ),
-    'archives'              => __( 'Card Deck Archives', $msx_text_domain ),
-    'insert_into_item'      => __( 'Insert into deck', $msx_text_domain ),
-    'uploaded_to_this_item' => __( 'Uploaded to this deck', $msx_text_domain ),
-    'featured_image'        => __( 'Featured Image', $msx_text_domain ),
-    'set_featured_image'    => __( 'Set featured image', $msx_text_domain ),
-    'remove_featured_image' => __( 'Remove featured image', $msx_text_domain ),
-    'use_featured_image'    => __( 'Use as featured image', $msx_text_domain ),
-    'filter_items_list'     => __( 'Filter decks list', $msx_text_domain ),
-    'items_list_navigation' => __( 'Card Decks list navigation', $msx_text_domain ),
-    'items_list'            => __( 'Card Decks list', $msx_text_domain ),
+    'name'                  => _x( 'Card Decks', 'post type general name', 'steel' ),
+    'singular_name'         => _x( 'Card Deck', 'post type singular name', 'steel' ),
+    'menu_name'             => __( 'Cards', 'steel' ),
+    'name_admin_bar'        => __( 'Card Decks', 'steel' ),
+    'add_new'               => __( 'Add New', 'steel' ),
+    'add_new_item'          => __( 'Add New Card Deck', 'steel' ),
+    'edit_item'             => __( 'Edit Card Deck', 'steel' ),
+    'new_item'              => __( 'New Card Deck', 'steel' ),
+    'view_item'             => __( 'View Card Deck', 'steel' ),
+    'update_item'           => __( 'Update', 'steel' ),
+    'search_items'          => __( 'Search Card Decks', 'steel' ),
+    'not_found'             => __( 'No decks found.', 'steel' ),
+    'not_found_in_trash'    => __( 'No decks found in Trash.', 'steel' ),
+    'all_items'             => __( 'All Card Decks', 'steel' ),
+    'archives'              => __( 'Card Deck Archives', 'steel' ),
+    'insert_into_item'      => __( 'Insert into deck', 'steel' ),
+    'uploaded_to_this_item' => __( 'Uploaded to this deck', 'steel' ),
+    'featured_image'        => __( 'Featured Image', 'steel' ),
+    'set_featured_image'    => __( 'Set featured image', 'steel' ),
+    'remove_featured_image' => __( 'Remove featured image', 'steel' ),
+    'use_featured_image'    => __( 'Use as featured image', 'steel' ),
+    'filter_items_list'     => __( 'Filter decks list', 'steel' ),
+    'items_list_navigation' => __( 'Card Decks list navigation', 'steel' ),
+    'items_list'            => __( 'Card Decks list', 'steel' ),
   );
   $args = array(
-    'label'               => __( 'msx_card_deck', $msx_text_domain ),
-    'description'         => __( 'A grouping of cards', $msx_text_domain ),
+    'label'               => __( 'msx_card_deck', 'steel' ),
+    'description'         => __( 'A grouping of cards', 'steel' ),
     'labels'              => $labels,
     'supports'            => array( 'title', 'editor' ),
     'hierarchical'        => false,
@@ -397,8 +396,8 @@ function msx_card_deck_display( $deck, $args = array() ) {
 function msx_card_deck_carousel( $deck, $args = array() ) {
   $defaults = array(
     'container_class' => 'carousel slide',
-    'container_id'    => 'carousel_' . $deck,
-    'deck_class'      => 'msx-card-deck carousel-inner',
+    'container_id'    => 'carousel-' . $deck,
+    'deck_class'      => 'carousel-inner msx-card-deck',
     'deck_id'         => 'msx-card-deck-' . $deck,
     'card_class'      => 'item',
     'image_size'      => 'full',
@@ -436,9 +435,9 @@ function msx_card_deck_carousel( $deck, $args = array() ) {
       foreach ( $cards as $card ) {
         if ( ! empty( $card ) ) {
           if ( 0 == $i ) {
-            $output .= '<li data-target="' . $args['container_id'] . '" data-slide-to="0" class="active"></li>';
+            $output .= '<li data-target="#' . $args['container_id'] . '" data-slide-to="0" class="active"></li>';
           } else {
-            $output .= '<li data-target="' . $args['container_id'] . '" data-slide-to="' . $i . '"></li>';
+            $output .= '<li data-target="#' . $args['container_id'] . '" data-slide-to="' . $i . '"></li>';
           }
 
           $i++;
@@ -461,9 +460,9 @@ function msx_card_deck_carousel( $deck, $args = array() ) {
         $card_class = 1 == $c ? $args['card_class'] . ' active' : $args['card_class'];
 
         $output .= sprintf(
-          '<div class="msx-card msx-card-%1$s %2$s" id="msx-card-%3$s">',
-          $format,
+          '<div class="%1$s msx-card msx-card-%2$s" id="msx-card-%3$s">',
           $card_class,
+          $format,
           $card->ID
         );
 
@@ -517,6 +516,18 @@ function msx_card_deck_carousel( $deck, $args = array() ) {
 
     // End the deck of cards.
     $output .= '</div>';
+
+    if ( ! false == $args['controls'] ) {
+      $output .= '<a class="left carousel-control" href="#' . $args['container_id'] . '" role="button" data-slide="prev">';
+      $output .= '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>';
+      $output .= '<span class="sr-only">Previous</span>';
+      $output .= '</a>';
+      $output .= '<a class="right carousel-control" href="#' . $args['container_id'] . '" role="button" data-slide="next">';
+      $output .= '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>';
+      $output .= '<span class="sr-only">Next</span>';
+      $output .= '</a>';
+    }
+
     $output .= '</div>';
 
     echo $output;
