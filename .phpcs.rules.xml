@@ -14,6 +14,10 @@
     <exclude name="PEAR.Functions.FunctionCallSignature.Indent" />
     <exclude name="WordPress.VIP" />
 
+    <!-- steel.php will always fail this test -->
+    <!-- All other files should pass this test -->
+    <exclude name="Squiz.Commenting.FileComment.Missing" />
+
     <!-- Temporary exclusions. -->
     <exclude name="WordPress.CSRF" />
     <exclude name="WordPress.XSS" />
