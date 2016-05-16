@@ -11,36 +11,35 @@
  * Return arguments for registering msx_card_deck
  */
 function msx_card_deck_post_type_args() {
-  global $msx_text_domain;
   $labels = array(
-    'name'                  => _x( 'Card Decks', 'post type general name', $msx_text_domain ),
-    'singular_name'         => _x( 'Card Deck', 'post type singular name', $msx_text_domain ),
-    'menu_name'             => __( 'Cards', $msx_text_domain ),
-    'name_admin_bar'        => __( 'Card Decks', $msx_text_domain ),
-    'add_new'               => __( 'Add New', $msx_text_domain ),
-    'add_new_item'          => __( 'Add New Card Deck', $msx_text_domain ),
-    'edit_item'             => __( 'Edit Card Deck', $msx_text_domain ),
-    'new_item'              => __( 'New Card Deck', $msx_text_domain ),
-    'view_item'             => __( 'View Card Deck', $msx_text_domain ),
-    'update_item'           => __( 'Update', $msx_text_domain ),
-    'search_items'          => __( 'Search Card Decks', $msx_text_domain ),
-    'not_found'             => __( 'No decks found.', $msx_text_domain ),
-    'not_found_in_trash'    => __( 'No decks found in Trash.', $msx_text_domain ),
-    'all_items'             => __( 'All Card Decks', $msx_text_domain ),
-    'archives'              => __( 'Card Deck Archives', $msx_text_domain ),
-    'insert_into_item'      => __( 'Insert into deck', $msx_text_domain ),
-    'uploaded_to_this_item' => __( 'Uploaded to this deck', $msx_text_domain ),
-    'featured_image'        => __( 'Featured Image', $msx_text_domain ),
-    'set_featured_image'    => __( 'Set featured image', $msx_text_domain ),
-    'remove_featured_image' => __( 'Remove featured image', $msx_text_domain ),
-    'use_featured_image'    => __( 'Use as featured image', $msx_text_domain ),
-    'filter_items_list'     => __( 'Filter decks list', $msx_text_domain ),
-    'items_list_navigation' => __( 'Card Decks list navigation', $msx_text_domain ),
-    'items_list'            => __( 'Card Decks list', $msx_text_domain ),
+    'name'                  => _x( 'Card Decks', 'post type general name', 'steel' ),
+    'singular_name'         => _x( 'Card Deck', 'post type singular name', 'steel' ),
+    'menu_name'             => __( 'Cards', 'steel' ),
+    'name_admin_bar'        => __( 'Card Decks', 'steel' ),
+    'add_new'               => __( 'Add New', 'steel' ),
+    'add_new_item'          => __( 'Add New Card Deck', 'steel' ),
+    'edit_item'             => __( 'Edit Card Deck', 'steel' ),
+    'new_item'              => __( 'New Card Deck', 'steel' ),
+    'view_item'             => __( 'View Card Deck', 'steel' ),
+    'update_item'           => __( 'Update', 'steel' ),
+    'search_items'          => __( 'Search Card Decks', 'steel' ),
+    'not_found'             => __( 'No decks found.', 'steel' ),
+    'not_found_in_trash'    => __( 'No decks found in Trash.', 'steel' ),
+    'all_items'             => __( 'All Card Decks', 'steel' ),
+    'archives'              => __( 'Card Deck Archives', 'steel' ),
+    'insert_into_item'      => __( 'Insert into deck', 'steel' ),
+    'uploaded_to_this_item' => __( 'Uploaded to this deck', 'steel' ),
+    'featured_image'        => __( 'Featured Image', 'steel' ),
+    'set_featured_image'    => __( 'Set featured image', 'steel' ),
+    'remove_featured_image' => __( 'Remove featured image', 'steel' ),
+    'use_featured_image'    => __( 'Use as featured image', 'steel' ),
+    'filter_items_list'     => __( 'Filter decks list', 'steel' ),
+    'items_list_navigation' => __( 'Card Decks list navigation', 'steel' ),
+    'items_list'            => __( 'Card Decks list', 'steel' ),
   );
   $args = array(
-    'label'               => __( 'msx_card_deck', $msx_text_domain ),
-    'description'         => __( 'A grouping of cards', $msx_text_domain ),
+    'label'               => __( 'msx_card_deck', 'steel' ),
+    'description'         => __( 'A grouping of cards', 'steel' ),
     'labels'              => $labels,
     'supports'            => array( 'title', 'editor' ),
     'hierarchical'        => false,
@@ -528,7 +527,7 @@ function msx_card_deck_carousel( $deck, $args = array() ) {
       $output .= '<span class="sr-only">Next</span>';
       $output .= '</a>';
     }
-      
+
     $output .= '</div>';
 
     echo $output;

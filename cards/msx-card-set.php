@@ -11,7 +11,6 @@
  * Return arguments for registering msx_card_set
  */
 function msx_card_set_taxonomy_args() {
-  global $msx_text_domain;
 
   $labels = array(
     'name'                       => _x( 'Card Sets', 'taxonomy general name', 'steel' ),
