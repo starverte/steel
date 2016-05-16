@@ -397,8 +397,8 @@ function msx_card_deck_display( $deck, $args = array() ) {
 function msx_card_deck_carousel( $deck, $args = array() ) {
   $defaults = array(
     'container_class' => 'carousel slide',
-    'container_id'    => 'carousel_' . $deck,
-    'deck_class'      => 'msx-card-deck carousel-inner',
+    'container_id'    => 'carousel-' . $deck,
+    'deck_class'      => 'carousel-inner msx-card-deck',
     'deck_id'         => 'msx-card-deck-' . $deck,
     'card_class'      => 'item',
     'image_size'      => 'full',
@@ -436,9 +436,9 @@ function msx_card_deck_carousel( $deck, $args = array() ) {
       foreach ( $cards as $card ) {
         if ( ! empty( $card ) ) {
           if ( 0 == $i ) {
-            $output .= '<li data-target="' . $args['container_id'] . '" data-slide-to="0" class="active"></li>';
+            $output .= '<li data-target="#' . $args['container_id'] . '" data-slide-to="0" class="active"></li>';
           } else {
-            $output .= '<li data-target="' . $args['container_id'] . '" data-slide-to="' . $i . '"></li>';
+            $output .= '<li data-target="#' . $args['container_id'] . '" data-slide-to="' . $i . '"></li>';
           }
 
           $i++;
@@ -461,9 +461,9 @@ function msx_card_deck_carousel( $deck, $args = array() ) {
         $card_class = 1 == $c ? $args['card_class'] . ' active' : $args['card_class'];
 
         $output .= sprintf(
-          '<div class="msx-card msx-card-%1$s %2$s" id="msx-card-%3$s">',
-          $format,
+          '<div class="%1$s msx-card msx-card-%2$s" id="msx-card-%3$s">',
           $card_class,
+          $format,
           $card->ID
         );
 
@@ -517,6 +517,18 @@ function msx_card_deck_carousel( $deck, $args = array() ) {
 
     // End the deck of cards.
     $output .= '</div>';
+
+    if ( ! false == $args['controls'] ) {
+      $output .= '<a class="left carousel-control" href="#' . $args['container_id'] . '" role="button" data-slide="prev">';
+      $output .= '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>';
+      $output .= '<span class="sr-only">Previous</span>';
+      $output .= '</a>';
+      $output .= '<a class="right carousel-control" href="#' . $args['container_id'] . '" role="button" data-slide="next">';
+      $output .= '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>';
+      $output .= '<span class="sr-only">Next</span>';
+      $output .= '</a>';
+    }
+      
     $output .= '</div>';
 
     echo $output;
