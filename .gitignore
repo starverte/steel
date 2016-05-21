@@ -18,6 +18,5 @@
 # Folders to ignore
 docs
 node_modules
-tests
 vendor
 
