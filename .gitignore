@@ -1,6 +1,7 @@
 # Numerous always-ignore extensions
 *.diff
 *.err
+*.lock
 *.log
 *.orig
 *.rej
@@ -17,5 +18,5 @@
 # Folders to ignore
 docs
 node_modules
-tests
+vendor
 

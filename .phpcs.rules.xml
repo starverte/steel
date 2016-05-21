@@ -12,6 +12,7 @@
     <exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact" />
     <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect" />
     <exclude name="PEAR.Functions.FunctionCallSignature.Indent" />
+    <exclude name="Squiz.Commenting.FunctionComment.ScalarTypeHintMissing" />
     <exclude name="WordPress.VIP" />
 
     <!-- steel.php will always fail this test -->
@@ -19,7 +20,7 @@
     <exclude name="Squiz.Commenting.FileComment.Missing" />
 
     <!-- Temporary exclusions. -->
-    <exclude name="WordPress.CSRF" />
     <exclude name="WordPress.XSS" />
+    <exclude name="WordPress.CSRF" />
   </rule>
 </ruleset>
