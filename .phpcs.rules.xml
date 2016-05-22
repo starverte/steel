@@ -20,7 +20,7 @@
     <exclude name="Squiz.Commenting.FileComment.Missing" />
 
     <!-- Temporary exclusions. -->
-    <exclude name="WordPress.XSS" />
     <exclude name="WordPress.CSRF" />
+    <exclude name="WordPress.XSS" />
   </rule>
 </ruleset>
