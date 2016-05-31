@@ -52,3 +52,4 @@ function msx_card_set_taxonomy_args() {
 
   return $args;
 }
+

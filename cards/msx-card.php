@@ -59,3 +59,4 @@ function msx_card_post_type_args() {
   );
   return $args;
 }
+

@@ -567,3 +567,4 @@ function msx_sanitize_card_deck_list( $input ) {
     return;
   }
 }
+
