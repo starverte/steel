@@ -56,7 +56,9 @@ if ( steel_module_status( 'widgets' ) ) {
   include_once dirname( __FILE__ ) . '/widgets/widgets.php';
 }
 
-if ( function_exists( 'flint_the_content' ) ) { include_once dirname( __FILE__ ) . '/templates/steel-profile.php'; }
+if ( function_exists( 'flint_the_content' ) ) {
+  include_once dirname( __FILE__ ) . '/templates/steel-profile.php';
+}
 
 /**
  * Register and load admin scripts and styles
@@ -66,13 +68,11 @@ if ( function_exists( 'flint_the_content' ) ) { include_once dirname( __FILE__ )
 function steel_admin_enqueue_scripts() {
   global $post_type;
   global $taxonomy;
-
   wp_enqueue_style( 'dashicons' );
-  wp_enqueue_style( 'bs-glyphicons'    , plugins_url( 'steel/css/glyphicons.css' ) );
-  wp_enqueue_style( 'bs-grid'          , plugins_url( 'steel/css/grid.css' ) );
+  wp_enqueue_style( 'bs-glyphicons', plugins_url( 'steel/css/glyphicons.css' ) );
+  wp_enqueue_style( 'bs-grid', plugins_url( 'steel/css/grid.css' ) );
   wp_enqueue_style( 'steel-admin-style', plugins_url( 'steel/css/admin.css' ) );
-  wp_enqueue_style( 'steel-font'       , plugins_url( 'steel/css/starverte.css' ) );
-
+  wp_enqueue_style( 'steel-font', plugins_url( 'steel/css/starverte.css' ) );
   wp_enqueue_script( 'jquery' );
   wp_enqueue_script( 'jquery-ui-core' );
   wp_enqueue_script( 'jquery-ui-accordion' );
@@ -81,7 +81,6 @@ function steel_admin_enqueue_scripts() {
   wp_enqueue_script( 'jquery-ui-position' );
   wp_enqueue_script( 'jquery-effects-core' );
   wp_enqueue_script( 'jquery-effects-blind' );
-
   wp_enqueue_media();
 
   wp_enqueue_script(
@@ -93,35 +92,37 @@ function steel_admin_enqueue_scripts() {
   );
 
   if ( 'steel_broadcast' == $post_type ) {
-		wp_enqueue_script(
-		'broadcast-edit',
-		plugins_url( 'steel/broadcast/edit.js' ),
-		array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ),
-		'1.3.0',
-		true
-		);
-		wp_enqueue_style( 'broadcast-style-admin', plugins_url( 'steel/broadcast/admin.css' ) );
+    wp_enqueue_script(
+      'broadcast-edit',
+      plugins_url( 'steel/broadcast/edit.js' ),
+      array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ),
+      '1.3.0',
+      true
+    );
+
+    wp_enqueue_style( 'broadcast-style-admin', plugins_url( 'steel/broadcast/admin.css' ) );
   };
 
   if ( 'steel_broadcast_channel' == $taxonomy ) {
-		wp_enqueue_script(
-		'broadcast-channel-edit',
-		plugins_url( 'steel/broadcast/channel-edit.js' ),
-		array( 'jquery' ),
-		'1.3.0',
-		true
-		);
+    wp_enqueue_script(
+      'broadcast-channel-edit',
+      plugins_url( 'steel/broadcast/channel-edit.js' ),
+      array( 'jquery' ),
+      '1.3.0',
+      true
+    );
   }
 
   if ( 'msx_card_deck' == $post_type ) {
-		wp_enqueue_script(
-		'cards-admin-script',
-		plugins_url( 'steel/cards/admin.js' ),
-		array( 'jquery' ),
-		'0.2.0',
-		true
-		);
-		wp_enqueue_style( 'cards-admin-style', plugins_url( 'steel/cards/admin.css' ) );
+    wp_enqueue_script(
+      'cards-admin-script',
+      plugins_url( 'steel/cards/admin.js' ),
+      array( 'jquery' ),
+      '0.2.0',
+      true
+    );
+
+    wp_enqueue_style( 'cards-admin-style', plugins_url( 'steel/cards/admin.css' ) );
   }
 }
 add_action( 'admin_enqueue_scripts', 'steel_admin_enqueue_scripts' );
@@ -135,33 +136,33 @@ function steel_enqueue_scripts() {
   $options = steel_get_options();
 
   if ( true === $options['load_bootstrap_js'] ) {
-		wp_deregister_script( 'bootstrap' );
+    wp_deregister_script( 'bootstrap' );
 
-		wp_enqueue_script(
-		'bootstrap',
-		'//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js',
-		array( 'jquery' ),
-		'3.3.6',
-		true
-		);
+    wp_enqueue_script(
+      'bootstrap',
+      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js',
+      array( 'jquery' ),
+      '3.3.6',
+      true
+    );
   }
 
   if ( true === $options['load_bootstrap_css'] ) {
-		wp_deregister_style( 'bootstrap-css' );
+    wp_deregister_style( 'bootstrap-css' );
 
-		wp_enqueue_style(
-		'bootstrap-css',
-		'//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
-		array(),
-		'3.3.6'
-		);
+    wp_enqueue_style(
+      'bootstrap-css',
+      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
+      array(),
+      '3.3.6'
+    );
   } else {
-		wp_enqueue_style(
-		'glyphicons',
-		plugins_url( 'steel/css/glyphicons.css' ),
-		array(),
-		'3.3.6'
-		);
+  wp_enqueue_style(
+    'glyphicons',
+    plugins_url( 'steel/css/glyphicons.css' ),
+    array(),
+    '3.3.6'
+    );
   }
 
   wp_enqueue_script( 'pin-it-button', '//assets.pinterest.com/js/pinit.js' );
@@ -183,23 +184,22 @@ add_action( 'wp_enqueue_scripts', 'steel_enqueue_scripts' );
  */
 function steel_open() {
   $options = steel_get_options();
-
   if ( true === $options['load_facebook']  && ! empty( $options['fb_app_id'] ) ) { ?>
-																					<div id="fb-root"></div>
-																					<script>
-																					(function(d, s, id) {
-																					var js, fjs = d.getElementsByTagName(s)[0];
-																					if (d.getElementById(id)) {
-																					return;
-																					}
-																					js = d.createElement(s);
-																					js.id = id;
-																					js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?php echo $options['fb_app_id']; ?>";
-																					fjs.parentNode.insertBefore(js, fjs);
-																					}(document, 'script', 'facebook-jssdk'));
-																					</script><?php
+<div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {
+      return;
+    }
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?php echo $options['fb_app_id']; ?>";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script><?php
   } else {
-		return;
+    return;
   }
 }
 add_action( 'flint_open','steel_open' );
@@ -213,8 +213,9 @@ add_action( 'flint_open','steel_open' );
  */
 function steel_request( $query_vars ) {
   if ( ! empty( $_GET['s'] ) && empty( $_GET['s'] ) ) {
-		$query_vars['s'] = ' ';
+    $query_vars['s'] = ' ';
   }
+
   return $query_vars;
 }
 add_filter( 'request', 'steel_request' );
@@ -228,9 +229,9 @@ function steel_module_status( $module ) {
   $options = steel_get_options();
 
   if ( true === $options[ 'load_' . $module ] ) {
-		return true;
+    return true;
   } else {
-		return false;
+    return false;
   }
 }
 
@@ -261,25 +262,21 @@ function steel_meta( $module, $key, $post_id = 0 ) {
  */
 function steel_ga_load() {
   $options = steel_get_options();
-
   $ga_id = $options['ga_id'];
-
   if ( ! empty( $ga_id ) ) {
-		if ( is_user_logged_in() ) { ?>
-			<!-- Google Analytics code disabled because user is logged in. -->
-			<?php
-			} else { ?>
-			  <script>
-				(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-				})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-				ga('create', <?php echo $ga_id; ?>, 'auto');
-				ga('send', 'pageview');
-
-			  </script><?php
-				}
+    if ( is_user_logged_in() ) { ?>
+<!-- Google Analytics code disabled because user is logged in. -->
+    <?php
+    } else { ?>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', <?php echo $ga_id; ?>, 'auto');
+  ga('send', 'pageview');
+</script><?php
+    }
   }
 }
 add_action( 'wp_head','steel_ga_load' );
@@ -290,10 +287,10 @@ add_action( 'wp_head','steel_ga_load' );
  * @internal
  */
 function steel_plugins_loaded() {
-  $steel_db = 151124;
-
+  $steel_db = 160530;
   if ( get_site_option( 'steel_db_version' ) != $steel_db ) {
     do_action( 'steel_register_update_hook' );
+    update_site_option( 'steel_db_version', 160530 );
   }
 }
 add_action( 'plugins_loaded', 'steel_plugins_loaded' );
@@ -349,12 +346,12 @@ add_action( 'steel_register_update_hook', 'steel_slides_x_cards' );
  */
 function steel_load_editor_posts_page( $post ) {
   if ( get_option( 'page_for_posts' ) != $post->ID ) {
-		return;
+    return;
   }
+
   remove_action( 'edit_form_after_title', '_wp_posts_page_notice' );
   add_post_type_support( 'page', 'editor' );
 }
-
 if ( steel_module_status( 'editor_posts_page' ) ) {
   add_action( 'edit_form_after_title', 'steel_load_editor_posts_page', 0 );
 }
@@ -367,27 +364,18 @@ if ( steel_module_status( 'editor_posts_page' ) ) {
  * @param string $context     The context for the link. One of 'post' or 'query'.
  */
 function steel_product_get_shortlink( $shortlink, $id, $context ) {
-
   $post_id = 0;
 
   if ( 'query' == $context && is_singular( 'product' ) ) {
-
-		// If context is query use current queried object for ID.
-		$post_id = get_queried_object_id();
-
+    $post_id = get_queried_object_id();
   } elseif ( 'post' == $context ) {
-
-		// If context is post use the passed $id.
-		$post_id = $id;
-
+    $post_id = $id;
   }
 
-  // Only do something if of product post type.
   if ( 'product' == get_post_type( $post_id ) ) {
-		$shortlink = home_url( '?p=' . $post_id );
+    $shortlink = home_url( '?p=' . $post_id );
   }
 
   return $shortlink;
 }
 add_filter( 'pre_get_shortlink', 'steel_product_get_shortlink', 10, 3 );
-
