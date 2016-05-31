@@ -291,8 +291,9 @@ add_action( 'wp_head','steel_ga_load' );
  */
 function steel_plugins_loaded() {
   $steel_db = 151124;
+
   if ( get_site_option( 'steel_db_version' ) != $steel_db ) {
-		do_action( 'steel_register_update_hook' );
+    do_action( 'steel_register_update_hook' );
   }
 }
 add_action( 'plugins_loaded', 'steel_plugins_loaded' );
@@ -304,30 +305,37 @@ add_action( 'plugins_loaded', 'steel_plugins_loaded' );
  */
 function steel_slides_x_cards() {
   $steel_slides = get_posts( array( 'post_type' => 'steel_slides', 'posts_per_page' => -1 ) );
+
   foreach ( $steel_slides as $slideshow ) {
-		$cards = explode( ',', get_post_meta( $slideshow->ID, 'slides_order', true ) );
-		$custom = get_post_custom( $slideshow->ID );
-		foreach ( $cards as $card ) {
-			if ( ! empty( $card ) ) {
-				$new_card = wp_insert_post(
-				array(
-				  'post_title' => $custom[ 'slides_title_' . $card ][0],
-				  'post_content' => $custom[ 'slides_content_' . $card ][0],
-				  'post_parent' => $card,
-				  'post_type' => 'msx_card',
-				  'post_status' => 'publish',
-				)
-				);
-				set_post_format( $new_card, 'image' );
-				update_post_meta( $new_card, 'target', $custom[ 'slides_link_' . $card ][0] );
-				update_post_meta( $new_card, 'image', $card );
-				delete_post_meta( $slideshow->ID, 'slides_title_' . $card );
-				delete_post_meta( $slideshow->ID, 'slides_content_' . $card );
-				delete_post_meta( $slideshow->ID, 'slides_link_' . $card );
-			}
-			}
-		delete_post_meta( $slideshow->ID, 'slides_order' );
-		set_post_type( $slideshow->ID, 'msx_card_deck' );
+    $cards = explode( ',', get_post_meta( $slideshow->ID, 'slides_order', true ) );
+    $cards_order = '';
+    $custom = get_post_custom( $slideshow->ID );
+
+    foreach ( $cards as $card ) {
+      if ( ! empty( $card ) ) {
+        $new_card = wp_insert_post(
+          array(
+            'post_title' => $custom[ 'slides_title_' . $card ][0],
+            'post_content' => $custom[ 'slides_content_' . $card ][0],
+            'post_parent' => $card,
+            'post_type' => 'msx_card',
+            'post_status' => 'publish',
+          )
+        );
+
+        set_post_format( $new_card, 'image' );
+        update_post_meta( $new_card, 'target', $custom[ 'slides_link_' . $card ][0] );
+        update_post_meta( $new_card, 'image', $card );
+        delete_post_meta( $slideshow->ID, 'slides_title_' . $card );
+        delete_post_meta( $slideshow->ID, 'slides_content_' . $card );
+        delete_post_meta( $slideshow->ID, 'slides_link_' . $card );
+        $cards_order .= $new_card . ',';
+      }
+    }
+
+    delete_post_meta( $slideshow->ID, 'slides_order' );
+    update_post_meta( $slideshow->ID, 'cards_order', $cards_order );
+    set_post_type( $slideshow->ID, 'msx_card_deck' );
   }
 }
 add_action( 'steel_register_update_hook', 'steel_slides_x_cards' );
