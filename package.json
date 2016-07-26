@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/starverte/steel#readme",
   "devDependencies": {
+    "bootstrap": "^3.3.7",
     "csscomb": "^3.1.8",
     "grunt": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
