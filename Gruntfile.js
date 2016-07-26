@@ -7,7 +7,25 @@ module.exports = function(grunt) {
         src: 'node_modules/matchstix/cards/*',
         dest: 'cards/',
         flatten: true,
-      }
+      },
+      bootstrap_css: {
+        expand: true,
+        flatten: true,
+        src: 'node_modules/bootstrap/dist/css/*',
+        dest: 'css/',
+      },
+      bootstrap_fonts: {
+        expand: true,
+        flatten: true,
+        src: 'node_modules/bootstrap/dist/fonts/*',
+        dest: 'fonts/',
+      },
+      bootstrap_js: {
+        expand: true,
+        flatten: true,
+        src: 'node_modules/bootstrap/dist/js/*',
+        dest: 'js/',
+      },
     },
     shell: {
       phpcs_config: {
