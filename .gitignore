@@ -20,3 +20,9 @@ docs
 node_modules
 vendor
 
+# Bootstrap
+css/bootstrap*
+fonts/glyphicon*
+js/bootstrap*
+js/npm.js
+
