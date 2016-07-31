@@ -7,6 +7,7 @@
 *.rej
 *.swo
 *.swp
+*.svn
 *.vi
 *.zip
 *~
@@ -16,8 +17,11 @@
 .DS_Store
 
 # Folders to ignore
+branches
 docs
 node_modules
+tags
+trunk
 vendor
 
 # Bootstrap
