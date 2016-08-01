@@ -387,7 +387,7 @@ function steel_broadcast_edit_form_fields( $term ) {
     <td>
       <input type="text" name="channel_meta[copyright]" value="<?php echo $term_meta['copyright'][0]; ?>" />
       <p class="description">
-        <?php _e( 'i.e. "2015 Star Verte LLC. All Rights Reserved."', 'steel' ); ?>
+        <?php _e( 'i.e. "2016 Star Verte LLC. All Rights Reserved."', 'steel' ); ?>
       </p>
     </td>
   </tr>
