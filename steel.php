@@ -3,13 +3,13 @@
  * Plugin Name: Steel
  * Plugin URI: https://github.com/starverte/steel.git
  * Description: Steel brings the power of Matchstix to a simple user interface, making any site’s impact spread like wildfire. No programming required.
- * Version: 1.3.0
+ * Version: 1.4.0
  * Author: Star Verte LLC
  * Author URI: http://starverte.com/
  * License: GPLv3
  * License URI: http://www.gnu.org/licenses/
  *
- *   Copyright 2013-2015 Star Verte LLC (email : dev@starverte.com)
+ *   Copyright 2013-2016 Star Verte LLC (email : dev@starverte.com)
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ function steel_admin_enqueue_scripts() {
     'functions',
     plugins_url( 'steel/js/functions.js' ),
     array( 'jquery' ),
-    '1.3.0',
+    '1.4.0',
     true
   );
 
@@ -96,7 +96,7 @@ function steel_admin_enqueue_scripts() {
       'broadcast-edit',
       plugins_url( 'steel/broadcast/edit.js' ),
       array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ),
-      '1.3.0',
+      '1.4.0',
       true
     );
 
@@ -108,7 +108,7 @@ function steel_admin_enqueue_scripts() {
       'broadcast-channel-edit',
       plugins_url( 'steel/broadcast/channel-edit.js' ),
       array( 'jquery' ),
-      '1.3.0',
+      '1.4.0',
       true
     );
   }
@@ -118,7 +118,7 @@ function steel_admin_enqueue_scripts() {
       'cards-admin-script',
       plugins_url( 'steel/cards/admin.js' ),
       array( 'jquery' ),
-      '0.2.0',
+      '1.4.0',
       true
     );
 
@@ -140,9 +140,9 @@ function steel_enqueue_scripts() {
 
     wp_enqueue_script(
       'bootstrap',
-      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js',
+      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js',
       array( 'jquery' ),
-      '3.3.6',
+      '3.3.7',
       true
     );
   }
@@ -152,9 +152,9 @@ function steel_enqueue_scripts() {
 
     wp_enqueue_style(
       'bootstrap-css',
-      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
+      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
       array(),
-      '3.3.6'
+      '3.3.7'
     );
   } else {
   wp_enqueue_style(
@@ -171,7 +171,7 @@ function steel_enqueue_scripts() {
     'steel-run',
     plugins_url( '/steel/js/run.js' ),
     array( 'jquery' ),
-    '1.3.0',
+    '1.4.0',
     true
   );
 }

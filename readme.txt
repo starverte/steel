@@ -1,11 +1,11 @@
 === Steel ===
 Contributors: starverte, mbeall
 Tags: bootstrap, carousel, quotes, shortcodes, slides, teams, widgets
-Requires at least: 3.9
-Tested up to: 4.3
-Stable tag: 1.3.0
+Requires at least: 4.3
+Tested up to: 4.5.3
+Stable tag: 1.4.0
 License: GPLv3 or later
-License URI: http://www.gnu.org/licenses/gpl.html
+License URI: https://www.gnu.org/licenses/gpl.html
 
 Steel brings the power of Matchstix to a simple user interface, making any site’s impact spread like wildfire. No programming required.
 
@@ -19,11 +19,11 @@ Bootstrap 3 is included with Steel, and comes alive with shortcodes.
 = Broadcast =
 Create audio or video series to display on website or publish on podcast feed.
 
+= Cards =
+Create cards to be displayed by set, deck, or individually in multiple ways. Replaces previous Slides module. A slide is now card, and a slideshow is now a deck. Uses Bootstrap's Carousel, and will use Bootstrap 4's new cards component.
+
 = Quotes =
 Display a random quote (or testimonial) in the sidebar with our random quote widget. We are looking at embedding random quotes within a post or page in our next update.
-
-= Slides =
-Create and display media slideshows using Bootstrap’s Carousel plugin.
 
 = Teams =
 Create profiles for board of directors, staff members, etc. and display them on a nice summary page.
@@ -49,11 +49,20 @@ Like our plugin? Write us a review!
 Submit your questions to https://matchstix.io/steel and we will try to answer them.
 
 == Changelog ==
+= 1.4.0 =
+- Updated dependencies
+- Improved code quality
+- Upgraded Steel Slides to [MSX Cards] (https://matchstix.io/msx-cards/) 
+- Integrated Matchstix 2.0
+- Improved support for NPM, Grunt, and Travis-CI
+
+For more details, check out https://github.com/starverte/steel/pull/182
+
 = 1.3.0 =
 - Fixed: Team profiles can once again be given a "menu order" value for sorting
 - Fixed: Delete item icon is now visible in all browsers, including Chrome
 - Fixed: If an attachment is deleted, it no longer appears in Slides
-- Prepared Steel for [Matchstix] (http://matchstix.io/the-future-of-sparks/)
+- Prepared Steel for [Matchstix] (https://matchstix.io/the-future-of-sparks/)
 - New Broadcast Module: Create audio or video series to display on website or publish on podcast feed
 - Improved inline code documentation
 - Improved code quality
@@ -122,8 +131,8 @@ Extracted carousel and glyphicon styles from bootstrap.css so that carousel work
 * Added ability to turn off Bootstrap module
 
 = 1.1.0 =
-* Added numerous shortcodes to implement Bootstrap like [btn] and [glyph] (for complete list and use, check out http://matchstix.io/steel/bootstrap/)
-* Added new Slides module (documentation will soon be available via http://matchstix.io/steel/slides/)
+* Added numerous shortcodes to implement Bootstrap like [btn] and [glyph] (for complete list and use, check out https://matchstix.io/steel/bootstrap/)
+* Added new Slides module (documentation will soon be available via https://matchstix.io/steel/slides/)
 
 For more details, check out https://github.com/starverte/steel/pull/102
 
