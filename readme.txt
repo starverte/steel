@@ -56,6 +56,8 @@ Submit your questions to https://matchstix.io/steel and we will try to answer th
 - Integrated Matchstix 2.0
 - Improved support for NPM, Grunt, and Travis-CI
 
+For more details, check out https://github.com/starverte/steel/pull/182
+
 = 1.3.0 =
 - Fixed: Team profiles can once again be given a "menu order" value for sorting
 - Fixed: Delete item icon is now visible in all browsers, including Chrome
