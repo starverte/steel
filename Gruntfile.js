@@ -2,29 +2,37 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     copy: {
-      cards: {
-        expand: true,
-        src: 'node_modules/matchstix/cards/*',
-        dest: 'cards/',
-        flatten: true,
+      bootstrap: {
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: 'node_modules/bootstrap/dist/css/*',
+            dest: 'css/',
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: 'node_modules/bootstrap/dist/fonts/*',
+            dest: 'fonts/',
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: 'node_modules/bootstrap/dist/js/*',
+            dest: 'js/',
+          },
+        ],
       },
-      bootstrap_css: {
-        expand: true,
-        flatten: true,
-        src: 'node_modules/bootstrap/dist/css/*',
-        dest: 'css/',
-      },
-      bootstrap_fonts: {
-        expand: true,
-        flatten: true,
-        src: 'node_modules/bootstrap/dist/fonts/*',
-        dest: 'fonts/',
-      },
-      bootstrap_js: {
-        expand: true,
-        flatten: true,
-        src: 'node_modules/bootstrap/dist/js/*',
-        dest: 'js/',
+      matchstix: {
+        files: [
+          {
+            expand: true,
+            src: 'node_modules/matchstix/cards/*',
+            dest: 'cards/',
+            flatten: true,
+          },
+        ],
       },
     },
     shell: {
@@ -46,7 +54,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks( 'grunt-contrib-copy' );
   grunt.loadNpmTasks( 'grunt-shell' );
   grunt.registerTask( 'init', ['shell:phpcs_config'] );
-  grunt.registerTask( 'build', ['copy', 'shell:msx_cards'] );
+  grunt.registerTask( 'build', ['copy:bootstrap', 'copy:matchstix', 'shell:msx_cards'] );
   grunt.registerTask( 'test', ['shell:syntax_tests', 'shell:phpcs_tests'] );
 }
 
