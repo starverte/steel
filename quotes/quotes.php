@@ -5,10 +5,15 @@
  * @package Steel\Quotes
  */
 
-include_once dirname( __FILE__ ) . '/inc/class-widget-random-quote.php';
+/**
+ * Include Steel_Widget_Random_Quote class
+ */
+include_once dirname( __FILE__ ) . '/class-widget-random-quote.php';
 
 /**
  * Register widget for displaying random quote
+ *
+ * @internal
  */
 function steel_quotes_widgets_init() {
   register_widget( 'Steel_Widget_Random_Quote' );

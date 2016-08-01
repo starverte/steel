@@ -11,21 +11,35 @@
 
 /**
  * Return arguments for registering steel_broadcast
+ *
+ * @internal
  */
 function steel_broadcast_post_type_args() {
   $labels = array(
-    'name'                => _x( 'Media Series', 'Post Type General Name', 'steel' ),
-    'singular_name'       => _x( 'Series', 'Post Type Singular Name', 'steel' ),
-    'menu_name'           => __( 'Broadcast', 'steel' ),
-    'all_items'           => __( 'Media Series', 'steel' ),
-    'view_item'           => __( 'View', 'steel' ),
-    'add_new_item'        => __( 'New Series', 'steel' ),
-    'add_new'             => __( 'New series', 'steel' ),
-    'edit_item'           => __( 'Edit Series', 'steel' ),
-    'update_item'         => __( 'Update', 'steel' ),
-    'search_items'        => __( 'Search media series', 'steel' ),
-    'not_found'           => __( 'No media series found', 'steel' ),
-    'not_found_in_trash'  => __( 'No media series found in Trash.', 'steel' ),
+    'name'                  => _x( 'Media Series', 'post type general name', 'steel' ),
+    'singular_name'         => _x( 'Series', 'post type singular name', 'steel' ),
+    'menu_name'             => __( 'Broadcast', 'steel' ),
+    'name_admin_bar'        => __( 'Broadcast', 'steel' ),
+    'add_new'               => __( 'Add New', 'steel' ),
+    'add_new_item'          => __( 'Add New Series', 'steel' ),
+    'edit_item'             => __( 'Edit Series', 'steel' ),
+    'new_item'              => __( 'New Series', 'steel' ),
+    'view_item'             => __( 'View Series', 'steel' ),
+    'update_item'           => __( 'Update', 'steel' ),
+    'search_items'          => __( 'Search Series', 'steel' ),
+    'not_found'             => __( 'No series found.', 'steel' ),
+    'not_found_in_trash'    => __( 'No series found in Trash.', 'steel' ),
+    'all_items'             => __( 'All Series', 'steel' ),
+    'archives'              => __( 'Series Archives', 'steel' ),
+    'insert_into_item'      => __( 'Insert into series', 'steel' ),
+    'uploaded_to_this_item' => __( 'Uploaded to this series', 'steel' ),
+    'featured_image'        => __( 'Featured Image', 'steel' ),
+    'set_featured_image'    => __( 'Set featured image', 'steel' ),
+    'remove_featured_image' => __( 'Remove featured image', 'steel' ),
+    'use_featured_image'    => __( 'Use as featured image', 'steel' ),
+    'filter_items_list'     => __( 'Filter series list', 'steel' ),
+    'items_list_navigation' => __( 'Series list navigation', 'steel' ),
+    'items_list'            => __( 'Series list', 'steel' ),
   );
   $rewrite = array(
     'slug' => 'broadcast',
@@ -55,21 +69,29 @@ function steel_broadcast_post_type_args() {
 
 /**
  * Return arguments for registering steel_broadcast_channel
+ *
+ * @internal
  */
 function steel_broadcast_channel_taxonomy_args() {
   $labels = array(
-    'name'                       => _x( 'Channels', 'Taxonomy General Name', 'steel' ),
-    'singular_name'              => _x( 'Channel', 'Taxonomy Singular Name', 'steel' ),
+    'name'                       => _x( 'Channels', 'taxonomy general name', 'steel' ),
+    'singular_name'              => _x( 'Channel', 'taxonomy singular name', 'steel' ),
     'menu_name'                  => __( 'Channels', 'steel' ),
+    'search_items'               => __( 'Search Channels', 'steel' ),
+    'popular_items'              => __( 'Popular Channels', 'steel' ),
     'all_items'                  => __( 'All Channels', 'steel' ),
-    'new_item_name'              => __( 'New Channel', 'steel' ),
-    'add_new_item'               => __( 'Add New Channel', 'steel' ),
     'edit_item'                  => __( 'Edit Channel', 'steel' ),
-    'update_item'                => __( 'Update', 'steel' ),
-    'separate_items_with_commas' => __( 'Separate channels with commas', 'steel' ),
-    'search_items'               => __( 'Search channels', 'steel' ),
-    'add_or_remove_items'        => __( 'Add or remove channels', 'steel' ),
-    'choose_from_most_used'      => __( 'Choose from the most used channels', 'steel' ),
+    'view_item'                  => __( 'View Channel', 'steel' ),
+    'update_item'                => __( 'Update Channel', 'steel' ),
+    'add_new_item'               => __( 'Add New Channel', 'steel' ),
+    'new_item_name'              => __( 'New Channel Name', 'steel' ),
+    'separate_items_with_commas' => __( 'Separate channels with commas' ),
+    'add_or_remove_items'        => __( 'Add or remove channels' ),
+    'choose_from_most_used'      => __( 'Choose from the most used channels' ),
+    'not_found'                  => __( 'No channels found.', 'steel' ),
+    'no_terms'                   => __( 'No channels', 'steel' ),
+    'items_list_navigation'      => __( 'Channels list navigation', 'steel' ),
+    'items_list'                 => __( 'Channels list', 'steel' ),
   );
   $rewrite = array(
     'slug' => 'channel',
@@ -89,6 +111,8 @@ function steel_broadcast_channel_taxonomy_args() {
 
 /**
  * Register custom post type and custom taxonomy
+ *
+ * @internal
  */
 function steel_broadcast_init() {
   register_post_type( 'steel_broadcast', steel_broadcast_post_type_args() );
@@ -105,6 +129,8 @@ add_action( 'init', 'steel_broadcast_init' );
 
 /**
  * Add meta boxes to Edit Series screen
+ *
+ * @internal
  */
 function steel_broadcast_add_meta_boxes() {
   add_meta_box(
@@ -120,6 +146,8 @@ add_action( 'add_meta_boxes', 'steel_broadcast_add_meta_boxes' );
 
 /**
  * Display media series items on Edit Series screen
+ *
+ * @internal
  */
 function steel_broadcast_item_list() {
   global $post;
@@ -208,6 +236,8 @@ function steel_broadcast_item_list() {
 
 /**
  * Save steel_broadcast
+ *
+ * @internal
  */
 function steel_broadcast_save() {
   global $post;
@@ -286,6 +316,8 @@ add_action( 'save_post', 'steel_broadcast_save' );
 
 /**
  * Display custom form fields on Channels/New Channel screen
+ *
+ * @internal
  */
 function steel_broadcast_add_form_fields() {
   ?>
@@ -307,22 +339,23 @@ add_action( 'steel_broadcast_channel_add_form_fields', 'steel_broadcast_add_form
 /**
  * Display custom form fields on Edit Channel screen
  *
+ * @internal
+ *
  * @param object $term Current taxonomy term object.
  */
 function steel_broadcast_edit_form_fields( $term ) {
-  $the_term = $term->term_id;
-  $term_meta = get_option( 'steel_broadcast_channel_' . $the_term );
+  $term_meta = steel_get_broadcast_channel_meta( $term->term_id );
   $itunes_cats = steel_broadcast_itunes_cats(); ?>
   <tr class="form-field">
     <th scope="row" valign="top">
       <label for="channel_meta[cover_photo_id]"><?php _e( 'Cover Photo', 'steel' ); ?></label>
     </th>
     <td>
-      <input type="hidden" name="channel_meta[cover_photo_id]" id="channel_cover_photo_id" value="<?php esc_attr_e( $term_meta['cover_photo_id'] ); ?>" />
+      <input type="hidden" name="channel_meta[cover_photo_id]" id="channel_cover_photo_id" value="<?php echo esc_attr( $term_meta['cover_photo_id'] ); ?>" />
       <div id="channel_cover_photo">
         <?php
           if ( ! empty( $term_meta['cover_photo_id'] ) ) { ?>
-            <img class="cover-photo" src="<?php echo wp_get_attachment_url( $term_meta['cover_photo_id'] ); ?>" width="140" height="140" /><?php
+            <img class="cover-photo" src="<?php echo wp_get_attachment_url( $term_meta['cover_photo_id'][0] ); ?>" width="140" height="140" /><?php
           }
         ?>
       </div>
@@ -343,7 +376,7 @@ function steel_broadcast_edit_form_fields( $term ) {
       <label for="channel_meta[link]"><?php _e( 'Link', 'steel' ); ?></label>
     </th>
     <td>
-      <input type="text" name="channel_meta[link]" value="<?php echo $term_meta['link']; ?>" />
+      <input type="text" name="channel_meta[link]" value="<?php echo $term_meta['link'][0]; ?>" />
       <p class="description"><?php _e( 'The podcast feed URL.', 'steel' ); ?></p>
     </td>
   </tr>
@@ -352,9 +385,9 @@ function steel_broadcast_edit_form_fields( $term ) {
       <label for="channel_meta[copyright]"><?php _e( 'Copyright Notice', 'steel' ); ?></label>
     </th>
     <td>
-      <input type="text" name="channel_meta[copyright]" value="<?php echo $term_meta['copyright']; ?>" />
+      <input type="text" name="channel_meta[copyright]" value="<?php echo $term_meta['copyright'][0]; ?>" />
       <p class="description">
-        <?php _e( 'i.e. "2015 Star Verte LLC. All Rights Reserved."', 'steel' ); ?>
+        <?php _e( 'i.e. "2016 Star Verte LLC. All Rights Reserved."', 'steel' ); ?>
       </p>
     </td>
   </tr>
@@ -363,7 +396,7 @@ function steel_broadcast_edit_form_fields( $term ) {
       <label for="channel_meta[author]"><?php _e( 'Author', 'steel' ); ?></label>
     </th>
     <td>
-      <input type="text" name="channel_meta[author]" value="<?php echo $term_meta['author']; ?>" />
+      <input type="text" name="channel_meta[author]" value="<?php echo $term_meta['author'][0]; ?>" />
       <p class="description">
         <?php _e( 'The individual or corporate author of the podcast.', 'steel' ); ?>
       </p>
@@ -376,7 +409,7 @@ function steel_broadcast_edit_form_fields( $term ) {
     <td>
       <select name="channel_meta[category]">
         <?php foreach ( $itunes_cats as $key => $value ) : ?>
-        <option value="<?php echo esc_attr( $key ); ?>" <?php selected( $term_meta['category'], $key ); ?>>
+        <option value="<?php echo esc_attr( $key ); ?>" <?php selected( $term_meta['category'][0], $key ); ?>>
           <?php echo esc_attr( $value ); ?>
         </option>
         <?php endforeach; ?>
@@ -391,7 +424,7 @@ function steel_broadcast_edit_form_fields( $term ) {
       <label for="channel_meta[owner_name]"><?php _e( 'Name', 'steel' ); ?></label>
     </th>
     <td>
-      <input type="text" name="channel_meta[owner_name]" value="<?php echo $term_meta['owner_name']; ?>" />
+      <input type="text" name="channel_meta[owner_name]" value="<?php echo $term_meta['owner_name'][0]; ?>" />
     </td>
   </tr>
   <tr class="form-field">
@@ -399,7 +432,7 @@ function steel_broadcast_edit_form_fields( $term ) {
       <label for="channel_meta[owner_email]"><?php _e( 'Email', 'steel' ); ?></label>
     </th>
     <td>
-      <input type="email" name="channel_meta[owner_email]" value="<?php echo $term_meta['owner_email']; ?>" />
+      <input type="email" name="channel_meta[owner_email]" value="<?php echo $term_meta['owner_email'][0]; ?>" />
     </td>
   </tr><?php
 }
@@ -408,19 +441,19 @@ add_action( 'steel_broadcast_channel_edit_form_fields', 'steel_broadcast_edit_fo
 /**
  * Save custom form fields on New Channel and Edit Channel screens
  *
+ * @internal
+ *
  * @param int $term_id Term ID.
  */
 function steel_broadcast_channel_save( $term_id ) {
-  $the_term = $term_id;
   if ( isset( $_POST['channel_meta'] ) ) {
-    $term_meta = get_option( 'steel_broadcast_channel_' . $the_term );
+    $term_meta = steel_get_broadcast_channel_meta( $term_id );
     $term_keys = array_keys( $_POST['channel_meta'] );
     foreach ( $term_keys as $key ) {
       if ( isset( $_POST['channel_meta'][ $key ] ) ) {
-        $term_meta[ $key ] = $_POST['channel_meta'][ $key ];
+        update_term_meta( $term_id, $key, $_POST['channel_meta'][ $key ] );
       }
     }
-    update_option( 'steel_broadcast_channel_' . $the_term, $term_meta );
   }
 }
 add_action( 'edited_steel_broadcast_channel', 'steel_broadcast_channel_save', 10, 2 );
@@ -559,9 +592,11 @@ function steel_broadcast_media( $post_id = 0 ) {
 
 /**
  * Load template for Broadcast Channel feeds
+ *
+ * @internal
  */
 function steel_broadcast_feed() {
-  load_template( dirname( __FILE__ ) . '/inc/broadcast-feed.php' );
+  load_template( dirname( __FILE__ ) . '/broadcast/feed.php' );
 }
 add_action( 'do_feed_broadcast', 'steel_broadcast_feed', 10, 1 );
 
@@ -569,6 +604,8 @@ add_action( 'do_feed_broadcast', 'steel_broadcast_feed', 10, 1 );
  * Add rewrite rules for Broadcast Channel feeds
  *
  * Ensures example.com/feed/broadcast/podcast outputs feed for channel with slug 'podcast'
+ *
+ * @internal
  *
  * @param object $wp_rewrite Current WP_Rewrite instance, passed by reference.
  */
@@ -591,7 +628,7 @@ function steel_broadcast_channel_data( $term_id ) {
   $channel = new stdClass();
 
   $term_data = get_term_by( 'id', $term_id, 'steel_broadcast_channel', 'ARRAY_A' );
-  $term_meta = get_option( 'steel_broadcast_channel_' . $term_id );
+  $term_meta = steel_get_broadcast_channel_meta( $term_id );
 
   foreach ( $term_data as $key => $value ) {
     $channel->$key = $value;
@@ -956,4 +993,36 @@ function steel_broadcast_channel_itunes_cat( $channel ) {
   } else {
     return false;
   }
+}
+
+/**
+ * Get Broadcast Channel term meta
+ *
+ * @param int $term_id The ID of the term to retrieve meta for.
+ * @return array The term meta, as an array.
+ */
+function steel_get_broadcast_channel_meta( $term_id ) {
+  $defaults = array(
+    'cover_photo_id' => 0,
+    'link'           => '',
+    'copyright'      => '',
+    'author'         => '',
+    'category'       => '',
+    'owner_name'     => '',
+    'owner_email'    => '',
+  );
+
+  /**
+   * Begin backwards compatability.
+   *
+   * Remove after WordPress 4.6 release and after at least Steel 1.6.
+   */
+  $options = get_option( 'steel_broadcast_channel_' . $term_id );
+
+  foreach ( $options as $key => $value ) {
+    $defaults[ $key ] = $value;
+  }
+  // End backwards compatability.
+  $term_meta = get_term_meta( $term_id );
+  return wp_parse_args( $term_meta, $defaults );
 }

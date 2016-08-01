@@ -2,7 +2,7 @@
 /**
  * Widgets: Steel_Walker_Nav_Menu_List_Group class
  *
- * @package Steel\Widgets
+ * @package Steel\Bootstrap
  * @since 1.3.0
  */
 
@@ -23,8 +23,8 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
    * @param array  $args   An array of arguments. @see wp_nav_menu().
    */
   function start_lvl( &$output, $depth = 0, $args = array() ) {
-    $indent = str_repeat( "\t", $depth );
-    $output .= "\n$indent<div class=\"sub-menu\">\n";
+		$indent = str_repeat( "\t", $depth );
+		$output .= "\n$indent<div class=\"sub-menu\">\n";
   }
 
   /**
@@ -37,8 +37,8 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
    * @param array  $args   An array of arguments. @see wp_nav_menu().
    */
   function end_lvl( &$output, $depth = 0, $args = array() ) {
-    $indent = str_repeat( "\t", $depth );
-    $output .= "$indent</div>\n";
+		$indent = str_repeat( "\t", $depth );
+		$output .= "$indent</div>\n";
   }
 
   /**
@@ -53,55 +53,55 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
    * @param int    $id     Current item ID.
    */
   function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
-    $indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
+		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
 
-    $class_names = $value = '';
+		$class_names = $value = '';
 
-    $classes = empty( $item->classes ) ? array() : (array) $item->classes;
-    $classes[] = 'menu-item-' . $item->ID;
+		$classes = empty( $item->classes ) ? array() : (array) $item->classes;
+		$classes[] = 'menu-item-' . $item->ID;
 
-    /**
+		/**
      * Filter the CSS class(es) applied to a menu item's <li>.
      */
-    $class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
-    $class_names = $class_names ? ' class="list-group-item ' . esc_attr( $class_names ) . '"' : '';
+		$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
+		$class_names = $class_names ? ' class="list-group-item ' . esc_attr( $class_names ) . '"' : '';
 
-    /**
+		/**
      * Filter the ID applied to a menu item's <li>.
      */
-    $id = apply_filters( 'nav_menu_item_id', 'menu-item-'. $item->ID, $item, $args );
-    $id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
+		$id = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args );
+		$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
 
-    $atts = array();
-    $atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
-    $atts['target'] = ! empty( $item->target )     ? $item->target     : '';
-    $atts['rel']    = ! empty( $item->xfn )        ? $item->xfn        : '';
-    $atts['href']   = ! empty( $item->url )        ? $item->url        : '';
+		$atts = array();
+		$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
+		$atts['target'] = ! empty( $item->target )     ? $item->target     : '';
+		$atts['rel']    = ! empty( $item->xfn )        ? $item->xfn        : '';
+		$atts['href']   = ! empty( $item->url )        ? $item->url        : '';
 
-    /**
+		/**
      * Filter the HTML attributes applied to a menu item's <a>.
      */
-    $atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args );
+		$atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args );
 
-    $attributes = '';
-    foreach ( $atts as $attr => $value ) {
-      if ( ! empty( $value ) ) {
-        $value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
-        $attributes .= ' ' . $attr . '="' . $value . '"';
-      }
-    }
+		$attributes = '';
+		foreach ( $atts as $attr => $value ) {
+			if ( ! empty( $value ) ) {
+				$value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+				$attributes .= ' ' . $attr . '="' . $value . '"';
+			}
+			}
 
-    $item_output = $args->before;
-    $item_output .= '<a ' . $id . $class_names . $attributes .'>';
-    /** This filter is documented in wp-includes/post-template.php */
-    $item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
-    $item_output .= '</a>';
-    $item_output .= $args->after;
+		$item_output = $args->before;
+		$item_output .= '<a ' . $id . $class_names . $attributes . '>';
+		/** This filter is documented in wp-includes/post-template.php */
+		$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
+		$item_output .= '</a>';
+		$item_output .= $args->after;
 
-    /**
+		/**
      * Filter a menu item's starting output.
      */
-    $output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+		$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
   }
 
   /**
@@ -115,6 +115,6 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
    * @param array  $args   An array of arguments. @see wp_nav_menu().
    */
   function end_el( &$output, $item, $depth = 0, $args = array() ) {
-    $output .= "\n";
+		$output .= "\n";
   }
 }

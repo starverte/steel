@@ -1,0 +1,191 @@
+/**
+ * Matchstix Cards Admin Stylesheet
+ *
+ * @package MSX\Cards
+ *
+ * @since 0.2.0
+ */
+
+.post-type-msx_card_deck #post-body-content {
+  margin-bottom: 0;
+}
+.post-type-msx_card_deck #wp-content-editor-tools {
+  border-bottom: 0;
+}
+.post-type-msx_card_deck .button .dashicons {
+  margin-top: 3px;
+}
+.post-type-msx_card_deck #insert-media-button {
+  display: none;
+}
+.card-controls .dashicons {
+  margin-bottom: -2px;
+}
+.post-php.post-type-msx_card_deck #misc-publishing-actions,
+.post-php.post-type-msx_card_deck #minor-publishing-actions,
+.post-new-php.post-type-msx_card_deck #misc-publishing-actions,
+.post-new-php.post-type-msx_card_deck #minor-publishing-actions {
+  display: none;
+}
+.card-insert-image .dashicons,
+.card-insert-video .dashicons,
+.card-insert-link .dashicons {
+  vertical-align: top;
+}
+.dashicons-format-link:before {
+  content: '\f103';
+}
+#cards {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+#cards img {
+  max-width: 300px;
+  margin: -5px 0 0;
+}
+#cards input,
+#cards textarea {
+  padding: 5px 10px;
+  margin: 0;
+  margin-bottom: 5px;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid #eee;
+  box-shadow: none;
+}
+.card-set-thumbnail {
+  display: block;
+  padding: 5px 10px;
+  text-align: center;
+}
+#cards .card-set-thumbnail img {
+  margin-top: -10px;
+  margin-right: -10px;
+  margin-left: -10px;
+  text-align: left;
+}
+#cards p {
+  position: relative;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+#cards p input,
+#cards p textarea {
+  width: 100%;
+  margin-bottom: 0;
+}
+.card-title {
+  font-weight: 600;
+}
+#cards p textarea {
+  font-weight: 300;
+  resize: none;
+}
+.card-controls {
+  padding: 5px;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #fff;
+  cursor: move;
+  border-bottom: 1px solid #eee;
+}
+.card-delete,
+.card-delete:hover,
+.edit-toggle,
+.edit-toggle:hover {
+  color: #fff;
+  cursor: pointer;
+}
+.msx-card {
+  float: left;
+  width: 300px;
+  min-height: 325px;
+  margin: 5px 5px 5px 0;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #f1f1f1;
+  border-top: 0;
+}
+.card:hover {
+  border: 1px solid #ccc;
+  border-top: 0;
+}
+.card:hover p,
+.card:active p {
+  background: #222;
+  background: rgba(0,0,0,0.6);
+}
+.card-controls {
+  border-bottom: 1px solid #fff;
+}
+.card-controls span {
+  display: inline-block;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.admin-color-fresh .card-controls {
+  background: #00a0d2;
+  border-color: #0073aa;
+}
+.admin-color-fresh .card-controls:hover,
+.admin-color-fresh .card:hover .card-controls {
+  background: #1e8cbe;
+}
+.admin-color-light .card-controls {
+  background: #04a4cc;
+  border-color: #036881;
+}
+.admin-color-light .card-controls:hover,
+.admin-color-light .card:hover .card-controls {
+  background: #0384a4;
+}
+.admin-color-blue .card-controls {
+  background: #e1a948;
+  border-color: #d39323;
+}
+.admin-color-blue .card-controls:hover,
+.admin-color-blue .card:hover .card-controls {
+  background: #db9825;
+}
+.admin-color-coffee .card-controls {
+  background: #c7a589;
+  border-color: #b78a66;
+}
+.admin-color-coffee .card-controls:hover,
+.admin-color-coffee .card:hover .card-controls {
+  background: #ba906d;
+}
+.admin-color-ectoplasm .card-controls {
+  background: #a3b745;
+  border-color: #839237;
+}
+.admin-color-ectoplasm .card-controls:hover,
+.admin-color-ectoplasm .card:hover .card-controls {
+  background: #89993a;
+}
+.admin-color-midnight .card-controls {
+  background: #e14d43;
+  border-color: #d02a21;
+}
+.admin-color-midnight .card-controls:hover,
+.admin-color-midnight .card:hover .card-controls {
+  background: #d92c23;
+}
+.admin-color-ocean .card-controls {
+  background: #9ebaa0;
+  border-color: #80a583;
+}
+.admin-color-ocean .card-controls:hover,
+.admin-color-ocean .card:hover .card-controls {
+  background: #86a988;
+}
+.admin-color-sunrise .card-controls {
+  background: #dd823b;
+  border-color: #c36822;
+}
+.admin-color-sunrise .card-controls:hover,
+.admin-color-sunrise .card:hover .card-controls {
+  background: #cc6c23;
+}

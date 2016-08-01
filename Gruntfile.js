@@ -1,83 +1,60 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    csscomb: {
-      css: {
-        options: {
-          config: '.csscomb.json'
-        },
-        files: {
-          'css/admin.css': ['css/admin.css'],
-          'css/broadcast-admin.css': ['css/broadcast-admin.css'],
-          'css/event-style.css': ['css/event-style.css'],
-          'css/glyphicons.css': ['css/glyphicons.css'],
-          'css/grid.css': ['css/grid.css'],
-          'css/slides-admin.css': ['css/slides-admin.css'],
-          'css/slides.css': ['css/slides.css'],
-          'css/starverte.css': ['css/starverte.css']
-        }
-      }
+    copy: {
+      bootstrap: {
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: 'node_modules/bootstrap/dist/css/*',
+            dest: 'css/',
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: 'node_modules/bootstrap/dist/fonts/*',
+            dest: 'fonts/',
+          },
+          {
+            expand: true,
+            flatten: true,
+            src: 'node_modules/bootstrap/dist/js/*',
+            dest: 'js/',
+          },
+        ],
+      },
+      matchstix: {
+        files: [
+          {
+            expand: true,
+            src: 'node_modules/matchstix/cards/*',
+            dest: 'cards/',
+            flatten: true,
+          },
+        ],
+      },
     },
     shell: {
-      empty_tests: {
-        command: 'rm -rfv tests'
-      },
-      syntax_clone: {
-        command: 'git clone https://gist.github.com/e2ab7e46b53e8882ba8e.git tests && rm -rfv tests/.git*'
-      },
-      phpcs_clone: {
-        command: 'git clone https://github.com/squizlabs/PHP_CodeSniffer.git tests/php-codesniffer'
-      },
-      wpcs_clone: {
-        command: 'git clone https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git tests/wordpress-coding-standards'
-      },
       phpcs_config: {
-        command: 'tests/php-codesniffer/scripts/phpcs --config-set installed_paths ../wordpress-coding-standards'
-      },
-      reset_tests: {
-        command: 'echo "" > tests/results'
+        command: 'vendor/bin/phpcs --config-set installed_paths ../../wp-coding-standards/wpcs'
       },
       syntax_tests: {
-        command: "bash tests/syntax.sh >> tests/results"
+        command: "find . -name '*.php' -not -path './node_modules/*' -not -path './vendor/*' -exec php -lf '{}' \\;"
       },
       phpcs_tests: {
-        command: 'tests/php-codesniffer/scripts/phpcs -p -s -v -n . --standard=./.phpcs.rules.xml --extensions=php --ignore=tests/*,node_modules/* >> tests/results'
+        command: 'vendor/bin/phpcs -p -s -v -n . --standard=./.phpcs.rules.xml --extensions=php --ignore=node_modules/*,vendor/*'
       },
-      phpcbf: {
-        command: 'tests/php-codesniffer/scripts/phpcbf -p -s -v -n . --standard=./.phpcs.rules.xml --extensions=php --ignore=tests/*,node_modules/*'
+      msx_cards: {
+        command: 'sed -i "" "s/MSX_TEXT_DOMAIN/steel/" cards/*'
       }
-    },
-    phpdoc: {
-      options: {
-        // Task-specific options go here.
-      },
-      docs: [
-        'bootstrap.php',
-        'broadcast.php',
-        'deprecated.php',
-        'inc/class-walker-nav-menu-list-group.php',
-        'inc/class-widget-button.php',
-        'inc/class-widget-link.php',
-        'inc/class-widget-list-group.php',
-        'inc/class-widget-random-quote.php',
-        'options.php',
-        'quotes.php',
-        'shortcodes.php',
-        'slides.php',
-        'social-media.php',
-        'steel.php',
-        'teams.php',
-        'templates.php',
-        'widgets.php'
-      ]
     }
   });
 
-  grunt.loadNpmTasks( 'grunt-csscomb' );
-  grunt.loadNpmTasks( 'grunt-phpdoc' );
+  grunt.loadNpmTasks( 'grunt-contrib-copy' );
   grunt.loadNpmTasks( 'grunt-shell' );
-
-  grunt.registerTask( 'build', ['csscomb:css', 'shell:phpcbf'] );
-  grunt.registerTask( 'init', ['shell:empty_tests', 'shell:syntax_clone', 'shell:phpcs_clone', 'shell:wpcs_clone', 'shell:phpcs_config'] );
-  grunt.registerTask( 'test', ['shell:reset_tests', 'shell:syntax_tests',  'shell:phpcs_tests'] );
+  grunt.registerTask( 'init', ['shell:phpcs_config'] );
+  grunt.registerTask( 'build', ['copy:bootstrap', 'copy:matchstix', 'shell:msx_cards'] );
+  grunt.registerTask( 'test', ['shell:syntax_tests', 'shell:phpcs_tests'] );
 }
+
