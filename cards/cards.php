@@ -98,6 +98,12 @@ function steel_deck_meta( $key, $post_id = 0 ) {
 }
 
 /**
+ * Add shortcodes for backwards compat.
+ */
+add_shortcode( 'steel_card_deck', 'msx_card_deck_shortcode' );
+add_shortcode( 'steel_slideshow', 'msx_card_deck_shortcode' );
+
+/**
  * Return IDs for all decks
  */
 function steel_get_decks() {
