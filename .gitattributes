@@ -26,11 +26,3 @@ Gruntfile.js export-ignore
 composer.json export-ignore
 package.json export-ignore
 
-# Don't diff Bootstrap files
-css/bootstrap* binary
-fonts/glyphicon* binary
-js/bootstrap* binary
-
-# Don't diff Matchstix files
-cards/msx* binary
-
