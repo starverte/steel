@@ -37,7 +37,7 @@ class Steel_Widget_Button extends WP_Widget {
    * @param array $instance The settings for the particular instance of the widget.
    */
   function widget( $args, $instance ) {
-		extract( $args );
+		extract( $args ); // @codingStandardsIgnoreLine
 		$title = apply_filters( 'widget_title', $instance['title'] );
 		$href = $instance['href'];
 		$style = strtolower( $instance['style'] );
