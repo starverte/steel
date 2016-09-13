@@ -37,12 +37,14 @@ class Steel_Widget_Link extends WP_Widget {
    * @param array $instance The settings for the particular instance of the widget.
    */
   function widget( $args, $instance ) {
-		extract( $args );
-		$title = apply_filters( 'widget_title', $instance['title'] );
-		$href = $instance['href'];
-		$class = $instance['class'];
-		$show_info = isset( $instance['show_info'] ) ? $instance['show_info'] : false;
-		if ( $title ) { echo '<a class="steel-widget-link ' . $class . '" href=' . $href . '>' . $before_widget . $before_title . $title . $after_title . $after_widget . '</a>'; }
+    $title = apply_filters( 'widget_title', $instance['title'] );
+    $href = $instance['href'];
+    $class = $instance['class'];
+    $show_info = isset( $instance['show_info'] ) ? $instance['show_info'] : false;
+
+    if ( $title ) {
+      echo '<a class="steel-widget-link ' . $class . '" href=' . $href . '>' . $atts['before_widget'] . $atts['before_title'] . $title . $atts['after_title'] . $atts['after_widget'] . '</a>';
+    }
   }
 
   /**
@@ -71,9 +73,9 @@ class Steel_Widget_Link extends WP_Widget {
    * @param array $instance Current settings.
    */
   function form( $instance ) {
-		$defaults = array( 'title' => __( '', 'steel' ), 'show_info' => true );
+		$defaults = array( 'title' => '', 'show_info' => true );
 		$defaults = array( 'href' => __( 'http://', 'steel' ), 'show_info' => true );
-		$defaults = array( 'class' => __( '', 'steel' ), 'show_info' => true );
+		$defaults = array( 'class' => '', 'show_info' => true );
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
 																	<p>

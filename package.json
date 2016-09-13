@@ -33,9 +33,9 @@
     "grunt": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-phpdoc": "^1.0.0",
-    "grunt-shell": "^1.3.0",
-    "matchstix": "git+https://github.com/starverte/matchstix.git#dev",
-    "snyk": "^1.17.5"
+    "grunt-replace": "^1.0.1",
+    "grunt-shell": "^1.3.1",
+    "matchstix": "^0.2.0",
+    "snyk": "^1.19.1"
   }
 }
-

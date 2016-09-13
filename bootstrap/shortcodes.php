@@ -31,17 +31,17 @@ if ( shortcode_exists( 'tooltip' )     ) { remove_shortcode( 'tooltip' ); }
  *
  * @internal
  *
- * @param array  $atts Attributes of the shortcode.
+ * @param array  $attr Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display alert.
  */
-function steel_shortcode_alert( $atts, $content = '' ) {
-  extract( shortcode_atts( array( 'color' => 'info' ), $atts ) );
+function steel_shortcode_alert( $attr, $content = '' ) {
+  $atts = shortcode_atts( array(
+    'color' => 'info',
+  ), $attr );
 
   $new = strip_tags( $content, '<a><strong><em><code><ol><ul><li>' );
-
-  $alert_class = 'alert-' . $color;
-
+  $alert_class = 'alert-' . $atts['color'];
   return '<div class="alert ' . $alert_class . '">' . $new . '</div>';
 }
 add_shortcode( 'alert', 'steel_shortcode_alert' );
@@ -56,11 +56,11 @@ add_shortcode( 'alert', 'steel_shortcode_alert' );
  *
  * @internal
  *
- * @param array  $atts Attributes of the shortcode.
+ * @param array  $attr Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display badge.
  */
-function steel_shortcode_badge( $atts, $content = '' ) {
+function steel_shortcode_badge( $attr, $content = '' ) {
   $new = strip_tags( $content, '<a>' );
   return '<span class="badge">' . $new . '</span>';
 }
@@ -76,12 +76,12 @@ add_shortcode( 'badge', 'steel_shortcode_badge' );
  *
  * @internal
  *
- * @param array  $atts Attributes of the shortcode.
+ * @param array  $attr Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display button.
  */
-function steel_shortcode_btn( $atts, $content = '' ) {
-  extract( shortcode_atts( array(
+function steel_shortcode_btn( $attr, $content = '' ) {
+  $atts = shortcode_atts( array(
     'color'     => 'default',
     'link'      => '#',
     'placement' => 'top auto',
@@ -89,39 +89,42 @@ function steel_shortcode_btn( $atts, $content = '' ) {
     'title'     => '',
     'body'      => '',
     'target'    => '',
-  ), $atts ) );
+  ), $attr );
 
   $new = strip_tags( $content, '<a><strong><em>' );
+  $btn_class = 'btn-' . $atts['color'];
 
-  $btn_class = 'btn-' . $color;
-
-  switch ( $toggle ) {
-		case 'tooltip':
-			if ( ! empty( $title ) ) {
-				$btn_class .= ' steel-tooltip';
-				$data       = ' data-toggle="tooltip"';
-				$data      .= ' data-placement="' . $placement . '"';
-			} else { $data = ''; }
-			break;
-		case 'popover':
-			if ( ! empty( $body ) ) {
-				$btn_class .= ' steel-popover';
-				$data       = ' data-toggle="popover"';
-				$data      .= ' data-placement="' . $placement . '"';
-				$data      .= ' data-content="' . $body . '"';
-			} else { $data = ''; }
-			break;
-		default:
-			$data = '';
-			break;
+  switch ( $atts['toggle'] ) {
+    case 'tooltip':
+      if ( ! empty( $atts['title'] ) ) {
+        $btn_class .= ' steel-tooltip';
+        $data       = ' data-toggle="tooltip"';
+        $data      .= ' data-placement="' . $atts['placement'] . '"';
+      } else {
+        $data = '';
+      }
+      break;
+    case 'popover':
+      if ( ! empty( $atts['body'] ) ) {
+        $btn_class .= ' steel-popover';
+        $data       = ' data-toggle="popover"';
+        $data      .= ' data-placement="' . $atts['placement'] . '"';
+        $data      .= ' data-content="' . $atts['body'] . '"';
+      } else {
+        $data = '';
+      }
+      break;
+    default:
+      $data = '';
+      break;
   }
 
   $output  = '<a ';
   $output .= 'class="btn ' . $btn_class . '" ';
-  $output .= 'popover' !== $toggle ? 'href="' . $link . '"' : '';
+  $output .= 'popover' !== $atts['toggle'] ? 'href="' . $atts['link'] . '"' : '';
   $output .= $data;
-  $output .= ! empty( $title )  ? ' title="' . $title . '"' : '';
-  $output .= ! empty( $target ) ? ' target="' . $target . '"' : '';
+  $output .= ! empty( $atts['title'] )  ? ' title="' . $atts['title'] . '"' : '';
+  $output .= ! empty( $atts['target'] ) ? ' target="' . $atts['target'] . '"' : '';
   $output .= '>';
   $output .= do_shortcode( $new );
   $output .= '</a>';
@@ -139,11 +142,11 @@ add_shortcode( 'btn', 'steel_shortcode_btn' );
  *
  * @internal
  *
- * @param array  $atts Attributes of the shortcode.
+ * @param array  $attr Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display button group.
  */
-function steel_shortcode_btn_group( $atts, $content = '' ) {
+function steel_shortcode_btn_group( $attr, $content = '' ) {
   $new = strip_tags( $content, '<a><strong><code>' );
 
   $output  = '<div class="btn-group">';
@@ -163,60 +166,60 @@ add_shortcode( 'btn_group', 'steel_shortcode_btn_group' );
  *
  * @internal
  *
- * @param array  $atts Attributes of the shortcode.
+ * @param array  $attr Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display column.
  */
-function steel_shortcode_column( $atts, $content = '' ) {
-  extract( shortcode_atts( array(
+function steel_shortcode_column( $attr, $content = '' ) {
+  $atts = shortcode_atts( array(
     'title' => '',
     'num'   => '2',
     'first' => false,
     'last'  => false,
-  ), $atts ) );
+  ), $attr );
 
-  switch ( $num ) {
-		case '2' :
-			$style = 'col-lg-6 col-md-6';
-			break;
-		case '3' :
-			$style = 'col-lg-4 col-md-4';
-			break;
-		case '4' :
-			$style = 'col-lg-3 col-md-3';
-			break;
-		case '5' :
-			if ( $first or $last ) {
-				$style = 'col-lg-3 col-md-3';
-			} else {
-				$style = 'col-lg-2 col-md-2';
-			}
-			break;
-		case '6' :
-			$style = 'col-lg-2 col-md-2';
-			break;
+  switch ( $atts['num'] ) {
+    case '2' :
+      $style = 'col-lg-6 col-md-6';
+      break;
+    case '3' :
+      $style = 'col-lg-4 col-md-4';
+      break;
+    case '4' :
+      $style = 'col-lg-3 col-md-3';
+      break;
+    case '5' :
+      if ( $atts['first'] or $atts['last'] ) {
+        $style = 'col-lg-3 col-md-3';
+      } else {
+        $style = 'col-lg-2 col-md-2';
+      }
+      break;
+    case '6' :
+      $style = 'col-lg-2 col-md-2';
+      break;
   }
 
   $new = strip_tags( $content, '<a><strong><em><blockquote><code><ol><ul><li>' );
 
-  if ( $first ) {
-		if ( ! empty( $title ) ) {
-			return '<div class="row-fluid"><div class="' . $style . '"><h3>' . esc_attr( $title ) . '</h3>' . $new . '</div>';
-			} else {
-			return '<div class="row-fluid"><div class="' . $style . '">' . $new . '</div>';
-			}
-  } elseif ( $last ) {
-		if ( ! empty( $title ) ) {
-			return '<div class="' . $style . '"><h3>' . esc_attr( $title ) . '</h3>' . $new . '</div></div>';
-			} else {
-			return '<div class="' . $style . '">' . $new . '</div></div>';
-			}
+  if ( $atts['first'] ) {
+    if ( ! empty( $atts['title'] ) ) {
+      return '<div class="row-fluid"><div class="' . $style . '"><h3>' . esc_attr( $atts['title'] ) . '</h3>' . $new . '</div>';
+    } else {
+      return '<div class="row-fluid"><div class="' . $style . '">' . $new . '</div>';
+    }
+  } elseif ( $atts['last'] ) {
+    if ( ! empty( $atts['title'] ) ) {
+      return '<div class="' . $style . '"><h3>' . esc_attr( $atts['title'] ) . '</h3>' . $new . '</div></div>';
+    } else {
+      return '<div class="' . $style . '">' . $new . '</div></div>';
+    }
   } else {
-		if ( ! empty( $title ) ) {
-			return '<div class="' . $style . '"><h3>' . esc_attr( $title ) . '</h3>' . $new . '</div>';
-			} else {
-			return '<div class="' . $style . '">' . $new . '</div>';
-			}
+    if ( ! empty( $atts['title'] ) ) {
+      return '<div class="' . $style . '"><h3>' . esc_attr( $atts['title'] ) . '</h3>' . $new . '</div>';
+    } else {
+      return '<div class="' . $style . '">' . $new . '</div>';
+    }
   }
 }
 add_shortcode( 'column', 'steel_shortcode_column' );
@@ -231,13 +234,16 @@ add_shortcode( 'column', 'steel_shortcode_column' );
  *
  * @internal
  *
- * @param array  $atts Attributes of the shortcode.
+ * @param array  $attr Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display glyphicon.
  */
-function steel_shortcode_glyphicon( $atts, $content = '' ) {
-  extract( shortcode_atts( array( 'icon' => '' ), $atts ) );
-  return '<i class="glyphicon glyphicon-' . $icon . '"></i> ';
+function steel_shortcode_glyphicon( $attr, $content = '' ) {
+  $atts = shortcode_atts( array(
+    'icon' => '',
+  ), $attr );
+
+  return '<i class="glyphicon glyphicon-' . $atts['icon'] . '"></i> ';
 }
 add_shortcode( 'glyph', 'steel_shortcode_glyphicon' );
 
@@ -251,17 +257,17 @@ add_shortcode( 'glyph', 'steel_shortcode_glyphicon' );
  *
  * @internal
  *
- * @param array  $atts Attributes of the shortcode.
+ * @param array  $attr Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display label.
  */
-function steel_shortcode_label( $atts, $content = '' ) {
-  extract( shortcode_atts( array( 'color' => 'default' ), $atts ) );
+function steel_shortcode_label( $attr, $content = '' ) {
+  $atts = shortcode_atts( array(
+    'color' => 'default',
+  ), $attr );
 
   $new = strip_tags( $content, '<a>' );
-
-  $label_class = 'label-' . $color;
-
+  $label_class = 'label-' . $atts['color'];
   return '<span class="label ' . $label_class . '">' . $new . '</span>';
 }
 add_shortcode( 'label', 'steel_shortcode_label' );
@@ -277,48 +283,46 @@ add_shortcode( 'label', 'steel_shortcode_label' );
  *
  * @internal
  *
- * @param array  $atts Attributes of the shortcode.
+ * @param array  $attr Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display panel.
  */
-function steel_shortcode_panel( $atts, $content = '' ) {
-  extract( shortcode_atts( array(
+function steel_shortcode_panel( $attr, $content = '' ) {
+  $atts = shortcode_atts( array(
     'color'   => 'default',
     'heading' => '',
     'title'   => '',
     'footer'  => '',
-  ), $atts ) );
+  ), $attr );
 
   $new = strip_tags( $content, '<a><strong><em><code><ol><ul><li>' );
-
   global $group_id, $panel_int;
   $panel_int += 1;
-
-  $panel_class = ' panel-' . $color;
-
+  $panel_class = ' panel-' . $atts['color'];
   $output  = '<div class="panel' . $panel_class . '"';
   $output .= ! empty( $group_id ) ? ' data-parent="' . $group_id . '"' : '';
   $output .= '>';
 
-  if ( ! empty( $title ) ) {
-		$output .= '<div class="panel-heading">';
-		$output .= '<h4 class="panel-title">';
-		$output .= ! empty( $group_id ) ? '<a data-toggle="collapse" data-parent="#' . $group_id . '" href="#' . $group_id . '-' . $panel_int . '">' : '';
-		$output .= $title;
-		$output .= ! empty( $group_id ) ? '</a>' : '';
-		$output .= '</h4>'; // .panel-title
-		$output .= '</div>'; // .panel-heading
-  } elseif ( ! empty( $heading ) ) { $output .= '<div class="panel-heading">' . $heading . '</div>'; }
+  if ( ! empty( $atts['title'] ) ) {
+    $output .= '<div class="panel-heading">';
+    $output .= '<h4 class="panel-title">';
+    $output .= ! empty( $group_id ) ? '<a data-toggle="collapse" data-parent="#' . $group_id . '" href="#' . $group_id . '-' . $panel_int . '">' : '';
+    $output .= $atts['title'];
+    $output .= ! empty( $group_id ) ? '</a>' : '';
+    $output .= '</h4>'; // .panel-title
+    $output .= '</div>'; // .panel-heading
+  } elseif ( ! empty( $atts['heading'] ) ) {
+    $output .= '<div class="panel-heading">' . $atts['heading'] . '</div>';
+  }
 
   $collapse_class = 'panel-collapse collapse';
   $collapse_class .= 1 === $panel_int ? ' in' : '';
-
   $output .= ! empty( $group_id ) ? '<div class="' . $collapse_class . '" id="' . $group_id . '-' . $panel_int . '">' : '';
   $output .= '<div class="panel-body">' . $new . '</div>';
   $output .= ! empty( $group_id ) ? '</div>' : '';
 
-  if ( ! empty( $footer ) ) {
-		$output .= '<div class="panel-footer">' . $footer . '</div>';
+  if ( ! empty( $atts['footer'] ) ) {
+    $output .= '<div class="panel-footer">' . $atts['footer'] . '</div>';
   }
 
   $output .= '</div>';
@@ -336,11 +340,11 @@ add_shortcode( 'panel', 'steel_shortcode_panel' );
  *
  * @internal
  *
- * @param array  $atts Attributes of the shortcode.
+ * @param array  $attr Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display panel group.
  */
-function steel_shortcode_panel_group( $atts, $content = '' ) {
+function steel_shortcode_panel_group( $attr, $content = '' ) {
   $new = strip_tags( $content, '<a><strong><em><code><ol><ul><li>' );
 
   global $group_id, $panel_int;
@@ -365,41 +369,41 @@ add_shortcode( 'panel_group', 'steel_shortcode_panel_group' );
  *
  * @internal
  *
- * @param array  $atts Attributes of the shortcode.
+ * @param array  $attr Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display progress bar.
  */
-function steel_shortcode_progress( $atts, $content = '' ) {
-  extract( shortcode_atts( array(
+function steel_shortcode_progress( $attr, $content = '' ) {
+  $atts = shortcode_atts( array(
     'color'   => 'default',
     'percent' => 0,
     'style'   => false,
-  ), $atts ) );
+  ), $attr );
 
-  switch ( $color ) {
-		case 'default' :
-			$progress_bar_class = '';
-			break;
-		default :
-			$progress_bar_class = ' progress-bar-' . $color;
-			break;
+  switch ( $atts['color'] ) {
+    case 'default' :
+      $progress_bar_class = '';
+      break;
+    default :
+      $progress_bar_class = ' progress-bar-' . $atts['color'];
+      break;
   }
 
-  switch ( $style ) {
-		case 'striped' :
-			$progress_class = ' progress-striped';
-			break;
-		case 'animated' :
-			$progress_class = ' progress-striped active';
-			break;
-		default :
-			$progress_class = '';
-			break;
+  switch ( $atts['style'] ) {
+    case 'striped' :
+      $progress_class = ' progress-striped';
+      break;
+    case 'animated' :
+      $progress_class = ' progress-striped active';
+      break;
+    default :
+      $progress_class = '';
+      break;
   }
 
   $output  = '<div class="progress' . $progress_class . '">';
-  $output .= '<div class="progress-bar' . $progress_bar_class . '" role="progressbar" aria-valuenow="' . $percent . '" aria-valuemin="0" aria-valuemax="100" style="width: ' . $percent . '%">';
-  $output .= '<span class="sr-only">' . $percent . '% Complete</span>';
+  $output .= '<div class="progress-bar' . $progress_bar_class . '" role="progressbar" aria-valuenow="' . $atts['percent'] . '" aria-valuemin="0" aria-valuemax="100" style="width: ' . $atts['percent'] . '%">';
+  $output .= '<span class="sr-only">' . $atts['percent'] . '% Complete</span>';
   $output .= '</div></div>';
   return $output;
 }
@@ -415,17 +419,17 @@ add_shortcode( 'progress', 'steel_shortcode_progress' );
  *
  * @internal
  *
- * @param array  $atts Attributes of the shortcode.
+ * @param array  $attr Attributes of the shortcode.
  * @param string $content Shortcode content.
  * @return string|void HTML content to display tooltip.
  */
-function steel_shortcode_tooltip( $atts, $content = '' ) {
-  extract( shortcode_atts( array(
+function steel_shortcode_tooltip( $attr, $content = '' ) {
+  $atts = shortcode_atts( array(
     'title' => '',
     'placement' => 'top auto',
-  ), $atts ) );
+  ), $attr );
 
   $new = strip_tags( $content, '<a><strong><em>' );
-  return '<a class="steel-tooltip" href="#" data-toggle="tooltip" title="' . $title . '" data-placement="' . $placement . '">' . $new . '</a>';
+  return '<a class="steel-tooltip" href="#" data-toggle="tooltip" title="' . $atts['title'] . '" data-placement="' . $atts['placement'] . '">' . $new . '</a>';
 }
 add_shortcode( 'tooltip', 'steel_shortcode_tooltip' );
