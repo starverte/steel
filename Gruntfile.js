@@ -23,24 +23,32 @@ module.exports = function(grunt) {
             dest: 'js/',
           },
         ],
-      },
-      matchstix: {
+      }
+    },
+    replace: {
+      msx_cards: {
+        options: {
+          usePrefix: false,
+          patterns: [
+            {
+              match: 'MSX_TEXT_DOMAIN',
+              replacement: 'steel'
+            }
+          ]
+        },
         files: [
           {
             expand: true,
-            src: 'node_modules/matchstix/cards/*',
-            dest: 'cards/',
             flatten: true,
-          },
-        ],
-      },
+            src: 'node_modules/matchstix/cards/*',
+            dest: 'cards/'
+          }
+        ]
+      }
     },
     shell: {
       composer_update: {
         command: 'composer update'
-      },
-      msx_cards: {
-        command: 'sed -i "" "s/MSX_TEXT_DOMAIN/steel/" cards/*'
       },
       npm_update: {
         command: 'npm update --save --save-dev'
@@ -58,6 +66,7 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks( 'grunt-contrib-copy' );
+  grunt.loadNpmTasks( 'grunt-replace' );
   grunt.loadNpmTasks( 'grunt-shell' );
 
   grunt.registerTask( 'init', [
@@ -69,8 +78,7 @@ module.exports = function(grunt) {
   grunt.registerTask( 'build', [
     'init',
     'copy:bootstrap',
-    'copy:matchstix',
-    'shell:msx_cards',
+    'replace:msx_cards',
     'shell:syntax_tests',
     'shell:phpcs_tests',
   ] );
@@ -78,8 +86,7 @@ module.exports = function(grunt) {
   grunt.registerTask( 'test', [
     'shell:phpcs_config',
     'copy:bootstrap',
-    'copy:matchstix',
-    'shell:msx_cards',
+    'replace:msx_cards',
     'shell:syntax_tests',
     'shell:phpcs_tests',
   ] );
