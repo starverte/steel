@@ -71,10 +71,15 @@ module.exports = function(grunt) {
     'copy:bootstrap',
     'copy:matchstix',
     'shell:msx_cards'
+    'shell:syntax_tests',
+    'shell:phpcs_tests'
   ] );
 
   grunt.registerTask( 'test', [
-    'build',
+    'shell:phpcs_config'
+    'copy:bootstrap',
+    'copy:matchstix',
+    'shell:msx_cards'
     'shell:syntax_tests',
     'shell:phpcs_tests'
   ] );
