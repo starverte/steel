@@ -63,24 +63,24 @@ module.exports = function(grunt) {
   grunt.registerTask( 'init', [
     'shell:npm_update',
     'shell:composer_update',
-    'shell:phpcs_config'
+    'shell:phpcs_config',
   ] );
 
   grunt.registerTask( 'build', [
     'init',
     'copy:bootstrap',
     'copy:matchstix',
-    'shell:msx_cards'
+    'shell:msx_cards',
     'shell:syntax_tests',
-    'shell:phpcs_tests'
+    'shell:phpcs_tests',
   ] );
 
   grunt.registerTask( 'test', [
-    'shell:phpcs_config'
+    'shell:phpcs_config',
     'copy:bootstrap',
     'copy:matchstix',
-    'shell:msx_cards'
+    'shell:msx_cards',
     'shell:syntax_tests',
-    'shell:phpcs_tests'
+    'shell:phpcs_tests',
   ] );
 }
