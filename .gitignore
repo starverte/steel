@@ -20,11 +20,6 @@ docs
 node_modules
 vendor
 
-# Bootstrap
-css/bootstrap*
-fonts/glyphicon*
-js/bootstrap*
+# Files to ignore
 js/npm.js
 
-# Matchstix
-cards/msx*
