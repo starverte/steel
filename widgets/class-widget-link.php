@@ -73,9 +73,9 @@ class Steel_Widget_Link extends WP_Widget {
    * @param array $instance Current settings.
    */
   function form( $instance ) {
-		$defaults = array( 'title' => __( '', 'steel' ), 'show_info' => true );
+		$defaults = array( 'title' => '', 'show_info' => true );
 		$defaults = array( 'href' => __( 'http://', 'steel' ), 'show_info' => true );
-		$defaults = array( 'class' => __( '', 'steel' ), 'show_info' => true );
+		$defaults = array( 'class' => '', 'show_info' => true );
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
 																	<p>
