@@ -3,7 +3,7 @@ Contributors: starverte, mbeall
 Tags: bootstrap, carousel, quotes, shortcodes, slides, teams, widgets
 Requires at least: 4.4
 Tested up to: 4.6.1
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -49,6 +49,14 @@ Like our plugin? Write us a review!
 Submit your questions to https://matchstix.io/steel and we will try to answer them.
 
 == Changelog ==
+= 1.4.2 =
+- Fixed: Use valid syntax for Google Analytics
+
+For more details check out https://github.com/starverte/steel/pull/229
+
+= 1.4.1 =
+For details check out https://github.com/starverte/steel/pull/226
+
 = 1.4.0 =
 - Updated dependencies
 - Improved code quality

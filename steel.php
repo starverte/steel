@@ -3,7 +3,7 @@
  * Plugin Name: Steel
  * Plugin URI: https://github.com/starverte/steel.git
  * Description: Steel brings the power of Matchstix to a simple user interface, making any site’s impact spread like wildfire. No programming required.
- * Version: 1.4.1
+ * Version: 1.4.2
  * Author: Star Verte LLC
  * Author URI: http://starverte.com/
  * License: GPLv3
