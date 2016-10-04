@@ -1,6 +1,6 @@
 {
   "name": "steel",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Steel brings the power of Matchstix to a simple user interface, making any site’s impact spread like wildfire. No programming required.",
   "main": "steel.php",
   "scripts": {

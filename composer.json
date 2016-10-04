@@ -1,6 +1,6 @@
 {
   "name": "starverte/steel",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Steel brings the power of Matchstix to a simple user interface, making any site’s impact spread like wildfire. No programming required.",
   "license": "GPLv3",
   "authors": [
@@ -11,6 +11,8 @@
   ],
   "require-dev": {
     "squizlabs/php_codesniffer": "~2.2",
-    "wp-coding-standards/wpcs": "~0.9"
+    "wp-coding-standards/wpcs": "~0.9",
+    "phpunit/phpunit": "^5.5",
+    "phpunit/php-invoker": "^1.1"
   }
 }

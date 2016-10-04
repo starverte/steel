@@ -3,7 +3,7 @@
  * Plugin Name: Steel
  * Plugin URI: https://github.com/starverte/steel.git
  * Description: Steel brings the power of Matchstix to a simple user interface, making any site’s impact spread like wildfire. No programming required.
- * Version: 1.4.1
+ * Version: 1.4.2
  * Author: Star Verte LLC
  * Author URI: http://starverte.com/
  * License: GPLv3
@@ -273,7 +273,7 @@ function steel_ga_load() {
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', <?php echo $ga_id; ?>, 'auto');
+  ga('create', '<?php echo $ga_id; ?>', 'auto');
   ga('send', 'pageview');
 </script><?php
     }
