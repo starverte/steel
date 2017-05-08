@@ -8,17 +8,17 @@
 /**
  * Deregister shortcodes from other plugins and themes
  */
-if ( shortcode_exists( 'alert' )       ) { remove_shortcode( 'alert' ); }
-if ( shortcode_exists( 'badge' )       ) { remove_shortcode( 'badge' ); }
-if ( shortcode_exists( 'btn' )         ) { remove_shortcode( 'btn' ); }
-if ( shortcode_exists( 'btn_group' )   ) { remove_shortcode( 'btn_group' ); }
-if ( shortcode_exists( 'column' )      ) { remove_shortcode( 'column' ); }
-if ( shortcode_exists( 'glyph' )       ) { remove_shortcode( 'glyph' ); }
-if ( shortcode_exists( 'label' )       ) { remove_shortcode( 'label' ); }
-if ( shortcode_exists( 'panel' )       ) { remove_shortcode( 'panel' ); }
+if ( shortcode_exists( 'alert' ) ) { remove_shortcode( 'alert' ); }
+if ( shortcode_exists( 'badge' ) ) { remove_shortcode( 'badge' ); }
+if ( shortcode_exists( 'btn' ) ) { remove_shortcode( 'btn' ); }
+if ( shortcode_exists( 'btn_group' ) ) { remove_shortcode( 'btn_group' ); }
+if ( shortcode_exists( 'column' ) ) { remove_shortcode( 'column' ); }
+if ( shortcode_exists( 'glyph' ) ) { remove_shortcode( 'glyph' ); }
+if ( shortcode_exists( 'label' ) ) { remove_shortcode( 'label' ); }
+if ( shortcode_exists( 'panel' ) ) { remove_shortcode( 'panel' ); }
 if ( shortcode_exists( 'panel_group' ) ) { remove_shortcode( 'panel_group' ); }
-if ( shortcode_exists( 'progress' )    ) { remove_shortcode( 'progress' ); }
-if ( shortcode_exists( 'tooltip' )     ) { remove_shortcode( 'tooltip' ); }
+if ( shortcode_exists( 'progress' ) ) { remove_shortcode( 'progress' ); }
+if ( shortcode_exists( 'tooltip' ) ) { remove_shortcode( 'tooltip' ); }
 
 /**
  * Builds the Alert shortcode output.
