@@ -51,7 +51,12 @@ class Steel_Widget_List_Group extends WP_Widget {
 			echo '<div class="panel-heading"><h3 class="panel-title">' . $instance['title'] . '</h3></div>';
 			}
 
-		Steel_Walker_Nav_Menu_List_Group( array( 'fallback_cb' => '', 'menu' => $nav_menu ) );
+    Steel_Walker_Nav_Menu_List_Group(
+      array(
+        'fallback_cb' => '',
+        'menu' => $nav_menu,
+      )
+    );
 
 		echo '</div>';
   }
@@ -84,7 +89,11 @@ class Steel_Widget_List_Group extends WP_Widget {
 		$title = isset( $instance['title'] ) ? $instance['title'] : '';
 		$nav_menu = isset( $instance['list-group'] ) ? $instance['list-group'] : '';
 
-		$menus = wp_get_nav_menus( array( 'orderby' => 'name' ) );
+    $menus = wp_get_nav_menus(
+      array(
+        'orderby' => 'name',
+      )
+    );
 
 		if ( ! $menus ) {
 			echo '<p>' . sprintf( __( 'No menus have been created yet. <a href="%s">Create some</a>.' ), admin_url( 'nav-menus.php' ) ) . '</p>';

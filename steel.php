@@ -302,7 +302,12 @@ add_action( 'plugins_loaded', 'steel_plugins_loaded' );
  * @internal
  */
 function steel_slides_x_cards() {
-  $steel_slides = get_posts( array( 'post_type' => 'steel_slides', 'posts_per_page' => -1 ) );
+  $steel_slides = get_posts(
+    array(
+      'post_type' => 'steel_slides',
+      'posts_per_page' => -1,
+    )
+  );
 
   foreach ( $steel_slides as $slideshow ) {
     $cards = explode( ',', get_post_meta( $slideshow->ID, 'slides_order', true ) );
