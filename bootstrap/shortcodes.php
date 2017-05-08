@@ -189,7 +189,7 @@ function steel_shortcode_column( $attr, $content = '' ) {
       $style = 'col-lg-3 col-md-3';
       break;
     case '5' :
-      if ( $atts['first'] or $atts['last'] ) {
+      if ( $atts['first'] || $atts['last'] ) {
         $style = 'col-lg-3 col-md-3';
       } else {
         $style = 'col-lg-2 col-md-2';
