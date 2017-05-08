@@ -297,7 +297,7 @@ function steel_shortcode_panel( $attr, $content = '' ) {
 
   $new = strip_tags( $content, '<a><strong><em><code><ol><ul><li>' );
   global $group_id, $panel_int;
-  $panel_int += 1;
+  $panel_int++;
   $panel_class = ' panel-' . $atts['color'];
   $output  = '<div class="panel' . $panel_class . '"';
   $output .= ! empty( $group_id ) ? ' data-parent="' . $group_id . '"' : '';
