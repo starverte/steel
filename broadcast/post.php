@@ -42,7 +42,7 @@ function steel_broadcast_the_content( $content ) {
       $content .= '<span class="media-content">' . $medium->post_content . '</span>';
       $content .= '</p>'; // End .media-details.
       $content .= '<audio controls preload="none">';
-      $content .= '<source src="' . $medium->guid . '" type="' . get_post_mime_type( $medium->ID )  . '">';
+      $content .= '<source src="' . $medium->guid . '" type="' . get_post_mime_type( $medium->ID ) . '">';
       $content .= 'Your browser does not support the audio tag.';
       $content .= '</audio>';
       $content .= '</div>'; // End .media-item.
