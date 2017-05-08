@@ -96,7 +96,8 @@ class Steel_Widget_List_Group extends WP_Widget {
     );
 
 		if ( ! $menus ) {
-			echo '<p>' . sprintf( __( 'No menus have been created yet. <a href="%s">Create some</a>.' ), admin_url( 'nav-menus.php' ) ) . '</p>';
+      /* translators: Empty menu placeholder with link to create a menu. */
+			echo sprintf( __( '<p>No menus have been created yet. <a href="%s">Create some</a>.</p>' ), admin_url( 'nav-menus.php' ) );
 			return;
 			} ?>
 
