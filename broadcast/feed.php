@@ -15,22 +15,28 @@ $term = get_queried_object();
 $channel = steel_broadcast_channel_data( $term->term_id );
 $channel_cats = steel_broadcast_channel_itunes_cat( $channel );
 $channel_cover = wp_get_attachment_image_src( $channel->cover_photo_id, 'steel-broadcast' );
+
+if ( ! empty( $channel->link[0] ) ) {
+  $channel_link = $channel->link[0];
+} else {
+  $channel_link = get_term_feed_link( $term->term_id, 'steel_broadcast_channel', 'itpc' );
+}
 ?>
 
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
 
 <channel>
   <title><?php echo esc_html( $channel->name ); ?></title>
-  <link><![CDATA[<?php echo $channel->link; ?>]]></link>
+  <link><![CDATA[<?php echo $channel_link; ?>]]></link>
   <language><?php bloginfo_rss( 'language' ); ?></language>
-  <copyright>&#x2117; <?php echo $channel->copyright; ?></copyright>
-  <itunes:author><?php echo esc_html( $channel->author ); ?></itunes:author>
+  <copyright>&#x2117; <?php echo $channel->copyright[0]; ?></copyright>
+  <itunes:author><?php echo esc_html( $channel->author[0] ); ?></itunes:author>
   <itunes:summary><![CDATA[<?php echo $channel->description; ?>]]></itunes:summary>
   <description><![CDATA[<?php echo $channel->description; ?>]]></description>
 
   <itunes:owner>
-    <itunes:name><?php echo esc_html( $channel->owner_name ); ?></itunes:name>
-    <itunes:email><?php echo esc_html( $channel->owner_email ); ?></itunes:email>
+    <itunes:name><?php echo esc_html( $channel->owner_name[0] ); ?></itunes:name>
+    <itunes:email><?php echo esc_html( $channel->owner_email[0] ); ?></itunes:email>
   </itunes:owner>
 
   <itunes:image href="<?php echo $channel_cover[0]; ?>" /><?php
