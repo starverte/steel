@@ -8,7 +8,7 @@
 /**
  * Include Steel_Widget_Random_Quote class
  */
-include_once dirname( __FILE__ ) . '/class-widget-random-quote.php';
+include_once dirname( __FILE__ ) . '/class-steel-widget-random-quote.php';
 
 /**
  * Register widget for displaying random quote

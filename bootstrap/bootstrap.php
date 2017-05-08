@@ -8,7 +8,7 @@
 /**
  * Include Steel_Walker_Nav_Menu_List_Group class
  */
-include_once dirname( __FILE__ ) . '/class-walker-nav-menu-list-group.php';
+include_once dirname( __FILE__ ) . '/class-steel-walker-nav-menu-list-group.php';
 
 /**
  * Include Bootstrap shortcodes
