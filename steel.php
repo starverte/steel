@@ -34,6 +34,7 @@ include_once dirname( __FILE__ ) . '/options.php';
 
 if ( steel_module_status( 'broadcast' ) ) {
   include_once dirname( __FILE__ ) . '/broadcast/broadcast.php';
+  include_once dirname( __FILE__ ) . '/broadcast/post.php';
 }
 
 if ( steel_module_status( 'cards' ) ) {
