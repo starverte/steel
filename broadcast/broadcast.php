@@ -220,8 +220,9 @@ function steel_broadcast_item_list() {
           </div>
         </div>
       <?php
-      }
-    } ?>
+      } // End if().
+    } // End foreach().
+?>
 
     </div>
     <a href="#" class="btn-media-add" title="Add item to series">
@@ -310,7 +311,7 @@ function steel_broadcast_save() {
     if ( 0 != $end_date ) {
       update_post_meta( $post->ID, 'end_date', $start_date );
     }
-  }
+  } // End if().
 }
 add_action( 'save_post', 'steel_broadcast_save' );
 
@@ -587,7 +588,7 @@ function steel_broadcast_media( $post_id = 0 ) {
     return $media;
   } else {
     return false;
-  }
+  } // End if().
 }
 
 /**
@@ -987,12 +988,12 @@ function steel_broadcast_channel_itunes_cat( $channel ) {
         'TV &amp; Film',
         false,
       );
-    }
+    } // End if().
 
     return $itunes_cat;
   } else {
     return false;
-  }
+  } // End if().
 }
 
 /**

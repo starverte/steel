@@ -49,7 +49,7 @@ function steel_broadcast_the_content( $content ) {
     }
 
     $content .= '</div>'; // End .media-series.
-  }
+  } // End if().
   return $content;
 }
 add_filter( 'the_content', 'steel_broadcast_the_content' );

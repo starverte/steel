@@ -168,10 +168,10 @@ function steel_teams_profile_save() {
   }
   if ( defined( 'DOING_AJAX' ) && DOING_AJAX && (isset( $post_id )) ) {
     return $post_id;
-  } //Prevents the metaboxes from being overwritten while quick editing.
+  }
   if ( preg_match( '/\edit\.php/', $_SERVER['REQUEST_URI'] ) && (isset( $post_id )) ) {
     return $post_id;
-  } //Detects if the save action is coming from a quick edit/batch edit.
+  }
   if ( isset( $_POST['profile_email'] ) ) {
     update_post_meta( $post->ID, 'profile_email', $_POST['profile_email'] );
   }
