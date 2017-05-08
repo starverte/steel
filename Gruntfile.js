@@ -57,7 +57,7 @@ module.exports = function(grunt) {
         command: 'vendor/bin/phpcs --config-set installed_paths ../../wp-coding-standards/wpcs'
       },
       phpcs_tests: {
-        command: 'vendor/bin/phpcs -p -s -v -n . --standard=./.phpcs.rules.xml --extensions=php --ignore=deprecated/*,node_modules/*,vendor/*'
+        command: 'vendor/bin/phpcs -p -s -v -n . --standard=./.phpcs.rules.xml --extensions=php --ignore=cards/*,deprecated/*,node_modules/*,tests/*,vendor/*'
       },
       syntax_tests: {
         command: "find . -name '*.php' -not -path './node_modules/*' -not -path './vendor/*' -exec php -lf '{}' \\;"
