@@ -6,7 +6,12 @@
  * @since 1.3.0
  */
 
-add_filter( 'the_content', 'steel_broadcast_the_content' );
+/**
+ * Append Media Series content with `the_content` filter
+ *
+ * @internal
+ * @param string $content Content of the current post.
+ */
 function steel_broadcast_the_content( $content ) {
   if ( is_single() && 'steel_broadcast' == get_post_type() ) {
     $post_custom = get_post_custom();
@@ -47,3 +52,4 @@ function steel_broadcast_the_content( $content ) {
   }
   return $content;
 }
+add_filter( 'the_content', 'steel_broadcast_the_content' );
