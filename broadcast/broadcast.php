@@ -596,9 +596,9 @@ function steel_broadcast_media( $post_id = 0 ) {
  * @internal
  */
 function steel_broadcast_feed() {
-  load_template( dirname( __FILE__ ) . '/broadcast/feed.php' );
+  load_template( dirname( __FILE__ ) . '/feed.php' );
 }
-add_action( 'do_feed_broadcast', 'steel_broadcast_feed', 10, 1 );
+add_action( 'do_feed_itpc', 'steel_broadcast_feed', 10, 1 );
 
 /**
  * Add rewrite rules for Broadcast Channel feeds
@@ -611,7 +611,7 @@ add_action( 'do_feed_broadcast', 'steel_broadcast_feed', 10, 1 );
  */
 function steel_broadcast_channel_feed_rewrite( $wp_rewrite ) {
   $feed_rules = array(
-    'feed/broadcast/(.+)' => 'index.php?feed=broadcast&steel_broadcast_channel=' . $wp_rewrite->preg_index( 1 ),
+    'itpc/(.+)' => 'index.php?feed=itpc&steel_broadcast_channel=' . $wp_rewrite->preg_index( 1 ),
   );
   $wp_rewrite->rules = $feed_rules + $wp_rewrite->rules;
 }
