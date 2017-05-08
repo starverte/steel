@@ -55,7 +55,11 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
   function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
 		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
 
-		$class_names = $value = '';
+    if ( ! empty( $value ) ) {
+      $class_names = $value;
+    } else {
+      $class_names = '';
+    }
 
 		$classes = empty( $item->classes ) ? array() : (array) $item->classes;
 		$classes[] = 'menu-item-' . $item->ID;
