@@ -40,7 +40,7 @@ function steel_list_group( $args = array() ) {
       'link_after'      => '',
       'items_wrap'      => '<div id="%1$s" class="%2$s">%3$s</div>',
       'depth'           => 0,
-      'walker'          => new Steel_Walker_Nav_Menu_List_Group,
+      'walker'          => new Steel_Walker_Nav_Menu_List_Group(),
   );
   $args = wp_parse_args( $args, $defaults );
   wp_nav_menu( $args );
