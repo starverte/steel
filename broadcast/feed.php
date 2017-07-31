@@ -39,19 +39,23 @@ if ( ! empty( $channel->link[0] ) ) {
     <itunes:email><?php echo esc_html( $channel->owner_email[0] ); ?></itunes:email>
   </itunes:owner>
 
-  <itunes:image href="<?php echo $channel_cover[0]; ?>" /><?php
+  <itunes:image href="<?php echo $channel_cover[0]; ?>" />
+  <?php
   if ( $channel_cats ) {
-		if ( $channel_cats[1] ) { ?>
+		if ( $channel_cats[1] ) {
+        ?>
 
 
 		<itunes:category text="<?php echo $channel_cats[1]; ?>">
 		  <itunes:category text="<?php echo $channel_cats[0]; ?>" />
 		</itunes:category>
 		  <?php
-			} else { ?>
+			} else {
+          ?>
 
 
-		  <itunes:category text="<?php echo $channel_cats[0]; ?>" /><?php
+		  <itunes:category text="<?php echo $channel_cats[0]; ?>" />
+          <?php
 			}
   }
   while ( have_posts() ) :
@@ -81,6 +85,7 @@ if ( ! empty( $channel->link[0] ) ) {
 		  </item>
 		  <?php
 			}
-    endwhile; ?>
+    endwhile;
+    ?>
 </channel>
 </rss>

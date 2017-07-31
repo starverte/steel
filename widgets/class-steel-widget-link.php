@@ -103,6 +103,7 @@ class Steel_Widget_Link extends WP_Widget {
       <p>
       <label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e( 'Classes:', 'steel' ); ?></label>
       <input id="<?php echo $this->get_field_id( 'class' ); ?>" name="<?php echo $this->get_field_name( 'class' ); ?>" value="<?php echo $instance['class']; ?>" style="width:100%;" />
-      </p><?php
+      </p>
+      <?php
   }
 }

@@ -132,9 +132,10 @@ add_action( 'init', 'steel_teams_init' );
 function steel_teams_meta() {
 ?>
 
-  <p><label>Title</label><br /><input type="text"  size="25" name="profile_title" value="<?php echo steel_profile_meta( 'title' ); ?>" /></p>
+  <p><label>Title</label><br /><input type="text" size="25" name="profile_title" value="<?php echo steel_profile_meta( 'title' ); ?>" /></p>
   <p><label>Email</label><br /><input type="email" size="25" name="profile_email" value="<?php echo steel_profile_meta( 'email' ); ?>" /></p>
-  <p><label>Phone</label><br /><input type="tel"   size="25" name="profile_phone" value="<?php echo steel_profile_phone();        ?>" /></p><?php
+  <p><label>Phone</label><br /><input type="tel" size="25" name="profile_phone" value="<?php echo steel_profile_phone(); ?>" /></p>
+  <?php
 
   do_action( 'steel_teams_add_meta' );
 }

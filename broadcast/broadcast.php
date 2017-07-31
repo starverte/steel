@@ -169,7 +169,8 @@ function steel_broadcast_item_list() {
     <span class="dashicons dashicons-images-alt"></span> Add item
   </a>
   <div id="series_wrap">
-    <div id="series" class="ui-sortable"><?php
+    <div id="series" class="ui-sortable">
+    <?php
 
     foreach ( $media as $medium ) {
       if ( 0 != $medium->ID && $post->ID != $medium->ID ) {
@@ -232,7 +233,8 @@ function steel_broadcast_item_list() {
     </a>
   </div>
   <input type="hidden" name="item_list" id="item_list" value="<?php echo $item_list; ?>">
-  <div class="clearfix"></div><?php
+  <div class="clearfix"></div>
+  <?php
 }
 
 /**
@@ -333,7 +335,8 @@ function steel_broadcast_add_form_fields() {
     <p class="description">
       <?php _e( 'iTunes requires square JPG or PNG images that are at least 1400x1400 pixels', 'steel' ); ?>
     </p>
-  </div><?php
+  </div>
+  <?php
 }
 add_action( 'steel_broadcast_channel_add_form_fields', 'steel_broadcast_add_form_fields', 10, 2 );
 
@@ -346,7 +349,8 @@ add_action( 'steel_broadcast_channel_add_form_fields', 'steel_broadcast_add_form
  */
 function steel_broadcast_edit_form_fields( $term ) {
   $term_meta = steel_get_broadcast_channel_meta( $term->term_id );
-  $itunes_cats = steel_broadcast_itunes_cats(); ?>
+  $itunes_cats = steel_broadcast_itunes_cats();
+  ?>
   <tr class="form-field">
     <th scope="row" valign="top">
       <label for="channel_meta[cover_photo_id]"><?php _e( 'Cover Photo', 'steel' ); ?></label>
@@ -355,8 +359,10 @@ function steel_broadcast_edit_form_fields( $term ) {
       <input type="hidden" name="channel_meta[cover_photo_id]" id="channel_cover_photo_id" value="<?php echo esc_attr( $term_meta['cover_photo_id'] ); ?>" />
       <div id="channel_cover_photo">
         <?php
-          if ( ! empty( $term_meta['cover_photo_id'] ) ) { ?>
-            <img class="cover-photo" src="<?php echo wp_get_attachment_url( $term_meta['cover_photo_id'][0] ); ?>" width="140" height="140" /><?php
+          if ( ! empty( $term_meta['cover_photo_id'] ) ) {
+          ?>
+            <img class="cover-photo" src="<?php echo wp_get_attachment_url( $term_meta['cover_photo_id'][0] ); ?>" width="140" height="140" />
+            <?php
           }
         ?>
       </div>
@@ -435,7 +441,8 @@ function steel_broadcast_edit_form_fields( $term ) {
     <td>
       <input type="email" name="channel_meta[owner_email]" value="<?php echo $term_meta['owner_email'][0]; ?>" />
     </td>
-  </tr><?php
+  </tr>
+  <?php
 }
 add_action( 'steel_broadcast_channel_edit_form_fields', 'steel_broadcast_edit_form_fields', 10, 2 );
 

@@ -198,7 +198,8 @@ function steel_open() {
     js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?php echo $options['fb_app_id']; ?>";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
-</script><?php
+</script>
+<?php
   } else {
     return;
   }
@@ -265,10 +266,12 @@ function steel_ga_load() {
   $options = steel_get_options();
   $ga_id = $options['ga_id'];
   if ( ! empty( $ga_id ) ) {
-    if ( is_user_logged_in() ) { ?>
+    if ( is_user_logged_in() ) {
+?>
 <!-- Google Analytics code disabled because user is logged in. -->
     <?php
-    } else { ?>
+    } else {
+?>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -276,7 +279,8 @@ function steel_ga_load() {
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   ga('create', '<?php echo $ga_id; ?>', 'auto');
   ga('send', 'pageview');
-</script><?php
+</script>
+<?php
     }
   }
 }
