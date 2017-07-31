@@ -211,23 +211,23 @@ function steel_shortcode_column( $attr, $content = '' ) {
   ), $attr );
 
   switch ( $atts['num'] ) {
-    case '2' :
+    case '2':
       $style = 'col-lg-6 col-md-6';
       break;
-    case '3' :
+    case '3':
       $style = 'col-lg-4 col-md-4';
       break;
-    case '4' :
+    case '4':
       $style = 'col-lg-3 col-md-3';
       break;
-    case '5' :
+    case '5':
       if ( $atts['first'] || $atts['last'] ) {
         $style = 'col-lg-3 col-md-3';
       } else {
         $style = 'col-lg-2 col-md-2';
       }
       break;
-    case '6' :
+    case '6':
       $style = 'col-lg-2 col-md-2';
       break;
   }
@@ -413,22 +413,22 @@ function steel_shortcode_progress( $attr, $content = '' ) {
   ), $attr );
 
   switch ( $atts['color'] ) {
-    case 'default' :
+    case 'default':
       $progress_bar_class = '';
       break;
-    default :
+    default:
       $progress_bar_class = ' progress-bar-' . $atts['color'];
       break;
   }
 
   switch ( $atts['style'] ) {
-    case 'striped' :
+    case 'striped':
       $progress_class = ' progress-striped';
       break;
-    case 'animated' :
+    case 'animated':
       $progress_class = ' progress-striped active';
       break;
-    default :
+    default:
       $progress_class = '';
       break;
   }

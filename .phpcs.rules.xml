@@ -6,6 +6,12 @@
   <!-- Set a description for this ruleset. -->
   <description>A custom set of code standard rules to check for WordPress plugins.</description>
 
+  <rule ref="PSR2.ControlStructures.SwitchDeclaration">
+    <properties>
+      <property name="indent" value="2" />
+    </properties>
+  </rule>
+
   <!-- Include the WordPress ruleset, with exclusions. -->
   <rule ref="WordPress">
     <exclude name="Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed" />
