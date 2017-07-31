@@ -169,7 +169,8 @@ function steel_broadcast_item_list() {
     <span class="dashicons dashicons-images-alt"></span> Add item
   </a>
   <div id="series_wrap">
-    <div id="series" class="ui-sortable"><?php
+    <div id="series" class="ui-sortable">
+    <?php
 
     foreach ( $media as $medium ) {
       if ( 0 != $medium->ID && $post->ID != $medium->ID ) {
@@ -220,8 +221,9 @@ function steel_broadcast_item_list() {
           </div>
         </div>
       <?php
-      }
-    } ?>
+      } // End if().
+    } // End foreach().
+?>
 
     </div>
     <a href="#" class="btn-media-add" title="Add item to series">
@@ -231,7 +233,8 @@ function steel_broadcast_item_list() {
     </a>
   </div>
   <input type="hidden" name="item_list" id="item_list" value="<?php echo $item_list; ?>">
-  <div class="clearfix"></div><?php
+  <div class="clearfix"></div>
+  <?php
 }
 
 /**
@@ -310,7 +313,7 @@ function steel_broadcast_save() {
     if ( 0 != $end_date ) {
       update_post_meta( $post->ID, 'end_date', $start_date );
     }
-  }
+  } // End if().
 }
 add_action( 'save_post', 'steel_broadcast_save' );
 
@@ -332,7 +335,8 @@ function steel_broadcast_add_form_fields() {
     <p class="description">
       <?php _e( 'iTunes requires square JPG or PNG images that are at least 1400x1400 pixels', 'steel' ); ?>
     </p>
-  </div><?php
+  </div>
+  <?php
 }
 add_action( 'steel_broadcast_channel_add_form_fields', 'steel_broadcast_add_form_fields', 10, 2 );
 
@@ -345,7 +349,8 @@ add_action( 'steel_broadcast_channel_add_form_fields', 'steel_broadcast_add_form
  */
 function steel_broadcast_edit_form_fields( $term ) {
   $term_meta = steel_get_broadcast_channel_meta( $term->term_id );
-  $itunes_cats = steel_broadcast_itunes_cats(); ?>
+  $itunes_cats = steel_broadcast_itunes_cats();
+  ?>
   <tr class="form-field">
     <th scope="row" valign="top">
       <label for="channel_meta[cover_photo_id]"><?php _e( 'Cover Photo', 'steel' ); ?></label>
@@ -354,8 +359,10 @@ function steel_broadcast_edit_form_fields( $term ) {
       <input type="hidden" name="channel_meta[cover_photo_id]" id="channel_cover_photo_id" value="<?php echo esc_attr( $term_meta['cover_photo_id'] ); ?>" />
       <div id="channel_cover_photo">
         <?php
-          if ( ! empty( $term_meta['cover_photo_id'] ) ) { ?>
-            <img class="cover-photo" src="<?php echo wp_get_attachment_url( $term_meta['cover_photo_id'][0] ); ?>" width="140" height="140" /><?php
+          if ( ! empty( $term_meta['cover_photo_id'] ) ) {
+          ?>
+            <img class="cover-photo" src="<?php echo wp_get_attachment_url( $term_meta['cover_photo_id'][0] ); ?>" width="140" height="140" />
+            <?php
           }
         ?>
       </div>
@@ -434,7 +441,8 @@ function steel_broadcast_edit_form_fields( $term ) {
     <td>
       <input type="email" name="channel_meta[owner_email]" value="<?php echo $term_meta['owner_email'][0]; ?>" />
     </td>
-  </tr><?php
+  </tr>
+  <?php
 }
 add_action( 'steel_broadcast_channel_edit_form_fields', 'steel_broadcast_edit_form_fields', 10, 2 );
 
@@ -587,7 +595,7 @@ function steel_broadcast_media( $post_id = 0 ) {
     return $media;
   } else {
     return false;
-  }
+  } // End if().
 }
 
 /**
@@ -596,9 +604,9 @@ function steel_broadcast_media( $post_id = 0 ) {
  * @internal
  */
 function steel_broadcast_feed() {
-  load_template( dirname( __FILE__ ) . '/broadcast/feed.php' );
+  load_template( dirname( __FILE__ ) . '/feed.php' );
 }
-add_action( 'do_feed_broadcast', 'steel_broadcast_feed', 10, 1 );
+add_action( 'do_feed_itpc', 'steel_broadcast_feed', 10, 1 );
 
 /**
  * Add rewrite rules for Broadcast Channel feeds
@@ -611,7 +619,7 @@ add_action( 'do_feed_broadcast', 'steel_broadcast_feed', 10, 1 );
  */
 function steel_broadcast_channel_feed_rewrite( $wp_rewrite ) {
   $feed_rules = array(
-    'feed/broadcast/(.+)' => 'index.php?feed=broadcast&steel_broadcast_channel=' . $wp_rewrite->preg_index( 1 ),
+    'itpc/(.+)' => 'index.php?feed=itpc&steel_broadcast_channel=' . $wp_rewrite->preg_index( 1 ),
   );
   $wp_rewrite->rules = $feed_rules + $wp_rewrite->rules;
 }
@@ -987,12 +995,12 @@ function steel_broadcast_channel_itunes_cat( $channel ) {
         'TV &amp; Film',
         false,
       );
-    }
+    } // End if().
 
     return $itunes_cat;
   } else {
     return false;
-  }
+  } // End if().
 }
 
 /**

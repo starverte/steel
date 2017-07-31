@@ -34,6 +34,7 @@ include_once dirname( __FILE__ ) . '/options.php';
 
 if ( steel_module_status( 'broadcast' ) ) {
   include_once dirname( __FILE__ ) . '/broadcast/broadcast.php';
+  include_once dirname( __FILE__ ) . '/broadcast/post.php';
 }
 
 if ( steel_module_status( 'cards' ) ) {
@@ -184,7 +185,7 @@ add_action( 'wp_enqueue_scripts', 'steel_enqueue_scripts' );
  */
 function steel_open() {
   $options = steel_get_options();
-  if ( true === $options['load_facebook']  && ! empty( $options['fb_app_id'] ) ) { ?>
+  if ( true === $options['load_facebook'] && ! empty( $options['fb_app_id'] ) ) { ?>
 <div id="fb-root"></div>
 <script>
   (function(d, s, id) {
@@ -197,7 +198,8 @@ function steel_open() {
     js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?php echo $options['fb_app_id']; ?>";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
-</script><?php
+</script>
+<?php
   } else {
     return;
   }
@@ -264,10 +266,12 @@ function steel_ga_load() {
   $options = steel_get_options();
   $ga_id = $options['ga_id'];
   if ( ! empty( $ga_id ) ) {
-    if ( is_user_logged_in() ) { ?>
+    if ( is_user_logged_in() ) {
+?>
 <!-- Google Analytics code disabled because user is logged in. -->
     <?php
-    } else { ?>
+    } else {
+?>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -275,7 +279,8 @@ function steel_ga_load() {
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   ga('create', '<?php echo $ga_id; ?>', 'auto');
   ga('send', 'pageview');
-</script><?php
+</script>
+<?php
     }
   }
 }
@@ -301,7 +306,12 @@ add_action( 'plugins_loaded', 'steel_plugins_loaded' );
  * @internal
  */
 function steel_slides_x_cards() {
-  $steel_slides = get_posts( array( 'post_type' => 'steel_slides', 'posts_per_page' => -1 ) );
+  $steel_slides = get_posts(
+    array(
+      'post_type' => 'steel_slides',
+      'posts_per_page' => -1,
+    )
+  );
 
   foreach ( $steel_slides as $slideshow ) {
     $cards = explode( ',', get_post_meta( $slideshow->ID, 'slides_order', true ) );

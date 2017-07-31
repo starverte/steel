@@ -132,9 +132,10 @@ add_action( 'init', 'steel_teams_init' );
 function steel_teams_meta() {
 ?>
 
-  <p><label>Title</label><br /><input type="text"  size="25" name="profile_title" value="<?php echo steel_profile_meta( 'title' ); ?>" /></p>
+  <p><label>Title</label><br /><input type="text" size="25" name="profile_title" value="<?php echo steel_profile_meta( 'title' ); ?>" /></p>
   <p><label>Email</label><br /><input type="email" size="25" name="profile_email" value="<?php echo steel_profile_meta( 'email' ); ?>" /></p>
-  <p><label>Phone</label><br /><input type="tel"   size="25" name="profile_phone" value="<?php echo steel_profile_phone();        ?>" /></p><?php
+  <p><label>Phone</label><br /><input type="tel" size="25" name="profile_phone" value="<?php echo steel_profile_phone(); ?>" /></p>
+  <?php
 
   do_action( 'steel_teams_add_meta' );
 }
@@ -168,10 +169,10 @@ function steel_teams_profile_save() {
   }
   if ( defined( 'DOING_AJAX' ) && DOING_AJAX && (isset( $post_id )) ) {
     return $post_id;
-  } //Prevents the metaboxes from being overwritten while quick editing.
+  }
   if ( preg_match( '/\edit\.php/', $_SERVER['REQUEST_URI'] ) && (isset( $post_id )) ) {
     return $post_id;
-  } //Detects if the save action is coming from a quick edit/batch edit.
+  }
   if ( isset( $_POST['profile_email'] ) ) {
     update_post_meta( $post->ID, 'profile_email', $_POST['profile_email'] );
   }

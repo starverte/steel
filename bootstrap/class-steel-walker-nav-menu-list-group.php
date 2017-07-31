@@ -55,7 +55,11 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
   function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
 		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
 
-		$class_names = $value = '';
+    if ( ! empty( $value ) ) {
+      $class_names = $value;
+    } else {
+      $class_names = '';
+    }
 
 		$classes = empty( $item->classes ) ? array() : (array) $item->classes;
 		$classes[] = 'menu-item-' . $item->ID;
@@ -73,10 +77,10 @@ class Steel_Walker_Nav_Menu_List_Group extends Walker_Nav_Menu {
 		$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
 
 		$atts = array();
-		$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
-		$atts['target'] = ! empty( $item->target )     ? $item->target     : '';
-		$atts['rel']    = ! empty( $item->xfn )        ? $item->xfn        : '';
-		$atts['href']   = ! empty( $item->url )        ? $item->url        : '';
+		$atts['title'] = ! empty( $item->attr_title ) ? $item->attr_title : '';
+		$atts['target'] = ! empty( $item->target ) ? $item->target : '';
+		$atts['rel'] = ! empty( $item->xfn ) ? $item->xfn : '';
+		$atts['href'] = ! empty( $item->url ) ? $item->url : '';
 
 		/**
      * Filter the HTML attributes applied to a menu item's <a>.

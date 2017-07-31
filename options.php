@@ -123,9 +123,11 @@ function steel_integrations_section() {
  * @internal
  */
 function steel_settings_field_fb_app_id() {
-  $options = steel_get_options(); ?>
+  $options = steel_get_options();
+  ?>
 
-  <input id="fb_app_id" name="steel_options[fb_app_id]" size="40" type="text" value="<?php echo $options['fb_app_id']; ?>"><?php
+  <input id="fb_app_id" name="steel_options[fb_app_id]" size="40" type="text" value="<?php echo $options['fb_app_id']; ?>">
+  <?php
 }
 
 /**
@@ -134,9 +136,11 @@ function steel_settings_field_fb_app_id() {
  * @internal
  */
 function steel_settings_field_ga_id() {
-  $options = steel_get_options(); ?>
+  $options = steel_get_options();
+  ?>
 
-  <input id="ga_id" name="steel_options[ga_id]" size="40" type="text" value="<?php echo $options['ga_id']; ?>" placeholder="UA-XXXXX-X"><?php
+  <input id="ga_id" name="steel_options[ga_id]" size="40" type="text" value="<?php echo $options['ga_id']; ?>" placeholder="UA-XXXXX-X">
+  <?php
 }
 
 /**
@@ -154,7 +158,8 @@ function steel_misc_section() {
  * @internal
  */
 function steel_settings_field_editor_posts_page() {
-  $options = steel_get_options(); ?>
+  $options = steel_get_options();
+  ?>
 
   <div class="radio-group">
     <label for="steel_options[load_editor_posts_page]">
@@ -181,7 +186,8 @@ function steel_mods_section() {
  * @internal
  */
 function steel_settings_field_bootstrap() {
-  $options = steel_get_options(); ?>
+  $options = steel_get_options();
+  ?>
 
   <div class="radio-group">
     <label for="steel_options[load_bootstrap_css]">
@@ -201,7 +207,8 @@ function steel_settings_field_bootstrap() {
  * @internal
  */
 function steel_settings_field_broadcast() {
-  $options = steel_get_options(); ?>
+  $options = steel_get_options();
+  ?>
 
   <div class="radio-group">
     <label for="steel_options[load_broadcast]">
@@ -217,7 +224,8 @@ function steel_settings_field_broadcast() {
  * @internal
  */
 function steel_settings_field_cards() {
-  $options = steel_get_options(); ?>
+  $options = steel_get_options();
+  ?>
 
   <div class="radio-group">
     <label for="steel_options[load_cards]">
@@ -233,7 +241,8 @@ function steel_settings_field_cards() {
  * @internal
  */
 function steel_settings_field_teams() {
-  $options = steel_get_options(); ?>
+  $options = steel_get_options();
+  ?>
 
   <div class="radio-group">
     <label for="steel_options[load_teams]">

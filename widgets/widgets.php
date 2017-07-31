@@ -8,17 +8,17 @@
 /**
  * Include Steel_Widget_Button class
  */
-include_once dirname( __FILE__ ) . '/class-widget-button.php';
+include_once dirname( __FILE__ ) . '/class-steel-widget-button.php';
 
 /**
  * Include Steel_Widget_Link class
  */
-include_once dirname( __FILE__ ) . '/class-widget-link.php';
+include_once dirname( __FILE__ ) . '/class-steel-widget-link.php';
 
 /**
  * Include Steel_Widget_List_Group class
  */
-include_once dirname( __FILE__ ) . '/class-widget-list-group.php';
+include_once dirname( __FILE__ ) . '/class-steel-widget-list-group.php';
 
 /**
  * Register custom widgets
