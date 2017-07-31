@@ -155,7 +155,7 @@ function steel_shortcode_btn( $attr, $content = '' ) {
   $output .= 'class="btn ' . $btn_class . '" ';
   $output .= 'popover' !== $atts['toggle'] ? 'href="' . $atts['link'] . '"' : '';
   $output .= $data;
-  $output .= ! empty( $atts['title'] )  ? ' title="' . $atts['title'] . '"' : '';
+  $output .= ! empty( $atts['title'] ) ? ' title="' . $atts['title'] . '"' : '';
   $output .= ! empty( $atts['target'] ) ? ' target="' . $atts['target'] . '"' : '';
   $output .= '>';
   $output .= do_shortcode( $new );

@@ -185,7 +185,7 @@ add_action( 'wp_enqueue_scripts', 'steel_enqueue_scripts' );
  */
 function steel_open() {
   $options = steel_get_options();
-  if ( true === $options['load_facebook']  && ! empty( $options['fb_app_id'] ) ) { ?>
+  if ( true === $options['load_facebook'] && ! empty( $options['fb_app_id'] ) ) { ?>
 <div id="fb-root"></div>
 <script>
   (function(d, s, id) {

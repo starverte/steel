@@ -106,7 +106,7 @@ class Steel_Widget_Random_Quote extends WP_Widget {
    */
   function form( $instance ) {
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
-		$list  = ! empty( $instance['list'] )  ? $instance['list']  : '';
+		$list  = ! empty( $instance['list'] ) ? $instance['list'] : '';
 
 		$cats = get_categories();
 		?>

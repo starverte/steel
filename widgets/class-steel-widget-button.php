@@ -100,7 +100,7 @@ class Steel_Widget_Button extends WP_Widget {
    */
   function form( $instance ) {
     $title = ! empty( $instance['title'] ) ? $instance['title'] : '';
-    $href  = ! empty( $instance['href'] )  ? $instance['href']  : 'http://';
+    $href  = ! empty( $instance['href'] ) ? $instance['href'] : 'http://';
     $style = ! empty( $instance['style'] ) ? $instance['style'] : ''; ?>
 
     <p>
