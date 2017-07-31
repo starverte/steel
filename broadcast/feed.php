@@ -54,7 +54,8 @@ if ( ! empty( $channel->link[0] ) ) {
 		  <itunes:category text="<?php echo $channel_cats[0]; ?>" /><?php
 			}
   }
-  while ( have_posts() ) : the_post();
+  while ( have_posts() ) :
+      the_post();
 
 		$media = steel_broadcast_media();
 		$img_id = get_post_thumbnail_id();

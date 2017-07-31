@@ -88,19 +88,21 @@ class Steel_Widget_Link extends WP_Widget {
       'show_info' => true,
     );
 
-		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
+    $instance = wp_parse_args( (array) $instance, $defaults );
+    $_title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+    $_href = ! empty( $instance['href'] ) ? $instance['href'] : ''; ?>
 
-																	<p>
-																	<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'steel' ); ?></label>
-																	<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php if ( ! empty( $instance['title'] ) ) { echo $instance['title']; } ?>" style="width:100%;" />
-																	</p>
-																	<p>
-																	<label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e( 'Link:', 'steel' ); ?></label>
-																	<input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php if ( ! empty( $instance['href'] ) ) { echo $instance['href']; } ?>" style="width:100%;" />
-																	</p>
-																	<p>
-																	<label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e( 'Classes:', 'steel' ); ?></label>
-																	<input id="<?php echo $this->get_field_id( 'class' ); ?>" name="<?php echo $this->get_field_name( 'class' ); ?>" value="<?php echo $instance['class']; ?>" style="width:100%;" />
-																	</p><?php
+      <p>
+      <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'steel' ); ?></label>
+      <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $_title; ?>" style="width:100%;" />
+      </p>
+      <p>
+      <label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e( 'Link:', 'steel' ); ?></label>
+      <input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo $_href; ?>" style="width:100%;" />
+      </p>
+      <p>
+      <label for="<?php echo $this->get_field_id( 'class' ); ?>"><?php _e( 'Classes:', 'steel' ); ?></label>
+      <input id="<?php echo $this->get_field_id( 'class' ); ?>" name="<?php echo $this->get_field_name( 'class' ); ?>" value="<?php echo $instance['class']; ?>" style="width:100%;" />
+      </p><?php
   }
 }

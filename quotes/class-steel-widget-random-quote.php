@@ -37,46 +37,47 @@ class Steel_Widget_Random_Quote extends WP_Widget {
    * @param array $instance The settings for the particular instance of the widget.
    */
   function widget( $args, $instance ) {
-		$cat = ! empty( $instance['cat'] ) ? get_category( $instance['cat'] ) : false;
+    $cat = ! empty( $instance['cat'] ) ? get_category( $instance['cat'] ) : false;
 
-		if ( ! $cat ) {
-			return;
-			}
+    if ( ! $cat ) {
+        return;
+        }
 
-		$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
+    $instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 
-		echo $args['before_widget'];
+    echo $args['before_widget'];
 
-		if ( ! empty( $instance['title'] ) ) {
-			echo $args['before_title'] . $instance['title'] . $args['after_title'];
-			}
+    if ( ! empty( $instance['title'] ) ) {
+        echo $args['before_title'] . $instance['title'] . $args['after_title'];
+        }
 
-		$quotes = new WP_Query(
-		array(
-        'post_type' => 'post',
-        'orderby' => 'rand',
-        'posts_per_page' => 1,
-        'tax_query' => array(
-          'relation' => 'AND',
-          array(
-            'taxonomy' => 'category',
-            'field' => 'slug',
-            'terms' => $cat->slug,
-          ),
-          array(
-            'taxonomy' => 'post_format',
-            'field' => 'slug',
-            'terms' => array( 'post-format-quote' ),
-          )
-        ),
-		)
-		);
+    $quotes = new WP_Query(
+    array(
+    'post_type' => 'post',
+    'orderby' => 'rand',
+    'posts_per_page' => 1,
+    'tax_query' => array(
+      'relation' => 'AND',
+      array(
+        'taxonomy' => 'category',
+        'field' => 'slug',
+        'terms' => $cat->slug,
+      ),
+      array(
+        'taxonomy' => 'post_format',
+        'field' => 'slug',
+        'terms' => array( 'post-format-quote' ),
+      )
+    ),
+    )
+    );
 
-		while ( $quotes->have_posts() ) : $quotes->the_post(); ?>
-			<blockquote><?php the_content(); ?></blockquote>
-		  <?php endwhile;
+    while ( $quotes->have_posts() ) :
+      $quotes->the_post(); ?>
+        <blockquote><?php the_content(); ?></blockquote>
+      <?php endwhile;
 
-		echo $args['after_widget'];
+    echo $args['after_widget'];
   }
 
   /**
